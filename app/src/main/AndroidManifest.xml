@@ -15,7 +15,6 @@
         <activity
             android:name=".app.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.ArchitectCoders2024">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
