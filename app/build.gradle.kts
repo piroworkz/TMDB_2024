@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.compose.constraint.layout)
+    implementation(libs.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.retrofit)
