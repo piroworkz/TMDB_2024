@@ -14,23 +14,23 @@ fun NavGraphBuilder.navComposable(
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(
-        destination.route(),
+        route = destination.route(),
         arguments = destination.setNavArgs(),
+        deepLinks = destination.deepLinks
     ) {
         content(it)
     }
 }
 
-fun <T> NavHostController.navigateTo(
+fun NavHostController.navigateTo(
     destination: Destination,
-    args: T? = null,
     optionsBuilder: (NavOptionsBuilder.() -> Unit) = {
-        popUpTo(route = destination.buildRoute(args?.toString())) { inclusive = false }
+        popUpTo(route = destination.buildRoute()) { inclusive = false }
         launchSingleTop = true
     }
 ) {
     navigate(
-        route = destination.buildRoute(args?.toString()),
+        route = destination.buildRoute(),
         builder = { optionsBuilder() }
     )
 }
@@ -48,5 +48,5 @@ fun Destination.route(): String =
         .plus(args.map { "{${it.name}}" })
         .joinToString(separator = "/")
 
-private fun Destination.buildRoute(value: String?): String =
-    if (value != null) listOf(name).plus(args.map { value }).joinToString(separator = "/") else name
+private fun Destination.buildRoute(): String =
+    listOf(name).plus(args.map { it.defaultValue.toString() }).joinToString(separator = "/")
