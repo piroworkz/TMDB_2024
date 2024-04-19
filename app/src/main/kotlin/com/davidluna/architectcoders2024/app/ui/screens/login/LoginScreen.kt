@@ -11,7 +11,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
+import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
 
 @Composable
@@ -43,11 +43,8 @@ fun LoginScreen(
             colorFilter = ColorFilter.tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
 
-        if (state.launchIntent) {
-            WebView(state.authToken) {
-                "on Done".log("onDone")
-                sendEvent(LoginEvent.AskForPermission)
-            }
+        if (state.intent) {
+            WebView(state.token) { sendEvent(LoginEvent.AskForPermission) }
         } else {
             Column(
                 modifier = Modifier
@@ -68,25 +65,15 @@ fun LoginScreen(
                     )
                 }
 
-                TextButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Enter as Guest",
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp),
-                        color = colorScheme.onPrimary
-                    )
-                }
             }
         }
 
         if (state.isLoading) {
             CircularProgressIndicator()
         }
-
+        ErrorDialogView(error = state.appError) {
+            sendEvent(LoginEvent.ResetError)
+        }
     }
 
 }

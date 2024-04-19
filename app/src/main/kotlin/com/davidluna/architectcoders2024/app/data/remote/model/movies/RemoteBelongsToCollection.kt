@@ -1,12 +1,16 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteBelongsToCollection(
-    @SerializedName("backdrop_path")
+    @SerialName("backdrop_path")
     val backdropPath: String,
+    @SerialName("id")
     val id: Int,
+    @SerialName("name")
     val name: String,
-    @SerializedName("poster_path")
+    @SerialName("poster_path")
     val posterPath: String
 )

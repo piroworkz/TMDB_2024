@@ -1,23 +1,32 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteCast(
+    @SerialName("adult")
     val adult: Boolean,
-    @SerializedName("cast_id")
+    @SerialName("cast_id")
     val castId: Int,
+    @SerialName("character")
     val character: String,
-    @SerializedName("credit_id")
+    @SerialName("credit_id")
     val creditId: String,
+    @SerialName("gender")
     val gender: Int,
+    @SerialName("id")
     val id: Int,
-    @SerializedName("known_for_department")
+    @SerialName("known_for_department")
     val knownForDepartment: String,
+    @SerialName("name")
     val name: String,
+    @SerialName("order")
     val order: Int,
-    @SerializedName("original_name")
+    @SerialName("original_name")
     val originalName: String,
+    @SerialName("popularity")
     val popularity: Double,
-    @SerializedName("profile_path")
+    @SerialName("profile_path")
     val profilePath: String
 )

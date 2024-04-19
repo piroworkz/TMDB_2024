@@ -30,10 +30,12 @@ import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
 @Composable
 fun AppBarView(
     modifier: Modifier = Modifier,
-    isTopLevelDestination: Boolean = false,
+    topLevel: Boolean,
+    hideAppBar: Boolean,
     title: String = stringResource(id = R.string.app_name),
-    onNavigationIconClick: () -> Unit = {}
+    onNavigationIconClick: () -> Unit
 ) {
+    if (hideAppBar) return
     Card(
         shape = RectangleShape,
         elevation = cardElevation(defaultElevation = 8.dp)
@@ -42,7 +44,7 @@ fun AppBarView(
             title = { Text(text = title) },
             modifier = modifier,
             navigationIcon = {
-                val icon = if (isTopLevelDestination) Icons.Default.Menu else Rounded.ArrowBack
+                val icon = if (topLevel) Icons.Default.Menu else Rounded.ArrowBack
                 IconButton(onClick = {
                     onNavigationIconClick()
                 }) {
@@ -68,7 +70,12 @@ fun AppBarView(
 private fun AppBarPreView() {
     ArchitectCoders2024Theme {
         Scaffold(
-            topBar = { AppBarView() },
+            topBar = {
+                AppBarView(
+                    topLevel = true,
+                    hideAppBar = false,
+                ) {}
+            },
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues))
         }

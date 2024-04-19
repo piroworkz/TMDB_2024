@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "user.proto";
+import "auth.proto";
+
+option java_package = "com.davidluna.protodatastore";
+option java_multiple_files = true;
+
+message Session {
+  AuthenticationValues auth = 1;
+  UserAccount user = 2;
+}

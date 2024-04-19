@@ -8,6 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ByDefault
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.SafeArgs
 
 fun NavGraphBuilder.navComposable(
     destination: Destination,
@@ -25,28 +28,30 @@ fun NavGraphBuilder.navComposable(
 fun NavHostController.navigateTo(
     destination: Destination,
     optionsBuilder: (NavOptionsBuilder.() -> Unit) = {
-        popUpTo(route = destination.buildRoute()) { inclusive = false }
+        popUpTo(route = destination.setArgs()) { inclusive = false }
         launchSingleTop = true
     }
 ) {
     navigate(
-        route = destination.buildRoute(),
+        route = destination.setArgs(),
         builder = { optionsBuilder() }
     )
 }
 
 private fun Destination.setNavArgs(): List<NamedNavArgument> =
-    args.map { arguments: Args<Any> ->
-        navArgument(arguments.name) {
-            type = arguments.type
-            arguments.defaultValue?.let { defaultValue = it }
+    args.map { arguments: Pair<SafeArgs, Any?> ->
+        navArgument(arguments.first.name) {
+            type = arguments.first.type
+            if (arguments.first is ByDefault<*>) {
+                defaultValue = arguments.second
+            }
         }
     }
 
-fun Destination.route(): String =
-    listOf(name)
-        .plus(args.map { "{${it.name}}" })
-        .joinToString(separator = "/")
+fun Destination.route(): String = listOf(name)
+    .plus(args.map { "{${it.first.name}}" })
+    .joinToString(separator = "/")
 
-private fun Destination.buildRoute(): String =
-    listOf(name).plus(args.map { it.defaultValue.toString() }).joinToString(separator = "/")
+fun Destination.setArgs(): String = listOf(name)
+    .plus(args.map { it.second.toString() })
+    .joinToString(separator = "/")

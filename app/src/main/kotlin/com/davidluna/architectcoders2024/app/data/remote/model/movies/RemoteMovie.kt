@@ -1,28 +1,16 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import com.davidluna.architectcoders2024.data.MovieType
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteMovie(
-//    val adult: Boolean,
-//    @SerializedName("backdrop_path")
-//    val backdroPath: String,
-//    @SerializedName("genre_ids")
-//    val genreIds: List<Int>,
+    @SerialName("id")
     val id: Int,
-//    @SerializedName("original_language")
-//    val originalLanguage: String,
-//    @SerializedName("original_title")
-//    val originalTitle: String,
-//    val overview: String,
-//    val popularity: Double,
-    @SerializedName("poster_path")
+    @SerialName("poster_path")
     val posterPath: String,
-//    @SerializedName("release_date")
-//    val releaseDate: String,
+    @SerialName("title")
     val title: String,
-//    val video: Boolean,
-//    @SerializedName("vote_average")
-//    val voteAverage: Double,
-//    @SerializedName("vote_count")
-//    val voteCount: Int
+    val type: MovieType = MovieType.POPULAR
 )

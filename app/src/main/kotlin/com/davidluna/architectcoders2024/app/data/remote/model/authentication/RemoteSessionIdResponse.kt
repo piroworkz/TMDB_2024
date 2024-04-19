@@ -1,10 +1,12 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.authentication
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteSessionIdResponse(
-    @SerializedName("session_id")
+    @SerialName("session_id")
     val sessionId: String,
-    @SerializedName("success")
+    @SerialName("success")
     val success: Boolean
 )

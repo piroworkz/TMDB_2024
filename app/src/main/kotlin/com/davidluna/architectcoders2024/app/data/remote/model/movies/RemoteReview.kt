@@ -1,16 +1,22 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteReview(
+    @SerialName("author")
     val author: String,
-    @SerializedName("author_details")
+    @SerialName("author_details")
     val authorDetails: RemoteAuthorDetails,
+    @SerialName("content")
     val content: String,
-    @SerializedName("created_at")
+    @SerialName("created_at")
     val createdAt: String,
+    @SerialName("id")
     val id: String,
-    @SerializedName("updated_at")
+    @SerialName("updated_at")
     val updatedAt: String,
+    @SerialName("url")
     val url: String
 )

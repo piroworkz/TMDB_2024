@@ -1,15 +1,20 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.tv
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteCreatedBy(
-    @SerializedName("credit_id")
+    @SerialName("credit_id")
     val creditId: String,
+    @SerialName("gender")
     val gender: Int,
+    @SerialName("id")
     val id: Int,
+    @SerialName("name")
     val name: String,
-    @SerializedName("original_name")
+    @SerialName("original_name")
     val originalName: String,
-    @SerializedName("profile_path")
+    @SerialName("profile_path")
     val profilePath: String
 )

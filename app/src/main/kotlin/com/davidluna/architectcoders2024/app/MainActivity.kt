@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.davidluna.architectcoders2024.app.ui.navigation.Navigator
+import com.davidluna.architectcoders2024.app.ui.screens.navigator.Navigator
 import com.davidluna.architectcoders2024.app.ui.screens.login.LoginViewModel
 import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
 
