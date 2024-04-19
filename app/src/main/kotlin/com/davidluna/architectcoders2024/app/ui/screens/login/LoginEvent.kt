@@ -5,4 +5,6 @@ sealed interface LoginEvent {
     data object AskForPermission : LoginEvent
     data class CreateSessionId(val requestToken: String) : LoginEvent
     data object GetAccount : LoginEvent
+    data object ResetError : LoginEvent
+    data object IsLoggedIn : LoginEvent
 }

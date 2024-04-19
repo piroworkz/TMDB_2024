@@ -1,12 +1,16 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteProductionCompany(
+    @SerialName("id")
     val id: Int,
-    @SerializedName("logo_path")
+    @SerialName("logo_path")
     val logoPath: String,
+    @SerialName("name")
     val name: String,
-    @SerializedName("origin_country")
+    @SerialName("origin_country")
     val originCountry: String
 )

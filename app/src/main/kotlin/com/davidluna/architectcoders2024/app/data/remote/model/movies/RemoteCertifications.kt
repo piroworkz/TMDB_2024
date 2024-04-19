@@ -1,99 +1,100 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class RemoteCertifications(
-    @SerializedName("AR")
+    @SerialName("AR")
     val argentina: List<RemoteCertificationDetail>,
-    @SerializedName("AU")
+    @SerialName("AU")
     val australia: List<RemoteCertificationDetail>,
-    @SerializedName("BG")
+    @SerialName("BG")
     val bulgaria: List<RemoteCertificationDetail>,
-    @SerializedName("BR")
+    @SerialName("BR")
     val brazil: List<RemoteCertificationDetail>,
-    @SerializedName("CA")
+    @SerialName("CA")
     val canada: List<RemoteCertificationDetail>,
-    @SerializedName("CA-QC")
+    @SerialName("CA-QC")
     val canadaQuebec: List<RemoteCertificationDetail>,
-    @SerializedName("CH")
+    @SerialName("CH")
     val switzerland: List<RemoteCertificationDetail>,
-    @SerializedName("CZ")
+    @SerialName("CZ")
     val czechRepublic: List<RemoteCertificationDetail>,
-    @SerializedName("DE")
+    @SerialName("DE")
     val germany: List<RemoteCertificationDetail>,
-    @SerializedName("DK")
+    @SerialName("DK")
     val denmark: List<RemoteCertificationDetail>,
-    @SerializedName("ES")
+    @SerialName("ES")
     val spain: List<RemoteCertificationDetail>,
-    @SerializedName("FI")
+    @SerialName("FI")
     val finland: List<RemoteCertificationDetail>,
-    @SerializedName("FR")
+    @SerialName("FR")
     val france: List<RemoteCertificationDetail>,
-    @SerializedName("GB")
+    @SerialName("GB")
     val unitedKingdom: List<RemoteCertificationDetail>,
-    @SerializedName("GR")
+    @SerialName("GR")
     val greece: List<RemoteCertificationDetail>,
-    @SerializedName("HK")
+    @SerialName("HK")
     val hongKong: List<RemoteCertificationDetail>,
-    @SerializedName("HU")
+    @SerialName("HU")
     val hungary: List<RemoteCertificationDetail>,
-    @SerializedName("ID")
+    @SerialName("ID")
     val indonesia: List<RemoteCertificationDetail>,
-    @SerializedName("IE")
+    @SerialName("IE")
     val ireland: List<RemoteCertificationDetail>,
-    @SerializedName("IL")
+    @SerialName("IL")
     val israel: List<RemoteCertificationDetail>,
-    @SerializedName("IN")
+    @SerialName("IN")
     val india: List<RemoteCertificationDetail>,
-    @SerializedName("IT")
+    @SerialName("IT")
     val italy: List<RemoteCertificationDetail>,
-    @SerializedName("JP")
+    @SerialName("JP")
     val japan: List<RemoteCertificationDetail>,
-    @SerializedName("KR")
+    @SerialName("KR")
     val southKorea: List<RemoteCertificationDetail>,
-    @SerializedName("LT")
+    @SerialName("LT")
     val lithuania: List<RemoteCertificationDetail>,
-    @SerializedName("LU")
+    @SerialName("LU")
     val luxembourg: List<RemoteCertificationDetail>,
-    @SerializedName("LV")
+    @SerialName("LV")
     val latvia: List<RemoteCertificationDetail>,
-    @SerializedName("MO")
+    @SerialName("MO")
     val macau: List<RemoteCertificationDetail>,
-    @SerializedName("MX")
+    @SerialName("MX")
     val mexico: List<RemoteCertificationDetail>,
-    @SerializedName("MY")
+    @SerialName("MY")
     val malaysia: List<RemoteCertificationDetail>,
-    @SerializedName("NL")
+    @SerialName("NL")
     val netherlands: List<RemoteCertificationDetail>,
-    @SerializedName("NO")
+    @SerialName("NO")
     val norway: List<RemoteCertificationDetail>,
-    @SerializedName("NZ")
+    @SerialName("NZ")
     val newZealand: List<RemoteCertificationDetail>,
-    @SerializedName("PH")
+    @SerialName("PH")
     val philippines: List<RemoteCertificationDetail>,
-    @SerializedName("PR")
+    @SerialName("PR")
     val puertoRico: List<RemoteCertificationDetail>,
-    @SerializedName("PT")
+    @SerialName("PT")
     val portugal: List<RemoteCertificationDetail>,
-    @SerializedName("RU")
+    @SerialName("RU")
     val russia: List<RemoteCertificationDetail>,
-    @SerializedName("SE")
+    @SerialName("SE")
     val sweden: List<RemoteCertificationDetail>,
-    @SerializedName("SG")
+    @SerialName("SG")
     val singapore: List<RemoteCertificationDetail>,
-    @SerializedName("SK")
+    @SerialName("SK")
     val slovakia: List<RemoteCertificationDetail>,
-    @SerializedName("TH")
+    @SerialName("TH")
     val thailand: List<RemoteCertificationDetail>,
-    @SerializedName("TR")
+    @SerialName("TR")
     val turkey: List<RemoteCertificationDetail>,
-    @SerializedName("TW")
+    @SerialName("TW")
     val taiwan: List<RemoteCertificationDetail>,
-    @SerializedName("US")
+    @SerialName("US")
     val unitedStates: List<RemoteCertificationDetail>,
-    @SerializedName("VI")
+    @SerialName("VI")
     val virginIslands: List<RemoteCertificationDetail>,
-    @SerializedName("ZA")
+    @SerialName("ZA")
     val southAfrica: List<RemoteCertificationDetail>
 )

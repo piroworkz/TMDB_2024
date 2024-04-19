@@ -1,20 +1,24 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.tv
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteSeason(
-    @SerializedName("air_date")
+    @SerialName("air_date")
     val airDate: String,
-    @SerializedName("episode_count")
+    @SerialName("episode_count")
     val episodeCount: Int,
+    @SerialName("id")
     val id: Int,
+    @SerialName("name")
     val name: String,
-    @SerializedName("overview")
+    @SerialName("overview")
     val overview: String,
-    @SerializedName("poster_path")
+    @SerialName("poster_path")
     val posterPath: String,
-    @SerializedName("season_number")
+    @SerialName("season_number")
     val seasonNumber: Int,
-    @SerializedName("vote_average")
+    @SerialName("vote_average")
     val voteAverage: Double
 )

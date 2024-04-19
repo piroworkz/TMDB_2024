@@ -1,18 +1,22 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteImage(
-    @SerializedName("aspect_ratio")
+    @SerialName("aspect_ratio")
     val aspectRatio: Double,
-    @SerializedName("file_path")
+    @SerialName("file_path")
     val filePath: String,
+    @SerialName("height")
     val height: Int,
-    @SerializedName("iso_639_1")
+    @SerialName("iso_639_1")
     val iso6391: String,
-    @SerializedName("vote_average")
+    @SerialName("vote_average")
     val voteAverage: Double,
-    @SerializedName("vote_count")
+    @SerialName("vote_count")
     val voteCount: Int,
+    @SerialName("width")
     val width: Int
 )

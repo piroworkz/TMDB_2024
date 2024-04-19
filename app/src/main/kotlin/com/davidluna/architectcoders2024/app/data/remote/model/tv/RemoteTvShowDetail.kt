@@ -4,57 +4,73 @@ import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteGenr
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteProductionCompany
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteProductionCountry
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteSpokenLanguage
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteTvShowDetail(
+    @SerialName("adult")
     val adult: Boolean,
-    @SerializedName("backdrop_path")
+    @SerialName("backdrop_path")
     val backdropPath: String,
-    @SerializedName("created_by")
+    @SerialName("created_by")
     val createdBy: List<RemoteCreatedBy>,
-    @SerializedName("episode_run_time")
+    @SerialName("episode_run_time")
     val episodeRunTime: List<Int>,
-    @SerializedName("first_air_date")
+    @SerialName("first_air_date")
     val firstAirDate: String,
+    @SerialName("genres")
     val genres: List<RemoteGenre>,
+    @SerialName("homepage")
     val homepage: String,
+    @SerialName("id")
     val id: Int,
-    @SerializedName("in_production")
+    @SerialName("in_production")
     val inProduction: Boolean,
+    @SerialName("languages")
     val languages: List<String>,
-    @SerializedName("last_air_date")
+    @SerialName("last_air_date")
     val lastAirDate: String,
-    @SerializedName("last_episode_to_air")
+    @SerialName("last_episode_to_air")
     val lastEpisodeToAir: RemoteLastEpisodeToAir,
+    @SerialName("name")
     val name: String,
+    @SerialName("networks")
     val networks: List<RemoteTvNetwork>,
-    @SerializedName("next_episode_to_air")
-    val nextEpisodeToAir: Any,
-    @SerializedName("number_of_episodes")
+    @SerialName("next_episode_to_air")
+    val nextEpisodeToAir: String,
+    @SerialName("number_of_episodes")
     val numberOfEpisodes: Int,
-    @SerializedName("number_of_seasons")
+    @SerialName("number_of_seasons")
     val numberOfSeasons: Int,
-    @SerializedName("origin_country")
+    @SerialName("origin_country")
     val originCountry: List<String>,
-    @SerializedName("original_language")
+    @SerialName("original_language")
     val originalLanguage: String,
-    @SerializedName("original_name")
+    @SerialName("original_name")
     val originalName: String,
+    @SerialName("overview")
     val overview: String,
+    @SerialName("popularity")
     val popularity: Double,
-    @SerializedName("poster_path")
+    @SerialName("poster_path")
     val posterPath: String,
-    @SerializedName("production_companies")
+    @SerialName("production_companies")
     val productionCompanies: List<RemoteProductionCompany>,
-    @SerializedName("production_countries")
+    @SerialName("production_countries")
     val productionCountries: List<RemoteProductionCountry>,
-    @SerializedName("seasons")
+    @SerialName("seasons")
     val seasons: List<RemoteSeason>,
-    @SerializedName("spoken_languages")
+    @SerialName("spoken_languages")
     val spokenLanguages: List<RemoteSpokenLanguage>,
+    @SerialName("status")
     val status: String,
+    @SerialName("tagline")
     val tagline: String,
+    @SerialName("type")
     val type: String,
+    @SerialName("vote_average")
     val voteAverage: Double,
+    @SerialName("vote_count")
     val voteCount: Int
 )
