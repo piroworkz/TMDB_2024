@@ -10,19 +10,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.davidluna.architectcoders2024.app.ui.screens.navigator.Navigator
 import com.davidluna.architectcoders2024.app.ui.screens.login.LoginViewModel
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.screens.player.VideoPlayerScreen
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewmodel: LoginViewModel by viewModels<LoginViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 
-            ArchitectCoders2024Theme {
+            TmdbTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+//                    VideoPlayerScreen("Way9Dexny3w")
                     Navigator()
                 }
             }

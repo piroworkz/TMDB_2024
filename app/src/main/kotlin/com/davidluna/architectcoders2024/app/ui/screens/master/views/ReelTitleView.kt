@@ -27,9 +27,9 @@ fun ReelTitleView(title: String? = "Popular Movies") {
         Text(
             text = title ?: "",
             modifier = Modifier
-                .padding(8.dp)
+                .padding(4.dp)
                 .fillMaxWidth(),
-            fontSize = 24.sp,
+            style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimary,
             maxLines = 1,

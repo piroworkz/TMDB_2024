@@ -2,9 +2,8 @@ package com.davidluna.architectcoders2024.app.data.remote
 
 import com.davidluna.architectcoders2024.app.data.local.datastore.SessionDatastore
 import com.davidluna.protodatastore.AuthenticationValues
+import com.davidluna.protodatastore.copy
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -16,9 +15,11 @@ class MoviesInterceptor(
     private val scope: CoroutineScope
 ) : Interceptor {
 
+    private var auth = AuthenticationValues.getDefaultInstance()
 
-
-    private val auth: AuthenticationValues by lazy(::collectAuth)
+    init {
+        collectAuth()
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -32,30 +33,34 @@ class MoviesInterceptor(
     }
 
     private fun buildRequest(request: Request, url: HttpUrl) = request.newBuilder().apply {
-        addHeader("Authorization", "api_key $API_KEY")
+        addHeader(AUTHORIZATION, "$API_KEY_NAME $API_KEY")
         url(url)
     }.build()
 
     private fun buildUrl(request: Request) = request.url.newBuilder().apply {
         if (auth.sessionId.isNotEmpty()) {
-            addQueryParameter("session_id", auth.sessionId)
+            addQueryParameter(SESSION_ID_NAME, auth.sessionId)
         }
-        addQueryParameter("api_key", API_KEY)
+        addQueryParameter(API_KEY_NAME, API_KEY)
     }.build()
 
 
     companion object {
         private const val API_KEY = "2a00202b4e3679575440424cbfe2c97b"
+        private const val API_KEY_NAME = "api_key"
+        private const val SESSION_ID_NAME = "session_id"
+        private const val AUTHORIZATION = "Authorization"
     }
 
-    private fun collectAuth(): AuthenticationValues {
-        var auth: AuthenticationValues = AuthenticationValues.getDefaultInstance()
+    private fun collectAuth() {
         scope.launch {
             session.getAuth().collect {
-                auth = it
+                auth = auth.copy {
+                    sessionId = it.sessionId
+                    token = it.token
+                }
             }
         }
-        return auth
     }
 
 }

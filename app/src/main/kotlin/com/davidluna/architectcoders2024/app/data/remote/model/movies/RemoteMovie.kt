@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.app.data.remote.model.movies
 
-import com.davidluna.architectcoders2024.data.MovieType
+import com.davidluna.architectcoders2024.domain.MovieType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,7 +9,7 @@ data class RemoteMovie(
     @SerialName("id")
     val id: Int,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("title")
     val title: String,
     val type: MovieType = MovieType.POPULAR

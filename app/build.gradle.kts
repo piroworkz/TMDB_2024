@@ -79,7 +79,13 @@ dependencies {
     implementation(libs.kotlin.converter)
     implementation(libs.protobuf.javalite)
     implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.media3.common)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.exoplayer.dash)
+    implementation(libs.media3.ui)
+
     debugImplementation(libs.compose.ui.tooling)
+
 }
 
 protobuf {

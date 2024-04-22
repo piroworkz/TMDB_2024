@@ -52,28 +52,44 @@ class MoviesViewModel(private val repository: MoviesRepository) : ViewModel() {
     private fun getNowPlayingMovies(page: Int = 1) = run {
         repository.getNowPlayingMovies(page).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { it.copy(movies = it.movies.plus(r.results)) } }
+            ifRight = { r ->
+                _state.update { s ->
+                    s.copy(movies = s.movies.plus(r.results.filter { it.posterPath != null }))
+                }
+            }
         )
     }
 
     private fun getPopularMovies(page: Int = 1) = run {
         repository.getPopularMovies(page).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { it.copy(movies = it.movies.plus(r.results)) } }
+            ifRight = { r ->
+                _state.update { s ->
+                    s.copy(movies = s.movies.plus(r.results.filter { it.posterPath != null }))
+                }
+            }
         )
     }
 
     private fun getTopRatedMovies(page: Int = 1) = run {
         repository.getTopRatedMovies(page).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { it.copy(movies = it.movies.plus(r.results)) } }
+            ifRight = { r ->
+                _state.update { s ->
+                    s.copy(movies = s.movies.plus(r.results.filter { it.posterPath != null }))
+                }
+            }
         )
     }
 
     private fun getUpcomingMovies(page: Int = 1) = run {
         repository.getUpcomingMovies(page).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { it.copy(movies = it.movies.plus(r.results)) } }
+            ifRight = { r ->
+                _state.update { s ->
+                    s.copy(movies = s.movies.plus(r.results.filter { it.posterPath != null }))
+                }
+            }
         )
     }
 

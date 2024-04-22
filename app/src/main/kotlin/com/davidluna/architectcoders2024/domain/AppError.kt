@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.domain
 
-import kotlinx.serialization.Serializable
 import okio.IOException
+import org.json.JSONException
 import retrofit2.HttpException
 
 sealed class AppError(
@@ -9,6 +9,12 @@ sealed class AppError(
     val statusMessage: String = "",
     val success: Boolean = false
 ) : Throwable() {
+
+    data class Serialization(
+        val code: Int,
+        val description: String,
+        val successful: Boolean
+    ) : AppError(code, description, successful)
 
 
     data class Unknown(
@@ -31,6 +37,12 @@ sealed class AppError(
 }
 
 fun Throwable.toAppError(): AppError = when (this) {
+    is JSONException -> AppError.Serialization(
+        code = 0,
+        description = message.orEmpty(),
+        successful = false
+    )
+
     is IOException -> AppError.IO(code = 0, description = message.orEmpty(), successful = false)
     is HttpException -> AppError.Network(
         code = 0,

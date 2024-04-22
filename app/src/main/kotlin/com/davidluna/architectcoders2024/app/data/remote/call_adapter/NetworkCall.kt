@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.app.data.remote.call_adapter
 
 import arrow.core.Either
-import arrow.core.left
+import com.davidluna.architectcoders2024.app.utils.log
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.toAppError
 import okhttp3.Request
@@ -33,11 +33,8 @@ class NetworkCall<L : Any, R : Any>(
                 }
 
                 override fun onFailure(call: Call<R>, throwable: Throwable) {
-                    @Suppress("UNCHECKED_CAST")
-                    callback.onResponse(
-                        this@NetworkCall,
-                        Response.success(throwable.toAppError().left() as Either<L, R>)
-                    )
+                    "NetworkCall onFailure ${throwable.message}".log(throwable::class.java.simpleName)
+                    throw throwable.toAppError()
                 }
 
             }
@@ -73,12 +70,11 @@ class NetworkCall<L : Any, R : Any>(
             if (errorBody != null) {
                 onResponse(this@NetworkCall, Response.success(Either.Left(errorBody)))
             } else {
-                @Suppress("UNCHECKED_CAST")
-                onResponse(
-                    this@NetworkCall,
-                    Response.success(
-                        AppError.Network(0, "Error Body is null", false).left() as Either<L, R>
-                    )
+                "Failed to parse error".log()
+                throw AppError.Network(
+                    code = response.code(),
+                    description = response.message(),
+                    successful = false
                 )
             }
         }

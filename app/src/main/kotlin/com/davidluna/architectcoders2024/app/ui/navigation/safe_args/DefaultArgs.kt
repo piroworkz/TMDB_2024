@@ -2,25 +2,25 @@ package com.davidluna.architectcoders2024.app.ui.navigation.safe_args
 
 import androidx.navigation.NavType
 
-sealed class Default<out T>(
+sealed class DefaultArgs<out T>(
     override val name: String,
     override val type: NavType<*>,
     override val defaultValue: T
-) : ByDefault<T> {
+) : DefaultSafeArgs<T> {
 
-    data object TopLevel : Default<Boolean>(
+    data object TopLevel : DefaultArgs<Boolean>(
         name = IS_TOP_LEVEL,
         type = NavType.BoolType,
         defaultValue = true
     )
 
-    data object Auth : Default<String>(
+    data object Auth : DefaultArgs<String>(
         name = APPROVED,
         type = NavType.StringType,
         defaultValue = "DENIED"
     )
 
-    data object HideAppBar : Default<Boolean>(
+    data object HideAppBar : DefaultArgs<Boolean>(
         name = HIDE_APP_BAR,
         type = NavType.BoolType,
         defaultValue = true

@@ -14,3 +14,4 @@ data class RemoteImages(
     @SerialName("posters")
     val posters: List<RemoteImage>
 )
+
