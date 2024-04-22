@@ -3,20 +3,17 @@ package com.davidluna.architectcoders2024.app.ui.navigation.destinations
 import android.content.Intent
 import androidx.navigation.NavDeepLink
 import androidx.navigation.navDeepLink
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Default
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Default.HideAppBar
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.HideAppBar
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.SafeArgs
 
 sealed class AuthGraph(
     override val name: String,
-    override val args: List<Pair<SafeArgs, Any?>>,
+    override val args: List<Pair<SafeArgs, Any?>> = emptyList(),
     override val deepLinks: List<NavDeepLink> = emptyList()
-) : Destination {
+) : DeepLink {
 
-    data object Init : AuthGraph(
-        name = INIT,
-        args = emptyList()
-    )
+    data object Init : AuthGraph(name = INIT)
 
     data object Login : AuthGraph(
         name = LOGIN,
@@ -24,7 +21,7 @@ sealed class AuthGraph(
         deepLinks = listOf(
             navDeepLink {
                 uriPattern =
-                    "https://com.davidluna.architectcoders2024/{${Default.Auth.name}}"
+                    "https://com.davidluna.architectcoders2024/{${DefaultArgs.Auth.name}}"
                 action = Intent.ACTION_VIEW
             }
         )

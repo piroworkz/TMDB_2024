@@ -10,6 +10,4 @@ fun RemoteError.toAppError(): AppError = AppError.Network(
     successful = success
 )
 
-
-
 fun String.log(name: String = javaClass.simpleName) = Log.d("<-- $name", this)

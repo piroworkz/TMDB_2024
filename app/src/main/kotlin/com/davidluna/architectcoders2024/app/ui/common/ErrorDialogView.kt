@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
@@ -98,7 +98,7 @@ fun ErrorDialogView(
 )
 @Composable
 private fun ErrorDialogPreView() {
-    ArchitectCoders2024Theme {
+    TmdbTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

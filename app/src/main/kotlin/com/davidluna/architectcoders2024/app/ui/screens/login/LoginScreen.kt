@@ -21,7 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.screens.login.views.IntentView
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @Composable
 fun LoginScreen(
@@ -44,7 +45,7 @@ fun LoginScreen(
         )
 
         if (state.intent) {
-            WebView(state.token) { sendEvent(LoginEvent.AskForPermission) }
+            IntentView(state.token) { sendEvent(LoginEvent.AskForPermission) }
         } else {
             Column(
                 modifier = Modifier
@@ -84,7 +85,7 @@ fun LoginScreen(
 )
 @Composable
 private fun LoginScreenPreview() {
-    ArchitectCoders2024Theme {
+    TmdbTheme {
         LoginScreen(
             state = LoginViewModel.State()
         ) {

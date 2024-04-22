@@ -19,13 +19,14 @@ import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovi
 
 @Composable
 fun MovieReelView(
+    title: String,
     movies: List<RemoteMovie> = emptyList(),
     onMovieSelected: (Int) -> Unit
 ) {
     Spacer(
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier.padding(top = 32.dp)
     )
-    ReelTitleView(title = buildReelTitle(movies))
+    ReelTitleView(title = title)
     LazyRow(
         modifier = Modifier
             .wrapContentHeight()
@@ -39,15 +40,12 @@ fun MovieReelView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                FilmMaskImageView(movie.posterPath.buildModel())
+                FilmMaskImageView(movie.posterPath?.buildModel())
                 MovieTitleView(movie.title)
             }
         }
     }
 }
 
-@Composable
-private fun buildReelTitle(movies: List<RemoteMovie>) =
-    movies.first().type.name.replace("_", " ")
 
-private fun String.buildModel(): String = "https://image.tmdb.org/t/p/w185$this"
+

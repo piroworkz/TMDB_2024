@@ -7,15 +7,12 @@ import com.davidluna.architectcoders2024.app.data.remote.model.authentication.Re
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteGravatar
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteLoginRequest
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteUserAccountDetail
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Default
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Default.Auth
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
 import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.data.AuthenticationRepository
 import com.davidluna.architectcoders2024.data.SessionRepository
 import com.davidluna.architectcoders2024.domain.AppError
-import com.davidluna.architectcoders2024.domain.toAppError
 import com.davidluna.protodatastore.AuthenticationValues
 import com.davidluna.protodatastore.Avatar
 import com.davidluna.protodatastore.Gravatar
@@ -26,12 +23,11 @@ import com.davidluna.protodatastore.userAccount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val args: String?,
+    private val args: String,
     private val repository: AuthenticationRepository,
     private val local: SessionRepository
 ) : ViewModel() {
@@ -40,14 +36,12 @@ class LoginViewModel(
     val state = _state.asStateFlow()
 
     init {
-        collectAuth()
         getArguments()
     }
 
     data class State(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
-        val userAccountDetail: RemoteUserAccountDetail? = null,
         val token: String? = null,
         val authSession: AuthenticationValues? = null,
         val intent: Boolean = false,
@@ -66,7 +60,7 @@ class LoginViewModel(
     }
 
     private fun setIsLoggedIn() {
-        _state.update { it.copy(isLoggedIn = true) }
+        _state.update { it.copy(isLoggedIn = !it.isLoggedIn) }
     }
 
     private fun resetError() {
@@ -98,37 +92,19 @@ class LoginViewModel(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r ->
                 local.saveUser(r.toUser())
-                _state.update { it.copy(userAccountDetail = r, isLoggedIn = true) }
-                _state.value = State()
+                sendEvent(LoginEvent.IsLoggedIn)
             }
         )
     }
 
-
-    private fun collectAuth() {
-        viewModelScope.launch {
-            local.auth
-                .catch { e ->
-                    e.printStackTrace()
-                    _state.update { it.copy(appError = e.toAppError()) }
-                }
-                .collect { a ->
-                    if (a.sessionId.isNotEmpty()) {
-                        sendEvent(LoginEvent.IsLoggedIn)
-                    }
-                }
-        }
-    }
-
     private fun getArguments() {
-        args?.let {
-            val uri =
-                Uri.parse(Login.deepLinks[0].uriPattern?.replace("{${Auth.name}}", args))
-            val approved = uri.getBooleanQueryParameter("approved", false)
-            val requestToken = uri.getQueryParameter("request_token")
-            if (approved && requestToken != null) {
-                sendEvent(LoginEvent.CreateSessionId(requestToken))
-            }
+        if (args.isEmpty()) return
+        val uri =
+            Uri.parse(Login.deepLinks[0].uriPattern?.replace("{${Auth.name}}", args))
+        val approved = uri.getBooleanQueryParameter("approved", false)
+        val requestToken = uri.getQueryParameter("request_token")
+        if (approved && requestToken != null) {
+            sendEvent(LoginEvent.CreateSessionId(requestToken))
         }
     }
 

@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,11 +44,13 @@ fun AppBarView(
             title = { Text(text = title) },
             modifier = modifier,
             navigationIcon = {
-                val icon = if (topLevel) Icons.Default.Menu else Rounded.ArrowBack
-                IconButton(onClick = {
-                    onNavigationIconClick()
-                }) {
-                    Icon(imageVector = icon, contentDescription = icon.name)
+                if (!topLevel) {
+                    val icon = /*if (topLevel) Icons.Default.Menu else*/ Rounded.ArrowBack
+                    IconButton(onClick = {
+                        onNavigationIconClick()
+                    }) {
+                        Icon(imageVector = icon, contentDescription = icon.name)
+                    }
                 }
             },
             colors = topAppBarColors(
@@ -68,7 +70,7 @@ fun AppBarView(
 )
 @Composable
 private fun AppBarPreView() {
-    ArchitectCoders2024Theme {
+    TmdbTheme {
         Scaffold(
             topBar = {
                 AppBarView(

@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.login
+package com.davidluna.architectcoders2024.app.ui.screens.login.views
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -10,11 +10,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebView(token: String?, onDone: () -> Unit) {
+fun IntentView(token: String?, onDone: () -> Unit) {
 
     val resultLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
@@ -40,8 +40,8 @@ fun WebView(token: String?, onDone: () -> Unit) {
 )
 @Composable
 private fun WebViewPreview() {
-    ArchitectCoders2024Theme {
-        WebView("") {}
+    TmdbTheme {
+        IntentView("") {}
     }
 }
 

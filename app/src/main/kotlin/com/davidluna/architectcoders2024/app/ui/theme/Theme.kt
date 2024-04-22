@@ -42,7 +42,7 @@ private val LightColorScheme = lightColorScheme(
 private val DarkColorScheme = lightColorScheme()
 
 @Composable
-fun ArchitectCoders2024Theme(
+fun TmdbTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit

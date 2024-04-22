@@ -2,6 +2,7 @@ package com.davidluna.architectcoders2024.app.data.remote
 
 import com.davidluna.architectcoders2024.app.data.remote.call_adapter.NetworkCallAdapterFactory
 import com.davidluna.architectcoders2024.app.data.remote.services.authentication.AuthenticationService
+import com.davidluna.architectcoders2024.app.data.remote.services.movies.MovieDetailService
 import com.davidluna.architectcoders2024.app.data.remote.services.movies.MoviesService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -44,4 +45,7 @@ class Client(interceptor: MoviesInterceptor) {
 
     val moviesService: MoviesService =
         retrofit.create(MoviesService::class.java)
+
+    val movieDetailService: MovieDetailService =
+        retrofit.create(MovieDetailService::class.java)
 }

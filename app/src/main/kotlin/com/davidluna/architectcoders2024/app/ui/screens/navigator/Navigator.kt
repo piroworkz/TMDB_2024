@@ -11,12 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import com.davidluna.architectcoders2024.app.ui.common.AppBarView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.authNavGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.mainNavGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.moviesNavGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.splashNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.navigateTo
 import com.davidluna.architectcoders2024.app.ui.navigation.route
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
-import com.davidluna.architectcoders2024.app.ui.theme.ArchitectCoders2024Theme
+import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @Composable
 fun Navigator() = with(rememberNavigatorState()) {
@@ -34,11 +36,18 @@ fun Navigator() = with(rememberNavigatorState()) {
     ) { paddingValues: PaddingValues ->
         NavHost(
             navController = controller,
-            startDestination = AuthGraph.Init.route(),
+            startDestination = InitGraph.Init.route(),
             modifier = Modifier
                 .padding(paddingValues)
                 .background(appGradient())
         ) {
+
+            splashNavGraph {
+                controller.navigateTo(it) {
+                    popUpTo(InitGraph.Init.route()) { inclusive = true }
+                    launchSingleTop = true
+                }
+            }
 
             authNavGraph {
                 controller.navigateTo(it) {
@@ -47,7 +56,7 @@ fun Navigator() = with(rememberNavigatorState()) {
                 }
             }
 
-            mainNavGraph(navigateTo = { navigateTo(it) })
+            moviesNavGraph(navigateTo = ::navigateTo)
 
         }
     }
@@ -59,7 +68,7 @@ fun Navigator() = with(rememberNavigatorState()) {
 )
 @Composable
 private fun AppScaffoldPreView() {
-    ArchitectCoders2024Theme {
+    TmdbTheme {
         Navigator()
     }
 }

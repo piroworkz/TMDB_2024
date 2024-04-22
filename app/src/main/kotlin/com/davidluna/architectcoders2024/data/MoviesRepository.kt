@@ -6,12 +6,13 @@ import arrow.core.right
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteResults
 import com.davidluna.architectcoders2024.app.data.remote.services.movies.MoviesService
-import com.davidluna.architectcoders2024.data.MovieType.NOW_PLAYING
-import com.davidluna.architectcoders2024.data.MovieType.POPULAR
-import com.davidluna.architectcoders2024.data.MovieType.TOP_RATED
-import com.davidluna.architectcoders2024.data.MovieType.UPCOMING
 import com.davidluna.architectcoders2024.app.utils.toAppError
+import com.davidluna.architectcoders2024.domain.MovieType.NOW_PLAYING
+import com.davidluna.architectcoders2024.domain.MovieType.POPULAR
+import com.davidluna.architectcoders2024.domain.MovieType.TOP_RATED
+import com.davidluna.architectcoders2024.domain.MovieType.UPCOMING
 import com.davidluna.architectcoders2024.domain.AppError
+import com.davidluna.architectcoders2024.domain.setType
 
 class MoviesRepository(private val service: MoviesService) {
 
@@ -40,13 +41,4 @@ class MoviesRepository(private val service: MoviesService) {
         )
     }
 
-}
-
-private fun RemoteResults<RemoteMovie>.setType(type: MovieType = POPULAR): List<RemoteMovie> {
-    return results.map { it.copy(type = type) }
-}
-
-
-enum class MovieType {
-    NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING
 }
