@@ -8,12 +8,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.app.app
+import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepository
+import com.davidluna.architectcoders2024.app.data.repositories.MoviesRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MainGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.route
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Args
 import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationComposable
-import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationDialog
 import com.davidluna.architectcoders2024.app.ui.screens.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.app.ui.screens.detail.MovieDetailScreen
 import com.davidluna.architectcoders2024.app.ui.screens.detail.MovieDetailViewModel
@@ -21,25 +22,24 @@ import com.davidluna.architectcoders2024.app.ui.screens.master.MoviesEvent
 import com.davidluna.architectcoders2024.app.ui.screens.master.MoviesScreen
 import com.davidluna.architectcoders2024.app.ui.screens.master.MoviesViewModel
 import com.davidluna.architectcoders2024.app.ui.screens.player.VideoPlayerScreen
-import com.davidluna.architectcoders2024.app.utils.log
-import com.davidluna.architectcoders2024.data.MovieDetailsRepository
-import com.davidluna.architectcoders2024.data.MoviesRepository
+import com.davidluna.architectcoders2024.app.ui.screens.player.VideoPlayerViewModel
 
 fun NavGraphBuilder.moviesNavGraph(
-    navigateTo: (Destination) -> Unit
+    navigateTo: (Destination) -> Unit,
+    navigateUp: () -> Unit
 ) {
     navigation(
-        route = MainGraph.Init.route(),
-        startDestination = MainGraph.Home.route()
+        route = MoviesGraph.Init.route(),
+        startDestination = MoviesGraph.Home.route()
     ) {
 
-        setDestinationComposable(MainGraph.Home) {
+        setDestinationComposable(MoviesGraph.Home) {
             val context = LocalContext.current
             val viewModel: MoviesViewModel = viewModel { context.buildMoviesViewModel() }
             val state by viewModel.state.collectAsState()
 
             state.selectedMovieId?.let {
-                navigateTo(MainGraph.Detail(it))
+                navigateTo(MoviesGraph.Detail(it))
                 viewModel.sendEvent(MoviesEvent.OnMovieClicked(null))
             }
             MoviesScreen(
@@ -48,7 +48,7 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        setDestinationComposable(MainGraph.Detail()) {
+        setDestinationComposable(MoviesGraph.Detail()) {
             val movieId = it.arguments?.getInt(Args.DetailId.name)
             val context = LocalContext.current
             val viewModel = viewModel { context.buildMovieDetailViewModel(movieId) }
@@ -65,13 +65,20 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        setDestinationDialog(MainGraph.VideoPlayer()) {
+        setDestinationComposable(MoviesGraph.VideoPlayer()) {
             val movieId = it.arguments?.getInt(Args.DetailId.name)
-            movieId?.toString()?.log("videoId")
-            VideoPlayerScreen(videoId = "Way9Dexny3w")
+            val context = LocalContext.current
+            val viewModel = viewModel { context.buildPlayerViewModel(movieId) }
+            val state by viewModel.state.collectAsState()
+            VideoPlayerScreen(state, navigateUp)
         }
 
     }
+}
+
+fun Context.buildPlayerViewModel(movieId: Int?): VideoPlayerViewModel {
+    val repository = MovieDetailsRepository(app.client.movieDetailService)
+    return VideoPlayerViewModel(repository, movieId)
 }
 
 private fun Context.buildMovieDetailViewModel(

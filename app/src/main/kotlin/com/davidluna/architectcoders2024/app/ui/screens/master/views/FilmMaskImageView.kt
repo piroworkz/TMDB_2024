@@ -20,7 +20,7 @@ import com.davidluna.architectcoders2024.R
 @Composable
 fun FilmMaskImageView(
     model: String? = "",
-    imageSize: Dp = LocalConfiguration.current.screenWidthDp.dp / 2
+    imageSize: Dp
 ) {
 
     Box(

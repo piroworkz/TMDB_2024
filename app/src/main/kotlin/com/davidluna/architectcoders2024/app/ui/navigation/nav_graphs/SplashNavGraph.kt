@@ -15,7 +15,7 @@ import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationComposa
 import com.davidluna.architectcoders2024.app.ui.screens.splash.AnimationState
 import com.davidluna.architectcoders2024.app.ui.screens.splash.SplashScreen
 import com.davidluna.architectcoders2024.app.ui.screens.splash.SplashViewModel
-import com.davidluna.architectcoders2024.data.SessionRepository
+import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 
 fun NavGraphBuilder.splashNavGraph(
     navigateTo: (Destination) -> Unit

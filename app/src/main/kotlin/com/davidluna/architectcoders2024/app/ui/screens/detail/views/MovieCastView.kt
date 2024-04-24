@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,9 @@ fun MovieCastView(
             items(movieCredits.cast.filter { it.profilePath.isNullOrEmpty().not() }) { cast ->
                 Box(
                     modifier = Modifier
+                        .padding(8.dp)
                         .width(width / 2.3F)
+                        .clip(MaterialTheme.shapes.large)
                         .background(appGradient()),
                     contentAlignment = Alignment.Center
                 ) {

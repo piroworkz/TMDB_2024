@@ -11,15 +11,15 @@ import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.app.app
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MainGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.route
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs
 import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationComposable
 import com.davidluna.architectcoders2024.app.ui.screens.login.LoginEvent
 import com.davidluna.architectcoders2024.app.ui.screens.login.LoginScreen
 import com.davidluna.architectcoders2024.app.ui.screens.login.LoginViewModel
-import com.davidluna.architectcoders2024.data.AuthenticationRepository
-import com.davidluna.architectcoders2024.data.SessionRepository
+import com.davidluna.architectcoders2024.app.data.repositories.AuthenticationRepository
+import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 
 fun NavGraphBuilder.authNavGraph(
     navigateTo: (Destination) -> Unit
@@ -38,7 +38,7 @@ fun NavGraphBuilder.authNavGraph(
             val viewModel: LoginViewModel = viewModel { context.createVM(args) }
             val state by viewModel.state.collectAsState()
             if (state.isLoggedIn) {
-                navigateTo(MainGraph.Home)
+                navigateTo(MoviesGraph.Home)
                 viewModel.sendEvent(LoginEvent.IsLoggedIn)
             }
             LoginScreen(state = state, sendEvent = viewModel::sendEvent)

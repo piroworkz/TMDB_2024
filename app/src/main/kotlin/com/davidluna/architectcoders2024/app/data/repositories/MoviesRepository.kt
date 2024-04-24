@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.data
+package com.davidluna.architectcoders2024.app.data.repositories
 
 import arrow.core.Either
 import arrow.core.left

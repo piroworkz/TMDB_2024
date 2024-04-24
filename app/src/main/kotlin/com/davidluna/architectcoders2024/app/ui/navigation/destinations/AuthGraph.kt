@@ -1,6 +1,7 @@
 package com.davidluna.architectcoders2024.app.ui.navigation.destinations
 
 import android.content.Intent
+import androidx.core.net.toUri
 import androidx.navigation.NavDeepLink
 import androidx.navigation.navDeepLink
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs
@@ -17,11 +18,13 @@ sealed class AuthGraph(
 
     data object Login : AuthGraph(
         name = LOGIN,
-        args = listOf(HideAppBar to HideAppBar.defaultValue),
+        args = listOf(
+            HideAppBar to HideAppBar.defaultValue,
+            DefaultArgs.Auth to DefaultArgs.Auth.defaultValue
+        ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern =
-                    "https://com.davidluna.architectcoders2024/{${DefaultArgs.Auth.name}}"
+                uriPattern = "https://tmdb.davidluna.com/{${DefaultArgs.Auth.name}}"
                 action = Intent.ACTION_VIEW
             }
         )
