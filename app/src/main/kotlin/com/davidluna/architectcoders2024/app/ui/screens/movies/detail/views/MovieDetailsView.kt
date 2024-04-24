@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.ReelTitleView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.ReelTitleView
 
 @Composable
 fun MovieDetailsView(

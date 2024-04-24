@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieCredits
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.ReelTitleView
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.buildModel
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.ReelTitleView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.buildModel
 
 @Composable
 fun MovieCastView(

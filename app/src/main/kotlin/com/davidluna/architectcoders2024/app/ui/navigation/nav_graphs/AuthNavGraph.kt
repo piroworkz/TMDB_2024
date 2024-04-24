@@ -9,6 +9,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.app.app
+import com.davidluna.architectcoders2024.app.data.remote.services.authentication.AuthenticationService
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
@@ -52,7 +53,8 @@ private fun Context.createVM(
     args: String,
 ): LoginViewModel {
     val sessionRepository = SessionRepository(app.sessionDatastore)
-    val authenticationRepository = AuthenticationRepository(app.client.authenticationService)
+    val authenticationRepository =
+        AuthenticationRepository(app.client.create(AuthenticationService::class.java))
     return LoginViewModel(
         args = args,
         repository = authenticationRepository,

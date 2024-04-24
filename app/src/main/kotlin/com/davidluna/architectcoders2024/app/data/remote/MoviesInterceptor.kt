@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.app.data.remote
 
+import com.davidluna.architectcoders2024.BuildConfig
 import com.davidluna.architectcoders2024.app.data.local.datastore.SessionDatastore
 import com.davidluna.protodatastore.AuthenticationValues
 import com.davidluna.protodatastore.copy
@@ -14,9 +15,7 @@ class MoviesInterceptor(
     private val session: SessionDatastore,
     private val scope: CoroutineScope
 ) : Interceptor {
-
     private var auth = AuthenticationValues.getDefaultInstance()
-
     init {
         collectAuth()
     }
@@ -46,7 +45,7 @@ class MoviesInterceptor(
 
 
     companion object {
-        private const val API_KEY = "2a00202b4e3679575440424cbfe2c97b"
+        private const val API_KEY = BuildConfig.API_KEY
         private const val API_KEY_NAME = "api_key"
         private const val SESSION_ID_NAME = "session_id"
         private const val AUTHORIZATION = "Authorization"

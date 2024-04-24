@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TMDB</string>
+    <string name="intent_url">https://www.themoviedb.org/authenticate/%1$s?redirect_to=https://tmdb.davidluna.com</string>
+    <string name="title_popular_movies">POPULAR MOVIES</string>
+    <string name="title_now_playing_movies">NOW PLAYING MOVIES</string>
+    <string name="title_top_rated_movies">TOP RATED MOVIES</string>
+    <string name="title_upcoming_movies">UPCOMING MOVIES</string>
+    <string name="title_recommended_movies">RECOMMENDATIONS</string>
+    <string name="title_similar_movies">SIMILAR</string>
 </resources>

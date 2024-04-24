@@ -45,7 +45,7 @@ fun LoginScreen(
         )
 
         if (state.intent) {
-            IntentView(state.token) { sendEvent(LoginEvent.AskForPermission) }
+            IntentView(state.token)
         } else {
             Column(
                 modifier = Modifier

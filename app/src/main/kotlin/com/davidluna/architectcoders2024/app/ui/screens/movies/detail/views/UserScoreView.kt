@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

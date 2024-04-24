@@ -1,26 +1,31 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteImages
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieCredits
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.buildModel
-import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepository
+import com.davidluna.architectcoders2024.app.data.repositories.MoviesRepository
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.buildModel
+import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.toAppError
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
     movieId: Int?,
-    private val repository: MovieDetailsRepository
+    private val detailsRepository: MovieDetailsRepository,
+    private val moviesRepository: MoviesRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -37,8 +42,8 @@ class MovieDetailViewModel(
         val movieDetail: RemoteMovieDetail? = null,
         val movieCredits: RemoteMovieCredits? = null,
         val images: List<String> = emptyList(),
-        val recommendations: List<RemoteMovie> = emptyList(),
-        val similar: List<RemoteMovie> = emptyList(),
+        val recommendations: Flow<PagingData<RemoteMovie>> = emptyFlow(),
+        val similar: Flow<PagingData<RemoteMovie>> = emptyFlow(),
     )
 
     fun sendEvent(event: MovieDetailEvent) {
@@ -63,42 +68,36 @@ class MovieDetailViewModel(
     }
 
     private fun getMovieDetail(movieId: Int) = run {
-        repository.getMovieDetail(movieId).fold(
+        detailsRepository.getMovieDetail(movieId).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r -> _state.update { it.copy(movieDetail = r) } }
         )
     }
 
     private fun getMovieCredits(movieId: Int) = run {
-        repository.getMovieCredits(movieId).fold(
+        detailsRepository.getMovieCredits(movieId).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r -> _state.update { it.copy(movieCredits = r) } }
         )
     }
 
     private fun getMovieImages(movieId: Int) = run {
-        repository.getMovieImages(movieId).fold(
+        detailsRepository.getMovieImages(movieId).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r -> r.toImageList() }
         )
     }
 
     private fun getMovieRecommendations(movieId: Int) = run {
-        repository.getMovieRecommendations(movieId = movieId).fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
-            ifRight = { r -> _state.update { s -> s.copy(recommendations = r.results.filter { it.posterPath != null }) } }
-        )
+        _state.update { it.copy(recommendations = moviesRepository.getMovies("$movieId$RECOMMENDATIONS")) }
     }
 
     private fun getSimilarMovies(movieId: Int) = run {
-        repository.getSimilarMovies(movieId = movieId).fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
-            ifRight = { r -> _state.update { s -> s.copy(similar = r.results.filter { it.posterPath != null }) } }
-        )
+        _state.update { it.copy(similar = moviesRepository.getMovies("$movieId$SIMILAR")) }
     }
 
     private fun RemoteImages.toImageList() {
-        val images: List<String> = posters.map { it.filePath.buildModel("w500") }
+        val images: List<String> = posters.map { it.filePath.buildModel(POSTER_WIDTH) }
         _state.update { s -> s.copy(images = images) }
     }
 
@@ -113,6 +112,12 @@ class MovieDetailViewModel(
                 _state.update { it.copy(isLoading = false) }
             }
         }
+    }
+
+    companion object {
+        private const val RECOMMENDATIONS = "/recommendations"
+        private const val SIMILAR = "/similar"
+        private const val POSTER_WIDTH = "w500"
     }
 
 }

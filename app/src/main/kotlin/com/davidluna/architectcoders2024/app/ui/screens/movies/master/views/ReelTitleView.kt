@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.master.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.master.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,8 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 
 @Composable
 fun ReelTitleView(title: String? = "Popular Movies") {
