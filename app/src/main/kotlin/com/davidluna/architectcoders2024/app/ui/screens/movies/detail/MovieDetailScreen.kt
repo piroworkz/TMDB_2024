@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,14 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
-import com.davidluna.architectcoders2024.app.ui.screens.detail.views.MovieCastView
-import com.davidluna.architectcoders2024.app.ui.screens.detail.views.MovieDetailsView
-import com.davidluna.architectcoders2024.app.ui.screens.detail.views.PostersPagerView
-import com.davidluna.architectcoders2024.app.ui.screens.detail.views.joinImages
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.MovieReelView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieCastView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieDetailsView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.PostersPagerView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.joinImages
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.MoviesEvent
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.MovieReelView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.MoviesLazyRow
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @Composable
@@ -47,34 +50,26 @@ fun MovieDetailScreen(
 
             MovieCastView(state.movieCredits)
 
-            if (state.recommendations.isNotEmpty()) {
-                MovieReelView(
-                    title = "RECOMMENDED",
-                    movies = state.recommendations
-                ) {
-                    sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
-                }
+
+            MoviesLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
+                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
             }
 
-            if (state.similar.isNotEmpty()) {
-                MovieReelView(
-                    title = "SIMILAR",
-                    movies = state.similar
-                ) {
-                    sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
-                }
+            MoviesLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
+                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
             }
-            Spacer(modifier = Modifier.padding(all = 16.dp))
-        }
 
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        }
-
-        ErrorDialogView(error = state.appError) {
-            sendEvent(MovieDetailEvent.ResetError)
-        }
+        Spacer(modifier = Modifier.padding(all = 16.dp))
     }
+
+    if (state.isLoading) {
+        CircularProgressIndicator()
+    }
+
+    ErrorDialogView(error = state.appError) {
+        sendEvent(MovieDetailEvent.ResetError)
+    }
+}
 
 }
 

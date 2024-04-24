@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -14,7 +14,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteGenre
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
-import com.davidluna.architectcoders2024.app.ui.screens.master.views.ReelTitleView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

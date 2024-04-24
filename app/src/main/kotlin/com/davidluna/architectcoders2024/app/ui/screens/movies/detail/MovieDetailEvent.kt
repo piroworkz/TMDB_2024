@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.detail
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail
 
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 
