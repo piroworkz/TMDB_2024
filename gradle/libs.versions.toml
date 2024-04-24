@@ -13,6 +13,8 @@ compose-navigation = "2.7.7"
 compose-constraint-layout = "1.0.1"
 #other
 media3 = "1.3.1"
+pagingCompose = "3.3.0-beta01"
+pagingRuntime = "3.2.1"
 protobufJavalite = "3.21.11"
 protobufKotlinLite = "3.21.11"
 retrofit = "2.11.0"
@@ -43,6 +45,8 @@ icons-extended = { group = "androidx.compose.material", name = "material-icons-e
 #kotlin coroutines
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 #retrofit
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 kotlin-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter" }
 #media3

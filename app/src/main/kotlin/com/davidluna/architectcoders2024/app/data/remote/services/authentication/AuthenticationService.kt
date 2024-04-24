@@ -20,3 +20,7 @@ interface AuthenticationService {
     @GET("account")
     suspend fun getAccount(): Either<RemoteError, RemoteUserAccountDetail>
 }
+
+
+
+//https://www.themoviedb.org/authenticate/{REQUEST_TOKEN}?redirect_to=http://www.yourapp.com/approved

@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.data
+package com.davidluna.architectcoders2024.app.data.repositories
 
 import com.davidluna.architectcoders2024.app.data.local.datastore.SessionDatastore
 import com.davidluna.protodatastore.AuthenticationValues

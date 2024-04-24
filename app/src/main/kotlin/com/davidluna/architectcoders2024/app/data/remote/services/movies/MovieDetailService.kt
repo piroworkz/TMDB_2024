@@ -2,6 +2,7 @@ package com.davidluna.architectcoders2024.app.data.remote.services.movies
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.app.data.remote.model.RemoteError
+import com.davidluna.architectcoders2024.app.data.remote.model.RemoteVideos
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteImages
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieCredits
@@ -33,4 +34,7 @@ interface MovieDetailService {
         @Path("movie_id") movieId: Int,
         @Query("page") page: Int
     ): Either<RemoteError, RemoteResults<RemoteMovie>>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(@Path("movie_id") movieId: Int): Either<RemoteError, RemoteVideos>
 }

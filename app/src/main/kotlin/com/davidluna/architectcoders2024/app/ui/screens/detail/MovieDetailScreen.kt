@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MainGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.app.ui.screens.detail.views.MovieCastView
 import com.davidluna.architectcoders2024.app.ui.screens.detail.views.MovieDetailsView
 import com.davidluna.architectcoders2024.app.ui.screens.detail.views.PostersPagerView
@@ -41,9 +41,10 @@ fun MovieDetailScreen(
         ) {
             PostersPagerView(images = joinImages(state))
             MovieDetailsView(state.movieDetail) {
-                sendEvent(MovieDetailEvent.OnNavigate(MainGraph.VideoPlayer(movieId = state.movieDetail?.id)))
+                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.VideoPlayer(movieId = state.movieDetail?.id)))
             }
             Spacer(modifier = Modifier.padding(all = 16.dp))
+
             MovieCastView(state.movieCredits)
 
             if (state.recommendations.isNotEmpty()) {
@@ -51,7 +52,7 @@ fun MovieDetailScreen(
                     title = "RECOMMENDED",
                     movies = state.recommendations
                 ) {
-                    sendEvent(MovieDetailEvent.OnNavigate(MainGraph.Detail(it)))
+                    sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
                 }
             }
 
@@ -60,7 +61,7 @@ fun MovieDetailScreen(
                     title = "SIMILAR",
                     movies = state.similar
                 ) {
-                    sendEvent(MovieDetailEvent.OnNavigate(MainGraph.Detail(it)))
+                    sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
                 }
             }
             Spacer(modifier = Modifier.padding(all = 16.dp))

@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.app.ui.screens.master
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
-import com.davidluna.architectcoders2024.data.MoviesRepository
+import com.davidluna.architectcoders2024.app.data.repositories.MoviesRepository
 import com.davidluna.architectcoders2024.domain.AppError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow

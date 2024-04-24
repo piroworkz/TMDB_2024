@@ -1,32 +1,84 @@
 package com.davidluna.architectcoders2024.app.ui.screens.player
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import com.davidluna.architectcoders2024.app.ui.common.AppBarView
+import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @Composable
-fun VideoPlayerScreen(videoId: String) = with(rememberVideoPlayerState()) {
+fun VideoPlayerScreen(
+    state: VideoPlayerViewModel.State,
+    navigateUp: () -> Unit
+) = with(rememberVideoPlayerState()) {
+
+    AddLifecycleObserver()
+
     SetScreenOrientation()
+
+    DisposableEffect(webView) {
+        onDispose {
+            webView.destroy()
+        }
+    }
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        AndroidView(
-            factory = {
-                webView
-            },
+        if (state.videos.isNotEmpty()) {
+            AndroidView(
+                factory = {
+                    webView.apply { loadData(loadHtml(state.videos), "text/html", "UTF-8") }
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
+
+        AnimatedVisibility(
             modifier = Modifier
-                .fillMaxSize(),
-            update = { webView ->
-                webView.loadData(loadHtml(videoId), "text/html", "UTF-8")
-            }
-        )
+                .fillMaxWidth()
+                .align(Alignment.TopCenter),
+            visible = showAppBar.value,
+            enter = slideInVertically(tween(100)),
+            exit = slideOutVertically(tween(100))
+        ) {
+
+            AppBarView(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                topLevel = false,
+                hideAppBar = false,
+                onNavigationIconClick = {
+                    showAppBar.value = false
+                    if (!showAppBar.value) {
+                        navigateUp()
+                    }
+                }
+            )
+        }
+
+
+
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        }
+
+//    ErrorDialogView(error = state.appError) {
+//
+//    }
     }
 }
 
@@ -37,6 +89,8 @@ fun VideoPlayerScreen(videoId: String) = with(rememberVideoPlayerState()) {
 @Composable
 private fun VideoPlayerScreenPreview() {
     TmdbTheme {
-        VideoPlayerScreen(videoId = "Way9Dexny3w")
+        VideoPlayerScreen(
+            state = VideoPlayerViewModel.State(),
+        ) {}
     }
 }

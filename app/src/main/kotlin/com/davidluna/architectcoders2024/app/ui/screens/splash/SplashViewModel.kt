@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MainGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.app.ui.screens.splash.AnimationState.START
-import com.davidluna.architectcoders2024.data.SessionRepository
+import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.toAppError
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +46,7 @@ class SplashViewModel(
                 }
                 .collect { a ->
                     if (a.sessionId.isNotEmpty()) {
-                        _state.update { it.copy(destination = MainGraph.Home) }
+                        _state.update { it.copy(destination = MoviesGraph.Home) }
                     } else {
                         _state.update { it.copy(destination = AuthGraph.Login) }
                     }

@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MovieTitleView(movieTitle: String? = "Movie Title") {
-    val imageSize = LocalConfiguration.current.screenWidthDp.dp / 2
+fun MovieTitleView(movieTitle: String? = "Movie Title", imageSize: Dp) {
     Text(
         text = movieTitle ?: "",
         modifier = Modifier

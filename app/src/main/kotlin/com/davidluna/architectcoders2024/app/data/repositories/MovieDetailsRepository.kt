@@ -1,10 +1,10 @@
-package com.davidluna.architectcoders2024.data
+package com.davidluna.architectcoders2024.app.data.repositories
 
-import android.util.Log
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.davidluna.architectcoders2024.app.data.remote.model.RemoteError
+import com.davidluna.architectcoders2024.app.data.remote.model.RemoteVideo
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteImages
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieCredits
@@ -36,5 +36,22 @@ class MovieDetailsRepository(
         page: Int = 1
     ): Either<RemoteError, RemoteResults<RemoteMovie>> =
         service.getSimilarMovies(movieId, page)
+
+
+    suspend fun getMovieVideos(movieId: Int): Either<RemoteError, List<RemoteVideo>> =
+        service.getMovieVideos(movieId).fold(
+            ifLeft = { it.left() },
+            ifRight = {
+                it.results.map { video ->
+                    video.copy(
+                        order = when (video.type) {
+                            "Trailer" -> 1
+                            "Teaser" -> 2
+                            else -> 3
+                        }
+                    )
+                }.right()
+            }
+        )
 
 }

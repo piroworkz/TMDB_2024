@@ -10,8 +10,8 @@ import com.davidluna.architectcoders2024.app.data.remote.model.authentication.Re
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
 import com.davidluna.architectcoders2024.app.utils.toAppError
-import com.davidluna.architectcoders2024.data.AuthenticationRepository
-import com.davidluna.architectcoders2024.data.SessionRepository
+import com.davidluna.architectcoders2024.app.data.repositories.AuthenticationRepository
+import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.protodatastore.AuthenticationValues
 import com.davidluna.protodatastore.Avatar

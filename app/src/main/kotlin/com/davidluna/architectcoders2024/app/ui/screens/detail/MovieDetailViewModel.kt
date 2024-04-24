@@ -9,7 +9,7 @@ import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovi
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.screens.master.views.buildModel
 import com.davidluna.architectcoders2024.app.utils.toAppError
-import com.davidluna.architectcoders2024.data.MovieDetailsRepository
+import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepository
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.toAppError
 import kotlinx.coroutines.CoroutineScope

@@ -56,7 +56,10 @@ fun Navigator() = with(rememberNavigatorState()) {
                 }
             }
 
-            moviesNavGraph(navigateTo = ::navigateTo)
+            moviesNavGraph(
+                navigateTo = { navigateTo(it) },
+                navigateUp = { popBackStack() }
+            )
 
         }
     }

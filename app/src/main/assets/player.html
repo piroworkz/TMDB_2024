@@ -14,25 +14,42 @@
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            videoId: '{{videoId}}',
             playerVars: {
+                'playlist': [{{playlist}}],
                 'autoplay': 1,
-                'fs': 1,
-                'playsinline': 0
+                'controls': 0,
+                'playsinline': 1,
+                'loop': 1,
+                'modestbranding': 1,
+                'rel': 0,
+                'showinfo': 0,
+                'iv_load_policy': 3,
+                'cc_load_policy': 0,
+                'disablekb': 1,
+                'fs': 0
             },
             events: {
                 'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange,
             }
         });
     }
 
     function onPlayerReady(event) {
+        console.log(event.data);
         event.target.playVideo();
     }
 
     function stopVideo() {
         player.stopVideo();
     }
+
+    function onPlayerStateChange(event) {
+        if (typeof Android !== 'undefined' && Android !== null) {
+            Android.onPlayerStateChanged(event.data);
+        }
+    }
+
 </script>
 </body>
 </html>
