@@ -29,12 +29,13 @@ fun NavGraphBuilder.splashNavGraph(
             val context = LocalContext.current
             val viewModel: SplashViewModel = viewModel { context.createSplashVM() }
             val state by viewModel.state.collectAsState()
-            if (state.animationState == AnimationState.FINISH) {
+
+            if (state.isGranted) {
                 state.destination?.let { destination ->
                     navigateTo(destination)
                 }
             }
-            SplashScreen(animationState = viewModel::setAnimationState)
+            SplashScreen { viewModel.setPermissionState() }
         }
     }
 }
