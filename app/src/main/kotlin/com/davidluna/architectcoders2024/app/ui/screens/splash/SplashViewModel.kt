@@ -2,11 +2,10 @@ package com.davidluna.architectcoders2024.app.ui.screens.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
-import com.davidluna.architectcoders2024.app.ui.screens.splash.AnimationState.START
-import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.toAppError
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,11 +29,11 @@ class SplashViewModel(
         val loading: Boolean = false,
         val appError: AppError? = null,
         val destination: Destination? = null,
-        val animationState: AnimationState = START
+        val isGranted: Boolean = false
     )
 
-    fun setAnimationState(state: AnimationState) {
-        _state.update { it.copy(animationState = state) }
+    fun setPermissionState() {
+        _state.update { it.copy(isGranted = true) }
     }
 
     private fun collectAuth() {
