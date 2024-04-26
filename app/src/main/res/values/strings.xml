@@ -7,4 +7,8 @@
     <string name="title_upcoming_movies">UPCOMING MOVIES</string>
     <string name="title_recommended_movies">RECOMMENDATIONS</string>
     <string name="title_similar_movies">SIMILAR</string>
+    <string name="biometric_auth_title">Login</string>
+    <string name="biometric_auth_subtitle">Please login using fingerprint reader</string>
+    <string name="biometric_use_password_instead">Use Password Instead</string>
+    <string name="biometric_auth_failed">Try again!</string>
 </resources>

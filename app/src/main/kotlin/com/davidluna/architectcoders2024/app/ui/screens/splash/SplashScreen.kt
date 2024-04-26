@@ -15,44 +15,57 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
-import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
-import com.davidluna.architectcoders2024.app.ui.screens.splash.PermissionState.DENIED
-import com.davidluna.architectcoders2024.app.ui.screens.splash.PermissionState.GRANTED
-import com.davidluna.architectcoders2024.app.ui.screens.splash.PermissionState.SHOULD_SHOW_RATIONALE
+import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
+import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SHOW_PROMPT
+import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SUCCESS
+import com.davidluna.architectcoders2024.app.ui.screens.biometrics.rememberBiometricAuth
+import com.davidluna.architectcoders2024.app.ui.screens.splash.animation.rememberAnimationState
+import com.davidluna.architectcoders2024.app.ui.screens.splash.permissions.PermissionState.SHOULD_SHOW_RATIONALE
+import com.davidluna.architectcoders2024.app.ui.screens.splash.permissions.rememberPermissionState
+import com.davidluna.architectcoders2024.app.ui.screens.splash.views.AnimationLaunchedEffect
+import com.davidluna.architectcoders2024.app.ui.screens.splash.views.PermissionLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.app.utils.log
 import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
 fun SplashScreen(
-    onGranted: () -> Unit
+    state: SplashViewModel.State,
+    sendEvent: (SplashEvent) -> Unit
 ) {
-
     val permissionState = rememberPermissionState()
     val animationState = rememberAnimationState()
+    val biometricAuthState = rememberBiometricAuth()
 
-    LaunchedEffect(key1 = permissionState.currentState) {
-        "Permission state: ${permissionState.currentState}".log()
-        when (permissionState.currentState) {
-            GRANTED -> {
-                "Permissions were granted".log()
-                onGranted()
+    LaunchedEffect(
+        key1 = biometricAuthState.currentState,
+        key2 = state.isGranted,
+        key3 = state.sessionExists
+    ) {
+        "Splash Launched Effect biometricAuthState: ${biometricAuthState.currentState} isGranted: ${state.isGranted} sessionExists: ${state.sessionExists}".log()
+        when (biometricAuthState.currentState) {
+            SUCCESS -> {
+                sendEvent(SplashEvent.OnLoggedIn)
             }
 
-            DENIED -> {
-                "Permissions were denied for good".log()
-                permissionState.requestPermission()
+            SHOW_PROMPT -> {
+                if (state.isGranted && state.sessionExists) {
+                    biometricAuthState.launchPrompt()
+                }
+                if (state.isGranted && !state.sessionExists) {
+                    "not logged in".log()
+                    sendEvent(SplashEvent.OnBioFailed)
+                }
             }
 
-            SHOULD_SHOW_RATIONALE -> {
-                "Permissions were denied. Should show rationale".log()
+            else -> {
+                sendEvent(SplashEvent.OnBioFailed)
             }
         }
     }
 
-    LaunchedEffect(key1 = animationState.currentState) {
-        animationState.observeState()
-    }
+    AnimationLaunchedEffect(animationState)
+    PermissionLaunchedEffect(permissionState) { sendEvent(SplashEvent.OnGranted) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Image(
@@ -80,11 +93,6 @@ fun SplashScreen(
 
 }
 
-
-enum class AnimationState {
-    FINISH, START
-}
-
 @Preview(
     showBackground = true,
     showSystemUi = true
@@ -92,7 +100,9 @@ enum class AnimationState {
 @Composable
 private fun SplashScreenPreview() {
     TmdbTheme {
-        SplashScreen {
+        SplashScreen(
+            state = SplashViewModel.State(),
+        ) {
 
         }
     }
