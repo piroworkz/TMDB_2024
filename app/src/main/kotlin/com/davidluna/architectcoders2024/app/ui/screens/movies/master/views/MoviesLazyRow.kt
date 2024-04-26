@@ -14,7 +14,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
-import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
+import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.domain.AppError
 import kotlinx.coroutines.flow.Flow
 

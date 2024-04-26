@@ -11,6 +11,8 @@ import com.davidluna.architectcoders2024.domain.toAppError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,27 +31,49 @@ class SplashViewModel(
         val loading: Boolean = false,
         val appError: AppError? = null,
         val destination: Destination? = null,
-        val isGranted: Boolean = false
+        val sessionExists: Boolean = false,
+        val isGranted: Boolean = false,
     )
 
-    fun setPermissionState() {
+    fun sendEvent(event: SplashEvent) {
+        when (event) {
+            SplashEvent.OnGranted -> setPermissionState()
+            SplashEvent.ResetError -> resetError()
+            SplashEvent.OnLoggedIn -> setLoggedIn()
+            SplashEvent.OnBioFailed -> onFailed()
+        }
+    }
+
+    private fun onFailed() {
+        _state.update { it.copy(destination = AuthGraph.Login) }
+    }
+
+    private fun setLoggedIn() {
+        _state.update { it.copy(destination = MoviesGraph.Home) }
+    }
+
+    private fun resetError() {
+        _state.update { it.copy(appError = null) }
+    }
+
+    private fun setPermissionState() {
         _state.update { it.copy(isGranted = true) }
     }
 
     private fun collectAuth() {
         viewModelScope.launch {
             local.auth
-                .catch { e ->
-                    e.printStackTrace()
-                    _state.update { it.copy(appError = e.toAppError()) }
-                }
-                .collect { a ->
-                    if (a.sessionId.isNotEmpty()) {
-                        _state.update { it.copy(destination = MoviesGraph.Home) }
-                    } else {
-                        _state.update { it.copy(destination = AuthGraph.Login) }
-                    }
-                }
+                .onStart { _state.update { it.copy(loading = true) } }
+                .onCompletion { _state.update { it.copy(loading = false) } }
+                .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
+                .collect { a -> _state.update { it.copy(sessionExists = a.sessionId.isNotEmpty()) } }
         }
     }
+}
+
+sealed interface SplashEvent {
+    data object OnGranted : SplashEvent
+    data object ResetError : SplashEvent
+    data object OnLoggedIn : SplashEvent
+    data object OnBioFailed : SplashEvent
 }

@@ -95,7 +95,8 @@ dependencies {
 
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
-
+    implementation(libs.biometric)
+    implementation (libs.play.services.location)
     debugImplementation(libs.compose.ui.tooling)
 
 }

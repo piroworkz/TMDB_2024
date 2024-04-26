@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.common
+package com.davidluna.architectcoders2024.app.ui.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

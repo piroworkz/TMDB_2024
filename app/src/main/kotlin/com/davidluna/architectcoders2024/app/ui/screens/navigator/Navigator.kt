@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
-import com.davidluna.architectcoders2024.app.ui.common.AppBarView
+import com.davidluna.architectcoders2024.app.ui.composables.AppBarView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.authNavGraph

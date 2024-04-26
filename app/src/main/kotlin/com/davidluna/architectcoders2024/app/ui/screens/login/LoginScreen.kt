@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
-import com.davidluna.architectcoders2024.app.ui.common.ErrorDialogView
+import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.IntentView
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
