@@ -8,10 +8,10 @@ ArchitectCoders2024 is a modern Android application developed with Kotlin and Je
 - **Data Serialization with Protobuf**: Efficient data serialization and deserialization using Google's Protocol Buffers.
 - **Secure Network Communication**: Network calls with Retrofit and OkHttp, ensuring secure and efficient data transfer.
 - **Advanced State Management and Asynchrony Handling**: Uses Kotlin Coroutines for managing asynchronous tasks and data flow.
-- **Secure and Scalable Architecture**: Includes features like biometric authentication and location services, all integrated into a clean architecture.
+  
 
 ## Getting Started
-
+- ** Add your own TMDB api_key variable to your local.properties
 ### Prerequisites
 
 - Android Studio Chipmunk | 2021.2.1 Patch 2 or higher
