@@ -7,7 +7,7 @@ sealed class Args(
     override val type: NavType<*>
 ) : SafeArgs {
 
-    data object DetailId : Args(
+    data object MovieId : Args(
         name = ID,
         type = NavType.IntType
     )

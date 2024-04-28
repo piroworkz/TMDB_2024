@@ -7,8 +7,5 @@ import kotlinx.serialization.Serializable
 data class RemoteMovieCredits(
     @SerialName("cast")
     val cast: List<RemoteCast>,
-    @SerialName("crew")
-    val crew: List<RemoteCrew>,
-    @SerialName("id")
     val id: Int
 )

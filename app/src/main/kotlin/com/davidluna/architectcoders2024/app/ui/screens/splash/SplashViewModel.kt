@@ -2,12 +2,13 @@ package com.davidluna.architectcoders2024.app.ui.screens.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
+import com.davidluna.architectcoders2024.app.data.toAppError
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.domain.AppError
-import com.davidluna.architectcoders2024.domain.toAppError
+import com.davidluna.architectcoders2024.usecases.auth.SessionIdUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -15,12 +16,14 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashViewModel(
-    private val local: SessionRepository
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    private val sessionId: SessionIdUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(State())
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State())
     val state = _state.asStateFlow()
 
     init {
@@ -62,18 +65,11 @@ class SplashViewModel(
 
     private fun collectAuth() {
         viewModelScope.launch {
-            local.auth
+            sessionId()
                 .onStart { _state.update { it.copy(loading = true) } }
                 .onCompletion { _state.update { it.copy(loading = false) } }
                 .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
                 .collect { a -> _state.update { it.copy(sessionExists = a.sessionId.isNotEmpty()) } }
         }
     }
-}
-
-sealed interface SplashEvent {
-    data object OnGranted : SplashEvent
-    data object ResetError : SplashEvent
-    data object OnLoggedIn : SplashEvent
-    data object OnBioFailed : SplashEvent
 }

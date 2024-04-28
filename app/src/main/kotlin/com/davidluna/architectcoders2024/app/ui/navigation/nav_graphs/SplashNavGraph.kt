@@ -1,14 +1,10 @@
 package com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs
 
-import android.content.Context
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import com.davidluna.architectcoders2024.app.app
-import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.route
@@ -25,8 +21,7 @@ fun NavGraphBuilder.splashNavGraph(
     ) {
 
         setDestinationComposable(InitGraph.Splash) {
-            val context = LocalContext.current
-            val viewModel: SplashViewModel = viewModel { context.createSplashVM() }
+            val viewModel: SplashViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let { destination ->
                 navigateTo(destination)
@@ -34,9 +29,4 @@ fun NavGraphBuilder.splashNavGraph(
             SplashScreen(state) { viewModel.sendEvent(it) }
         }
     }
-}
-
-private fun Context.createSplashVM(): SplashViewModel {
-    val sessionRepository = SessionRepository(app.sessionDatastore)
-    return SplashViewModel(local = sessionRepository)
 }

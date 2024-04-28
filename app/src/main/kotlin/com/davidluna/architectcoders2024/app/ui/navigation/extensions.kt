@@ -14,7 +14,6 @@ import com.davidluna.architectcoders2024.app.ui.navigation.destinations.DeepLink
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultSafeArgs
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.SafeArgs
-import com.davidluna.architectcoders2024.app.utils.log
 
 fun NavGraphBuilder.setDestinationComposable(
     destination: Destination,

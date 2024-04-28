@@ -8,15 +8,12 @@ import android.view.WindowInsetsController
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import com.davidluna.architectcoders2024.app.utils.log
 
 class VideoPlayerLifecycleObserver(
     private val activity: Activity?
 ) : LifecycleEventObserver {
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-
-        event.name.log("CURRENT LIFE CYCLE EVENT")
         if (event == Lifecycle.Event.ON_RESUME) {
             activity?.hideSystemBars()
         }

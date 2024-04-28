@@ -13,19 +13,19 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.domain.AppError
+import com.davidluna.architectcoders2024.domain.responses.movies.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MoviesLazyRow(
     title: Int,
-    flow: Flow<PagingData<RemoteMovie>>,
+    flow: Flow<PagingData<Movie>>,
     onMovieClicked: (Int) -> Unit
 ) {
 
-    val movies: LazyPagingItems<RemoteMovie> = flow.collectAsLazyPagingItems()
+    val movies: LazyPagingItems<Movie> = flow.collectAsLazyPagingItems()
 
     when (movies.loadState.refresh) {
         is LoadState.Error -> {

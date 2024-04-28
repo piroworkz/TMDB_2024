@@ -1,4 +1,11 @@
 [versions]
+#config
+appId = "com.davidluna.architectcoders2024"
+minSdk = "26"
+targetSdk = "34"
+versionCode = "1"
+versionName = "1.0"
+#android
 agp = "8.3.2"
 biometric = "1.2.0-alpha05"
 datastoreCore = "1.1.0"
@@ -26,6 +33,13 @@ pagingRuntime = "3.2.1"
 protobufJavalite = "3.21.11"
 protobufKotlinLite = "3.21.11"
 protobuf = "0.9.4"
+jetbrainsKotlinJvm = "1.9.23"
+#hilt
+hilt = "2.50"
+hiltNavigationCompose = "1.2.0"
+javaxInject = "1"
+#annotation processor
+kapt = "1.9.23"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,9 +76,18 @@ paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pag
 #android components
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+#hilt
+hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobufPlugin = { id = "com.google.protobuf", version.ref = "protobuf" }
+hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
 

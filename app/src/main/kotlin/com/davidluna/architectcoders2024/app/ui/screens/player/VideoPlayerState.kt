@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
-import com.davidluna.architectcoders2024.app.utils.log
 
 class VideoPlayerState(
     private val context: Context,
@@ -45,12 +44,6 @@ class VideoPlayerState(
         }
     }
 
-    fun loadHtml(playlist: List<String> = emptyList()): String {
-        val formattedList = playlist.map { "\'$it\'" }.take(3)
-        return context.assets.open(FILE_NAME).bufferedReader().use { it.readText() }
-            .replace("{{playlist}}", formattedList.joinToString(", "))
-    }
-
     @Composable
     fun AddLifecycleObserver() {
         DisposableEffect(Unit) {
@@ -61,11 +54,16 @@ class VideoPlayerState(
         }
     }
 
+    fun loadHtml(playlist: List<String> = emptyList()): String {
+        val formattedList = playlist.map { "\'$it\'" }.take(3)
+        return context.assets.open(FILE_NAME).bufferedReader().use { it.readText() }
+            .replace("{{playlist}}", formattedList.joinToString(", "))
+    }
+
     private fun WebView.setupJavascriptInterface() {
         addJavascriptInterface(object {
             @JavascriptInterface
             fun onPlayerStateChanged(event: Int) {
-                "onPlayerStateChanged: $event".log()
                 when (event) {
                     0 -> showAppBar.value = true
                     1 -> showAppBar.value = false

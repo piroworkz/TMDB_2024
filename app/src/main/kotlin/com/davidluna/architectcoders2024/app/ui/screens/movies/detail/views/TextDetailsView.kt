@@ -12,14 +12,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteGenre
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
+import com.davidluna.architectcoders2024.domain.responses.movies.Genre
+import com.davidluna.architectcoders2024.domain.responses.movies.MovieDetail
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun TextDetailsView(movieDetail: RemoteMovieDetail?) {
+fun TextDetailsView(movieDetail: MovieDetail?) {
 
     if (movieDetail == null) {
         CircularProgressIndicator()
@@ -32,7 +32,7 @@ fun TextDetailsView(movieDetail: RemoteMovieDetail?) {
     }
 
     Text(
-        text = movieDetail?.tagline ?: "asasasa",
+        text = movieDetail?.tagline ?: "",
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
@@ -57,12 +57,12 @@ fun TextDetailsView(movieDetail: RemoteMovieDetail?) {
 }
 
 @Composable
-private fun annotatedString(movieDetail: RemoteMovieDetail?) =
+private fun annotatedString(movieDetail: MovieDetail?) =
     AnnotatedString.Builder().apply {
         LabelStyle()
         movieDetail?.releaseDate?.let { append(formatDate(it)) }
         Bullet()
-        movieDetail?.genres?.let { list: List<RemoteGenre> ->
+        movieDetail?.genres?.let { list: List<Genre> ->
             append(list.joinToString(separator = ", ") { it.name })
         }
     }.toAnnotatedString()
