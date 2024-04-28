@@ -1,26 +1,30 @@
 package com.davidluna.architectcoders2024.app.ui.screens.player
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepository
-import com.davidluna.architectcoders2024.app.utils.toAppError
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Args
 import com.davidluna.architectcoders2024.domain.AppError
+import com.davidluna.architectcoders2024.usecases.movies.GetMovieVideosUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class VideoPlayerViewModel(
-    private val repository: MovieDetailsRepository,
-    private val movieId: Int?
+@HiltViewModel
+class VideoPlayerViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val getMovieVideosUseCase: GetMovieVideosUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
     val state = _state.asStateFlow()
 
     init {
-        getMovieVideos()
+        savedStateHandle.get<Int>(Args.MovieId.name)?.let(::getMovieVideos)
     }
 
     data class State(
@@ -29,16 +33,12 @@ class VideoPlayerViewModel(
         val videos: List<String> = emptyList()
     )
 
-    fun resetError() = _state.update { it.copy(appError = null) }
-
-    private fun getMovieVideos() = run {
-        movieId ?: return@run
-        repository.getMovieVideos(movieId).fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
+    private fun getMovieVideos(movieId: Int) = run {
+        getMovieVideosUseCase(movieId).fold(
+            ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
                 _state.update { s ->
-                    s.copy(
-                        videos = r.sortedBy { it.order }.map { it.key })
+                    s.copy(videos = r.sortedBy { it.order }.map { it.key })
                 }
             }
         )

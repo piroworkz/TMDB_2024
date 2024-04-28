@@ -2,7 +2,7 @@ package com.davidluna.architectcoders2024.app.data.remote.services.movies
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.app.data.remote.model.RemoteError
-import com.davidluna.architectcoders2024.app.data.remote.model.RemoteVideos
+import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteVideos
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteImages
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieCredits
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail

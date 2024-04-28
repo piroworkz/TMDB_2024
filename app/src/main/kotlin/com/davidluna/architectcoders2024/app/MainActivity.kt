@@ -9,7 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import com.davidluna.architectcoders2024.app.ui.screens.navigator.Navigator
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

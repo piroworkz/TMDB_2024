@@ -25,8 +25,6 @@ import com.davidluna.architectcoders2024.app.ui.screens.splash.permissions.remem
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.AnimationLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.PermissionLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
-import com.davidluna.architectcoders2024.app.utils.log
-import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
 fun SplashScreen(
@@ -42,7 +40,6 @@ fun SplashScreen(
         key2 = state.isGranted,
         key3 = state.sessionExists
     ) {
-        "Splash Launched Effect biometricAuthState: ${biometricAuthState.currentState} isGranted: ${state.isGranted} sessionExists: ${state.sessionExists}".log()
         when (biometricAuthState.currentState) {
             SUCCESS -> {
                 sendEvent(SplashEvent.OnLoggedIn)
@@ -53,7 +50,6 @@ fun SplashScreen(
                     biometricAuthState.launchPrompt()
                 }
                 if (state.isGranted && !state.sessionExists) {
-                    "not logged in".log()
                     sendEvent(SplashEvent.OnBioFailed)
                 }
             }
@@ -80,7 +76,7 @@ fun SplashScreen(
 
         if (permissionState.currentState == SHOULD_SHOW_RATIONALE && !permissionState.requestedAtLeastOnce) {
             ErrorDialogView(
-                error = AppError.Unknown(
+                error = com.davidluna.architectcoders2024.domain.AppError.Unknown(
                     0,
                     "The location permission was denied, this permission is required, you should consider granting it.",
                     false

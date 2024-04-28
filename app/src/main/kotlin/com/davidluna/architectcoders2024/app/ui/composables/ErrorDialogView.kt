@@ -28,7 +28,7 @@ import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
 fun ErrorDialogView(
-    error: AppError?,
+    error: com.davidluna.architectcoders2024.domain.AppError?,
     onDismissRequest: () -> Unit,
 ) {
     if (error == null) return
@@ -104,7 +104,7 @@ private fun ErrorDialogPreView() {
             contentAlignment = Alignment.Center
         ) {
             ErrorDialogView(
-                error = AppError.Unknown(
+                error = com.davidluna.architectcoders2024.domain.AppError.Unknown(
                     0,
                     "Invalid API key: You must be granted a valid key.",
                     false

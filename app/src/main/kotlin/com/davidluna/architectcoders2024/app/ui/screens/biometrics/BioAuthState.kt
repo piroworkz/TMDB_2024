@@ -18,7 +18,6 @@ import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuth
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SHOW_PROMPT
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SUCCESS
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.UNAVAILABLE
-import com.davidluna.architectcoders2024.app.utils.log
 import java.util.concurrent.Executor
 
 class BioAuthState(
@@ -52,7 +51,6 @@ class BioAuthState(
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                result.authenticationType.toString().log("onAuthenticationSucceeded")
                 state.value = SUCCESS
             }
 

@@ -69,15 +69,9 @@ fun VideoPlayerScreen(
             )
         }
 
-
-
         if (state.isLoading) {
             CircularProgressIndicator()
         }
-
-//    ErrorDialogView(error = state.appError) {
-//
-//    }
     }
 }
 

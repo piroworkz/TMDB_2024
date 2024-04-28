@@ -1,35 +1,36 @@
 package com.davidluna.architectcoders2024.app.ui.screens.login
 
 import android.net.Uri
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteAvatar
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteGravatar
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteLoginRequest
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteUserAccountDetail
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
-import com.davidluna.architectcoders2024.app.utils.toAppError
-import com.davidluna.architectcoders2024.app.data.repositories.AuthenticationRepository
-import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.domain.AppError
-import com.davidluna.protodatastore.AuthenticationValues
-import com.davidluna.protodatastore.Avatar
-import com.davidluna.protodatastore.Gravatar
-import com.davidluna.protodatastore.UserAccount
-import com.davidluna.protodatastore.avatar
-import com.davidluna.protodatastore.gravatar
-import com.davidluna.protodatastore.userAccount
+import com.davidluna.architectcoders2024.domain.requests.LoginRequest
+import com.davidluna.architectcoders2024.usecases.auth.CreateRequestTokenUseCase
+import com.davidluna.architectcoders2024.usecases.auth.CreateSessionIdUseCase
+import com.davidluna.architectcoders2024.usecases.auth.GetUserAccountUseCase
+import com.davidluna.architectcoders2024.usecases.auth.SaveSessionIdUseCase
+import com.davidluna.architectcoders2024.usecases.auth.SaveUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
-    private val args: String,
-    private val repository: AuthenticationRepository,
-    private val local: SessionRepository
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val createRequestTokenUseCase: CreateRequestTokenUseCase,
+    private val createSessionIdUseCase: CreateSessionIdUseCase,
+    private val getUserAccountUseCase: GetUserAccountUseCase,
+    private val saveSessionIdUseCase: SaveSessionIdUseCase,
+    private val saveUserAccountUseCase: SaveUserUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -43,9 +44,8 @@ class LoginViewModel(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
         val token: String? = null,
-        val authSession: AuthenticationValues? = null,
         val intent: Boolean = false,
-        val isLoggedIn: Boolean = false
+        val destination: Destination? = null,
     )
 
     fun sendEvent(event: LoginEvent) {
@@ -55,12 +55,12 @@ class LoginViewModel(
             is LoginEvent.CreateSessionId -> createSessionId(event.requestToken)
             LoginEvent.GetAccount -> getAccount()
             LoginEvent.ResetError -> resetError()
-            LoginEvent.IsLoggedIn -> setIsLoggedIn()
+            is LoginEvent.IsLoggedIn -> setIsLoggedIn(event.destination)
         }
     }
 
-    private fun setIsLoggedIn() {
-        _state.update { it.copy(isLoggedIn = !it.isLoggedIn) }
+    private fun setIsLoggedIn(destination: Destination?) {
+        _state.update { it.copy(destination = destination) }
     }
 
     private fun resetError() {
@@ -68,8 +68,8 @@ class LoginViewModel(
     }
 
     private fun createRequestToken() = run {
-        repository.createRequestToken().fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
+        createRequestTokenUseCase().fold(
+            ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r -> _state.update { s -> s.copy(token = r.requestToken, intent = true) } }
         )
     }
@@ -78,27 +78,28 @@ class LoginViewModel(
         _state.update { it.copy(intent = !it.intent) }
 
     private fun createSessionId(requestToken: String) = run {
-        repository.createSessionId(requestToken.request()).fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
+        createSessionIdUseCase(requestToken.request()).fold(
+            ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
-                local.saveSessionId(r.sessionId)
+                saveSessionIdUseCase(r.sessionId)
                 sendEvent(LoginEvent.GetAccount)
             }
         )
     }
 
     private fun getAccount() = run {
-        repository.getAccount().fold(
-            ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
+        getUserAccountUseCase().fold(
+            ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
-                local.saveUser(r.toUser())
-                sendEvent(LoginEvent.IsLoggedIn)
+                saveUserAccountUseCase(r)
+                sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home))
             }
         )
     }
 
     private fun getArguments() {
-        if (args.isEmpty()) return
+        val args = savedStateHandle.get<String>(Auth.name)
+        if (args.isNullOrEmpty()) return
         val uri =
             Uri.parse(Login.deepLinks[0].uriPattern?.replace("{${Auth.name}}", args))
         val approved = uri.getBooleanQueryParameter("approved", false)
@@ -108,7 +109,7 @@ class LoginViewModel(
         }
     }
 
-    private fun String.request() = RemoteLoginRequest(this)
+    private fun String.request(): LoginRequest = LoginRequest(this)
 
     private fun run(action: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
@@ -126,26 +127,5 @@ class LoginViewModel(
 
 }
 
-private fun RemoteUserAccountDetail.toUser(): UserAccount {
-    return userAccount {
-        avatar = this@toUser.avatar.toProtobuf()
-        id = this@toUser.id.toLong()
-        includeAdult = this@toUser.includeAdult
-        name = this@toUser.name
-        username = this@toUser.username
-    }
-}
-
-private fun RemoteAvatar.toProtobuf(): Avatar {
-    return avatar {
-        gravatar = this@toProtobuf.gravatar.toProtobuf()
-    }
-}
-
-private fun RemoteGravatar.toProtobuf(): Gravatar {
-    return gravatar {
-        hash = this@toProtobuf.hash
-    }
-}
 
 

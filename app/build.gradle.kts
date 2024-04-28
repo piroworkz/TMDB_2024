@@ -3,9 +3,11 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.protobufPlugin)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hiltPlugin)
 }
 
 val key: String = Properties().let {
@@ -14,15 +16,15 @@ val key: String = Properties().let {
 }
 
 android {
-    namespace = "com.davidluna.architectcoders2024"
-    compileSdk = 34
+    namespace = libs.versions.appId.get()
+    compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.davidluna.architectcoders2024"
-        minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = libs.versions.appId.get()
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -38,7 +40,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -65,10 +66,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":usecases"))
+    implementation(project(":data"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-
     implementation(libs.compose.activity)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
@@ -80,25 +83,29 @@ dependencies {
     implementation(libs.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.kotlin.coroutines.core)
-
     implementation(libs.retrofit)
     implementation(libs.okhttp.client)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlin.converter)
-
     implementation(libs.arrow.core)
-
     implementation(libs.datastore.core)
     implementation(libs.protobuf.javalite)
     implementation(libs.protobuf.kotlin.lite)
-
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
     implementation(libs.biometric)
-    implementation (libs.play.services.location)
+    implementation(libs.play.services.location)
+    implementation(libs.hiltNavigationCompose)
+    implementation(libs.hiltAndroid)
+    kapt(libs.hiltCompiler)
+
     debugImplementation(libs.compose.ui.tooling)
 
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 protobuf {

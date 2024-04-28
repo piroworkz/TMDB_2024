@@ -8,12 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.ReelTitleView
+import com.davidluna.architectcoders2024.domain.responses.movies.MovieDetail
 
 @Composable
 fun MovieDetailsView(
-    movieDetail: RemoteMovieDetail?,
+    movieDetail: MovieDetail?,
     playTrailer: () -> Unit
 ) {
     ReelTitleView(title = movieDetail?.title)

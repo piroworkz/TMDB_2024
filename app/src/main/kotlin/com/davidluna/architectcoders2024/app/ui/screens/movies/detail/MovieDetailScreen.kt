@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph.VideoPlayer
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
+import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailEvent.OnNavigate
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieCastView
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieDetailsView
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.PostersPagerView
@@ -42,7 +44,7 @@ fun MovieDetailScreen(
         ) {
             PostersPagerView(images = joinImages(state))
             MovieDetailsView(state.movieDetail) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.VideoPlayer(movieId = state.movieDetail?.id)))
+                sendEvent(OnNavigate(VideoPlayer(movieId = state.movieDetail?.id)))
             }
             Spacer(modifier = Modifier.padding(all = 16.dp))
 
@@ -50,24 +52,24 @@ fun MovieDetailScreen(
 
 
             MoviesLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
+                sendEvent(OnNavigate(MoviesGraph.Detail(it)))
             }
 
             MoviesLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
+                sendEvent(OnNavigate(MoviesGraph.Detail(it)))
             }
 
-        Spacer(modifier = Modifier.padding(all = 16.dp))
-    }
+            Spacer(modifier = Modifier.padding(all = 16.dp))
+        }
 
-    if (state.isLoading) {
-        CircularProgressIndicator()
-    }
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        }
 
-    ErrorDialogView(error = state.appError) {
-        sendEvent(MovieDetailEvent.ResetError)
+        ErrorDialogView(error = state.appError) {
+            sendEvent(MovieDetailEvent.ResetError)
+        }
     }
-}
 
 }
 
