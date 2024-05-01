@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.usecases.auth
+package com.davidluna.architectcoders2024.usecases.preferences
 
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import com.davidluna.architectcoders2024.usecases.repositories.LocalSessionRepository

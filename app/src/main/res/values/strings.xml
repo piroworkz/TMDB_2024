@@ -11,4 +11,12 @@
     <string name="biometric_auth_subtitle">Please login using fingerprint reader</string>
     <string name="biometric_use_password_instead">Use Password Instead</string>
     <string name="biometric_auth_failed">Try again!</string>
+    <string name="permission_rationale_message">The location permission was denied, this permission is required, you should consider granting it.</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="page_image_description">Page Image</string>
+    <string name="placeholder_description">Placeholder</string>
+    <string name="play_trailer_button">Play Trailer</string>
+    <string name="drawer_movies">Movies</string>
+    <string name="drawer_tv_shows">Tv Shows</string>
+    <string name="drawer_close_session">Close Session</string>
 </resources>

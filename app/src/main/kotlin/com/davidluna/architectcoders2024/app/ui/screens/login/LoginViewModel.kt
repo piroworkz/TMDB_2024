@@ -10,11 +10,10 @@ import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGr
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.requests.LoginRequest
+import com.davidluna.architectcoders2024.usecases.auth.CreateGuestSessionIdUseCase
 import com.davidluna.architectcoders2024.usecases.auth.CreateRequestTokenUseCase
 import com.davidluna.architectcoders2024.usecases.auth.CreateSessionIdUseCase
 import com.davidluna.architectcoders2024.usecases.auth.GetUserAccountUseCase
-import com.davidluna.architectcoders2024.usecases.auth.SaveSessionIdUseCase
-import com.davidluna.architectcoders2024.usecases.auth.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,9 +27,8 @@ class LoginViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val createRequestTokenUseCase: CreateRequestTokenUseCase,
     private val createSessionIdUseCase: CreateSessionIdUseCase,
-    private val getUserAccountUseCase: GetUserAccountUseCase,
-    private val saveSessionIdUseCase: SaveSessionIdUseCase,
-    private val saveUserAccountUseCase: SaveUserUseCase
+    private val createGuestSessionIdUseCase: CreateGuestSessionIdUseCase,
+    private val getUserAccountUseCase: GetUserAccountUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -56,6 +54,7 @@ class LoginViewModel @Inject constructor(
             LoginEvent.GetAccount -> getAccount()
             LoginEvent.ResetError -> resetError()
             is LoginEvent.IsLoggedIn -> setIsLoggedIn(event.destination)
+            LoginEvent.CreateGuestSession -> createGuestSessionId()
         }
     }
 
@@ -70,7 +69,9 @@ class LoginViewModel @Inject constructor(
     private fun createRequestToken() = run {
         createRequestTokenUseCase().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { s -> s.copy(token = r.requestToken, intent = true) } }
+            ifRight = { r ->
+                _state.update { s -> s.copy(token = r.requestToken, intent = true) }
+            }
         )
     }
 
@@ -80,20 +81,23 @@ class LoginViewModel @Inject constructor(
     private fun createSessionId(requestToken: String) = run {
         createSessionIdUseCase(requestToken.request()).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r ->
-                saveSessionIdUseCase(r.sessionId)
-                sendEvent(LoginEvent.GetAccount)
-            }
+            ifRight = { sendEvent(LoginEvent.GetAccount) }
         )
+    }
+
+    private fun createGuestSessionId() {
+        run {
+            createGuestSessionIdUseCase().fold(
+                ifLeft = { e -> _state.update { it.copy(appError = e) } },
+                ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home)) }
+            )
+        }
     }
 
     private fun getAccount() = run {
         getUserAccountUseCase().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r ->
-                saveUserAccountUseCase(r)
-                sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home))
-            }
+            ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home)) }
         )
     }
 

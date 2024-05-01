@@ -2,8 +2,10 @@ package com.davidluna.architectcoders2024.app.ui.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.AutoMirrored.Rounded
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,13 +44,11 @@ fun AppBarView(
             title = { Text(text = title) },
             modifier = modifier,
             navigationIcon = {
-                if (!topLevel) {
-                    val icon = /*if (topLevel) Icons.Default.Menu else*/ Rounded.ArrowBack
-                    IconButton(onClick = {
-                        onNavigationIconClick()
-                    }) {
-                        Icon(imageVector = icon, contentDescription = icon.name)
-                    }
+                val icon = if (topLevel) Icons.Default.Menu else Rounded.ArrowBack
+                IconButton(onClick = {
+                    onNavigationIconClick()
+                }) {
+                    Icon(imageVector = icon, contentDescription = icon.name)
                 }
             },
             colors = topAppBarColors(

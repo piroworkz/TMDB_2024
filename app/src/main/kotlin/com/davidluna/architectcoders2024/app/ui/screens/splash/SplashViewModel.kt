@@ -7,7 +7,7 @@ import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGrap
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
 import com.davidluna.architectcoders2024.domain.AppError
-import com.davidluna.architectcoders2024.usecases.auth.SessionIdUseCase
+import com.davidluna.architectcoders2024.usecases.preferences.SessionIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -69,7 +69,7 @@ class SplashViewModel @Inject constructor(
                 .onStart { _state.update { it.copy(loading = true) } }
                 .onCompletion { _state.update { it.copy(loading = false) } }
                 .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
-                .collect { a -> _state.update { it.copy(sessionExists = a.sessionId.isNotEmpty()) } }
+                .collect { id -> _state.update { it.copy(sessionExists = id.isNotEmpty()) } }
         }
     }
 }

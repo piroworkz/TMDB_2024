@@ -1,6 +1,7 @@
 [versions]
 #config
 appId = "com.davidluna.architectcoders2024"
+hiltWork = "1.2.0"
 minSdk = "26"
 targetSdk = "34"
 versionCode = "1"

@@ -4,10 +4,8 @@ import android.app.Application
 import android.location.Geocoder
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.MultiProcessDataStoreFactory
-import com.davidluna.architectcoders2024.BuildConfig
-import com.davidluna.architectcoders2024.app.data.local.datastore.ProtoSessionSerializer
-import com.davidluna.architectcoders2024.app.di.annotations.ApiKey
-import com.davidluna.protodatastore.ProtoSession
+import com.davidluna.architectcoders2024.app.data.local.datastore.ProtoPreferencesSerializer
+import com.davidluna.protodatastore.ProtoPreferences
 import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
@@ -29,9 +27,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDataStore(application: Application): DataStore<ProtoSession> =
+    fun provideDataStore(application: Application): DataStore<ProtoPreferences> =
         MultiProcessDataStoreFactory.create(
-            serializer = ProtoSessionSerializer,
+            serializer = ProtoPreferencesSerializer,
             produceFile = { application.filesDir.resolve("session.preferences_pb") }
         )
 
@@ -44,4 +42,5 @@ object AppModule {
     @Provides
     fun provideGeoCoder(application: Application) =
         Geocoder(application)
+
 }

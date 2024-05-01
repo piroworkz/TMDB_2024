@@ -8,6 +8,7 @@ import android.view.WindowInsetsController
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 
 class VideoPlayerLifecycleObserver(
     private val activity: Activity?

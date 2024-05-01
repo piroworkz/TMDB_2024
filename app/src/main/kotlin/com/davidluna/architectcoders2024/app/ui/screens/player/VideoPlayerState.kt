@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 
 class VideoPlayerState(
     private val context: Context,
@@ -55,7 +56,7 @@ class VideoPlayerState(
     }
 
     fun loadHtml(playlist: List<String> = emptyList()): String {
-        val formattedList = playlist.map { "\'$it\'" }.take(3)
+        val formattedList = playlist.map { "\'$it\'" }
         return context.assets.open(FILE_NAME).bufferedReader().use { it.readText() }
             .replace("{{playlist}}", formattedList.joinToString(", "))
     }
@@ -87,7 +88,7 @@ class VideoPlayerState(
 @Composable
 fun rememberVideoPlayerState(
     context: Context = LocalContext.current,
-    activity: Activity? = context.getParentActivity(),
+    activity: Activity = Locals.activity,
     owner: LifecycleOwner = LocalLifecycleOwner.current,
     @SuppressLint("SetJavaScriptEnabled")
     webView: WebView = remember {
@@ -104,14 +105,3 @@ fun rememberVideoPlayerState(
         }
     }
 ): VideoPlayerState = remember(webView) { VideoPlayerState(context, activity, owner, webView) }
-
-
-// TODO: Remove and move this to CompositionLocal
-fun Context.getParentActivity(): Activity? {
-    return when (this) {
-        is Activity -> this
-        else -> null
-    }
-}
-
-

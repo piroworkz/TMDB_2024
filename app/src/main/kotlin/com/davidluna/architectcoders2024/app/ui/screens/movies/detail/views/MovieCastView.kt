@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.ReelTitleView
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 import com.davidluna.architectcoders2024.domain.responses.Cast
 
 @Composable
@@ -36,7 +37,7 @@ fun MovieCastView(
             items(cast.filter { it.profilePath.isNullOrEmpty().not() }) { cast ->
                 Box(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(Locals.dimensDp.medium)
                         .width(width / 2.3F)
                         .clip(MaterialTheme.shapes.large)
                         .background(appGradient()),
@@ -58,7 +59,7 @@ fun MovieCastView(
                             text = "${cast.name} as ${cast.character}",
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(4.dp),
+                                .padding(Locals.dimensDp.small),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onPrimary
                         )

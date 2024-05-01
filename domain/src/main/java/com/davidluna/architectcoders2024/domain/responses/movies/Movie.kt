@@ -5,3 +5,4 @@ data class Movie(
     val posterPath: String,
     val title: String,
 )
+

@@ -4,6 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemoteAvatar(
-    val gravatar: RemoteGravatar,
     val tmdb: RemoteTmdb
 )

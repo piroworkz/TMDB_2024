@@ -11,7 +11,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 import com.davidluna.architectcoders2024.domain.responses.movies.Genre
 import com.davidluna.architectcoders2024.domain.responses.movies.MovieDetail
 import java.text.SimpleDateFormat
@@ -25,7 +25,7 @@ fun TextDetailsView(movieDetail: MovieDetail?) {
         CircularProgressIndicator()
     }
 
-    Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+    Row(modifier = Modifier.padding(horizontal = Locals.dimensDp.large)) {
         Text(
             text = annotatedString(movieDetail),
         )
@@ -33,7 +33,10 @@ fun TextDetailsView(movieDetail: MovieDetail?) {
 
     Text(
         text = movieDetail?.tagline ?: "",
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.padding(
+            horizontal = Locals.dimensDp.large,
+            vertical = Locals.dimensDp.medium
+        ),
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
         fontStyle = FontStyle.Italic
@@ -41,7 +44,10 @@ fun TextDetailsView(movieDetail: MovieDetail?) {
 
     Text(
         text = "Overview",
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.padding(
+            horizontal = Locals.dimensDp.large,
+            vertical = Locals.dimensDp.medium
+        ),
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onPrimary,
         fontWeight = FontWeight.Black
@@ -49,7 +55,7 @@ fun TextDetailsView(movieDetail: MovieDetail?) {
 
     Text(
         text = movieDetail?.overview ?: "",
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = Modifier.padding(horizontal = Locals.dimensDp.large),
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
         textAlign = TextAlign.Justify
@@ -68,7 +74,7 @@ private fun annotatedString(movieDetail: MovieDetail?) =
     }.toAnnotatedString()
 
 
-fun formatDate(releaseDate: String): String {
+private fun formatDate(releaseDate: String): String {
     val originalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val date = originalFormat.parse(releaseDate)
     val localizedFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())

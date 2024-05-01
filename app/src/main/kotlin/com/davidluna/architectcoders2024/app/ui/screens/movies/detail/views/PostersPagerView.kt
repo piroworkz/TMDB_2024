@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.R
 
@@ -24,7 +25,7 @@ fun PostersPagerView(
         val image = images[it]
         AsyncImage(
             model = image,
-            contentDescription = "Page Image",
+            contentDescription = stringResource(R.string.page_image_description),
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop
         )
@@ -32,7 +33,7 @@ fun PostersPagerView(
     if (images.isEmpty()) {
         Image(
             painter = painterResource(id = R.drawable.demo_thumb),
-            contentDescription = "Placeholder",
+            contentDescription = stringResource(R.string.placeholder_description),
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop,
         )

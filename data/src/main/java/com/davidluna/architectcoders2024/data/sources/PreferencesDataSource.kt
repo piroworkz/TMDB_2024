@@ -1,13 +1,14 @@
 package com.davidluna.architectcoders2024.data.sources
 
-import com.davidluna.architectcoders2024.domain.session.SessionId
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import kotlinx.coroutines.flow.Flow
 
-interface LocalSessionDataSource {
-    val sessionId: Flow<SessionId>
+interface PreferencesDataSource {
+    val sessionId: Flow<String>
     val userAccount: Flow<UserAccount>
+    val isGuest: Flow<Boolean>
+    suspend fun closeSession()
+    suspend fun saveIsGuest(isGuest: Boolean)
     suspend fun saveSessionId(sessionId: String)
     suspend fun saveUser(user: UserAccount)
-    suspend fun closeSession()
 }

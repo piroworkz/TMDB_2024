@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 
 class NavigatorState(
     private val navController: NavHostController,
+    private val drawerState: NavDrawerState,
     backStackEntry: Flow<NavBackStackEntry>,
     scope: CoroutineScope
 ) {
@@ -25,6 +26,9 @@ class NavigatorState(
     init {
         collectFlow(scope, backStackEntry)
     }
+
+    val drawer
+        get() = drawerState
 
     val controller
         get() = navController
@@ -34,6 +38,14 @@ class NavigatorState(
 
     var hideAppBar by mutableStateOf(false)
         private set
+
+    fun onNavClick() {
+        if (isTopLevel) {
+            drawer.toggleState()
+        } else {
+            popBackStack()
+        }
+    }
 
     fun popBackStack() {
         navController.popBackStack()
@@ -62,7 +74,8 @@ class NavigatorState(
 fun rememberNavigatorState(
     navController: NavHostController = rememberNavController(),
     backStackEntry: Flow<NavBackStackEntry> = navController.currentBackStackEntryFlow,
-    scope: CoroutineScope = rememberCoroutineScope()
+    scope: CoroutineScope = rememberCoroutineScope(),
+    drawerState: NavDrawerState = rememberNavDrawerState(scope = scope),
 ) = remember {
-    NavigatorState(navController, backStackEntry, scope)
+    NavigatorState(navController, drawerState, backStackEntry, scope)
 }

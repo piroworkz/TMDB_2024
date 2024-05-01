@@ -5,26 +5,26 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter.Companion.tint
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
-import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SHOW_PROMPT
-import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SUCCESS
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.app.ui.screens.splash.animation.rememberAnimationState
 import com.davidluna.architectcoders2024.app.ui.screens.splash.permissions.PermissionState.SHOULD_SHOW_RATIONALE
 import com.davidluna.architectcoders2024.app.ui.screens.splash.permissions.rememberPermissionState
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.AnimationLaunchedEffect
+import com.davidluna.architectcoders2024.app.ui.screens.splash.views.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.PermissionLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
 fun SplashScreen(
@@ -35,31 +35,7 @@ fun SplashScreen(
     val animationState = rememberAnimationState()
     val biometricAuthState = rememberBiometricAuth()
 
-    LaunchedEffect(
-        key1 = biometricAuthState.currentState,
-        key2 = state.isGranted,
-        key3 = state.sessionExists
-    ) {
-        when (biometricAuthState.currentState) {
-            SUCCESS -> {
-                sendEvent(SplashEvent.OnLoggedIn)
-            }
-
-            SHOW_PROMPT -> {
-                if (state.isGranted && state.sessionExists) {
-                    biometricAuthState.launchPrompt()
-                }
-                if (state.isGranted && !state.sessionExists) {
-                    sendEvent(SplashEvent.OnBioFailed)
-                }
-            }
-
-            else -> {
-                sendEvent(SplashEvent.OnBioFailed)
-            }
-        }
-    }
-
+    BiometricsLaunchedEffect(biometricAuthState, state, sendEvent = { sendEvent(it) })
     AnimationLaunchedEffect(animationState)
     PermissionLaunchedEffect(permissionState) { sendEvent(SplashEvent.OnGranted) }
 
@@ -76,9 +52,9 @@ fun SplashScreen(
 
         if (permissionState.currentState == SHOULD_SHOW_RATIONALE && !permissionState.requestedAtLeastOnce) {
             ErrorDialogView(
-                error = com.davidluna.architectcoders2024.domain.AppError.Unknown(
+                error = AppError.Unknown(
                     0,
-                    "The location permission was denied, this permission is required, you should consider granting it.",
+                    stringResource(R.string.permission_rationale_message),
                     false
                 )
             ) {
@@ -88,6 +64,7 @@ fun SplashScreen(
     }
 
 }
+
 
 @Preview(
     showBackground = true,
