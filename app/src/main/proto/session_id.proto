@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-import "user.proto";
-import "auth.proto";
+import "guest.proto";
 
 option java_package = "com.davidluna.protodatastore";
 option java_multiple_files = true;
 
 message ProtoSession {
-  ProtoSessionId auth = 1;
-  ProtoUserAccount user = 2;
+  string session_id = 1;
+  ProtoGuestSessionId guest = 2;
+  bool isGuest = 3;
 }

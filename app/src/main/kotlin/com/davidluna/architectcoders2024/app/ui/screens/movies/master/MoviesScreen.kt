@@ -7,12 +7,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph.Detail
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.MoviesEvent.OnMovieClicked
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.MoviesLazyRow
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals.dimensDp
 
 @Composable
 fun MoviesScreen(
@@ -26,7 +26,7 @@ fun MoviesScreen(
     ) {
 
         item {
-            Spacer(modifier = Modifier.padding(top = 16.dp))
+            Spacer(modifier = Modifier.padding(top = dimensDp.large))
             MoviesLazyRow(
                 title = R.string.title_popular_movies,
                 flow = state.popularMovies,

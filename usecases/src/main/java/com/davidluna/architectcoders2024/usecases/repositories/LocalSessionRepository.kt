@@ -1,13 +1,11 @@
 package com.davidluna.architectcoders2024.usecases.repositories
 
-import com.davidluna.architectcoders2024.domain.session.SessionId
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import kotlinx.coroutines.flow.Flow
 
 interface LocalSessionRepository {
-    val sessionId: Flow<SessionId>
+    val sessionId: Flow<String>
     val userAccount: Flow<UserAccount>
-    suspend fun saveSessionId(sessionId: String)
-    suspend fun saveUser(user: UserAccount)
+    val isGuest: Flow<Boolean>
     suspend fun closeSession()
 }

@@ -8,6 +8,7 @@ import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.data.sources.AuthenticationDatasource
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.requests.LoginRequest
+import com.davidluna.architectcoders2024.domain.session.GuestSession
 import com.davidluna.architectcoders2024.domain.session.SessionId
 import com.davidluna.architectcoders2024.domain.session.TokenResponse
 import com.davidluna.architectcoders2024.domain.session.UserAccount
@@ -15,8 +16,7 @@ import javax.inject.Inject
 
 class ApiAuthenticationDatasource @Inject constructor(
     private val service: AuthenticationService
-) :
-    AuthenticationDatasource {
+) : AuthenticationDatasource {
 
     override suspend fun createRequestToken(): Either<AppError, TokenResponse> =
         service.createRequestToken().fold(
@@ -32,6 +32,12 @@ class ApiAuthenticationDatasource @Inject constructor(
 
     override suspend fun getAccount(): Either<AppError, UserAccount> =
         service.getAccount().fold(
+            ifLeft = { it.toAppError().left() },
+            ifRight = { it.toDomain().right() }
+        )
+
+    override suspend fun createGuestSessionId(): Either<AppError, GuestSession> =
+        service.createGuestSessionId().fold(
             ifLeft = { it.toAppError().left() },
             ifRight = { it.toDomain().right() }
         )

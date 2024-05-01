@@ -12,27 +12,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 
 @Composable
-fun ReelTitleView(title: String? = "Popular Movies") {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Black)
-
-    ) {
-        Text(
-            text = title ?: "",
+fun ReelTitleView(title: String?) {
+    title?.let {
+        Box(
             modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center
-        )
+                .fillMaxWidth()
+                .background(Color.Black)
+
+        ) {
+            Text(
+                text = title,
+                modifier = Modifier
+                    .padding(Locals.dimensDp.small)
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

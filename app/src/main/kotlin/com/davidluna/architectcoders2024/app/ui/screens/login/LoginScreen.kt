@@ -11,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,11 +19,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.IntentView
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals.dimensDp
 
 @Composable
 fun LoginScreen(
@@ -50,21 +51,33 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(32.dp)
+                    .padding(dimensDp.xLarge)
                     .align(Alignment.BottomCenter),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
                     onClick = { sendEvent(LoginEvent.CreateRequestToken) },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(dimensDp.medium)
                 ) {
                     Text(
                         text = "Login",
                         modifier = Modifier
-                            .padding(horizontal = 32.dp)
+                            .padding(horizontal = dimensDp.xLarge)
                     )
                 }
+
+                TextButton(
+                    onClick = { sendEvent(LoginEvent.CreateGuestSession) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Login as Guest",
+                        modifier = Modifier
+                            .padding(horizontal = dimensDp.xLarge)
+                    )
+                }
+
 
             }
         }

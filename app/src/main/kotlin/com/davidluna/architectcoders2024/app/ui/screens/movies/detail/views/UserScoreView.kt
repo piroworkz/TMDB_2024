@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.davidluna.architectcoders2024.R
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 
 @Composable
 fun UserScoreView(
@@ -29,7 +31,7 @@ fun UserScoreView(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(Locals.dimensDp.large),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -38,7 +40,7 @@ fun UserScoreView(
         ) {
             CircularProgressIndicator(
                 progress = { score / 10F },
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(Locals.dimensDp.large * 3),
                 color = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
             )
@@ -47,15 +49,15 @@ fun UserScoreView(
 
         Text(
             text = "User\nScore",
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(Locals.dimensDp.large),
             style = MaterialTheme.typography.labelSmall
         )
 
         VerticalDivider(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(horizontal = 16.dp),
-            thickness = 4.dp,
+                .padding(horizontal = Locals.dimensDp.large),
+            thickness = Locals.dimensDp.small,
             color = Color.White
         )
 
@@ -65,7 +67,7 @@ fun UserScoreView(
                 contentDescription = Icons.Outlined.PlayArrow.name
             )
 
-            Text(text = "Play Trailer")
+            Text(text = stringResource(R.string.play_trailer_button))
 
         }
     }

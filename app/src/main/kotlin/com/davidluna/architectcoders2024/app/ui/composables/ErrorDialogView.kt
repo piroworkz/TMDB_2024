@@ -20,15 +20,15 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 import com.davidluna.architectcoders2024.domain.AppError
 
 @Composable
 fun ErrorDialogView(
-    error: com.davidluna.architectcoders2024.domain.AppError?,
+    error: AppError?,
     onDismissRequest: () -> Unit,
 ) {
     if (error == null) return
@@ -41,7 +41,7 @@ fun ErrorDialogView(
     ) {
         Card(
             modifier = Modifier.wrapContentSize(),
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(Locals.dimensDp.medium),
             colors = CardColors(
                 containerColor = MaterialTheme.colorScheme.background,
                 contentColor = MaterialTheme.colorScheme.error,
@@ -57,7 +57,7 @@ fun ErrorDialogView(
             ) {
                 Text(
                     text = "Something went wrong",
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(Locals.dimensDp.medium),
                     color = MaterialTheme.colorScheme.onError,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Black
@@ -66,7 +66,7 @@ fun ErrorDialogView(
 
             Text(
                 text = error.statusMessage,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(Locals.dimensDp.large),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Black,
@@ -83,7 +83,7 @@ fun ErrorDialogView(
             ) {
                 Text(
                     text = "Press to dismiss",
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(Locals.dimensDp.medium),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -104,7 +104,7 @@ private fun ErrorDialogPreView() {
             contentAlignment = Alignment.Center
         ) {
             ErrorDialogView(
-                error = com.davidluna.architectcoders2024.domain.AppError.Unknown(
+                error = AppError.Unknown(
                     0,
                     "Invalid API key: You must be granted a valid key.",
                     false
