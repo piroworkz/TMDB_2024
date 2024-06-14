@@ -13,16 +13,21 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("appConfig") {
+            from(files("gradle/appConfig.versions.toml"))
+        }
+    }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "ArchitectCoders2024"
-include(":app")
-include(":domain")
-include(":data")
-include(":usecases")
+include(":app", ":domain", ":data", ":usecases")

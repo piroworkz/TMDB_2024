@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.toAppError
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.ItemsGraph
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.usecases.preferences.SessionIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,7 +52,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun setLoggedIn() {
-        _state.update { it.copy(destination = MoviesGraph.Home) }
+        _state.update { it.copy(destination = ItemsGraph.Home()) }
     }
 
     private fun resetError() {
@@ -67,9 +67,22 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             sessionId()
                 .onStart { _state.update { it.copy(loading = true) } }
-                .onCompletion { _state.update { it.copy(loading = false) } }
-                .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
-                .collect { id -> _state.update { it.copy(sessionExists = id.isNotEmpty()) } }
+                .catch { e ->
+                    _state.update {
+                        it.copy(
+                            appError = e.toAppError(),
+                            loading = false
+                        )
+                    }
+                }
+                .collect { id ->
+                    _state.update {
+                        it.copy(
+                            sessionExists = id.isNotEmpty(),
+                            loading = false
+                        )
+                    }
+                }
         }
     }
 }

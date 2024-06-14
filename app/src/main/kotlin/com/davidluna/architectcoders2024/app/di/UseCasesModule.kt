@@ -1,15 +1,15 @@
 package com.davidluna.architectcoders2024.app.di
 
-import com.davidluna.architectcoders2024.data.repositories.AuthenticationDataRepository
-import com.davidluna.architectcoders2024.data.repositories.LocalSessionDataRepository
-import com.davidluna.architectcoders2024.data.repositories.MovieDetailsDataRepository
-import com.davidluna.architectcoders2024.data.repositories.MoviesDataRepository
-import com.davidluna.architectcoders2024.data.repositories.RegionDataRepository
-import com.davidluna.architectcoders2024.usecases.repositories.AuthenticationRepository
-import com.davidluna.architectcoders2024.usecases.repositories.LocalSessionRepository
+import com.davidluna.architectcoders2024.data.repositories.location.RegionDataRepository
+import com.davidluna.architectcoders2024.data.repositories.movies.MovieDetailsDataRepository
+import com.davidluna.architectcoders2024.data.repositories.movies.MoviesDataRepository
+import com.davidluna.architectcoders2024.data.repositories.preferences.LocalPreferencesDataRepository
+import com.davidluna.architectcoders2024.data.repositories.session.SessionDataRepository
+import com.davidluna.architectcoders2024.usecases.repositories.LocalPreferencesRepository
 import com.davidluna.architectcoders2024.usecases.repositories.MovieDetailsRepository
 import com.davidluna.architectcoders2024.usecases.repositories.MoviesRepository
 import com.davidluna.architectcoders2024.usecases.repositories.RegionRepository
+import com.davidluna.architectcoders2024.usecases.repositories.SessionRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class UseCasesModule {
 
     @Binds
-    abstract fun bindAuthenticationRepository(repository: AuthenticationDataRepository): AuthenticationRepository
+    abstract fun bindAuthenticationRepository(repository: SessionDataRepository): SessionRepository
 
     @Binds
     abstract fun bindMoviesRepository(repository: MoviesDataRepository): MoviesRepository
@@ -32,5 +32,6 @@ abstract class UseCasesModule {
     abstract fun bindRegionRepository(repository: RegionDataRepository): RegionRepository
 
     @Binds
-    abstract fun bindLocalSessionRepository(repository: LocalSessionDataRepository): LocalSessionRepository
+    abstract fun bindLocalSessionRepository(repository: LocalPreferencesDataRepository): LocalPreferencesRepository
+
 }

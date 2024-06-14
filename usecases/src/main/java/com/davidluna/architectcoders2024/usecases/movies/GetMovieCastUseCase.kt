@@ -7,6 +7,6 @@ import com.davidluna.architectcoders2024.usecases.repositories.MovieDetailsRepos
 import javax.inject.Inject
 
 class GetMovieCastUseCase @Inject constructor(private val repository: MovieDetailsRepository) {
-    suspend operator fun invoke(movieId: Int): Either<AppError, List<Cast>> =
-        repository.getMovieCast(movieId)
+    suspend operator fun invoke(endpoint: String): Either<AppError, List<Cast>> =
+        repository.getMovieCast(endpoint)
 }

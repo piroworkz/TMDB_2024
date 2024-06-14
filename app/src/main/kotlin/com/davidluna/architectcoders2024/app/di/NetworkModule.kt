@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.app.di
 
 import com.davidluna.architectcoders2024.BuildConfig
-import com.davidluna.architectcoders2024.app.data.remote.services.authentication.AuthenticationService
-import com.davidluna.architectcoders2024.app.data.remote.services.movies.MovieDetailService
-import com.davidluna.architectcoders2024.app.data.remote.services.movies.MoviesService
+import com.davidluna.architectcoders2024.app.data.remote.services.session.SessionService
+import com.davidluna.architectcoders2024.app.data.remote.services.items.ContentDetailService
+import com.davidluna.architectcoders2024.app.data.remote.services.items.ContentService
 import com.davidluna.architectcoders2024.app.data.remote.utils.MoviesInterceptor
 import com.davidluna.architectcoders2024.app.data.remote.utils.call_adapter.NetworkCallAdapterFactory
 import com.davidluna.architectcoders2024.app.di.annotations.ApiKey
@@ -39,7 +39,7 @@ object NetworkModule {
     fun provideClient(
         interceptor: MoviesInterceptor
     ): OkHttpClient = HttpLoggingInterceptor().run {
-        level = HttpLoggingInterceptor.Level.BASIC
+        level = HttpLoggingInterceptor.Level.NONE
         OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addInterceptor(this)
@@ -72,16 +72,19 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideMoviesService(retrofit: Retrofit): MoviesService =
-        retrofit.create(MoviesService::class.java)
+    fun provideMoviesService(retrofit: Retrofit): ContentService =
+        retrofit.create(ContentService::class.java)
 
     @Singleton
     @Provides
-    fun provideMovieDetailService(retrofit: Retrofit): MovieDetailService =
-        retrofit.create(MovieDetailService::class.java)
+    fun provideMovieDetailService(retrofit: Retrofit): ContentDetailService =
+        retrofit.create(ContentDetailService::class.java)
 
     @Singleton
     @Provides
-    fun provideAuthenticationService(retrofit: Retrofit): AuthenticationService =
-        retrofit.create(AuthenticationService::class.java)
+    fun provideAuthenticationService(retrofit: Retrofit): SessionService =
+        retrofit.create(SessionService::class.java)
+
+
+
 }

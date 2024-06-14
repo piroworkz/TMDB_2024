@@ -3,6 +3,7 @@ package com.davidluna.architectcoders2024.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.toAppError
+import com.davidluna.architectcoders2024.app.utils.log
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import com.davidluna.architectcoders2024.usecases.preferences.UserAccountUseCase
@@ -38,10 +39,22 @@ class MainViewModel @Inject constructor(
     private fun collectUser() {
         viewModelScope.launch {
             userAccountUseCase()
-                .onStart { _state.update { it.copy(loading = true) } }
-                .onCompletion { _state.update { it.copy(loading = false) } }
-                .catch { error -> _state.update { it.copy(appError = error.toAppError()) } }
-                .collect { user -> _state.update { it.copy(user = user) } }
+                .onStart {
+                    "onStart".log("MainViewModel")
+                    _state.update { it.copy(loading = true) }
+                }
+                .onCompletion {
+                    "onCompletion".log("MainViewModel")
+                    _state.update { it.copy(loading = false) }
+                }
+                .catch { error ->
+                    "catch".log("MainViewModel")
+                    _state.update { it.copy(appError = error.toAppError()) }
+                }
+                .collect { user ->
+                    "collect".log("MainViewModel")
+                    _state.update { it.copy(user = user) }
+                }
         }
     }
 

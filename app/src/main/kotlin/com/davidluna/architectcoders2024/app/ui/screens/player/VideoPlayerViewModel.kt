@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Args
+import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ContentType
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.usecases.movies.GetMovieVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +18,20 @@ import javax.inject.Inject
 @HiltViewModel
 class VideoPlayerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getMovieVideosUseCase: GetMovieVideosUseCase,
+    private val getVideosUseCase: GetMovieVideosUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
     val state = _state.asStateFlow()
 
     init {
-        savedStateHandle.get<Int>(Args.MovieId.name)?.let(::getMovieVideos)
+        savedStateHandle.apply {
+            get<ContentType>(Args.Type.name)?.let { type ->
+                get<Int>(Args.MovieId.name)?.let { getVideos(it, type) }
+
+            }
+        }
+
     }
 
     data class State(
@@ -33,8 +40,9 @@ class VideoPlayerViewModel @Inject constructor(
         val videos: List<String> = emptyList()
     )
 
-    private fun getMovieVideos(movieId: Int) = run {
-        getMovieVideosUseCase(movieId).fold(
+    private fun getVideos(movieId: Int, contentType: ContentType) = run {
+        val from = if (contentType == ContentType.MOVIE) MOVIE else TV
+        getVideosUseCase("$from/$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
                 _state.update { s ->
@@ -57,5 +65,10 @@ class VideoPlayerViewModel @Inject constructor(
                 _state.update { it.copy(isLoading = false) }
             }
         }
+    }
+
+    companion object {
+        private const val MOVIE = "movie"
+        private const val TV = "tv"
     }
 }

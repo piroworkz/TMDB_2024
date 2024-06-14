@@ -6,18 +6,18 @@ import com.davidluna.architectcoders2024.app.data.remote.model.authentication.Re
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteTokenResponse
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteUserAccountDetail
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteCast
+import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteContent
+import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteContentDetail
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteGenre
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteImage
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovie
-import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteMovieDetail
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteResults
 import com.davidluna.architectcoders2024.app.data.remote.model.movies.RemoteVideo
 import com.davidluna.architectcoders2024.domain.requests.LoginRequest
 import com.davidluna.architectcoders2024.domain.responses.Cast
+import com.davidluna.architectcoders2024.domain.responses.movies.Content
+import com.davidluna.architectcoders2024.domain.responses.movies.Details
 import com.davidluna.architectcoders2024.domain.responses.movies.Genre
 import com.davidluna.architectcoders2024.domain.responses.movies.Image
-import com.davidluna.architectcoders2024.domain.responses.movies.Movie
-import com.davidluna.architectcoders2024.domain.responses.movies.MovieDetail
 import com.davidluna.architectcoders2024.domain.responses.movies.Results
 import com.davidluna.architectcoders2024.domain.responses.movies.YoutubeVideo
 import com.davidluna.architectcoders2024.domain.session.GuestSession
@@ -25,16 +25,16 @@ import com.davidluna.architectcoders2024.domain.session.SessionId
 import com.davidluna.architectcoders2024.domain.session.TokenResponse
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 
-fun RemoteResults<RemoteMovie>.toDomain(): Results<Movie> = Results(
+fun RemoteResults<RemoteContent>.toDomain(): Results<Content> = Results(
     page = page,
     results = results.map { it.toDomain() },
     totalPages = totalPages,
     totalResults = totalResults
 )
 
-fun RemoteMovie.toDomain(): Movie = Movie(
+fun RemoteContent.toDomain(): Content = Content(
     id = id,
-    title = title,
+    title = title ?: name ?: "",
     posterPath = posterPath?.buildModel() ?: "",
 )
 
@@ -71,14 +71,14 @@ fun RemoteVideo.toDomain() =
         }
     )
 
-fun RemoteMovieDetail.toDomain(): MovieDetail = MovieDetail(
+fun RemoteContentDetail.toDomain(): Details = Details(
     genres = genres.map { it.toDomain() },
     id = id,
     overview = overview,
     posterPath = posterPath.buildModel("w500"),
-    releaseDate = releaseDate,
+    releaseDate = releaseDate ?: firstAirDate ?: "",
     tagline = tagline,
-    title = title,
+    title = title ?: name ?: "",
     voteAverage = voteAverage
 )
 

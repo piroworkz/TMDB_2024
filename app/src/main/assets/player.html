@@ -23,9 +23,6 @@
                 'modestbranding': 1,
                 'rel': 0,
                 'showinfo': 0,
-                'iv_load_policy': 3,
-                'cc_load_policy': 0,
-                'disablekb': 1,
                 'fs': 0
             },
             events: {
@@ -35,8 +32,13 @@
         });
     }
 
+    function loadVideos(ids) {
+    if (player && ids) {
+        player.cuePlaylist(ids);
+    }
+}
+
     function onPlayerReady(event) {
-        console.log('<--' + event.data);
         event.target.playVideo();
     }
 
