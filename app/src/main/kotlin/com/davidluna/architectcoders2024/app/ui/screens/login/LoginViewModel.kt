@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.ItemsGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.requests.LoginRequest
-import com.davidluna.architectcoders2024.usecases.auth.CreateGuestSessionIdUseCase
-import com.davidluna.architectcoders2024.usecases.auth.CreateRequestTokenUseCase
-import com.davidluna.architectcoders2024.usecases.auth.CreateSessionIdUseCase
-import com.davidluna.architectcoders2024.usecases.auth.GetUserAccountUseCase
+import com.davidluna.architectcoders2024.usecases.session.CreateGuestSessionIdUseCase
+import com.davidluna.architectcoders2024.usecases.session.CreateRequestTokenUseCase
+import com.davidluna.architectcoders2024.usecases.session.CreateSessionIdUseCase
+import com.davidluna.architectcoders2024.usecases.session.GetUserAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -89,7 +89,7 @@ class LoginViewModel @Inject constructor(
         run {
             createGuestSessionIdUseCase().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
-                ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home)) }
+                ifRight = { sendEvent(LoginEvent.IsLoggedIn(ItemsGraph.Home())) }
             )
         }
     }
@@ -97,7 +97,7 @@ class LoginViewModel @Inject constructor(
     private fun getAccount() = run {
         getUserAccountUseCase().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesGraph.Home)) }
+            ifRight = { sendEvent(LoginEvent.IsLoggedIn(ItemsGraph.Home())) }
         )
     }
 

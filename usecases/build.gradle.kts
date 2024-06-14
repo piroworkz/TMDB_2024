@@ -8,7 +8,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":domain"))
+    implementation(projects.domain)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.arrow.core)
     implementation(libs.javaxInject)

@@ -1,8 +1,10 @@
 package com.davidluna.architectcoders2024.app.ui.theme.locals
 
+import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.fragment.app.FragmentActivity
 import com.davidluna.architectcoders2024.app.MainActivity
 import com.davidluna.architectcoders2024.app.ui.theme.DimensDp
 
@@ -13,7 +15,8 @@ fun MainActivity.Locals(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalActivity provides this,
+        LocalApplication provides this.application,
+        LocalFragmentActivity provides this,
         LocalDimensDp provides dimensDp,
     ) {
         content()
@@ -28,8 +31,13 @@ object Locals {
         @ReadOnlyComposable
         get() = LocalDimensDp.current
 
-    val activity: MainActivity
+    val application: Application
         @Composable
         @ReadOnlyComposable
-        get() = LocalActivity.current
+        get() = LocalApplication.current
+
+    val fragmentActivity: FragmentActivity
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalFragmentActivity.current
 }

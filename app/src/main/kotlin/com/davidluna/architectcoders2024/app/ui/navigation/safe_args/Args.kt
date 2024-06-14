@@ -7,6 +7,16 @@ sealed class Args(
     override val type: NavType<*>
 ) : SafeArgs {
 
+    data object Type : Args(
+        name = "CONTENT_TYPE",
+        type = NavType.EnumType(ContentType::class.java)
+    )
+
+    data object LoadMovies : Args(
+        name = ITEM_TYPE,
+        type = NavType.BoolType
+    )
+
     data object MovieId : Args(
         name = ID,
         type = NavType.IntType
@@ -14,5 +24,10 @@ sealed class Args(
 
     companion object {
         private const val ID = "ID"
+        private const val ITEM_TYPE = "ITEM_TYPE"
     }
+}
+
+enum class ContentType {
+    MOVIE, TV
 }

@@ -1,6 +1,7 @@
 [versions]
 #config
 appId = "com.davidluna.architectcoders2024"
+composeAndroidPermissions = "1.0.0"
 hiltWork = "1.2.0"
 minSdk = "26"
 targetSdk = "34"
@@ -9,14 +10,14 @@ versionName = "1.0"
 #android
 agp = "8.3.2"
 biometric = "1.2.0-alpha05"
-datastoreCore = "1.1.0"
+datastoreCore = "1.1.1"
 kotlin = "1.9.23"
 kotlin-coroutines = "1.7.3"
-coreKtx = "1.13.0"
+coreKtx = "1.13.1"
 kotlinxSerializationJson = "1.6.2"
-lifecycleRuntimeKtx = "2.7.0"
+lifecycleRuntimeKtx = "2.8.0"
 #compose
-composeBom = "2024.04.01"
+composeBom = "2024.05.00"
 compose-navigation = "2.7.7"
 compose-constraint-layout = "1.0.1"
 activityCompose = "1.9.0"
@@ -28,8 +29,8 @@ kotlin-converter = "1.0.0"
 okhttp = "4.12.0"
 arrow = "1.2.1"
 #paging
-pagingCompose = "3.3.0-beta01"
-pagingRuntime = "3.2.1"
+pagingCompose = "3.3.0"
+pagingRuntime = "3.3.0"
 #protobuf
 protobufJavalite = "3.21.11"
 protobufKotlinLite = "3.21.11"
@@ -43,6 +44,7 @@ javaxInject = "1"
 kapt = "1.9.23"
 
 [libraries]
+compose-android-permissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }

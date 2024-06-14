@@ -16,20 +16,19 @@ val key: String = Properties().let {
 }
 
 android {
-    namespace = libs.versions.appId.get()
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    namespace = appConfig.versions.appId.get()
+    compileSdk = appConfig.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        applicationId = libs.versions.appId.get()
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = libs.versions.versionName.get()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = appConfig.versions.appId.get()
+        minSdk = appConfig.versions.minSdk.get().toInt()
+        targetSdk = appConfig.versions.targetSdk.get().toInt()
+        versionCode = appConfig.versions.versionCode.get().toInt()
+        versionName = appConfig.versions.versionName.get()
+        testInstrumentationRunner = appConfig.versions.testInstrumentationRunner.get()
         vectorDrawables {
             useSupportLibrary = true
         }
-
         buildConfigField("String", "API_KEY", "\"$key\"")
     }
 
@@ -54,22 +53,19 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = appConfig.versions.kotlinCompilerExtensionVersion.get()
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":usecases"))
-    implementation(project(":data"))
-
+    implementation(projects.domain)
+    implementation(projects.usecases)
+    implementation(projects.data)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.compose.activity)
@@ -99,7 +95,9 @@ dependencies {
     implementation(libs.hiltNavigationCompose)
     implementation(libs.hiltAndroid)
     kapt(libs.hiltCompiler)
+    implementation(libs.compose.android.permissions)
 
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
     debugImplementation(libs.compose.ui.tooling)
 
 }
@@ -112,7 +110,6 @@ protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.21.12"
     }
-
     generateProtoTasks {
         all().forEach {
             it.builtins {

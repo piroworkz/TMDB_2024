@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.app.data.local.datastore
 
 import androidx.datastore.core.DataStore
-import com.davidluna.architectcoders2024.data.sources.PreferencesDataSource
+import com.davidluna.architectcoders2024.data.sources.preferences.PreferencesDataSource
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import com.davidluna.protodatastore.ProtoPreferences
 import kotlinx.coroutines.flow.Flow

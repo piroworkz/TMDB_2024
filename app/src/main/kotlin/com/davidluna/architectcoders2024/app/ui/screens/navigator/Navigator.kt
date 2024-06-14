@@ -16,7 +16,7 @@ import com.davidluna.architectcoders2024.app.ui.composables.NavDrawerView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.authNavGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.moviesNavGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.itemsNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.splashNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.navigateTo
 import com.davidluna.architectcoders2024.app.ui.navigation.route
@@ -30,11 +30,14 @@ fun Navigator(
 
     ModalNavigationDrawer(
         drawerContent = {
-            NavDrawerView(
-                isGuest = state.user == null,
-                user = state.user
-            ) {
-                drawer.toggleState()
+            if (isTopLevel) {
+                NavDrawerView(
+                    isGuest = state.user == null,
+                    user = state.user
+                ) {
+                    it?.let { controller.navigateTo(it) }
+                    drawer.toggleState()
+                }
             }
         },
         drawerState = drawer.state,
@@ -73,7 +76,7 @@ fun Navigator(
                     }
                 }
 
-                moviesNavGraph(
+                itemsNavGraph(
                     navigateTo = { navigateTo(it) },
                     navigateUp = { popBackStack() }
                 )

@@ -7,6 +7,6 @@ import com.davidluna.architectcoders2024.usecases.repositories.MovieDetailsRepos
 import javax.inject.Inject
 
 class GetMovieVideosUseCase @Inject constructor(private val repository: MovieDetailsRepository) {
-    suspend operator fun invoke(movieId: Int): Either<AppError, List<YoutubeVideo>> =
-        repository.getMovieVideos(movieId)
+    suspend operator fun invoke(endpoint: String): Either<AppError, List<YoutubeVideo>> =
+        repository.getVideos(endpoint)
 }
