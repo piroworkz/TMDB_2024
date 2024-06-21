@@ -13,13 +13,11 @@ import androidx.navigation.compose.NavHost
 import com.davidluna.architectcoders2024.app.MainViewModel
 import com.davidluna.architectcoders2024.app.ui.composables.AppBarView
 import com.davidluna.architectcoders2024.app.ui.composables.NavDrawerView
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.StartNav
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.authNavGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.itemsNavGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.moviesNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.splashNavGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.navigateTo
-import com.davidluna.architectcoders2024.app.ui.navigation.route
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
@@ -56,27 +54,27 @@ fun Navigator(
         ) { paddingValues: PaddingValues ->
             NavHost(
                 navController = controller,
-                startDestination = InitGraph.Init.route(),
+                startDestination = StartNav.Init,
                 modifier = Modifier
                     .padding(paddingValues)
                     .background(appGradient())
             ) {
 
                 splashNavGraph {
-                    controller.navigateTo(it) {
-                        popUpTo(InitGraph.Init.route()) { inclusive = true }
+                    controller.navigate(it) {
+                        popUpTo(StartNav.Init) { inclusive = true }
                         launchSingleTop = true
                     }
                 }
 
                 authNavGraph {
-                    controller.navigateTo(it) {
-                        popUpTo(AuthGraph.Init.route()) { inclusive = true }
+                    controller.navigate(it) {
+                        popUpTo(AuthNav.Init) { inclusive = true }
                         launchSingleTop = true
                     }
                 }
 
-                itemsNavGraph(
+                moviesNavGraph(
                     navigateTo = { navigateTo(it) },
                     navigateUp = { popBackStack() }
                 )
@@ -84,7 +82,6 @@ fun Navigator(
             }
         }
     }
-
 }
 
 @Preview(
@@ -94,8 +91,6 @@ fun Navigator(
 @Composable
 private fun AppScaffoldPreView() {
     TmdbTheme {
-        Navigator(
-            state = MainViewModel.State()
-        )
+        Navigator()
     }
 }

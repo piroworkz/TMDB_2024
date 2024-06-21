@@ -1,8 +1,6 @@
 package com.davidluna.architectcoders2024.app.ui.navigation.destinations
 
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.SafeArgs
+import kotlinx.serialization.Serializable
 
-sealed interface Destination {
-    val name: String
-    val args: List<Pair<SafeArgs, Any?>>
-}
+@Serializable
+sealed interface Destination
