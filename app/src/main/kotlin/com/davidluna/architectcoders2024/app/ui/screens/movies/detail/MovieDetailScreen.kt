@@ -42,7 +42,13 @@ fun MovieDetailScreen(
         ) {
             PostersPagerView(images = joinImages(state))
             MovieDetailsView(state.movieDetail) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.VideoPlayer(movieId = state.movieDetail?.id)))
+                sendEvent(
+                    MovieDetailEvent.OnNavigate(
+                        MoviesGraph.VideoPlayer(
+                            movieId = state.movieDetail?.id ?: 0
+                        )
+                    )
+                )
             }
             Spacer(modifier = Modifier.padding(all = 16.dp))
 
@@ -57,17 +63,17 @@ fun MovieDetailScreen(
                 sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
             }
 
-        Spacer(modifier = Modifier.padding(all = 16.dp))
-    }
+            Spacer(modifier = Modifier.padding(all = 16.dp))
+        }
 
-    if (state.isLoading) {
-        CircularProgressIndicator()
-    }
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        }
 
-    ErrorDialogView(error = state.appError) {
-        sendEvent(MovieDetailEvent.ResetError)
+        ErrorDialogView(error = state.appError) {
+            sendEvent(MovieDetailEvent.ResetError)
+        }
     }
-}
 
 }
 

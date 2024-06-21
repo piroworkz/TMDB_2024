@@ -39,6 +39,7 @@ class RegionSource(
             }
             countryCode
         } else {
+            @Suppress("DEPRECATION")
             coder.getFromLocation(location.latitude, location.longitude, 1)
                 ?.firstOrNull()?.countryCode
         } ?: DEFAULT_COUNTRY_CODE

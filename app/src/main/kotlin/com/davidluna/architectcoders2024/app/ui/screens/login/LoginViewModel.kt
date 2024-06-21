@@ -7,11 +7,10 @@ import com.davidluna.architectcoders2024.app.data.remote.model.authentication.Re
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteGravatar
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteLoginRequest
 import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteUserAccountDetail
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
-import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.app.data.repositories.AuthenticationRepository
 import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav.Login
+import com.davidluna.architectcoders2024.app.utils.toAppError
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.protodatastore.AuthenticationValues
 import com.davidluna.protodatastore.Avatar
@@ -100,7 +99,7 @@ class LoginViewModel(
     private fun getArguments() {
         if (args.isEmpty()) return
         val uri =
-            Uri.parse(Login.deepLinks[0].uriPattern?.replace("{${Auth.name}}", args))
+            Uri.parse(Login.link.uriPattern?.replace("{${Login.NAME}}", args))
         val approved = uri.getBooleanQueryParameter("approved", false)
         val requestToken = uri.getQueryParameter("request_token")
         if (approved && requestToken != null) {

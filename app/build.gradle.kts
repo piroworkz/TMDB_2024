@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.protobufPlugin)
+    alias(libs.plugins.compose.compiler)
 }
 
 val key: String = Properties().let {
@@ -52,9 +53,7 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -96,7 +95,7 @@ dependencies {
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
     implementation(libs.biometric)
-    implementation (libs.play.services.location)
+    implementation(libs.play.services.location)
     debugImplementation(libs.compose.ui.tooling)
 
 }
