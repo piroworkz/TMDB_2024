@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.splash.animation
+package com.davidluna.architectcoders2024.app.ui.screens.animation
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.davidluna.architectcoders2024.app.ui.screens.animation.AnimationStateHolder
 
 @Composable
 fun rememberAnimationState(

@@ -23,7 +23,7 @@ class MainActivity : FragmentActivity() {
             val state by viewModel.state.collectAsState()
             Locals(dimensDp = DimensDp()) {
                 TmdbTheme {
-                    Navigator(state = state)
+                    Navigator(state = state, sendEvent = viewModel::setContentKind)
                 }
             }
         }

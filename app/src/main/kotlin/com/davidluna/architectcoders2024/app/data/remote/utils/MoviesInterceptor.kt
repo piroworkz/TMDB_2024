@@ -23,9 +23,6 @@ class MoviesInterceptor @Inject constructor(
 
     init {
         collectAuth()
-        scope.launch {
-            region = getCountryCodeUseCase()
-        }
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -64,9 +61,18 @@ class MoviesInterceptor @Inject constructor(
 
     private fun collectAuth() {
         scope.launch {
-            sessionIdUseCase().collect {
-                id = it
+            sessionIdUseCase().collect { sessionId: String ->
+                id = sessionId
+                if (sessionId.isNotEmpty()) {
+                    setRegion()
+                }
             }
+        }
+    }
+
+    private fun setRegion() {
+        scope.launch {
+            region = getCountryCodeUseCase()
         }
     }
 

@@ -19,14 +19,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
+import com.davidluna.architectcoders2024.app.ui.screens.animation.AnimationState
+import com.davidluna.architectcoders2024.app.ui.screens.animation.rememberAnimationState
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BioAuthState
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.rememberBiometricAuth
-import com.davidluna.architectcoders2024.app.ui.screens.splash.animation.rememberAnimationState
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.AnimationLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.screens.splash.views.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.domain.AppError
 import com.piroworkz.composeandroidpermissions.PermissionLaunchedEffect
+import com.piroworkz.composeandroidpermissions.PermissionsState.GRANTED
 import com.piroworkz.composeandroidpermissions.PermissionsState.SHOULD_SHOW_RATIONALE
 import com.piroworkz.composeandroidpermissions.rememberPermissionsState
 
@@ -39,13 +41,20 @@ fun SplashScreen(
     val animationState = rememberAnimationState()
     val biometricAuthState: BioAuthState = rememberBiometricAuth()
 
-    BiometricsLaunchedEffect(biometricAuthState, state, sendEvent = { sendEvent(it) })
+
     AnimationLaunchedEffect(animationState)
-    PermissionLaunchedEffect(
-        permissions,
-        ACCESS_COARSE_LOCATION,
-        ACCESS_FINE_LOCATION
-    ) { sendEvent(SplashEvent.OnGranted) }
+
+    if (animationState.currentState == AnimationState.FINISH) {
+        PermissionLaunchedEffect(
+            permissions,
+            ACCESS_COARSE_LOCATION,
+            ACCESS_FINE_LOCATION
+        ) { sendEvent(SplashEvent.OnGranted) }
+    }
+
+    if (permissions.state == GRANTED) {
+        BiometricsLaunchedEffect(biometricAuthState, state, sendEvent = { sendEvent(it) })
+    }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Image(

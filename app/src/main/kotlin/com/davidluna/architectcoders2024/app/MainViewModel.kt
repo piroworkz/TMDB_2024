@@ -3,23 +3,21 @@ package com.davidluna.architectcoders2024.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.toAppError
-import com.davidluna.architectcoders2024.app.utils.log
 import com.davidluna.architectcoders2024.domain.AppError
+import com.davidluna.architectcoders2024.domain.ContentKind
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 import com.davidluna.architectcoders2024.usecases.preferences.UserAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val userAccountUseCase: UserAccountUseCase,
+    private val userAccountUseCase: UserAccountUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State())
@@ -32,30 +30,23 @@ class MainViewModel @Inject constructor(
     data class State(
         val loading: Boolean = false,
         val appError: AppError? = null,
-        val user: UserAccount? = null
+        val user: UserAccount? = null,
+        val contentKind: ContentKind = ContentKind.MOVIE
     )
-
 
     private fun collectUser() {
         viewModelScope.launch {
             userAccountUseCase()
-                .onStart {
-                    "onStart".log("MainViewModel")
-                    _state.update { it.copy(loading = true) }
-                }
-                .onCompletion {
-                    "onCompletion".log("MainViewModel")
-                    _state.update { it.copy(loading = false) }
-                }
                 .catch { error ->
-                    "catch".log("MainViewModel")
                     _state.update { it.copy(appError = error.toAppError()) }
                 }
                 .collect { user ->
-                    "collect".log("MainViewModel")
                     _state.update { it.copy(user = user) }
                 }
         }
     }
+
+    fun setContentKind(contentKind: ContentKind) =
+        _state.update { s -> s.copy(contentKind = contentKind) }
 
 }

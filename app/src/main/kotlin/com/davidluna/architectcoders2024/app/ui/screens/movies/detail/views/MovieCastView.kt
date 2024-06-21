@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,12 +18,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
-import com.davidluna.architectcoders2024.app.ui.screens.content.master.views.ReelTitleView
+import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.ReelTitleView
 import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 import com.davidluna.architectcoders2024.domain.responses.Cast
 
 @Composable
-fun ItemCastView(
+fun MovieCastView(
     cast: List<Cast>?,
 ) {
     val width = LocalConfiguration.current.screenWidthDp.dp

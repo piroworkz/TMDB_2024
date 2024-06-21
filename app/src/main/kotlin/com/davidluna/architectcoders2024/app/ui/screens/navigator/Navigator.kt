@@ -1,5 +1,7 @@
 package com.davidluna.architectcoders2024.app.ui.screens.navigator
 
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.End
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Start
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,16 +16,19 @@ import com.davidluna.architectcoders2024.app.MainViewModel
 import com.davidluna.architectcoders2024.app.ui.composables.AppBarView
 import com.davidluna.architectcoders2024.app.ui.composables.NavDrawerView
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.StartNav
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.authNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.moviesNavGraph
 import com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs.splashNavGraph
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.domain.ContentKind
 
 @Composable
 fun Navigator(
     state: MainViewModel.State,
+    sendEvent: (ContentKind) -> Unit
 ) = with(rememberNavigatorState()) {
 
     ModalNavigationDrawer(
@@ -33,7 +38,10 @@ fun Navigator(
                     isGuest = state.user == null,
                     user = state.user
                 ) {
-                    it?.let { controller.navigateTo(it) }
+                    it?.destination?.let { destination: Destination ->
+                        navigateTo(destination)
+                    }
+                    it?.contentKind?.let(sendEvent)
                     drawer.toggleState()
                 }
             }
@@ -57,24 +65,27 @@ fun Navigator(
                 startDestination = StartNav.Init,
                 modifier = Modifier
                     .padding(paddingValues)
-                    .background(appGradient())
+                    .background(appGradient()),
+                enterTransition = { slideIntoContainer(End) },
+                exitTransition = { slideOutOfContainer(Start) }
             ) {
 
                 splashNavGraph {
-                    controller.navigate(it) {
+                    navigateTo(it) {
                         popUpTo(StartNav.Init) { inclusive = true }
                         launchSingleTop = true
                     }
                 }
 
                 authNavGraph {
-                    controller.navigate(it) {
+                    navigateTo(it) {
                         popUpTo(AuthNav.Init) { inclusive = true }
                         launchSingleTop = true
                     }
                 }
 
                 moviesNavGraph(
+                    contentKind = state.contentKind,
                     navigateTo = { navigateTo(it) },
                     navigateUp = { popBackStack() }
                 )
@@ -91,6 +102,8 @@ fun Navigator(
 @Composable
 private fun AppScaffoldPreView() {
     TmdbTheme {
-        Navigator()
+        Navigator(MainViewModel.State()) {
+
+        }
     }
 }

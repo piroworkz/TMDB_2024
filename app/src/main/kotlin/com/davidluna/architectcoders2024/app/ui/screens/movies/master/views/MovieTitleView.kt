@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.master.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.master.views
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Dp
 import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 
 @Composable
-fun ItemTitleView(movieTitle: String?, imageSize: Dp) {
+fun MovieTitleView(movieTitle: String?, imageSize: Dp) {
     if (movieTitle == null) return
     Text(
         text = movieTitle,

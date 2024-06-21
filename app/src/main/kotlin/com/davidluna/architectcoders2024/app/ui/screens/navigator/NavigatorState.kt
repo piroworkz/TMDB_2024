@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import kotlinx.coroutines.CoroutineScope
@@ -49,9 +50,8 @@ class NavigatorState(
         navController.popBackStack()
     }
 
-    fun navigateTo(destination: Destination) {
-        navController.navigate(destination)
-    }
+    fun navigateTo(destination: Destination, builder: NavOptionsBuilder.() -> Unit = {}) =
+        navController.navigate(destination) { builder() }
 
     private fun collectFlow(
         scope: CoroutineScope,

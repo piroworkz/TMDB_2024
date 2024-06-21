@@ -31,5 +31,3 @@ fun GetContentUseCase.asPagingFlow(
         .cachedIn(scope)
 
 fun String.log(name: String = javaClass.simpleName) = Log.d("<-- $name", this)
-
-
