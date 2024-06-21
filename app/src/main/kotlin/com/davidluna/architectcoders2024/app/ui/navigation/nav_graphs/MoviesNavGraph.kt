@@ -6,7 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.davidluna.architectcoders2024.app.app
 import com.davidluna.architectcoders2024.app.data.remote.services.movies.MovieDetailService
 import com.davidluna.architectcoders2024.app.data.remote.services.movies.MoviesService
@@ -14,9 +16,6 @@ import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepos
 import com.davidluna.architectcoders2024.app.data.repositories.MoviesRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.route
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Args
-import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationComposable
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailScreen
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailViewModel
@@ -30,12 +29,12 @@ fun NavGraphBuilder.moviesNavGraph(
     navigateTo: (Destination) -> Unit,
     navigateUp: () -> Unit
 ) {
-    navigation(
-        route = MoviesGraph.Init.route(),
-        startDestination = MoviesGraph.Home.route()
+    navigation<MoviesGraph.Init>(
+        startDestination = MoviesGraph.Movies()
     ) {
 
-        setDestinationComposable(MoviesGraph.Home) {
+        composable<MoviesGraph.Movies> {
+
             val context = LocalContext.current
             val viewModel: MoviesViewModel = viewModel { context.buildMoviesViewModel() }
             val state by viewModel.state.collectAsState()
@@ -50,8 +49,8 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        setDestinationComposable(MoviesGraph.Detail()) {
-            val movieId = it.arguments?.getInt(Args.DetailId.name)
+        composable<MoviesGraph.Detail> {
+            val movieId = it.toRoute<MoviesGraph.Detail>().movieId
             val context = LocalContext.current
             val viewModel = viewModel { context.buildMovieDetailViewModel(movieId) }
             val state by viewModel.state.collectAsState()
@@ -67,8 +66,8 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        setDestinationComposable(MoviesGraph.VideoPlayer()) {
-            val movieId = it.arguments?.getInt(Args.DetailId.name)
+        composable<MoviesGraph.VideoPlayer> {
+            val movieId = it.toRoute<MoviesGraph.VideoPlayer>().movieId
             val context = LocalContext.current
             val viewModel = viewModel { context.buildPlayerViewModel(movieId) }
             val state by viewModel.state.collectAsState()

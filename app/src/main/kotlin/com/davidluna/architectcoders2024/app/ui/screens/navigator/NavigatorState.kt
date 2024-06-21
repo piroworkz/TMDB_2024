@@ -10,8 +10,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.navigateTo
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -40,7 +38,7 @@ class NavigatorState(
     }
 
     fun navigateTo(destination: Destination) {
-        navController.navigateTo(destination)
+        navController.navigate(destination)
     }
 
     private fun collectFlow(
@@ -50,8 +48,8 @@ class NavigatorState(
         scope.launch {
             backStackEntry.collect {
                 it.arguments?.let { args ->
-                    isTopLevel = args.getBoolean(DefaultArgs.TopLevel.name)
-                    hideAppBar = args.getBoolean(DefaultArgs.HideAppBar.name)
+                    hideAppBar = args.getBoolean("hideAppBar")
+                    isTopLevel = args.getBoolean("isTopLevel")
                 }
             }
         }

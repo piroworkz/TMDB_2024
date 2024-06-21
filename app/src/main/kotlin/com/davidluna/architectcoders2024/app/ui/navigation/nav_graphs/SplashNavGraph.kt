@@ -6,25 +6,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.app.app
 import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.InitGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.route
-import com.davidluna.architectcoders2024.app.ui.navigation.setDestinationComposable
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.StartNav
 import com.davidluna.architectcoders2024.app.ui.screens.splash.SplashScreen
 import com.davidluna.architectcoders2024.app.ui.screens.splash.SplashViewModel
 
 fun NavGraphBuilder.splashNavGraph(
     navigateTo: (Destination) -> Unit
 ) {
-    navigation(
-        route = InitGraph.Init.route(),
-        startDestination = InitGraph.Splash.route(),
+    navigation<StartNav.Init>(
+        startDestination = StartNav.Splash(true),
     ) {
 
-        setDestinationComposable(InitGraph.Splash) {
+        composable<StartNav.Splash> {
             val context = LocalContext.current
             val viewModel: SplashViewModel = viewModel { context.createSplashVM() }
             val state by viewModel.state.collectAsState()
