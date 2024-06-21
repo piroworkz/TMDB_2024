@@ -1,21 +1,15 @@
 package com.davidluna.architectcoders2024.app.ui.navigation.nav_graphs
 
-import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import androidx.navigation.toRoute
-import com.davidluna.architectcoders2024.app.app
-import com.davidluna.architectcoders2024.app.data.remote.services.movies.MovieDetailService
-import com.davidluna.architectcoders2024.app.data.remote.services.movies.MoviesService
-import com.davidluna.architectcoders2024.app.data.repositories.MovieDetailsRepository
-import com.davidluna.architectcoders2024.app.data.repositories.MoviesRepository
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailScreen
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.MovieDetailViewModel
@@ -24,23 +18,25 @@ import com.davidluna.architectcoders2024.app.ui.screens.movies.master.MoviesScre
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.MoviesViewModel
 import com.davidluna.architectcoders2024.app.ui.screens.player.VideoPlayerScreen
 import com.davidluna.architectcoders2024.app.ui.screens.player.VideoPlayerViewModel
+import com.davidluna.architectcoders2024.domain.ContentKind
 
 fun NavGraphBuilder.moviesNavGraph(
+    contentKind: ContentKind,
     navigateTo: (Destination) -> Unit,
     navigateUp: () -> Unit
 ) {
-    navigation<MoviesGraph.Init>(
-        startDestination = MoviesGraph.Movies()
+    navigation<MoviesNavigation.Init>(
+        startDestination = MoviesNavigation.Movies()
     ) {
 
-        composable<MoviesGraph.Movies> {
-
-            val context = LocalContext.current
-            val viewModel: MoviesViewModel = viewModel { context.buildMoviesViewModel() }
+        composable<MoviesNavigation.Movies> {
+            val viewModel: MoviesViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
-
-            state.selectedMovieId?.let {
-                navigateTo(MoviesGraph.Detail(it))
+            SetContentKind(contentKind = contentKind) {
+                viewModel.sendEvent(MoviesEvent.SetContentKind(contentKind))
+            }
+            state.destination?.let {
+                navigateTo(it)
                 viewModel.sendEvent(MoviesEvent.OnMovieClicked(null))
             }
             MoviesScreen(
@@ -49,12 +45,12 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        composable<MoviesGraph.Detail> {
-            val movieId = it.toRoute<MoviesGraph.Detail>().movieId
-            val context = LocalContext.current
-            val viewModel = viewModel { context.buildMovieDetailViewModel(movieId) }
+        composable<MoviesNavigation.Detail> {
+            val viewModel: MovieDetailViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
-
+            SetContentKind(contentKind = contentKind) {
+                viewModel.sendEvent(MovieDetailEvent.SetContentKind(contentKind))
+            }
             state.destination?.let { destination ->
                 navigateTo(destination)
                 viewModel.sendEvent(MovieDetailEvent.OnNavigate(null))
@@ -66,31 +62,25 @@ fun NavGraphBuilder.moviesNavGraph(
             )
         }
 
-        composable<MoviesGraph.VideoPlayer> {
-            val movieId = it.toRoute<MoviesGraph.VideoPlayer>().movieId
-            val context = LocalContext.current
-            val viewModel = viewModel { context.buildPlayerViewModel(movieId) }
+        composable<MoviesNavigation.VideoPlayer> {
+            val viewModel: VideoPlayerViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
+            SetContentKind(contentKind = contentKind) {
+                viewModel.setContentKind(contentKind)
+            }
+
             VideoPlayerScreen(state, navigateUp)
         }
 
     }
 }
 
-fun Context.buildPlayerViewModel(movieId: Int?): VideoPlayerViewModel {
-    val repository = MovieDetailsRepository(app.client.create(MovieDetailService::class.java))
-    return VideoPlayerViewModel(repository, movieId)
-}
-
-private fun Context.buildMovieDetailViewModel(
-    movieId: Int?
-): MovieDetailViewModel {
-    val repository = MovieDetailsRepository(app.client.create(MovieDetailService::class.java))
-    val moviesRepository = MoviesRepository(app.client.create(MoviesService::class.java))
-    return MovieDetailViewModel(movieId, repository, moviesRepository)
-}
-
-private fun Context.buildMoviesViewModel(): MoviesViewModel {
-    val repository = MoviesRepository(app.client.create(MoviesService::class.java))
-    return MoviesViewModel(repository)
+@Composable
+private fun SetContentKind(
+    contentKind: ContentKind,
+    setter: () -> Unit
+) {
+    LaunchedEffect(key1 = contentKind) {
+        setter()
+    }
 }

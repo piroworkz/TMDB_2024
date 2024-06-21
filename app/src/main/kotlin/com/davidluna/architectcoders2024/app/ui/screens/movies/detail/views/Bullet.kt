@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

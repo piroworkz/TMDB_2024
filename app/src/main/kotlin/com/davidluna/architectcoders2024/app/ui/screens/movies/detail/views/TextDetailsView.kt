@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.detail.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

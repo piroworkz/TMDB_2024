@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.davidluna.architectcoders2024.app.ui.composables.AppBarView
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
-import com.davidluna.architectcoders2024.app.utils.log
 
 @Composable
 fun VideoPlayerScreen(
@@ -38,7 +37,6 @@ fun VideoPlayerScreen(
         if (state.videos.isNotEmpty()) {
             AndroidView(
                 factory = {
-                    "factory called".log("VideoPlayerScreen")
                     webView.apply {
                         loadData(loadHtml(state.videos), "text/html", "UTF-8")
                     }

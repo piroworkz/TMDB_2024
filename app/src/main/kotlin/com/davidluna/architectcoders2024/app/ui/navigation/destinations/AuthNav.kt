@@ -11,7 +11,7 @@ sealed interface AuthNav : Destination {
     data object Init : AuthNav
 
     @Serializable
-    data class Login(val hideAppBar: Boolean = false) : AuthNav {
+    data class Login(val hideAppBar: Boolean = true) : AuthNav {
         @Serializable
         companion object Link {
             const val NAME : String = "APPROVED"

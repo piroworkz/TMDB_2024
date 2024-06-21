@@ -7,14 +7,14 @@ import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.ItemsGraph
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ContentType.MOVIE
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ContentType.TV
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
+import com.davidluna.architectcoders2024.domain.ContentKind
 
 sealed class DrawerDestination(
     val titleResource: Int,
     val iconResource: ImageVector,
-    val destination: Destination? = null
+    val destination: Destination? = null,
+    val contentKind: ContentKind? = null
 ) {
 
     companion object {
@@ -24,13 +24,15 @@ sealed class DrawerDestination(
     data object Movies : DrawerDestination(
         titleResource = R.string.drawer_movies,
         iconResource = Icons.Outlined.Movie,
-        destination = ItemsGraph.Home(contentType = MOVIE)
+        destination = MoviesNavigation.Movies(),
+        contentKind = ContentKind.MOVIE
     )
 
     data object TvShows : DrawerDestination(
         titleResource = R.string.drawer_tv_shows,
         iconResource = Icons.Outlined.Tv,
-        destination = ItemsGraph.Home(contentType = TV)
+        destination = MoviesNavigation.Movies(),
+        contentKind = ContentKind.TV_SHOW
     )
 
     data object CloseSession : DrawerDestination(

@@ -16,13 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.ui.composables.ErrorDialogView
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesGraph
-import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieCastView
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.MovieDetailsView
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.PostersPagerView
 import com.davidluna.architectcoders2024.app.ui.screens.movies.detail.views.joinImages
 import com.davidluna.architectcoders2024.app.ui.screens.movies.master.views.MoviesLazyRow
+import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 
 @Composable
@@ -44,7 +44,7 @@ fun MovieDetailScreen(
             MovieDetailsView(state.movieDetail) {
                 sendEvent(
                     MovieDetailEvent.OnNavigate(
-                        MoviesGraph.VideoPlayer(
+                        MoviesNavigation.VideoPlayer(
                             movieId = state.movieDetail?.id ?: 0
                         )
                     )
@@ -56,11 +56,11 @@ fun MovieDetailScreen(
 
 
             MoviesLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
+                sendEvent(MovieDetailEvent.OnNavigate(MoviesNavigation.Detail(it)))
             }
 
             MoviesLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesGraph.Detail(it)))
+                sendEvent(MovieDetailEvent.OnNavigate(MoviesNavigation.Detail(it)))
             }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))

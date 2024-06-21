@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.master.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.master.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,7 +49,7 @@ fun ReelView(
                         model = movie.posterPath,
                         imageSize = imageSize
                     )
-                    ItemTitleView(movie.title, imageSize)
+                    MovieTitleView(movie.title, imageSize)
                 }
             }
         }

@@ -35,25 +35,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.R
 import com.davidluna.architectcoders2024.app.MainActivity
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.screens.login.views.appGradient
 import com.davidluna.architectcoders2024.app.ui.theme.DimensDp
 import com.davidluna.architectcoders2024.app.ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.app.ui.theme.White
 import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
-import com.davidluna.architectcoders2024.app.utils.log
 import com.davidluna.architectcoders2024.domain.session.UserAccount
 
 @Composable
 fun NavDrawerView(
     isGuest: Boolean = false,
     user: UserAccount? = null,
-    onSelected: (Destination?) -> Unit
+    onSelected: (DrawerDestination?) -> Unit
 ) {
 
     val size = LocalConfiguration.current.screenWidthDp.dp / 5
-
-    user?.avatarPath?.log("user avatar")
 
     Column(
         modifier = Modifier
@@ -114,7 +110,7 @@ fun NavDrawerView(
                 modifier = Modifier
                     .padding(Locals.dimensDp.medium)
                     .fillMaxWidth()
-                    .clickable { onSelected(item.destination) },
+                    .clickable { onSelected(item) },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(

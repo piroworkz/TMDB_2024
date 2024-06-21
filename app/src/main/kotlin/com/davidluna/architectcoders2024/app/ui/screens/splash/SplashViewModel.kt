@@ -5,14 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.toAppError
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.ItemsGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.usecases.preferences.SessionIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val sessionId: SessionIdUseCase,
+    private val sessionId: SessionIdUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State())
@@ -52,7 +51,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun setLoggedIn() {
-        _state.update { it.copy(destination = MoviesGraph.Movies()) }
+        _state.update { it.copy(destination = MoviesNavigation.Movies()) }
     }
 
     private fun resetError() {

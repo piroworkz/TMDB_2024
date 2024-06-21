@@ -18,8 +18,6 @@ import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuth
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SHOW_PROMPT
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.SUCCESS
 import com.davidluna.architectcoders2024.app.ui.screens.biometrics.BiometricAuthState.UNAVAILABLE
-import com.davidluna.architectcoders2024.app.ui.theme.locals.LocalFragmentActivity
-import com.davidluna.architectcoders2024.app.ui.theme.locals.LocalApplication
 import com.davidluna.architectcoders2024.app.ui.theme.locals.Locals
 import java.util.concurrent.Executor
 

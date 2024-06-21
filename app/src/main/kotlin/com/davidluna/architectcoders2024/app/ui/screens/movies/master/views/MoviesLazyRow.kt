@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.master.views
+package com.davidluna.architectcoders2024.app.ui.screens.movies.master.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +24,7 @@ import com.davidluna.architectcoders2024.domain.responses.movies.Content
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun ItemsLazyRow(
+fun MoviesLazyRow(
     title: Int,
     flow: Flow<PagingData<Content>>,
     onMovieClicked: (Int) -> Unit

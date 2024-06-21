@@ -4,15 +4,9 @@ import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteAvatar
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteGravatar
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteLoginRequest
-import com.davidluna.architectcoders2024.app.data.remote.model.authentication.RemoteUserAccountDetail
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph.Login
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.DefaultArgs.Auth
-import com.davidluna.architectcoders2024.app.utils.toAppError
-import com.davidluna.architectcoders2024.app.data.repositories.AuthenticationRepository
-import com.davidluna.architectcoders2024.app.data.repositories.SessionRepository
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
 import com.davidluna.architectcoders2024.domain.AppError
 import com.davidluna.architectcoders2024.domain.requests.LoginRequest
 import com.davidluna.architectcoders2024.usecases.session.CreateGuestSessionIdUseCase
@@ -94,7 +88,7 @@ class LoginViewModel @Inject constructor(
         run {
             createGuestSessionIdUseCase().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
-                ifRight = { sendEvent(LoginEvent.IsLoggedIn()) }
+                ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesNavigation.Movies())) }
             )
         }
     }
@@ -102,15 +96,15 @@ class LoginViewModel @Inject constructor(
     private fun getAccount() = run {
         getUserAccountUseCase().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { sendEvent(LoginEvent.IsLoggedIn()) }
+            ifRight = { sendEvent(LoginEvent.IsLoggedIn(MoviesNavigation.Movies())) }
         )
     }
 
     private fun getArguments() {
-        val args = savedStateHandle.get<String>(Auth.name)
+        val args = savedStateHandle.get<String>(AuthNav.Login.NAME)
         if (args.isNullOrEmpty()) return
         val uri =
-            Uri.parse(Login.link.uriPattern?.replace("{${Login.NAME}}", args))
+            Uri.parse(AuthNav.Login.link.uriPattern?.replace("{${AuthNav.Login.NAME}}", args))
         val approved = uri.getBooleanQueryParameter("approved", false)
         val requestToken = uri.getQueryParameter("request_token")
         if (approved && requestToken != null) {

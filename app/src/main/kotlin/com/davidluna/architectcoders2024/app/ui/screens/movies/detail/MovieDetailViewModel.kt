@@ -1,15 +1,15 @@
-package com.davidluna.architectcoders2024.app.ui.screens.content.detail
+package com.davidluna.architectcoders2024.app.ui.screens.movies.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.app.data.toAppError
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.Args
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ContentType
-import com.davidluna.architectcoders2024.app.ui.navigation.safe_args.ContentType.MOVIE
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.MoviesNavigation
 import com.davidluna.architectcoders2024.app.utils.asPagingFlow
+import com.davidluna.architectcoders2024.domain.ContentKind
 import com.davidluna.architectcoders2024.domain.responses.Cast
 import com.davidluna.architectcoders2024.domain.responses.movies.Content
 import com.davidluna.architectcoders2024.domain.responses.movies.Details
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemDetailViewModel @Inject constructor(
+class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getMovieDetails: GetMovieDetailsUseCase,
     private val getMovieImagesUseCase: GetMovieImagesUseCase,
@@ -40,18 +40,13 @@ class ItemDetailViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        savedStateHandle.apply {
-            get<ContentType>(Args.Type.name)?.let { contentType ->
-                _state.update { s -> s.copy(contentType = contentType) }
-                get<Int>(Args.MovieId.name)?.let { fetchData(it, contentType) }
-            }
-        }
+        getArgs(savedStateHandle)
     }
 
     data class State(
         val isLoading: Boolean = false,
         val appError: com.davidluna.architectcoders2024.domain.AppError? = null,
-        val contentType: ContentType? = null,
+        val contentKind: ContentKind? = null,
         val destination: Destination? = null,
         val movieDetail: Details? = null,
         val movieCredits: List<Cast> = emptyList(),
@@ -60,10 +55,17 @@ class ItemDetailViewModel @Inject constructor(
         val similar: Flow<PagingData<Content>> = emptyFlow(),
     )
 
-    fun sendEvent(event: ItemDetailEvent) {
+    fun sendEvent(event: MovieDetailEvent) {
         when (event) {
-            is ItemDetailEvent.OnNavigate -> setDestination(event.destination)
-            ItemDetailEvent.ResetError -> resetError()
+            is MovieDetailEvent.OnNavigate -> setDestination(event.destination)
+            MovieDetailEvent.ResetError -> resetError()
+            is MovieDetailEvent.SetContentKind -> setContentType(event)
+        }
+    }
+
+    private fun getArgs(savedStateHandle: SavedStateHandle) {
+        savedStateHandle.toRoute<MoviesNavigation.Detail>().apply {
+            fetchData(movieId)
         }
     }
 
@@ -73,8 +75,8 @@ class ItemDetailViewModel @Inject constructor(
 
     private fun resetError() = _state.update { it.copy(appError = null) }
 
-    private fun fetchData(movieId: Int, contentType: ContentType) {
-        val from = if (contentType == MOVIE) MOVIES else TV
+    private fun fetchData(movieId: Int) {
+        val from = if (_state.value.contentKind == ContentKind.MOVIE) MOVIES else TV
         getDetails(from, movieId)
         getImages(from, movieId)
         getRecommendations(from, movieId)
@@ -138,6 +140,10 @@ class ItemDetailViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun setContentType(event: MovieDetailEvent.SetContentKind) {
+        _state.update { s -> s.copy(contentKind = event.contentKind) }
     }
 
     private fun run(action: suspend CoroutineScope.() -> Unit) {
