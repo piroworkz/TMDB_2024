@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.app.ui.screens.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.app.data.toAppError
-import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthGraph
+import com.davidluna.architectcoders2024.app.ui.navigation.destinations.AuthNav
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.Destination
 import com.davidluna.architectcoders2024.app.ui.navigation.destinations.ItemsGraph
 import com.davidluna.architectcoders2024.domain.AppError
@@ -48,11 +48,11 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun onFailed() {
-        _state.update { it.copy(destination = AuthGraph.Login) }
+        _state.update { it.copy(destination = AuthNav.Login(true)) }
     }
 
     private fun setLoggedIn() {
-        _state.update { it.copy(destination = ItemsGraph.Home()) }
+        _state.update { it.copy(destination = MoviesGraph.Movies()) }
     }
 
     private fun resetError() {

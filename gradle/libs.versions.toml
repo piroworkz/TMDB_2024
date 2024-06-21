@@ -12,18 +12,18 @@ agp = "8.3.2"
 biometric = "1.2.0-alpha05"
 datastoreCore = "1.1.1"
 kotlin = "1.9.23"
-kotlin-coroutines = "1.7.3"
+kotlin-coroutines = "1.8.0"
 coreKtx = "1.13.1"
-kotlinxSerializationJson = "1.6.2"
-lifecycleRuntimeKtx = "2.8.0"
+kotlinxSerializationJson = "1.6.3"
+lifecycleRuntimeKtx = "2.8.2"
 #compose
-composeBom = "2024.05.00"
-compose-navigation = "2.7.7"
+composeBom = "2024.06.00"
+compose-navigation = "2.8.0-beta03"
 compose-constraint-layout = "1.0.1"
 activityCompose = "1.9.0"
-coil-compose = "2.4.0"
+coil-compose = "2.6.0"
 #other
-playServicesLocation = "21.2.0"
+playServicesLocation = "21.3.0"
 retrofit = "2.11.0"
 kotlin-converter = "1.0.0"
 okhttp = "4.12.0"
@@ -32,8 +32,8 @@ arrow = "1.2.1"
 pagingCompose = "3.3.0"
 pagingRuntime = "3.3.0"
 #protobuf
-protobufJavalite = "3.21.11"
-protobufKotlinLite = "3.21.11"
+protobufJavalite = "4.26.0"
+protobufKotlinLite = "4.26.0"
 protobuf = "0.9.4"
 jetbrainsKotlinJvm = "1.9.23"
 #hilt
@@ -84,6 +84,7 @@ hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" 
 hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
