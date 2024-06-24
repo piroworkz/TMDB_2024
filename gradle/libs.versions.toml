@@ -1,12 +1,4 @@
 [versions]
-#config
-appId = "com.davidluna.architectcoders2024"
-composeAndroidPermissions = "1.0.0"
-hiltWork = "1.2.0"
-minSdk = "26"
-targetSdk = "34"
-versionCode = "1"
-versionName = "1.0"
 #android
 agp = "8.3.2"
 biometric = "1.2.0-alpha05"
@@ -21,7 +13,9 @@ composeBom = "2024.06.00"
 compose-navigation = "2.8.0-beta03"
 compose-constraint-layout = "1.0.1"
 activityCompose = "1.9.0"
+navigation = "2.7.7"
 coil-compose = "2.6.0"
+composeAndroidPermissions = "1.0.0"
 #other
 playServicesLocation = "21.3.0"
 retrofit = "2.11.0"
@@ -37,54 +31,70 @@ protobufKotlinLite = "4.26.0"
 protobuf = "0.9.4"
 jetbrainsKotlinJvm = "1.9.23"
 #hilt
-hilt = "2.50"
+hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+hiltWork = "1.2.0"
 javaxInject = "1"
 #annotation processor
 kapt = "1.9.23"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+fragmentKtx = "1.8.0"
 
 [libraries]
-compose-android-permissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }
+coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+datastoreCore = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
+kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+navigation = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigation" }
+fragmentKtx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 #compose
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
-compose-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraint-layout" }
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+composeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+composeUi = { group = "androidx.compose.ui", name = "ui" }
+composeUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+composeUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+composeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+composeMaterial3 = { group = "androidx.compose.material3", name = "material3" }
+composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+composeNavigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
+composeConstraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraint-layout" }
+coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
+iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 #kotlin coroutines
-kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlinCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 #retrofit
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-kotlin-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter" }
+kotlinConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter" }
 #protobuf
-protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavalite" }
-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
+protobufJavalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavalite" }
+protobufKotlinLite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
 #okhttp
-okhttp-client = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
-arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+okhttpClient = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+arrowCore = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 #Paging
-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+pagingRuntime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 #android components
-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+playServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 #hilt
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
-
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+extJunit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+#build logic dependencies
+androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -94,4 +104,9 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 protobufPlugin = { id = "com.google.protobuf", version.ref = "protobuf" }
 hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
-
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+#Convention plugins
+frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.plugin", version = "unspecified" }
+uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }
+architectCodersAndroidApplication = { id = "architectcoders2024.android.application", version = "unspecified" }
+androidLibraryConventionPlugin = { id = "architectcoders2024.android.library.plugin", version = "unspecified" }

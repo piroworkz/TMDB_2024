@@ -7,3 +7,4 @@ versionName = "1.0"
 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 kotlinCompilerExtensionVersion = "1.5.11"
 protobufArtifact = "com.google.protobuf:protoc:3.21.12"
+
