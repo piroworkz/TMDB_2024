@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="player" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+
+<script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            playerVars: {
+                'playlist': [{{playlist}}],
+                'autoplay': 1,
+                'controls': 0,
+                'playsinline': 1,
+                'loop': 1,
+                'modestbranding': 1,
+                'rel': 0,
+                'showinfo': 0,
+                'fs': 0
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange,
+            }
+        });
+    }
+
+    function loadVideos(ids) {
+    if (player && ids) {
+        player.cuePlaylist(ids);
+    }
+}
+
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    function onPlayerStateChange(event) {
+        if (typeof Android !== 'undefined' && Android !== null) {
+            Android.onPlayerStateChanged(event.data);
+        }
+    }
+
+</script>
+</body>
+</html>
