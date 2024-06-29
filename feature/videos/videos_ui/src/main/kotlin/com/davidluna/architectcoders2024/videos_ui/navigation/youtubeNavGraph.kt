@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.davidluna.architectcoders2024.navigation.model.YoutubeNavigation
+import com.davidluna.architectcoders2024.navigation.domain.YoutubeNavigation
 import com.davidluna.architectcoders2024.videos_ui.presenter.VideoPlayerViewModel
 import com.davidluna.architectcoders2024.videos_ui.view.VideoPlayerScreen
 

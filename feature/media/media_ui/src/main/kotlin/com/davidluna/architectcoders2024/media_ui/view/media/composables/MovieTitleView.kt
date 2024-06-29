@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun MovieTitleView(movieTitle: String?, imageSize: Dp) {
@@ -17,7 +17,7 @@ fun MovieTitleView(movieTitle: String?, imageSize: Dp) {
     Text(
         text = movieTitle,
         modifier = Modifier
-            .padding(Locals.dimensDp.medium)
+            .padding(Dimens.margins.medium)
             .sizeIn(maxWidth = imageSize),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.onPrimary,

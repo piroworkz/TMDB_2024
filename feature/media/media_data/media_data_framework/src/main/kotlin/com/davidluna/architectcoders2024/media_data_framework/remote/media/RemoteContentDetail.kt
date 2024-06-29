@@ -24,6 +24,7 @@ data class RemoteContentDetail(
     @SerialName("name")
     val name: String? = null,
     @SerialName("vote_average")
-    val voteAverage: Double
+    val voteAverage: Double,
+    @SerialName("video")
+    val video: Boolean = true
 )
-

@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.core_data_framework.local.datastore
 import androidx.datastore.core.DataStore
 import com.davidluna.architectcoders2024.core_data_repositories.datastore.PreferencesDataSource
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_domain.core_entities.tryCatch
 import com.davidluna.protodatastore.CONTENT_KIND
 import com.davidluna.protodatastore.ProtoPreferences

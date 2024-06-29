@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals
 
 @Composable
 fun rememberVideoPlayerState(
-    application: Application = Locals.application,
-    activity: Activity? = Locals.fragmentActivity.get(),
+    application: Application = LocalContext.current.applicationContext as Application,
+    activity: Activity? = LocalContext.current as Activity?,
     owner: LifecycleOwner = LocalLifecycleOwner.current,
     @SuppressLint("SetJavaScriptEnabled")
     webView: WebView = remember {

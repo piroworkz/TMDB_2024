@@ -37,12 +37,14 @@ hiltWork = "1.2.0"
 javaxInject = "1"
 #annotation processor
 kapt = "1.9.23"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 fragmentKtx = "1.8.0"
+#testing
+junit = "4.13.2"
+mock_K = "1.13.11"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
 
 [libraries]
 composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }
@@ -87,11 +89,15 @@ hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" 
 hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+#testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 extJunit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mock_K = { group = "io.mockk", name = "mockk", version.ref = "mock_K" }
+
 #build logic dependencies
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }

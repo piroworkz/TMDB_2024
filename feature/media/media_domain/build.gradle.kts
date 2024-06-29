@@ -10,6 +10,7 @@ java {
 
 dependencies {
     implementation(projects.core.coreDomain)
+    implementation(projects.feature.videos.videosDomain)
     implementation(libs.kotlinCoroutinesCore)
     implementation(libs.arrowCore)
     implementation(libs.javaxInject)

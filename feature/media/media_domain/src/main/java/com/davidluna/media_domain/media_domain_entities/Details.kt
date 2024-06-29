@@ -8,5 +8,6 @@ data class Details(
     val releaseDate: String,
     val tagline: String,
     val title: String,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val hasVideo: Boolean,
 )

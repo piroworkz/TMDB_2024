@@ -12,8 +12,8 @@ import com.davidluna.architectcoders2024.media_ui.view.details.MovieDetailScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.view.media.MoviesScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesViewModel
-import com.davidluna.architectcoders2024.navigation.model.Destination
-import com.davidluna.architectcoders2024.navigation.model.MoviesNavigation
+import com.davidluna.architectcoders2024.navigation.domain.Destination
+import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
 
 fun NavGraphBuilder.moviesNavGraph(
     navigateTo: (Destination) -> Unit,

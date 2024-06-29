@@ -28,7 +28,7 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun LoginScreen(
@@ -58,19 +58,19 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensDp.xLarge)
+                    .padding(Dimens.margins.xLarge)
                     .align(Alignment.BottomCenter),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
                     onClick = { sendEvent(LoginEvent.CreateRequestToken) },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(dimensDp.medium)
+                    shape = RoundedCornerShape(Dimens.margins.medium)
                 ) {
                     Text(
                         text = "Login",
                         modifier = Modifier
-                            .padding(horizontal = dimensDp.xLarge)
+                            .padding(horizontal = Dimens.margins.xLarge)
                     )
                 }
 
@@ -81,7 +81,7 @@ fun LoginScreen(
                     Text(
                         text = "Login as Guest",
                         modifier = Modifier
-                            .padding(horizontal = dimensDp.xLarge)
+                            .padding(horizontal = Dimens.margins.xLarge)
                     )
                 }
             }

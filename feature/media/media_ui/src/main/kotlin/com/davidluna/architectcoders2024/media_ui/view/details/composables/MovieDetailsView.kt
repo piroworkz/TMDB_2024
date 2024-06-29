@@ -7,6 +7,7 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
 import com.davidluna.media_domain.media_domain_entities.Details
 
@@ -22,14 +23,15 @@ fun MovieDetailsView(
         shape = RectangleShape,
         colors = cardColors()
     ) {
-        Spacer(modifier = Modifier.padding(all = com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp.medium))
+        Spacer(modifier = Modifier.padding(all = Dimens.margins.medium))
         TextDetailsView(
             movieDetail = movieDetail
         )
         UserScoreView(
+            hasVideo = movieDetail?.hasVideo ?: false,
             score = movieDetail?.voteAverage?.toFloat() ?: 0F,
             playTrailer = { playTrailer() }
         )
-        Spacer(modifier = Modifier.padding(all = com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp.medium))
+        Spacer(modifier = Modifier.padding(all = Dimens.margins.medium))
     }
 }

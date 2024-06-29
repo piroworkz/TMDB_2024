@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun ReelTitleView(title: String?) {
@@ -26,7 +26,7 @@ fun ReelTitleView(title: String?) {
             Text(
                 text = title,
                 modifier = Modifier
-                    .padding(Locals.dimensDp.small)
+                    .padding(Dimens.margins.small)
                     .fillMaxWidth(),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,

@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.core_data_repositories.datastore
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.LocalPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,7 +21,6 @@ class LocalPreferencesDataRepository @Inject constructor(
 
     override val contentKind: Flow<ContentKind>
         get() = local.contentKind
-
 
     override suspend fun closeSession(): Boolean = local.closeSession()
 

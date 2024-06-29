@@ -19,7 +19,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.media_domain.media_domain_entities.Media
 import kotlinx.coroutines.flow.Flow
 
@@ -49,7 +49,7 @@ fun MoviesLazyRow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(dimensDp.xLarge)
+                    .padding(Dimens.margins.xLarge)
                     .size(size),
                 contentAlignment = Alignment.Center
             ) {
@@ -62,7 +62,7 @@ fun MoviesLazyRow(
                 title = stringResource(title),
                 movies = movies,
             ) { onMovieClicked(it) }
-            Spacer(modifier = Modifier.padding(top = dimensDp.xLarge))
+            Spacer(modifier = Modifier.padding(top = Dimens.margins.xLarge))
         }
     }
 

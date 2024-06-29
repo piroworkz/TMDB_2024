@@ -37,7 +37,7 @@ class SplashViewModel @Inject constructor(
     private fun onFailed() {
         _state.update {
             it.copy(
-                destination = com.davidluna.architectcoders2024.navigation.model.AuthNav.Login(
+                destination = com.davidluna.architectcoders2024.navigation.domain.AuthNav.Login(
                     true
                 )
             )
@@ -45,7 +45,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun setLoggedIn() {
-        _state.update { it.copy(destination = com.davidluna.architectcoders2024.navigation.model.MoviesNavigation.Movies()) }
+        _state.update { it.copy(destination = com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation.Movies()) }
     }
 
     private fun resetError() {

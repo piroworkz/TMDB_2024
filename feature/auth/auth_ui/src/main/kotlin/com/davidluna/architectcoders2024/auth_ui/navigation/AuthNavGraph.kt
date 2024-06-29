@@ -9,8 +9,8 @@ import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
 import com.davidluna.architectcoders2024.auth_ui.view.LoginScreen
-import com.davidluna.architectcoders2024.navigation.model.AuthNav
-import com.davidluna.architectcoders2024.navigation.model.Destination
+import com.davidluna.architectcoders2024.navigation.domain.AuthNav
+import com.davidluna.architectcoders2024.navigation.domain.Destination
 
 fun NavGraphBuilder.authNavGraph(
     navigateTo: (Destination) -> Unit

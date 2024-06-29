@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun FilmMaskImageView(
@@ -28,8 +28,8 @@ fun FilmMaskImageView(
             .wrapContentSize()
             .size(imageSize)
             .sizeIn(
-                minWidth = dimensDp.minImageSize,
-                minHeight = dimensDp.minImageSize,
+                minWidth = Dimens.margins.minImageSize,
+                minHeight = Dimens.margins.minImageSize,
                 maxWidth = imageSize,
                 maxHeight = imageSize
             ),

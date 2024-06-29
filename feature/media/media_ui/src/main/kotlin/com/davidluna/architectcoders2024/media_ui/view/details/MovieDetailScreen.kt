@@ -23,10 +23,11 @@ import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailVi
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.MovieCastView
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.MovieDetailsView
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.PostersPagerView
+import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.joinImages
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.MoviesLazyRow
-import com.davidluna.architectcoders2024.navigation.model.MoviesNavigation
-import com.davidluna.architectcoders2024.navigation.model.YoutubeNavigation
+import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
+import com.davidluna.architectcoders2024.navigation.domain.YoutubeNavigation
 
 @Composable
 fun MovieDetailScreen(
@@ -98,7 +99,7 @@ private fun MovieDetailScreenPreview() {
                 .background(com.davidluna.architectcoders2024.core_ui.composables.appGradient())
         ) {
             MovieDetailScreen(
-                state = MovieDetailViewModel.State(),
+                state = MovieDetailViewModel.State(movieDetail = fakeDetails),
                 sendEvent = {}
             )
         }

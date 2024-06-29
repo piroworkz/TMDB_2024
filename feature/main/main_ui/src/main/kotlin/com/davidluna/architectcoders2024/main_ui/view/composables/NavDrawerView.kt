@@ -31,16 +31,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun NavDrawerView(
     isGuest: Boolean = false,
     user: UserAccount? = null,
-    onSelected: (com.davidluna.architectcoders2024.navigation.model.DrawerDestination?) -> Unit
+    onSelected: (com.davidluna.architectcoders2024.navigation.domain.DrawerItem?) -> Unit
 ) {
 
     val size = LocalConfiguration.current.screenWidthDp.dp / 5
@@ -53,7 +53,7 @@ fun NavDrawerView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(Locals.dimensDp.xLarge))
+        Spacer(modifier = Modifier.height(Dimens.margins.xLarge))
 
         Card(
             modifier = Modifier
@@ -86,23 +86,23 @@ fun NavDrawerView(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(Locals.dimensDp.large))
+        Spacer(modifier = Modifier.height(Dimens.margins.large))
         Text(
             text = user?.username ?: "Guest User",
             color = MaterialTheme.colorScheme.onPrimary
         )
-        Spacer(modifier = Modifier.height(Locals.dimensDp.large))
+        Spacer(modifier = Modifier.height(Dimens.margins.large))
         HorizontalDivider(
-            thickness = Locals.dimensDp.large,
+            thickness = Dimens.margins.large,
             color = MaterialTheme.colorScheme.secondary
         )
-        Spacer(modifier = Modifier.height(Locals.dimensDp.large))
+        Spacer(modifier = Modifier.height(Dimens.margins.large))
 
-        com.davidluna.architectcoders2024.navigation.model.DrawerDestination.items.forEach { item ->
+        com.davidluna.architectcoders2024.navigation.domain.DrawerItem.items.forEach { item ->
 
             Row(
                 modifier = Modifier
-                    .padding(Locals.dimensDp.medium)
+                    .padding(Dimens.margins.medium)
                     .fillMaxWidth()
                     .clickable { onSelected(item) },
                 verticalAlignment = Alignment.CenterVertically
@@ -112,10 +112,10 @@ fun NavDrawerView(
                     contentDescription = item.iconResource.name,
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-                Spacer(modifier = Modifier.width(Locals.dimensDp.large))
+                Spacer(modifier = Modifier.width(Dimens.margins.large))
                 Text(
                     text = stringResource(id = item.titleResource),
-                    modifier = Modifier.padding(vertical = Locals.dimensDp.medium),
+                    modifier = Modifier.padding(vertical = Dimens.margins.medium),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }

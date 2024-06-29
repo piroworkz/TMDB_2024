@@ -23,7 +23,7 @@ import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.splash_ui.animation.AnimationLaunchedEffect
 import com.davidluna.architectcoders2024.splash_ui.animation.AnimationState
 import com.davidluna.architectcoders2024.splash_ui.animation.rememberAnimationState
-import com.davidluna.architectcoders2024.splash_ui.biometrics.BioAuthState
+import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricAuthenticationState
 import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.splash_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.splash_ui.presenter.SplashEvent
@@ -40,8 +40,7 @@ fun SplashScreen(
 ) {
     val permissions = rememberPermissionsState()
     val animationState = rememberAnimationState()
-    val biometricAuthState: BioAuthState = rememberBiometricAuth()
-
+    val biometricAuthState: BiometricAuthenticationState = rememberBiometricAuth()
 
     AnimationLaunchedEffect(animationState)
 
