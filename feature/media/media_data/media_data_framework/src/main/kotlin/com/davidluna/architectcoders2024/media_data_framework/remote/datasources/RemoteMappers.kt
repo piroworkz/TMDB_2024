@@ -36,7 +36,8 @@ fun RemoteContentDetail.toDomain(): Details = Details(
     releaseDate = releaseDate ?: firstAirDate ?: "",
     tagline = tagline,
     title = title ?: name ?: "",
-    voteAverage = voteAverage
+    voteAverage = voteAverage,
+    hasVideo = video
 )
 
 fun RemoteGenre.toDomain(): Genre = Genre(id = id, name = name)

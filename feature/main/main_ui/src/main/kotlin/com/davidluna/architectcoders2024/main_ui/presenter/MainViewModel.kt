@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.CloseSessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SaveContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.UserAccountUseCase
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,16 +22,37 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val userAccountUseCase: UserAccountUseCase,
     private val setContentKindUseCase: SaveContentKindUseCase,
-    private val getContentKindUseCase: GetContentKindUseCase
+    private val getContentKindUseCase: GetContentKindUseCase,
+    private val closeSessionUseCase: CloseSessionUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(MainState())
-    val state: StateFlow<MainState>
-        get() {
-            collectUser()
-            collectContentKind()
-            return _state.asStateFlow()
+    val state: StateFlow<MainState> = _state.asStateFlow()
+
+    fun sendEvent(event: MainEvent) {
+        when (event) {
+            is MainEvent.OnCloseSession -> closeSession()
+            is MainEvent.SetContentKind -> setContentKind(event.mediaType)
+            MainEvent.OnUiReady -> onUiReady()
         }
+    }
+
+    private fun onUiReady() {
+        sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
+        collectUser()
+        collectContentKind()
+    }
+
+    private fun closeSession() {
+        viewModelScope.launch {
+            _state.update { s -> s.copy(closeSession = closeSessionUseCase()) }
+
+        }
+    }
+
+    private fun setContentKind(contentKind: ContentKind) = run {
+        setContentKindUseCase(contentKind)
+    }
 
     private fun collectUser() {
         viewModelScope.launch {
@@ -47,19 +68,12 @@ class MainViewModel @Inject constructor(
 
     private fun collectContentKind() = viewModelScope.launch {
         getContentKindUseCase()
-            .onStart {
-                _state.update { s -> s.copy(loading = true) }
-            }
             .catch { throwable: Throwable ->
-                _state.update { s -> s.copy(appError = throwable.toAppError(), loading = false) }
+                _state.update { s -> s.copy(appError = throwable.toAppError()) }
             }
             .collect { contentKind: ContentKind ->
-                _state.update { s -> s.copy(contentKind = contentKind, loading = false) }
+                _state.update { s -> s.copy(contentKind = contentKind) }
             }
-    }
-
-    fun setContentKind(contentKind: ContentKind) = run {
-        setContentKindUseCase(contentKind)
     }
 
 
@@ -78,3 +92,5 @@ class MainViewModel @Inject constructor(
     }
 
 }
+
+

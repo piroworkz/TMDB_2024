@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.core_data_framework.local.datastore
 
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.protodatastore.ProtoPreferences
 import com.davidluna.protodatastore.ProtoUserAccount
 import com.davidluna.protodatastore.copy

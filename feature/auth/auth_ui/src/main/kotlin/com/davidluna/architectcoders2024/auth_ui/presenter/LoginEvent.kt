@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
-import com.davidluna.architectcoders2024.navigation.model.Destination
+import com.davidluna.architectcoders2024.navigation.domain.Destination
 
 sealed interface LoginEvent {
     data object OnUiReady : LoginEvent

@@ -47,7 +47,7 @@ class VideoPlayerViewModel @Inject constructor(
     private fun getVideos() = run {
         val from = if (_state.value.contentKind == ContentKind.MOVIE) MOVIE else TV
         val movieId =
-            savedStateHandle.toRoute<com.davidluna.architectcoders2024.navigation.model.YoutubeNavigation.Video>().movieId
+            savedStateHandle.toRoute<com.davidluna.architectcoders2024.navigation.domain.YoutubeNavigation.Video>().movieId
         getVideosUseCase("$from/$movieId").fold(
             ifLeft = { e: AppError ->
                 _state.update { it.copy(appError = e) }

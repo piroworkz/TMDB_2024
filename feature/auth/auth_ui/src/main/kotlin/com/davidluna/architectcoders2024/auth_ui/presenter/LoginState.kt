@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.navigation.model.Destination
+import com.davidluna.architectcoders2024.navigation.domain.Destination
 
 data class LoginState(
     val isLoading: Boolean = false,

@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.core_domain.core_usecases.datastore
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import kotlinx.coroutines.flow.Flow
 
 interface LocalPreferencesRepository {

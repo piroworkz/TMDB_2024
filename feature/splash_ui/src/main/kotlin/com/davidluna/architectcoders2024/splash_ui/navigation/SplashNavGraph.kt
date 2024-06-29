@@ -6,8 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.davidluna.architectcoders2024.navigation.model.Destination
-import com.davidluna.architectcoders2024.navigation.model.StartNav
+import com.davidluna.architectcoders2024.navigation.domain.Destination
+import com.davidluna.architectcoders2024.navigation.domain.StartNav
 import com.davidluna.architectcoders2024.splash_ui.presenter.SplashViewModel
 
 fun NavGraphBuilder.splashNavGraph(

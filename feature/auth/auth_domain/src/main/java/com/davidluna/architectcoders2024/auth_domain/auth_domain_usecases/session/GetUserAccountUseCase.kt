@@ -2,7 +2,7 @@ package com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.sessi
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import javax.inject.Inject
 
 class GetUserAccountUseCase @Inject constructor(

@@ -21,17 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun UserScoreView(
+    hasVideo: Boolean,
     score: Float,
     playTrailer: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Locals.dimensDp.large),
+            .padding(Dimens.margins.large),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -40,7 +41,7 @@ fun UserScoreView(
         ) {
             CircularProgressIndicator(
                 progress = { score / 10F },
-                modifier = Modifier.size(Locals.dimensDp.large * 3),
+                modifier = Modifier.size(Dimens.margins.large * 3),
                 color = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
             )
@@ -49,19 +50,23 @@ fun UserScoreView(
 
         Text(
             text = "User\nScore",
-            modifier = Modifier.padding(Locals.dimensDp.large),
+            modifier = Modifier.padding(Dimens.margins.large),
             style = MaterialTheme.typography.labelSmall
         )
 
         VerticalDivider(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(horizontal = Locals.dimensDp.large),
-            thickness = Locals.dimensDp.small,
+                .padding(horizontal = Dimens.margins.large),
+            thickness = Dimens.margins.small,
             color = Color.White
         )
 
-        TextButton(onClick = { playTrailer() }) {
+
+        TextButton(
+            onClick = { playTrailer() },
+            enabled = hasVideo
+        ) {
             Icon(
                 imageVector = Icons.Outlined.PlayArrow,
                 contentDescription = Icons.Outlined.PlayArrow.name

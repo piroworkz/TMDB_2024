@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="one">1dp</dimen>
+    <dimen name="two">2dp</dimen>
+    <dimen name="small">4dp</dimen>
+    <dimen name="medium">8dp</dimen>
+    <dimen name="large">16dp</dimen>
+    <dimen name="xlarge">32dp</dimen>
+    <dimen name="xxlarge">64dp</dimen>
+    <dimen name="xxxlarge">128dp</dimen>
+    <dimen name="minImageSize">150dp</dimen>
+</resources>

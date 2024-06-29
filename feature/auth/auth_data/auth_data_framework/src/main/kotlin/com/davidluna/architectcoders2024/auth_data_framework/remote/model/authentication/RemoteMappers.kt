@@ -5,7 +5,7 @@ import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.sessio
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.SessionId
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.TokenResponse
 import com.davidluna.architectcoders2024.core_domain.core_entities.buildModel
-import com.davidluna.architectcoders2024.core_domain.core_entities.session.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 
 
 fun RemoteUserAccountDetail.toDomain(): UserAccount = UserAccount(

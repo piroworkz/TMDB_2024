@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.media_domain.media_domain_entities.Media
 
 @Composable
@@ -26,7 +27,7 @@ fun ReelView(
 ) {
     val imageSize = LocalConfiguration.current.screenWidthDp.dp / 2
     Spacer(
-        modifier = Modifier.padding(top = com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp.xLarge)
+        modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
     if (movies.itemCount != 0) {
         ReelTitleView(title = title)

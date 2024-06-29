@@ -5,35 +5,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
-import com.davidluna.architectcoders2024.core_ui.theme.locals.Locals.dimensDp
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
-import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesViewModel
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
+import com.davidluna.architectcoders2024.media_ui.presenter.media.State
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.MoviesLazyRow
-import com.davidluna.architectcoders2024.navigation.model.MoviesNavigation
+import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
 
 @Composable
 fun MoviesScreen(
-    state: MoviesViewModel.State,
+    state: State,
     sendEvent: (MoviesEvent) -> Unit
 ) {
-
-    LaunchedEffect(key1 = Unit) {
-        sendEvent(MoviesEvent.OnViewReady)
-    }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
         item {
-            Spacer(modifier = Modifier.padding(top = dimensDp.large))
+            Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
             MoviesLazyRow(
                 title = R.string.title_popular_movies,
                 flow = state.firstList,
@@ -81,7 +75,7 @@ fun MoviesScreen(
 private fun MoviesScreenPreview() {
     TmdbTheme {
         MoviesScreen(
-            state = MoviesViewModel.State()
+            state = State()
         ) {
 
         }

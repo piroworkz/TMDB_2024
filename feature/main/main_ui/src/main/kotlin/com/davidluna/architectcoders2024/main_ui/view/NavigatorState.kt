@@ -10,8 +10,11 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
+import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent
 import com.davidluna.architectcoders2024.main_ui.view.composables.NavDrawerState
 import com.davidluna.architectcoders2024.main_ui.view.composables.rememberNavDrawerState
+import com.davidluna.architectcoders2024.navigation.domain.DrawerItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -51,8 +54,24 @@ class NavigatorState(
         navController.popBackStack()
     }
 
-    fun navigateTo(destination: com.davidluna.architectcoders2024.navigation.model.Destination, builder: NavOptionsBuilder.() -> Unit = {}) =
+    fun navigateTo(
+        destination: com.davidluna.architectcoders2024.navigation.domain.Destination,
+        builder: NavOptionsBuilder.() -> Unit = {}
+    ) =
         navController.navigate(destination) { builder() }
+
+    fun onDrawerItemSelected(
+        drawerDestination: DrawerItem?,
+        sendEvent: (MainEvent) -> Unit
+    ) {
+        when (drawerDestination) {
+            DrawerItem.CloseSession -> sendEvent(MainEvent.OnCloseSession)
+            DrawerItem.Movies -> sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
+            DrawerItem.TvShows -> sendEvent(MainEvent.SetContentKind(ContentKind.TV_SHOW))
+            null -> {}
+        }
+        drawer.toggleState()
+    }
 
     private fun collectFlow(
         scope: CoroutineScope,

@@ -1,4 +1,6 @@
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.build_logic.constants.Constants.API_KEY
+import com.davidluna.architectcoders2024.build_logic.constants.Constants.BASE_URL
 
 plugins {
     alias(libs.plugins.androidLibraryConventionPlugin)
@@ -9,6 +11,22 @@ plugins {
 
 android {
     namespace = Constants.NAMESPACE.plus(".di")
+    defaultConfig {
+        @Suppress("UnstableApiUsage")
+        externalNativeBuild {
+            ndkBuild {
+                arguments(
+                    "$API_KEY=${project.property(API_KEY)}",
+                    "$BASE_URL=${project.property(BASE_URL)}"
+                )
+            }
+        }
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path = file("src/main/jni/Android.mk")
+        }
+    }
 
 }
 
