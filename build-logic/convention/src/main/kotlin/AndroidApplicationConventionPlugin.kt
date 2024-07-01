@@ -93,7 +93,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             implementation(libs.composeActivity)
             implementation(libs.hiltAndroid)
             kapt(libs.hiltCompiler)
-            debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+//            debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
         }
     }
 

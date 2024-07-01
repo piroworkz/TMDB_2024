@@ -46,7 +46,7 @@ object NetworkModule {
     fun provideClient(
         interceptor: MoviesInterceptor
     ): OkHttpClient = HttpLoggingInterceptor().run {
-        level = HttpLoggingInterceptor.Level.BASIC
+        level = HttpLoggingInterceptor.Level.NONE
         OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addInterceptor(this)

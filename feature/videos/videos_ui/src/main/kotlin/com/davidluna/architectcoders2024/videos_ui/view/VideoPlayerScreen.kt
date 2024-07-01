@@ -9,47 +9,47 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.davidluna.architectcoders2024.core_ui.composables.AppBarView
+import com.davidluna.architectcoders2024.core_ui.composables.SlideFromTopAnimation
 import com.davidluna.architectcoders2024.videos_ui.presenter.PlayerState
 
 @Composable
 fun VideoPlayerScreen(
     state: PlayerState,
-    onUiReady: () -> Unit,
     navigateUp: () -> Unit
 ) = with(rememberVideoPlayerState()) {
 
-    LaunchedEffect(key1 = Unit) {
-        onUiReady()
-    }
-
-    SetScreenOrientation()
-    AddLifecycleObserver()
-    DisposableEffect(webView) {
-        onDispose {
-            webView.destroy()
-        }
-    }
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        if (state.videos.isNotEmpty()) {
-            AndroidView(
-                factory = {
-                    webView.apply {
-                        loadData(loadHtml(state.videos), "text/html", "UTF-8")
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+        SlideFromTopAnimation(
+            target = state.videos.isNotEmpty(),
+            modifier = Modifier.fillMaxSize(),
+            label = "VideoPlayerContent"
+        ) { target: Boolean ->
+            if (target) {
+                AndroidView(
+                    factory = {
+                        webView.apply {
+                            loadData(loadHtml(state.videos), "text/html", "UTF-8")
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
 
         AnimatedVisibility(
@@ -74,10 +74,6 @@ fun VideoPlayerScreen(
                 }
             )
         }
-
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        }
     }
 }
 
@@ -90,7 +86,6 @@ private fun VideoPlayerScreenPreview() {
     com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
         VideoPlayerScreen(
             state = PlayerState(),
-            onUiReady = {},
         ) {}
     }
 }

@@ -1,6 +1,5 @@
 package com.davidluna.architectcoders2024.media_ui.view.details.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -73,10 +72,6 @@ private fun annotatedString(movieDetail: Details?) =
             append(list.joinToString(separator = ", ") { it.name })
         }
     }.toAnnotatedString()
-
-private fun String.log() {
-    Log.d("<-- ", this)
-}
 
 
 @Preview
