@@ -15,30 +15,32 @@ import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.log
 import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricState.SHOW_PROMPT
 import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricState.UNAVAILABLE
+import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 
 class BiometricAuthenticationState(
-    private val fragmentActivity: FragmentActivity,
+    private val fragmentActivity: WeakReference<FragmentActivity>,
     private val state: MutableState<BiometricState>
 ) {
-
     private val executor: Executor? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            fragmentActivity.mainExecutor
+            this.fragmentActivity.get()?.mainExecutor
         } else {
-            ContextCompat.getMainExecutor(fragmentActivity.applicationContext)
+            this.fragmentActivity.get()?.applicationContext?.let { ContextCompat.getMainExecutor(it) }
         }
 
-    private val biometricManager: BiometricManager =
-        BiometricManager.from(fragmentActivity.application)
+    private val biometricManager: BiometricManager? =
+        this.fragmentActivity.get()?.let { BiometricManager.from(it.application) }
 
-    private val promptInfo: PromptInfo.Builder = PromptInfo.Builder()
-        .setTitle(fragmentActivity.getString(R.string.biometric_auth_title))
-        .setSubtitle(fragmentActivity.getString(R.string.biometric_auth_subtitle))
-        .setNegativeButtonText(fragmentActivity.getString(R.string.biometric_use_password_instead))
+    private val promptInfo: PromptInfo.Builder? = this.fragmentActivity.get()?.let {
+        PromptInfo.Builder()
+            .setTitle(it.getString(R.string.biometric_auth_title))
+            .setSubtitle(it.getString(R.string.biometric_auth_subtitle))
+            .setNegativeButtonText(it.getString(R.string.biometric_use_password_instead))
+    }
 
     private val canAuthenticate: MutableState<Boolean> =
-        mutableStateOf(biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS)
+        mutableStateOf(biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS)
 
     val biometricState: BiometricState
         get() = state.value
@@ -49,14 +51,16 @@ class BiometricAuthenticationState(
 
     fun launchPrompt() {
         try {
-            getBiometricPrompt()?.authenticate(promptInfo.build())
+            promptInfo?.build()?.let { getBiometricPrompt()?.authenticate(it) }
         } catch (e: Exception) {
             state.value = BiometricState.ERROR
         }
     }
 
     private fun getBiometricPrompt(): BiometricPrompt? = executor?.let { executor: Executor ->
-        BiometricPrompt(fragmentActivity, executor, getCallback())
+        fragmentActivity.get()?.let { activity ->
+            BiometricPrompt(activity, executor, getCallback())
+        }
     }
 
     private fun getCallback(): BiometricPrompt.AuthenticationCallback =
@@ -64,7 +68,7 @@ class BiometricAuthenticationState(
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                promptInfo.setSubtitle(errString)
+                promptInfo?.setSubtitle(errString)
                 state.value = BiometricState.ERROR
             }
 
@@ -75,10 +79,16 @@ class BiometricAuthenticationState(
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                promptInfo.setSubtitle(fragmentActivity.getString(R.string.biometric_auth_failed))
+                promptInfo?.setSubtitle(
+                    fragmentActivity.get()?.getString(R.string.biometric_auth_failed)
+                )
                 state.value = SHOW_PROMPT
             }
 
         }
 
+    fun clearReferences() {
+        "cleared references in BiometricAuthenticationState".log(javaClass.simpleName)
+        fragmentActivity.clear()
+    }
 }

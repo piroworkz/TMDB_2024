@@ -1,12 +1,5 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.architectCodersAndroidApplication)
-}
-
-val key: String = Properties().let {
-    it.load(project.rootProject.file("local.properties").inputStream())
-    it.getProperty("key")
 }
 
 dependencies {
