@@ -9,7 +9,6 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.core_ui.log
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
 import com.davidluna.architectcoders2024.navigation.domain.Destination
 import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
@@ -69,9 +68,7 @@ class MovieDetailViewModel @Inject constructor(
     private fun getArgs(savedStateHandle: SavedStateHandle) {
         savedStateHandle.toRoute<MoviesNavigation.Detail>()
             .apply {
-                _state.value.contentKind?.let { kind ->
-                    kind.name.log("contentKind")
-                    movieId.toString().log("movieId")
+                _state.value.contentKind?.let { _ ->
                     fetchData(movieId)
                 }
             }
@@ -116,7 +113,7 @@ class MovieDetailViewModel @Inject constructor(
         from: String,
         movieId: Int
     ) = run {
-        delay(3000)
+
         getMovieImagesUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r ->

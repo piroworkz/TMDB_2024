@@ -22,7 +22,6 @@ fun NavGraphBuilder.youtubeNavGraph(
             val state by viewModel.state.collectAsState()
             VideoPlayerScreen(
                 state = state,
-                onUiReady = { viewModel.onViewReady() },
                 navigateUp = { navigateUp() }
             )
         }

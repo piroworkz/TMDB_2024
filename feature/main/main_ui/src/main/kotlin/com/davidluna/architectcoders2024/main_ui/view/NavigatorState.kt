@@ -1,6 +1,7 @@
 package com.davidluna.architectcoders2024.main_ui.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,11 +12,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_ui.log
 import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent
 import com.davidluna.architectcoders2024.main_ui.view.composables.NavDrawerState
 import com.davidluna.architectcoders2024.main_ui.view.composables.rememberNavDrawerState
+import com.davidluna.architectcoders2024.navigation.domain.Destination
 import com.davidluna.architectcoders2024.navigation.domain.DrawerItem
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -55,7 +59,7 @@ class NavigatorState(
     }
 
     fun navigateTo(
-        destination: com.davidluna.architectcoders2024.navigation.domain.Destination,
+        destination: Destination,
         builder: NavOptionsBuilder.() -> Unit = {}
     ) =
         navController.navigate(destination) { builder() }
@@ -94,6 +98,17 @@ fun rememberNavigatorState(
     backStackEntry: Flow<NavBackStackEntry> = navController.currentBackStackEntryFlow,
     scope: CoroutineScope = rememberCoroutineScope(),
     drawerState: NavDrawerState = rememberNavDrawerState(scope = scope),
-) = remember {
-    NavigatorState(navController, drawerState, backStackEntry, scope)
+): NavigatorState {
+    val navigatorState = remember {
+        NavigatorState(navController, drawerState, backStackEntry, scope)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            "NavigatorState disposed canceling scope".log(javaClass.simpleName)
+            scope.cancel()
+        }
+    }
+
+    return navigatorState
 }

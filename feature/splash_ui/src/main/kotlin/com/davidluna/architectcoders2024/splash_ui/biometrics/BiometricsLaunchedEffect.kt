@@ -2,7 +2,6 @@ package com.davidluna.architectcoders2024.splash_ui.biometrics
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.davidluna.architectcoders2024.core_ui.log
 import com.davidluna.architectcoders2024.splash_ui.presenter.SplashEvent
 import com.davidluna.architectcoders2024.splash_ui.presenter.SplashState
 
@@ -17,9 +16,6 @@ fun BiometricsLaunchedEffect(
         key2 = state.isGranted,
         key3 = state.sessionExists
     ) {
-
-        biometricAuthState.biometricState.name.log()
-
         when (biometricAuthState.biometricState) {
             BiometricState.SUCCESS -> {
                 sendEvent(SplashEvent.OnLoggedIn)

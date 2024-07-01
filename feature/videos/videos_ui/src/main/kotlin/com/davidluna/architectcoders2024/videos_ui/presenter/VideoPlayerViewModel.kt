@@ -12,6 +12,7 @@ import com.davidluna.architectcoders2024.videos_domain.videos_domain_entities.Yo
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,8 +31,12 @@ class VideoPlayerViewModel @Inject constructor(
     private val _state = MutableStateFlow(PlayerState())
     val state = _state.asStateFlow()
 
-    fun onViewReady() {
-        viewModelScope.launch {
+    init {
+        collectContentKind()
+    }
+
+    private fun collectContentKind() {
+        viewModelScope.launch(Dispatchers.IO) {
             getContentKindUseCase()
                 .distinctUntilChanged()
                 .catch { e -> _state.update { s: PlayerState -> s.copy(appError = e.toAppError()) } }

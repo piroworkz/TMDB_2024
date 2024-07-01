@@ -15,9 +15,7 @@ pluginManagement {
     }
 }
 
-
 dependencyResolutionManagement {
-
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
@@ -33,6 +31,7 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "ArchitectCoders2024"
+
 include(
     ":app",
     ":feature:main:main_ui",
@@ -56,3 +55,16 @@ include(
     ":di",
     ":navigation"
 )
+
+rootProject.children.forEach { levelOne ->
+    levelOne.buildFileName = "${levelOne.name}.gradle.kts"
+    levelOne.children.forEach { levelTwo ->
+        levelTwo.buildFileName = "${levelTwo.name}.gradle.kts"
+        levelTwo.children.forEach { levelThree: ProjectDescriptor ->
+            levelThree.buildFileName = "${levelThree.name}.gradle.kts"
+            levelThree.children.forEach { levelFour: ProjectDescriptor ->
+                levelFour.buildFileName = "${levelFour.name}.gradle.kts"
+            }
+        }
+    }
+}

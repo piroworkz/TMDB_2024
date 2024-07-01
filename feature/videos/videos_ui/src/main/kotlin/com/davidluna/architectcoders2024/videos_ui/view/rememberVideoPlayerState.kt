@@ -1,33 +1,36 @@
 package com.davidluna.architectcoders2024.videos_ui.view
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Application
-import android.view.ViewGroup
-import android.webkit.WebView
+import android.content.Context
+import android.content.pm.ActivityInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.davidluna.architectcoders2024.core_ui.composables.findActivity
+import java.lang.ref.WeakReference
 
 @Composable
 fun rememberVideoPlayerState(
-    application: Application = LocalContext.current.applicationContext as Application,
-    activity: Activity? = LocalContext.current as Activity?,
-    owner: LifecycleOwner = LocalLifecycleOwner.current,
-    @SuppressLint("SetJavaScriptEnabled")
-    webView: WebView = remember {
-        WebView(activity!!).apply {
-            settings.apply {
-                javaScriptEnabled = true
-                loadWithOverviewMode = true
-                useWideViewPort = true
+    context: Context = LocalContext.current,
+    activity: WeakReference<Activity> = remember { WeakReference(context.findActivity()) }
+): VideoPlayerState {
+
+    val state = remember(context) { VideoPlayerState(activity) }
+
+    DisposableEffect(context) {
+        state.apply {
+            setScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+            activity.get()?.let { mainActivity: Activity ->
+               mainActivity.hideSystemBars()
             }
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+        }
+
+        onDispose {
+            state.clearReferences()
         }
     }
-): VideoPlayerState = remember(webView) { VideoPlayerState(application, activity, owner, webView) }
+
+    return state
+}

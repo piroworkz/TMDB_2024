@@ -1,58 +1,94 @@
 package com.davidluna.architectcoders2024.videos_ui.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Application
-import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+import android.content.Context
+import android.content.pm.ActivityInfo
+import android.os.Build
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LifecycleOwner
+import com.davidluna.architectcoders2024.core_ui.log
+import java.lang.ref.WeakReference
 
 class VideoPlayerState(
-    private val application: Application,
-    private val activity: Activity?,
-    private val owner: LifecycleOwner,
-    view: WebView
+    private val activity: WeakReference<Activity>,
 ) {
-    private val observer = VideoPlayerLifecycleObserver(activity)
+
+    lateinit var webView: WebView
+        private set
 
     var showAppBar: MutableState<Boolean> = mutableStateOf(false)
         private set
 
-    val webView: WebView = view.apply {
-        setupJavascriptInterface()
+    fun setupWebView(context: Context) {
+        "setupWebView".log("VideoPlayerState")
+        webView = buildWebView(context)
     }
 
-    @Composable
-    fun SetScreenOrientation() {
-        DisposableEffect(Unit) {
-            activity?.requestedOrientation =
-                SCREEN_ORIENTATION_LANDSCAPE
-            onDispose {
-                activity?.requestedOrientation =
-                    SCREEN_ORIENTATION_UNSPECIFIED
-            }
-        }
-    }
 
-    @Composable
-    fun AddLifecycleObserver() {
-        DisposableEffect(Unit) {
-            owner.lifecycle.addObserver(observer)
-            onDispose {
-                owner.lifecycle.removeObserver(observer)
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun buildWebView(context: Context): WebView {
+        return WebView(context).apply {
+            settings.apply {
+                javaScriptEnabled = true
+                loadWithOverviewMode = true
+                useWideViewPort = true
             }
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            setupJavascriptInterface()
         }
     }
 
     fun loadHtml(playlist: List<String> = emptyList()): String {
         val formattedList = playlist.map { "\'$it\'" }
-        return application.assets.open(FILE_NAME).bufferedReader().use { it.readText() }
-            .replace("{{playlist}}", formattedList.drop(1).joinToString(", "))
+        return activity.get()?.assets?.open(FILE_NAME)?.bufferedReader().use { it?.readText() }
+            ?.replace("{{playlist}}", formattedList.drop(1).joinToString(", ")) ?: String()
+    }
+
+    fun clearReferences() {
+        "clearReferences".log("VideoPlayerState")
+        webView?.clearCache(true)
+        webView?.removeAllViews()
+        webView?.destroy()
+        setScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        activity.clear()
+    }
+
+
+    fun setScreenOrientation(orientation: Int) {
+        "setScreenOrientation".log(javaClass.simpleName)
+        activity.get()?.requestedOrientation = orientation
+    }
+
+    fun Activity.hideSystemBars() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController?.run {
+                hide(WindowInsets.Type.systemBars())
+                systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.apply {
+                systemUiVisibility = (
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        )
+            }
+        }
     }
 
     private fun WebView.setupJavascriptInterface() {
@@ -66,7 +102,6 @@ class VideoPlayerState(
                         2 -> showAppBar.value = true
                         3 -> showAppBar.value = false
                         else -> showAppBar.value = true
-
                     }
                 }
             }, JS_INTERFACE_NAME
@@ -74,9 +109,7 @@ class VideoPlayerState(
     }
 
     companion object {
-        private const val FILE_NAME = "player.html"
+        private const val FILE_NAME = "raw/player.html"
         private const val JS_INTERFACE_NAME = "Android"
     }
-
 }
-
