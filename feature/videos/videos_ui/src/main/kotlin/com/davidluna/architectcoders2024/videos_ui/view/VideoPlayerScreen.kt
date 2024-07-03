@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.videos_ui.view
 
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -35,9 +36,9 @@ fun VideoPlayerScreen(
             if (target) {
                 AndroidView(
                     factory = {
-                        webView.apply {
+                        webView?.apply {
                             loadData(loadHtml(state.videos), "text/html", "UTF-8")
-                        }
+                        } ?: View(it)
                     },
                     modifier = Modifier
                         .fillMaxSize()
