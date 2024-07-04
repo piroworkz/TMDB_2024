@@ -1,0 +1,6 @@
+package com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session
+
+data class GuestSession(
+    val expiresAt: String,
+    val guestSessionId: String
+)
