@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesViewModel @Inject constructor(
+class MediaViewModel @Inject constructor(
     private val getContent: GetContentUseCase,
     private val getContentKind: GetContentKindUseCase
 ) : ViewModel() {

@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface MediaCatalogService {
     @GET("{endpoint}")
     suspend fun getMedia(
-        @Path("endpoint") endpoint: String,
+        @Path("endpoint", encoded = true) endpoint: String,
         @Query("page") page: Int
     ): Either<RemoteError, RemoteResults<RemoteMedia>>
 

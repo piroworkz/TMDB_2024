@@ -8,5 +8,5 @@ import retrofit2.http.Path
 
 interface VideosService {
     @GET("{endpoint}/videos")
-    suspend fun getVideos(@Path("endpoint") endpoint: String): Either<RemoteError, RemoteVideos>
+    suspend fun getVideos(@Path("endpoint", encoded = true) endpoint: String): Either<RemoteError, RemoteVideos>
 }

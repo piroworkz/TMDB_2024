@@ -7,7 +7,7 @@ kotlin = "1.9.23"
 kotlin-coroutines = "1.8.0"
 coreKtx = "1.13.1"
 kotlinxSerializationJson = "1.6.3"
-lifecycleRuntimeKtx = "2.8.2"
+lifecycleRuntimeKtx = "2.8.3"
 #compose
 composeBom = "2024.06.00"
 compose-navigation = "2.8.0-beta04"
@@ -39,12 +39,12 @@ javaxInject = "1"
 kapt = "1.9.23"
 appcompat = "1.7.0"
 material = "1.12.0"
-fragmentKtx = "1.8.0"
+fragmentKtx = "1.8.1"
 #testing
 junit = "4.13.2"
 mock_K = "1.13.11"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
 
 [libraries]
 composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }

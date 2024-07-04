@@ -30,7 +30,7 @@ sealed class DrawerItem(
         titleResource = R.string.drawer_tv_shows,
         iconResource = Icons.Outlined.Tv,
         destination = MoviesNavigation.Movies(),
-        contentKind = ContentKind.TV_SHOW
+        contentKind = ContentKind.TV
     )
 
     data object CloseSession : DrawerItem(

@@ -70,7 +70,7 @@ class NavigatorState(
         when (drawerDestination) {
             DrawerItem.CloseSession -> sendEvent(MainEvent.OnCloseSession)
             DrawerItem.Movies -> sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
-            DrawerItem.TvShows -> sendEvent(MainEvent.SetContentKind(ContentKind.TV_SHOW))
+            DrawerItem.TvShows -> sendEvent(MainEvent.SetContentKind(ContentKind.TV))
             null -> {}
         }
         drawer.toggleState()

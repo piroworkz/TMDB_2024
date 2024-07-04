@@ -11,12 +11,12 @@ import retrofit2.http.Path
 interface MediaDetailService {
 
     @GET("{endpoint}")
-    suspend fun getDetailById(@Path("endpoint") endpoint: String): Either<RemoteError, RemoteContentDetail>
+    suspend fun getDetailById(@Path("endpoint", encoded = true) endpoint: String): Either<RemoteError, RemoteContentDetail>
 
     @GET("{endpoint}/credits")
-    suspend fun getCreditsById(@Path("endpoint") endpoint: String): Either<RemoteError, RemoteCredits>
+    suspend fun getCreditsById(@Path("endpoint", encoded = true) endpoint: String): Either<RemoteError, RemoteCredits>
 
     @GET("{endpoint}/images")
-    suspend fun getImagesById(@Path("endpoint") endpoint: String): Either<RemoteError, RemoteImages>
+    suspend fun getImagesById(@Path("endpoint", encoded = true) endpoint: String): Either<RemoteError, RemoteImages>
 
 }
