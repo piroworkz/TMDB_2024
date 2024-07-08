@@ -7,8 +7,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
-import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent.OnUiReady
-import com.davidluna.architectcoders2024.main_ui.presenter.MainState
 import com.davidluna.architectcoders2024.main_ui.presenter.MainViewModel
 import com.davidluna.architectcoders2024.main_ui.view.Navigator
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,10 +16,9 @@ class MainActivity : FragmentActivity() {
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.sendEvent(OnUiReady)
         setContent {
             val state by viewModel.state.collectAsState()
-            closeSession(state)
+            closeSession(state.closeSession)
             TmdbTheme {
                 Navigator(
                     state = state,
@@ -31,8 +28,8 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    private fun closeSession(state: MainState) {
-        if (state.closeSession) {
+    private fun closeSession(closeSession: Boolean) {
+        if (closeSession) {
             finishAffinity()
         }
     }

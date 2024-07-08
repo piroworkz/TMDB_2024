@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.splash_ui.biometrics
+package com.davidluna.architectcoders2024.auth_ui.biometrics
 
 import android.os.Build
 import androidx.biometric.BiometricManager
@@ -11,9 +11,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.SHOW_PROMPT
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.UNAVAILABLE
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricState.SHOW_PROMPT
-import com.davidluna.architectcoders2024.splash_ui.biometrics.BiometricState.UNAVAILABLE
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 
@@ -38,7 +38,7 @@ class BiometricAuthenticationState(
             .setNegativeButtonText(it.getString(R.string.biometric_use_password_instead))
     }
 
-    private val canAuthenticate: MutableState<Boolean> =
+    val canAuthenticate: MutableState<Boolean> =
         mutableStateOf(biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS)
 
     val biometricState: BiometricState

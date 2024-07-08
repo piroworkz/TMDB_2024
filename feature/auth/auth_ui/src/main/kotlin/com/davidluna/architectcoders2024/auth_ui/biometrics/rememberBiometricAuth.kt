@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.splash_ui.biometrics
+package com.davidluna.architectcoders2024.auth_ui.biometrics
 
 import android.content.Context
 import androidx.compose.runtime.Composable

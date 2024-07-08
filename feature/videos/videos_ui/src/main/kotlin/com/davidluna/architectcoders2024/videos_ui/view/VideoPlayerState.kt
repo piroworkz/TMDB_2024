@@ -15,6 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.davidluna.architectcoders2024.videos_ui.R
 import java.lang.ref.WeakReference
+import kotlin.math.truncate
 
 class VideoPlayerState(
     private val activity: WeakReference<Activity>,
@@ -23,7 +24,7 @@ class VideoPlayerState(
     lateinit var webView: WebView
         private set
 
-    var showAppBar: MutableState<Boolean> = mutableStateOf(false)
+    var showAppBar: MutableState<Boolean> = mutableStateOf(currentScreenOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         private set
 
     init {
@@ -70,6 +71,9 @@ class VideoPlayerState(
     fun setScreenOrientation(orientation: Int) {
         activity.get()?.requestedOrientation = orientation
     }
+
+    fun currentScreenOrientation(): Int? =
+        activity.get()?.requestedOrientation
 
     fun Activity.hideSystemBars() {
 

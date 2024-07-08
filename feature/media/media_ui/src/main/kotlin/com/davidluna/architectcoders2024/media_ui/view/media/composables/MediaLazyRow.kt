@@ -24,46 +24,18 @@ import com.davidluna.media_domain.media_domain_entities.Media
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun MoviesLazyRow(
+fun MediaLazyRow(
     title: Int,
     flow: Flow<PagingData<Media>>,
     onMovieClicked: (Int) -> Unit
 ) {
 
     val movies: LazyPagingItems<Media> = flow.collectAsLazyPagingItems()
-    val size = LocalConfiguration.current.screenWidthDp.dp / 2
 
-    when (movies.loadState.refresh) {
-        is LoadState.Error -> {
-            ErrorDialogView(
-                error = AppError.Message(
-                    0,
-                    stringResource(R.string.something_went_wrong)
-                )
-            ) {
-                movies.refresh()
-            }
-        }
-
-        LoadState.Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(Dimens.margins.xLarge)
-                    .size(size),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is LoadState.NotLoading -> {
-            ReelView(
-                title = stringResource(title),
-                movies = movies,
-            ) { onMovieClicked(it) }
-            Spacer(modifier = Modifier.padding(top = Dimens.margins.xLarge))
-        }
-    }
+    ReelView(
+        title = stringResource(title),
+        movies = movies,
+    ) { onMovieClicked(it) }
+    Spacer(modifier = Modifier.padding(top = Dimens.margins.xLarge))
 
 }

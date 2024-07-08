@@ -9,6 +9,6 @@ interface LocalPreferencesRepository {
     val userAccount: Flow<UserAccount>
     val isGuest: Flow<Boolean>
     val contentKind: Flow<ContentKind>
-    suspend fun closeSession(): Boolean
-    suspend fun saveContentKind(contentKind: ContentKind): Boolean
+    suspend fun closeSession()
+    suspend fun saveContentKind(contentKind: ContentKind)
 }

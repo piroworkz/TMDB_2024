@@ -29,15 +29,18 @@ class MainViewModel @Inject constructor(
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = _state.asStateFlow()
 
+    init {
+        initViewModel()
+    }
+
     fun sendEvent(event: MainEvent) {
         when (event) {
             is MainEvent.OnCloseSession -> closeSession()
             is MainEvent.SetContentKind -> setContentKind(event.mediaType)
-            MainEvent.OnUiReady -> onUiReady()
         }
     }
 
-    private fun onUiReady() {
+    private fun initViewModel() {
         sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
         collectUser()
         collectContentKind()
@@ -45,7 +48,8 @@ class MainViewModel @Inject constructor(
 
     private fun closeSession() {
         viewModelScope.launch {
-            _state.update { s -> s.copy(closeSession = closeSessionUseCase()) }
+            closeSessionUseCase()
+            _state.update { s -> s.copy(closeSession = true) }
 
         }
     }

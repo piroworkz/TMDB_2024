@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
 import com.davidluna.media_domain.media_domain_entities.Cast
 
@@ -27,8 +29,7 @@ fun MovieCastView(
     cast: List<Cast>?,
 ) {
     val width = LocalConfiguration.current.screenWidthDp.dp
-
-    ReelTitleView("CAST")
+    ReelTitleView(stringResource(R.string.title_cast_row))
     cast?.let {
         LazyRow(
             modifier = Modifier.fillMaxWidth()

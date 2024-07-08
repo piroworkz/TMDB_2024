@@ -4,6 +4,6 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import javax.inject.Inject
 
 class SaveContentKindUseCase @Inject constructor(private val repository: LocalPreferencesRepository) {
-    suspend operator fun invoke(contentKind: ContentKind): Boolean =
+    suspend operator fun invoke(contentKind: ContentKind) =
         repository.saveContentKind(contentKind)
 }

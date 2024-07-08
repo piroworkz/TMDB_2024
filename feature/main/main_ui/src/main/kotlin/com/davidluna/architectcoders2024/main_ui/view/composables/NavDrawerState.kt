@@ -26,4 +26,4 @@ class NavDrawerState(
 fun rememberNavDrawerState(
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     scope: CoroutineScope
-): NavDrawerState = remember { NavDrawerState(drawerState, scope) }
+): NavDrawerState = remember(drawerState) { NavDrawerState(drawerState, scope) }

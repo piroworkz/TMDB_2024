@@ -3,19 +3,19 @@ package com.davidluna.architectcoders2024.navigation.domain
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface MoviesNavigation : Destination {
+sealed interface MediaNavigation : Destination {
     @Serializable
-    data object Init : MoviesNavigation
+    data object Init : MediaNavigation
 
     @Serializable
     data class Movies(
         val isTopLevel: Boolean = true
-    ) : MoviesNavigation
+    ) : MediaNavigation
 
     @Serializable
     data class Detail(
         val movieId: Int
-    ) : MoviesNavigation
+    ) : MediaNavigation
 
 }
 

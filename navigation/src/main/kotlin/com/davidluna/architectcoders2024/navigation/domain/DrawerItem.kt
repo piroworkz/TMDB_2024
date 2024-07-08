@@ -22,15 +22,15 @@ sealed class DrawerItem(
     data object Movies : DrawerItem(
         titleResource = R.string.drawer_movies,
         iconResource = Icons.Outlined.Movie,
-        destination = MoviesNavigation.Movies(),
+        destination = MediaNavigation.Movies(),
         contentKind = ContentKind.MOVIE
     )
 
     data object TvShows : DrawerItem(
         titleResource = R.string.drawer_tv_shows,
         iconResource = Icons.Outlined.Tv,
-        destination = MoviesNavigation.Movies(),
-        contentKind = ContentKind.TV
+        destination = MediaNavigation.Movies(),
+        contentKind = ContentKind.TV_SHOW
     )
 
     data object CloseSession : DrawerItem(

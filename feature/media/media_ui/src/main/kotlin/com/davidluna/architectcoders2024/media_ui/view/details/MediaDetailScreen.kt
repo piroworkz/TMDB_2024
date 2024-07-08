@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
+import com.davidluna.architectcoders2024.core_ui.composables.appGradient
+import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.MovieCastView
@@ -25,18 +27,18 @@ import com.davidluna.architectcoders2024.media_ui.view.details.composables.Movie
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.PostersPagerView
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.joinImages
-import com.davidluna.architectcoders2024.media_ui.view.media.composables.MoviesLazyRow
-import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
+import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
 import com.davidluna.architectcoders2024.navigation.domain.YoutubeNavigation
 
 @Composable
-fun MovieDetailScreen(
+fun MediaDetailScreen(
     state: MovieDetailViewModel.State,
     sendEvent: (MovieDetailEvent) -> Unit
 ) {
+    val scrollState = rememberScrollState()
 
-    LaunchedEffect(key1 = Unit) {
-        sendEvent(MovieDetailEvent.OnViewReady)
+    LaunchedEffect(state.movieDetail) {
+        scrollState.animateScrollTo(0)
     }
 
     Box(
@@ -46,7 +48,7 @@ fun MovieDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
         ) {
             PostersPagerView(images = joinImages(state))
             MovieDetailsView(state.movieDetail) {
@@ -63,12 +65,12 @@ fun MovieDetailScreen(
             MovieCastView(state.movieCredits)
 
 
-            MoviesLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesNavigation.Detail(it)))
+            MediaLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
+                sendEvent(MovieDetailEvent.OnMovieSelected(mediaId = it))
             }
 
-            MoviesLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
-                sendEvent(MovieDetailEvent.OnNavigate(MoviesNavigation.Detail(it)))
+            MediaLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
+                sendEvent(MovieDetailEvent.OnMovieSelected(mediaId = it))
             }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))
@@ -92,13 +94,13 @@ fun MovieDetailScreen(
 )
 @Composable
 private fun MovieDetailScreenPreview() {
-    com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
+    TmdbTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(com.davidluna.architectcoders2024.core_ui.composables.appGradient())
+                .background(appGradient())
         ) {
-            MovieDetailScreen(
+            MediaDetailScreen(
                 state = MovieDetailViewModel.State(movieDetail = fakeDetails),
                 sendEvent = {}
             )

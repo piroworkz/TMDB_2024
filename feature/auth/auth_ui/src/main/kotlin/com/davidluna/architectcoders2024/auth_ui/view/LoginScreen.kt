@@ -6,24 +6,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricsLaunchedEffect
+import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.OnUiReady
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginState
-import com.davidluna.architectcoders2024.auth_ui.view.composables.IntentView
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
@@ -32,69 +32,79 @@ import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
 fun LoginScreen(
-    state: LoginState,
+    state: LoginViewModel.LoginState,
     sendEvent: (event: LoginEvent) -> Unit
 ) {
 
-    LaunchedEffect(key1 = Unit) { sendEvent(OnUiReady) }
+    val bioState = rememberBiometricAuth()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
 
         Image(
             painter = painterResource(id = R.drawable.logo_v1),
             contentDescription = "",
-            modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop,
             colorFilter = ColorFilter.tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
 
-        if (state.intent) {
-            IntentView(state.token)
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.margins.xLarge)
-                    .align(Alignment.BottomCenter),
-                horizontalAlignment = Alignment.CenterHorizontally
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimens.margins.xLarge)
+                .align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Button(
+                onClick = { sendEvent(LoginEvent.CreateRequestToken) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.small
             ) {
-                Button(
-                    onClick = { sendEvent(LoginEvent.CreateRequestToken) },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(Dimens.margins.medium)
-                ) {
-                    Text(
-                        text = "Login",
-                        modifier = Modifier
-                            .padding(horizontal = Dimens.margins.xLarge)
-                    )
+                Text(
+                    text = stringResource(R.string.btn_login),
+                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                )
+            }
+
+            TextButton(
+                onClick = { sendEvent(LoginEvent.CreateGuestSession) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.btn_login_as_guest),
+                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                )
+            }
+
+            if (state.sessionExists && bioState.canAuthenticate.value) {
+                BiometricsLaunchedEffect(biometricAuthState = bioState) {
+                    sendEvent(it)
                 }
 
                 TextButton(
-                    onClick = { sendEvent(LoginEvent.CreateGuestSession) },
+                    onClick = { bioState.launchPrompt() },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Login as Guest",
-                        modifier = Modifier
-                            .padding(horizontal = Dimens.margins.xLarge)
+                        text = stringResource(id = R.string.btn_launch_biometrics),
+                        modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
                     )
                 }
             }
+
+
         }
 
         if (state.isLoading) {
             CircularProgressIndicator()
         }
         ErrorDialogView(error = state.appError as? AppError.Message) {
-            sendEvent(LoginEvent.ResetError)
+            sendEvent(LoginEvent.SetError(null))
         }
     }
-
 }
 
 @Preview(
@@ -105,7 +115,7 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     TmdbTheme {
         LoginScreen(
-            state = LoginState()
+            state = LoginViewModel.LoginState()
         ) { }
     }
 }

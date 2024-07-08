@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Dp
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
-fun MovieTitleView(movieTitle: String?, imageSize: Dp) {
+fun MediaTitleView(movieTitle: String?, imageSize: Dp) {
     if (movieTitle == null) return
     Text(
         text = movieTitle,

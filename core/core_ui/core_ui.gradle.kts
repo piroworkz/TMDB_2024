@@ -1,17 +1,14 @@
-import com.davidluna.architectcoders2024.build_logic.constants.Constants.KOTLIN_COMPILER_EXTENSION_VERSION
 import com.davidluna.architectcoders2024.build_logic.constants.Constants.NAMESPACE
 
 plugins {
     alias(libs.plugins.androidLibraryConventionPlugin)
+    alias(libs.plugins.composeCompiler)
 }
 
 android {
     namespace = NAMESPACE.plus(".core_ui")
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = KOTLIN_COMPILER_EXTENSION_VERSION
     }
 }
 
@@ -25,7 +22,10 @@ dependencies {
     implementation(libs.iconsExtended)
     implementation(libs.coilCompose)
     implementation(libs.fragmentKtx)
+    debugImplementation(libs.runtimeTracing)
+    debugImplementation(libs.composeUiTooling)
     testImplementation(libs.junit)
     androidTestImplementation(libs.extJunit)
     androidTestImplementation(libs.espressoCore)
+
 }

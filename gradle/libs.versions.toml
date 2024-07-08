@@ -3,7 +3,7 @@
 agp = "8.3.2"
 biometric = "1.2.0-alpha05"
 datastoreCore = "1.1.1"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 kotlin-coroutines = "1.8.0"
 coreKtx = "1.13.1"
 kotlinxSerializationJson = "1.6.3"
@@ -29,7 +29,6 @@ pagingRuntime = "3.3.0"
 protobufJavalite = "4.26.0"
 protobufKotlinLite = "4.26.0"
 protobuf = "0.9.4"
-jetbrainsKotlinJvm = "1.9.23"
 #hilt
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
@@ -61,11 +60,13 @@ composeUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 composeUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 composeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 composeMaterial3 = { group = "androidx.compose.material3", name = "material3" }
+composeAnimation = { group = "androidx.compose.animation", name = "animation", version = "1.7.0-beta05"}
 composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 composeNavigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 composeConstraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraint-layout" }
 coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+runtimeTracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version = "1.0.0-beta01"}
 #kotlin coroutines
 kotlinCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 #retrofit
@@ -105,12 +106,13 @@ kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plu
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobufPlugin = { id = "com.google.protobuf", version.ref = "protobuf" }
 hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #Convention plugins
 frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.plugin", version = "unspecified" }
 uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }

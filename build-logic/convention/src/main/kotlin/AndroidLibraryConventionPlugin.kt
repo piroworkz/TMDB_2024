@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.libs.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.libs
@@ -13,9 +14,9 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
     }
 
     private fun Project.applyPlugins() {
-        project.apply {
-            plugin(libs.androidLibrary.get().pluginId)
-            plugin(libs.kotlinAndroid.get().pluginId)
+        pluginManager.apply {
+            alias(libs.androidLibrary)
+            alias(libs.kotlinAndroid)
         }
     }
 

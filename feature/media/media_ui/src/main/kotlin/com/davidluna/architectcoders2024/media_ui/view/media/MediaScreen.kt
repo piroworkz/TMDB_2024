@@ -14,11 +14,11 @@ import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
 import com.davidluna.architectcoders2024.media_ui.presenter.media.State
-import com.davidluna.architectcoders2024.media_ui.view.media.composables.MoviesLazyRow
-import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
+import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
+import com.davidluna.architectcoders2024.navigation.domain.MediaNavigation
 
 @Composable
-fun MoviesScreen(
+fun MediaScreen(
     state: State,
     sendEvent: (MoviesEvent) -> Unit
 ) {
@@ -28,38 +28,38 @@ fun MoviesScreen(
     ) {
         item {
             Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
-            MoviesLazyRow(
+            MediaLazyRow(
                 title = R.string.title_popular_movies,
                 flow = state.firstList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MoviesNavigation.Detail(it))) }
+                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
             )
         }
 
         item {
-            MoviesLazyRow(
+            MediaLazyRow(
                 title = R.string.title_top_rated_movies,
                 flow = state.secondList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MoviesNavigation.Detail(it))) }
+                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
             )
         }
 
         item {
             val title =
                 if (state.contentKind == ContentKind.MOVIE) R.string.title_upcoming_movies else R.string.title_airing_today
-            MoviesLazyRow(
+            MediaLazyRow(
                 title = title,
                 flow = state.thirdList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MoviesNavigation.Detail(it))) }
+                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
             )
         }
 
         item {
             val title =
                 if (state.contentKind == ContentKind.MOVIE) R.string.title_now_playing_movies else R.string.title_on_air
-            MoviesLazyRow(
+            MediaLazyRow(
                 title = title,
                 flow = state.fourthList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MoviesNavigation.Detail(it))) }
+                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
             )
         }
 
@@ -74,7 +74,7 @@ fun MoviesScreen(
 @Composable
 private fun MoviesScreenPreview() {
     TmdbTheme {
-        MoviesScreen(
+        MediaScreen(
             state = State()
         ) {
 

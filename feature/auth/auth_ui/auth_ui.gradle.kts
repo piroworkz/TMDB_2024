@@ -14,4 +14,5 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(projects.feature.auth.authDomain)
     implementation(libs.arrowCore)
+    implementation(libs.biometric)
 }

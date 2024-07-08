@@ -20,10 +20,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
+import com.davidluna.architectcoders2024.core_domain.core_entities.labels.Animation
 
 fun Modifier.shimmer(enabled: Boolean, duration: Int = 1000): Modifier = composed {
     var intSize by remember { mutableStateOf(IntSize.Zero) }
-    val transition = rememberInfiniteTransition(label = "shimmer")
+    val transition = rememberInfiniteTransition(label = Animation.SHIMMER)
     val startOffset by transition.animateFloat(
         initialValue = -2 * intSize.width.toFloat(),
         targetValue = 2 * intSize.width.toFloat(),
@@ -33,11 +34,11 @@ fun Modifier.shimmer(enabled: Boolean, duration: Int = 1000): Modifier = compose
                 easing = LinearEasing
             ),
             repeatMode = RepeatMode.Reverse
-        ), label = "shimmer"
+        ), label = Animation.SHIMMER
     )
 
     if (enabled) {
-        background(getGrayGradientBrush(startOffset = startOffset, intSize = intSize))
+        background(appGradientBrush(startOffset = startOffset, intSize = intSize))
             .onGloballyPositioned { coordinates ->
                 intSize = coordinates.size
             }
@@ -49,7 +50,7 @@ fun Modifier.shimmer(enabled: Boolean, duration: Int = 1000): Modifier = compose
 
 
 @Composable
-private fun getGrayGradientBrush(startOffset: Float, intSize: IntSize): Brush =
+private fun appGradientBrush(startOffset: Float, intSize: IntSize): Brush =
     Brush.linearGradient(
         colors = listOf(
             colorScheme.primary,

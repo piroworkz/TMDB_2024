@@ -35,6 +35,13 @@ class VideoPlayerViewModel @Inject constructor(
         collectContentKind()
     }
 
+    data class PlayerState(
+        val isLoading: Boolean = false,
+        val appError: AppError? = null,
+        val videos: List<String> = emptyList(),
+        val contentKind: ContentKind = ContentKind.MOVIE
+    )
+
     private fun collectContentKind() {
         viewModelScope.launch(Dispatchers.IO) {
             getContentKindUseCase()

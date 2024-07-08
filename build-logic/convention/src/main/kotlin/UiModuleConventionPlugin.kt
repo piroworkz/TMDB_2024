@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.androidTestImplementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.debugImplementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
@@ -7,7 +8,9 @@ import com.davidluna.architectcoders2024.build_logic.dependency_utilities.kapt
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.testImplementation
 import com.davidluna.architectcoders2024.build_logic.libs.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.libs.arrowCore
+import com.davidluna.architectcoders2024.build_logic.libs.composeAnimation
 import com.davidluna.architectcoders2024.build_logic.libs.composeBom
+import com.davidluna.architectcoders2024.build_logic.libs.composeCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.composeMaterial3
 import com.davidluna.architectcoders2024.build_logic.libs.composeNavigation
 import com.davidluna.architectcoders2024.build_logic.libs.composeUi
@@ -25,6 +28,7 @@ import com.davidluna.architectcoders2024.build_logic.libs.junit
 import com.davidluna.architectcoders2024.build_logic.libs.kapt
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.libs
+import com.davidluna.architectcoders2024.build_logic.libs.runtimeTracing
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -38,11 +42,12 @@ class UiModuleConventionPlugin : Plugin<Project> {
     }
 
     private fun Project.applyPlugins() {
-        project.apply {
-            plugin(libs.androidLibrary.get().pluginId)
-            plugin(libs.kotlinAndroid.get().pluginId)
-            plugin(libs.kapt.get().pluginId)
-            plugin(libs.hiltPlugin.get().pluginId)
+        pluginManager.apply {
+            alias(libs.androidLibrary)
+            alias(libs.kotlinAndroid)
+            alias(libs.kapt)
+            alias(libs.hiltPlugin)
+            alias(libs.composeCompiler)
         }
     }
 
@@ -69,15 +74,10 @@ class UiModuleConventionPlugin : Plugin<Project> {
                 compose = true
             }
 
-            composeOptions {
-                kotlinCompilerExtensionVersion = Constants.KOTLIN_COMPILER_EXTENSION_VERSION
-            }
-
             compileOptions {
                 sourceCompatibility = Constants.JAVA_VERSION
                 targetCompatibility = Constants.JAVA_VERSION
             }
-
 
         }
     }
@@ -89,7 +89,6 @@ class UiModuleConventionPlugin : Plugin<Project> {
             implementation(libs.hiltNavigationCompose)
             implementation(libs.hiltAndroid)
             kapt(libs.hiltCompiler)
-
             testImplementation(libs.junit)
             androidTestImplementation(libs.extJunit)
             androidTestImplementation(libs.espressoCore)
@@ -106,7 +105,8 @@ class UiModuleConventionPlugin : Plugin<Project> {
             implementation(libs.composeMaterial3)
             implementation(libs.iconsExtended)
             implementation(libs.composeNavigation)
-
+            implementation(libs.composeAnimation)
+            debugImplementation(libs.runtimeTracing)
             debugImplementation(libs.composeUiTooling)
         }
     }

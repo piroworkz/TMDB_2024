@@ -17,7 +17,7 @@ fun SlideFromTopAnimation(
     target: Boolean,
     modifier: Modifier = Modifier,
     label: String,
-    duration: MutableIntState = remember { mutableIntStateOf(1000) },
+    duration: MutableIntState = remember { mutableIntStateOf(500) },
     content: @Composable (Boolean) -> Unit
 ) {
 

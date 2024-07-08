@@ -121,3 +121,9 @@ val VersionCatalog.kotlinxSerializationJson: Provider<MinimalExternalModuleDepen
 val VersionCatalog.lifecycleRuntimeKtx: Provider<MinimalExternalModuleDependency>
     get() = findLibrary(VersionCatalog::lifecycleRuntimeKtx.name).get()
 
+val VersionCatalog.runtimeTracing: Provider<MinimalExternalModuleDependency>
+    get() = findLibrary(VersionCatalog::runtimeTracing.name).get()
+
+val VersionCatalog.composeAnimation: Provider<MinimalExternalModuleDependency>
+    get() = findLibrary(VersionCatalog::composeAnimation.name).get()
+

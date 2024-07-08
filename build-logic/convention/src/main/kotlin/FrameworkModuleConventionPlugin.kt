@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.androidTestImplementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.testImplementation
@@ -29,10 +30,10 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
     }
 
     private fun Project.applyPlugins() {
-        project.apply {
-            plugin(libs.androidLibrary.get().pluginId)
-            plugin(libs.kotlinAndroid.get().pluginId)
-            plugin(libs.kotlinSerialization.get().pluginId)
+        pluginManager.apply {
+            alias(libs.androidLibrary)
+            alias(libs.kotlinAndroid)
+            alias(libs.kotlinSerialization)
         }
     }
 

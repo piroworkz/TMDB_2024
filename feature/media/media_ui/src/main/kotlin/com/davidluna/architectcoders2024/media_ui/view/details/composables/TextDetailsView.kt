@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.media_domain.media_domain_entities.Details
 import com.davidluna.media_domain.media_domain_entities.Genre
 
@@ -43,7 +45,7 @@ fun TextDetailsView(movieDetail: Details?) {
     )
 
     Text(
-        text = "Overview",
+        text = stringResource(R.string.title_overview),
         modifier = Modifier.padding(
             horizontal = Dimens.margins.large,
             vertical = Dimens.margins.medium
