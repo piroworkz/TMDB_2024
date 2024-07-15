@@ -15,7 +15,7 @@ import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
 import com.davidluna.architectcoders2024.media_ui.presenter.media.State
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
-import com.davidluna.architectcoders2024.navigation.domain.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 
 @Composable
 fun MediaScreen(
@@ -31,7 +31,9 @@ fun MediaScreen(
             MediaLazyRow(
                 title = R.string.title_popular_movies,
                 flow = state.firstList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
+                onMovieClicked = { movieId, movieTitle ->
+                    sendEvent(OnMovieClicked(MediaNavigation.Detail(movieId, movieTitle)))
+                }
             )
         }
 
@@ -39,7 +41,9 @@ fun MediaScreen(
             MediaLazyRow(
                 title = R.string.title_top_rated_movies,
                 flow = state.secondList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
+                onMovieClicked = { movieId, movieTitle ->
+                    sendEvent(OnMovieClicked(MediaNavigation.Detail(movieId, movieTitle)))
+                }
             )
         }
 
@@ -49,7 +53,9 @@ fun MediaScreen(
             MediaLazyRow(
                 title = title,
                 flow = state.thirdList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
+                onMovieClicked = { movieId, movieTitle ->
+                    sendEvent(OnMovieClicked(MediaNavigation.Detail(movieId, movieTitle)))
+                }
             )
         }
 
@@ -59,7 +65,9 @@ fun MediaScreen(
             MediaLazyRow(
                 title = title,
                 flow = state.fourthList,
-                onMovieClicked = { sendEvent(OnMovieClicked(MediaNavigation.Detail(it))) }
+                onMovieClicked = { movieId, movieTitle ->
+                    sendEvent(OnMovieClicked(MediaNavigation.Detail(movieId, movieTitle)))
+                }
             )
         }
 

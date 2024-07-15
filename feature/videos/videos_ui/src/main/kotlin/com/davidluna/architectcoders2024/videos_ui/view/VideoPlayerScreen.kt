@@ -60,6 +60,7 @@ fun VideoPlayerScreen(
                     .fillMaxWidth(),
                 topLevel = false,
                 hideAppBar = false,
+                title = null,
                 onNavigationIconClick = {
                     showAppBar.value = false
                     if (!showAppBar.value) {

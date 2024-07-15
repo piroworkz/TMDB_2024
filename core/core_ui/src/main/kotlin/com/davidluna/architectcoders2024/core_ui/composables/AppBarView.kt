@@ -29,9 +29,9 @@ import com.davidluna.architectcoders2024.core_ui.R
 @Composable
 fun AppBarView(
     modifier: Modifier = Modifier,
+    title: String?,
     topLevel: Boolean,
     hideAppBar: Boolean,
-    title: String = stringResource(id = R.string.app_name),
     onNavigationIconClick: () -> Unit
 ) {
     if (hideAppBar) return
@@ -40,7 +40,7 @@ fun AppBarView(
         elevation = cardElevation(defaultElevation = 8.dp)
     ) {
         TopAppBar(
-            title = { Text(text = title) },
+            title = { Text(text = title ?: stringResource(id = R.string.app_name)) },
             modifier = modifier,
             navigationIcon = {
                 val icon = if (topLevel) Icons.Default.Menu else Rounded.ArrowBack
@@ -73,6 +73,7 @@ private fun AppBarPreView() {
                 AppBarView(
                     topLevel = true,
                     hideAppBar = false,
+                    title = "Title",
                 ) {}
             },
         ) { paddingValues ->

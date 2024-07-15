@@ -14,8 +14,9 @@ import com.davidluna.architectcoders2024.main_ui.presenter.MainState
 import com.davidluna.architectcoders2024.main_ui.view.composables.DrawerScaffoldView
 import com.davidluna.architectcoders2024.main_ui.view.composables.rememberNavigatorState
 import com.davidluna.architectcoders2024.media_ui.navigation.mediaNavGraph
-import com.davidluna.architectcoders2024.navigation.domain.AuthNav
-import com.davidluna.architectcoders2024.navigation.domain.StartNav
+import com.davidluna.architectcoders2024.navigation.domain.destination.AuthNavigation
+import com.davidluna.architectcoders2024.navigation.domain.destination.StartNavigation
+import com.davidluna.architectcoders2024.navigation.domain.route
 import com.davidluna.architectcoders2024.splash_ui.navigation.splashNavGraph
 import com.davidluna.architectcoders2024.videos_ui.navigation.youtubeNavGraph
 
@@ -27,11 +28,12 @@ fun Navigator(
 
     DrawerScaffoldView(
         state = state,
+        appBarTitle = appBarTitle,
         sendEvent = { sendEvent(it) }
     ) { paddingValues: PaddingValues ->
         NavHost(
             navController = controller,
-            startDestination = StartNav.Init,
+            startDestination = StartNavigation.Init.route(),
             modifier = Modifier
                 .padding(paddingValues),
             enterTransition = { EnterTransition.None },
@@ -40,14 +42,14 @@ fun Navigator(
 
             splashNavGraph {
                 navigateTo(it) {
-                    popUpTo(StartNav.Init) { inclusive = true }
+                    popUpTo(StartNavigation.Init.route()) { inclusive = true }
                     launchSingleTop = true
                 }
             }
 
             authNavGraph {
                 navigateTo(it) {
-                    popUpTo(AuthNav.Init) { inclusive = true }
+                    popUpTo(AuthNavigation.Init.route()) { inclusive = true }
                     launchSingleTop = true
                 }
             }

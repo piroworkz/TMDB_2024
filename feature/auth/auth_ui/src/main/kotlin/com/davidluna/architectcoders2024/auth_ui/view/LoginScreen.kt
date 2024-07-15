@@ -79,7 +79,7 @@ fun LoginScreen(
                 )
             }
 
-            if (state.sessionExists && bioState.canAuthenticate.value) {
+            if (state.sessionExists && bioState.canAuthenticate.value && !state.bioSuccess) {
                 BiometricsLaunchedEffect(biometricAuthState = bioState) {
                     sendEvent(it)
                 }

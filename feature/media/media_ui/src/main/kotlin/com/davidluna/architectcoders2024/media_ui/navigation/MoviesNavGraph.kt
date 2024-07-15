@@ -4,7 +4,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
@@ -12,17 +11,20 @@ import com.davidluna.architectcoders2024.media_ui.view.details.MediaDetailScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.view.media.MediaScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaViewModel
-import com.davidluna.architectcoders2024.navigation.domain.Destination
-import com.davidluna.architectcoders2024.navigation.domain.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.composable
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.route
 
 fun NavGraphBuilder.mediaNavGraph(
     navigateTo: (Destination) -> Unit,
 ) {
-    navigation<MediaNavigation.Init>(
-        startDestination = MediaNavigation.Movies()
+    navigation(
+        route = MediaNavigation.Init.route(),
+        startDestination = MediaNavigation.MediaCatalog.route()
     ) {
 
-        composable<MediaNavigation.Movies> {
+        composable(MediaNavigation.MediaCatalog) {
             val viewModel: MediaViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let {
@@ -35,7 +37,7 @@ fun NavGraphBuilder.mediaNavGraph(
             )
         }
 
-        composable<MediaNavigation.Detail> {
+        composable(MediaNavigation.Detail(appBarTitle = null)) {
             val viewModel: MovieDetailViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let { destination ->

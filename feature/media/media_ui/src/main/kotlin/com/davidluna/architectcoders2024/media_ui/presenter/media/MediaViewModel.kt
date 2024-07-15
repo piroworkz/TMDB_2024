@@ -6,7 +6,7 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.navigation.domain.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.media_domain.media_domain_usecases.GetContentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

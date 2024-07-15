@@ -3,15 +3,15 @@ package com.davidluna.architectcoders2024.media_ui.presenter.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.navigation.domain.Destination
-import com.davidluna.architectcoders2024.navigation.domain.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.args.Args
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.media_domain.media_domain_entities.Cast
 import com.davidluna.media_domain.media_domain_entities.Details
 import com.davidluna.media_domain.media_domain_entities.Media
@@ -63,14 +63,18 @@ class MovieDetailViewModel @Inject constructor(
     fun sendEvent(event: MovieDetailEvent) {
         when (event) {
             is MovieDetailEvent.OnNavigate -> setDestination(event.destination)
-            is MovieDetailEvent.OnMovieSelected -> fetchData(event.mediaId)
+            is MovieDetailEvent.OnMovieSelected -> onMovieSelected(event.mediaId, event.appBarTitle)
             MovieDetailEvent.ResetError -> resetError()
         }
     }
 
     private fun getArgs(savedStateHandle: SavedStateHandle) {
-        savedStateHandle.toRoute<MediaNavigation.Detail>()
-            .apply { _state.value.contentKind?.let { _ -> fetchData(movieId) } }
+        savedStateHandle.get<Int>(Args.DetailId.name)
+            ?.let { movieId -> _state.value.contentKind?.let { _ -> fetchData(movieId) } }
+    }
+
+    private fun onMovieSelected(movieId: Int, appBarTitle: String) {
+        _state.update { it.copy(destination = MediaNavigation.Detail(movieId, appBarTitle)) }
     }
 
     private fun setDestination(destination: Destination?) {
@@ -112,12 +116,9 @@ class MovieDetailViewModel @Inject constructor(
         from: String,
         movieId: Int
     ) = run {
-
         getMovieImagesUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
-            ifRight = { r ->
-                _state.update { s -> s.copy(images = r.map { it.filePath }) }
-            }
+            ifRight = { r -> _state.update { s -> s.copy(images = r.map { it.filePath }) } }
         )
     }
 

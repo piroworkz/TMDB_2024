@@ -28,7 +28,7 @@ import com.davidluna.architectcoders2024.media_ui.view.details.composables.Poste
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.joinImages
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
-import com.davidluna.architectcoders2024.navigation.domain.YoutubeNavigation
+import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
 
 @Composable
 fun MediaDetailScreen(
@@ -65,12 +65,18 @@ fun MediaDetailScreen(
             MovieCastView(state.movieCredits)
 
 
-            MediaLazyRow(title = R.string.title_recommended_movies, flow = state.recommendations) {
-                sendEvent(MovieDetailEvent.OnMovieSelected(mediaId = it))
+            MediaLazyRow(
+                title = R.string.title_recommended_movies,
+                flow = state.recommendations
+            ) { movieId, movieTitle ->
+                sendEvent(MovieDetailEvent.OnMovieSelected(movieId, movieTitle))
             }
 
-            MediaLazyRow(title = R.string.title_similar_movies, flow = state.similar) {
-                sendEvent(MovieDetailEvent.OnMovieSelected(mediaId = it))
+            MediaLazyRow(
+                title = R.string.title_similar_movies,
+                flow = state.similar
+            ) { movieId, movieTitle ->
+                sendEvent(MovieDetailEvent.OnMovieSelected(movieId, movieTitle))
             }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))

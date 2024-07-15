@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.media_ui.presenter.media
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.navigation.domain.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.media_domain.media_domain_entities.Media
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

@@ -23,12 +23,13 @@ import com.davidluna.media_domain.media_domain_entities.Media
 fun ReelView(
     title: String,
     movies: LazyPagingItems<Media>,
-    onMovieSelected: (Int) -> Unit
+    onMovieSelected: (Int, String) -> Unit
 ) {
     val imageSize = LocalConfiguration.current.screenWidthDp.dp / 2
     Spacer(
         modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
+
     if (movies.itemCount != 0) {
         ReelTitleView(title = title)
         LazyRow(
@@ -42,7 +43,7 @@ fun ReelView(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Black)
-                        .clickable { movie?.id?.let { movieId -> onMovieSelected(movieId) } },
+                        .clickable { movie?.id?.let { movieId -> onMovieSelected(movieId, movie.title) } },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

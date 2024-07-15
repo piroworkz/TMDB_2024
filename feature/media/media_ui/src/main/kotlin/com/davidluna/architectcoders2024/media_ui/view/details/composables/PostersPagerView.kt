@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.media_ui.view.details.composables
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.SlideFromTopAnimation
 import com.davidluna.architectcoders2024.core_ui.composables.shimmer
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PostersPagerView(
     images: List<String>

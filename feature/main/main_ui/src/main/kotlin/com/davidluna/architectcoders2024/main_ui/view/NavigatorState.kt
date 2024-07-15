@@ -7,12 +7,15 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument.APP_BAR_TITLE
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument.HIDE_APP_BAR
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument.IS_TOP_LEVEL
 import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent
 import com.davidluna.architectcoders2024.main_ui.view.composables.NavDrawerState
-import com.davidluna.architectcoders2024.navigation.domain.Destination
-import com.davidluna.architectcoders2024.navigation.domain.DrawerItem
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.DrawerItem
+import com.davidluna.architectcoders2024.navigation.domain.route
+import com.davidluna.architectcoders2024.navigation.domain.setArgs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -40,6 +43,9 @@ class NavigatorState(
     var hideAppBar by mutableStateOf(false)
         private set
 
+    var appBarTitle: String? by mutableStateOf(null)
+        private set
+
     fun onNavDrawerClick() {
         if (isTopLevel) {
             drawer.toggleState()
@@ -54,12 +60,14 @@ class NavigatorState(
 
     fun navigateTo(
         destination: Destination,
-        builder: NavOptionsBuilder.() -> Unit = {
-            popUpTo(destination) { inclusive = false }
-            launchSingleTop = true
+        optionsBuilder: (NavOptionsBuilder.() -> Unit) = {
+            popUpTo(destination.route()) { inclusive = true }
         }
     ) {
-        navController.navigate(destination) { builder() }
+        navController.navigate(
+            route = destination.setArgs(),
+            builder = { optionsBuilder() }
+        )
     }
 
     fun onDrawerItemSelected(
@@ -85,6 +93,7 @@ class NavigatorState(
                 it.arguments?.let { args ->
                     hideAppBar = args.getBoolean(HIDE_APP_BAR)
                     isTopLevel = args.getBoolean(IS_TOP_LEVEL)
+                    appBarTitle = args.getString(APP_BAR_TITLE)
                 }
             }
         }

@@ -35,12 +35,13 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.navigation.domain.destination.DrawerItem
 
 @Composable
 fun NavDrawerView(
     isGuest: Boolean = false,
     user: UserAccount? = null,
-    onSelected: (com.davidluna.architectcoders2024.navigation.domain.DrawerItem?) -> Unit
+    onSelected: (DrawerItem?) -> Unit
 ) {
 
     val size = LocalConfiguration.current.screenWidthDp.dp / 5
@@ -98,7 +99,7 @@ fun NavDrawerView(
         )
         Spacer(modifier = Modifier.height(Dimens.margins.large))
 
-        com.davidluna.architectcoders2024.navigation.domain.DrawerItem.items.forEach { item ->
+        DrawerItem.items.forEach { item ->
 
             Row(
                 modifier = Modifier

@@ -5,4 +5,6 @@ data object NavArgument : Labels {
     const val IS_TOP_LEVEL = "isTopLevel"
     const val APPROVED = "approved"
     const val REQUEST_TOKEN = "request_token"
+    const val MEDIA_ID = "MEDIA_ID"
+    const val APP_BAR_TITLE = "APP_BAR_TITLE"
 }

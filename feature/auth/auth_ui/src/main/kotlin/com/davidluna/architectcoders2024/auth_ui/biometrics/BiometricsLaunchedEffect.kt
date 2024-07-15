@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.auth_ui.biometrics
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
-import com.davidluna.architectcoders2024.navigation.domain.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 
 @Composable
 fun BiometricsLaunchedEffect(
@@ -15,7 +15,7 @@ fun BiometricsLaunchedEffect(
     ) {
         when (biometricAuthState.biometricState) {
             BiometricState.SUCCESS -> {
-                sendEvent(LoginEvent.IsLoggedIn(MediaNavigation.Movies()))
+                sendEvent(LoginEvent.IsLoggedIn(MediaNavigation.MediaCatalog))
             }
 
             BiometricState.SHOW_PROMPT -> {

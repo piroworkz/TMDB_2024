@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.navigation.domain
+package com.davidluna.architectcoders2024.navigation.domain.destination
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
@@ -22,14 +22,14 @@ sealed class DrawerItem(
     data object Movies : DrawerItem(
         titleResource = R.string.drawer_movies,
         iconResource = Icons.Outlined.Movie,
-        destination = MediaNavigation.Movies(),
+        destination = MediaNavigation.MediaCatalog,
         contentKind = ContentKind.MOVIE
     )
 
     data object TvShows : DrawerItem(
         titleResource = R.string.drawer_tv_shows,
         iconResource = Icons.Outlined.Tv,
-        destination = MediaNavigation.Movies(),
+        destination = MediaNavigation.MediaCatalog,
         contentKind = ContentKind.TV_SHOW
     )
 
