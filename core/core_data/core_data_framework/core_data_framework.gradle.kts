@@ -20,6 +20,9 @@ dependencies {
     implementation(libs.playServicesLocation)
     implementation(libs.javaxInject)
     implementation(libs.okhttpClient)
+
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }
 
 protobuf {

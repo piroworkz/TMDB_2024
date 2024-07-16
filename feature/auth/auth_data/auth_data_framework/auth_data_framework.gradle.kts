@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)
 }
 
+
 android {
     namespace = Constants.NAMESPACE.plus(".auth_data_framework")
 }

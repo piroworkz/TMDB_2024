@@ -23,25 +23,28 @@ class SessionDataRepository @Inject constructor(
         remote.createSessionId(loginRequest).fold(
             ifLeft = { Either.Left(it) },
             ifRight = {
-                local.saveSessionId(it.sessionId)
+                require(local.saveSessionId(it.sessionId)) { "Error saving session id" }
                 Either.Right(it)
             }
         )
 
-    override suspend fun getUserAccount(): Either<AppError, UserAccount> = remote.getAccount().fold(
-        ifLeft = { Either.Left(it) },
-        ifRight = {
-            local.saveUser(it)
-            Either.Right(it)
-        }
-    )
+    override suspend fun getUserAccount(): Either<AppError, UserAccount> =
+        remote.getUserAccount().fold(
+            ifLeft = { Either.Left(it) },
+            ifRight = {
+                require(local.saveUser(it)) { "Error saving user account" }
+                Either.Right(it)
+            }
+        )
 
     override suspend fun createGuestSessionId(): Either<AppError, GuestSession> =
         remote.createGuestSessionId().fold(
             ifLeft = { Either.Left(it) },
             ifRight = {
-                local.saveIsGuest(it.guestSessionId.isNotEmpty())
-                local.saveSessionId(it.guestSessionId)
+                require(
+                    local.saveIsGuest(it.guestSessionId.isNotEmpty()) &&
+                            local.saveSessionId(it.guestSessionId)
+                ) { "Error saving guest session id" }
                 Either.Right(it)
             }
         )

@@ -7,8 +7,8 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.media_data_framework.remote.services.MediaCatalogService
 import com.davidluna.architectcoders2024.media_data_repositories.MediaCatalogRemoteDatasource
-import com.davidluna.media_domain.media_domain_entities.Media
-import com.davidluna.media_domain.media_domain_entities.Results
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Results
 import javax.inject.Inject
 
 class MediaCatalogRemoteApi @Inject constructor(private val service: MediaCatalogService) :

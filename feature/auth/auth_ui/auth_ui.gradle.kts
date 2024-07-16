@@ -15,4 +15,6 @@ dependencies {
     implementation(projects.feature.auth.authDomain)
     implementation(libs.arrowCore)
     implementation(libs.biometric)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }

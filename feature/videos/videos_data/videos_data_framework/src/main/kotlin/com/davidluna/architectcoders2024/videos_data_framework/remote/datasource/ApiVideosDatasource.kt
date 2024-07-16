@@ -15,9 +15,8 @@ class ApiVideosDatasource @Inject constructor(
 ) : VideosDataSource {
 
     override suspend fun getVideos(endpoint: String): Either<AppError, List<YoutubeVideo>> =
-        service.getVideos(endpoint)
-            .fold(
-                ifLeft = { it.toAppError().left() },
-                ifRight = { it.results.map { video -> video.toDomain() }.right() }
-            )
+        service.getVideos(endpoint).fold(
+            ifLeft = { it.toAppError().left() },
+            ifRight = { it.results.map { video -> video.toDomain() }.right() }
+        )
 }

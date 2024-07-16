@@ -12,7 +12,6 @@ object Constants {
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
     const val API_KEY = "MY_API_KEY"
     const val BASE_URL = "BASE_URL"
-    const val KOTLIN_COMPILER_EXTENSION_VERSION = "1.5.11"
 
-    val JAVA_VERSION = JavaVersion.VERSION_17
+    val JAVA_VERSION: JavaVersion = JavaVersion.VERSION_17
 }

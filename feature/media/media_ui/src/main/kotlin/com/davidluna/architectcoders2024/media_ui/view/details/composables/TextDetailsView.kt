@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.media_domain.media_domain_entities.Details
-import com.davidluna.media_domain.media_domain_entities.Genre
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Genre
 
 @Composable
-fun TextDetailsView(movieDetail: Details?) {
+fun TextDetailsView(movieDetail: MediaDetails?) {
 
     if (movieDetail == null) {
         CircularProgressIndicator()
@@ -65,7 +65,7 @@ fun TextDetailsView(movieDetail: Details?) {
 }
 
 @Composable
-private fun annotatedString(movieDetail: Details?) =
+private fun annotatedString(movieDetail: MediaDetails?) =
     AnnotatedString.Builder().apply {
         LabelStyle()
         movieDetail?.releaseDate?.let { append(it) }
@@ -88,7 +88,7 @@ private fun TextDetailsPreView() {
     }
 }
 
-val fakeDetails = Details(
+val fakeDetails = MediaDetails(
     id = 1,
     title = "Movie Title",
     overview = "Movie Overview",

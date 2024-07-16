@@ -24,8 +24,6 @@ dependencies {
     implementation(libs.fragmentKtx)
     debugImplementation(libs.runtimeTracing)
     debugImplementation(libs.composeUiTooling)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.extJunit)
-    androidTestImplementation(libs.espressoCore)
 
+    testImplementation(projects.testShared.testSharedDomain)
 }

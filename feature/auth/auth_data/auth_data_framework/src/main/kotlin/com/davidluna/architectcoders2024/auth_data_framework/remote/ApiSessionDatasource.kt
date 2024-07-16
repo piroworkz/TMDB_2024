@@ -31,7 +31,7 @@ class ApiSessionDatasource @Inject constructor(
             ifRight = { it.toDomain().right() }
         )
 
-    override suspend fun getAccount(): Either<AppError, UserAccount> =
+    override suspend fun getUserAccount(): Either<AppError, UserAccount> =
         service.getAccount().fold(
             ifLeft = { it.toAppError().left() },
             ifRight = { it.toDomain().right() }

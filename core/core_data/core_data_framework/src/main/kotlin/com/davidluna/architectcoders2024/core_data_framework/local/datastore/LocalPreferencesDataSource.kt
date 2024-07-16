@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import com.davidluna.architectcoders2024.core_data_repositories.datastore.PreferencesDataSource
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
-import com.davidluna.protodatastore.CONTENT_KIND
+import com.davidluna.architectcoders2024.core_domain.core_entities.tryCatch
 import com.davidluna.protodatastore.ProtoPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -19,32 +19,30 @@ class LocalPreferencesDataSource @Inject constructor(private val dataStore: Data
     override val userAccount: Flow<UserAccount>
         get() = dataStore.data.map { it.user.toDomain() }
 
-    override val isGuest: Flow<Boolean> = dataStore.data.map { it.session.isGuest }
-
     override val contentKind: Flow<ContentKind> = dataStore.data.map {
         ContentKind.valueOf(it.contentKind.name)
     }
 
-    override suspend fun closeSession() {
+    override suspend fun closeSession(): Boolean = tryCatch {
         dataStore.updateData { ProtoPreferences.getDefaultInstance() }
-    }
+    }.isRight()
 
-    override suspend fun saveIsGuest(isGuest: Boolean) {
+    override suspend fun saveIsGuest(isGuest: Boolean): Boolean = tryCatch {
         dataStore.updateData { preferences -> preferences.setIsGuest(isGuest) }
-    }
+    }.isRight()
 
-    override suspend fun saveSessionId(sessionId: String) {
+    override suspend fun saveSessionId(sessionId: String): Boolean = tryCatch {
         dataStore.updateData { preferences -> preferences.setSessionId(sessionId) }
-    }
+    }.isRight()
 
-    override suspend fun saveUser(user: UserAccount) {
+    override suspend fun saveUser(user: UserAccount): Boolean = tryCatch {
         dataStore.updateData { preferences -> preferences.setUserAccount(user) }
-    }
+    }.isRight()
 
-    override suspend fun saveContentKind(contentKind: ContentKind) {
+    override suspend fun saveContentKind(contentKind: ContentKind): Boolean = tryCatch {
         dataStore.updateData { preferences ->
             preferences.setContentKind(contentKind)
         }
-    }
+    }.isRight()
 
 }

@@ -10,8 +10,8 @@ import com.davidluna.architectcoders2024.media_data_repositories.MovieDetailsDat
 import com.davidluna.architectcoders2024.media_data_repositories.MediaCatalogDataRepository
 import com.davidluna.architectcoders2024.videos_data_repositories.VideosDataRepository
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases.VideosRepository
-import com.davidluna.media_domain.media_domain_usecases.MovieDetailsRepository
-import com.davidluna.media_domain.media_domain_usecases.MoviesRepository
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.MovieDetailsRepository
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.MoviesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

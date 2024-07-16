@@ -1,0 +1,53 @@
+package com.davidluna.architectcoders2024.core_domain.core_usecases.datastore
+
+import app.cash.turbine.test
+import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.whenever
+import java.io.IOException
+
+@RunWith(MockitoJUnitRunner::class)
+class GetContentKindUseCaseTest {
+
+    @Mock
+    lateinit var repository: LocalPreferencesRepository
+
+    @Test
+    fun `given invoke() is successful when get content kind is called should return flow of ContentKind`() =
+        runTest {
+            val expected = flowOf(ContentKind.MOVIE)
+            whenever(repository.contentKind).thenReturn(expected)
+
+            val actual: Flow<ContentKind> = repository.contentKind
+            assertThat(actual).isEqualTo(expected)
+
+            actual.test {
+                val collected = awaitItem()
+                assertThat(collected).isEqualTo(ContentKind.MOVIE)
+                awaitComplete()
+                cancel()
+            }
+        }
+
+    @Test
+    fun `given invoke() fails when get content kind is called should throw Exception`() = runTest {
+        val expected = IOException("Test Exception")
+        whenever(repository.contentKind).thenReturn(flow { throw expected })
+
+        val actual: Flow<ContentKind> = repository.contentKind
+
+        actual.test {
+            val catchException = awaitError()
+            assertThat(catchException).isEqualTo(expected)
+            cancel()
+        }
+    }
+}

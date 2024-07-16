@@ -21,6 +21,7 @@ import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.dependencies
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
@@ -82,6 +83,11 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
         }
+
+        java {
+            sourceCompatibility = JAVA_VERSION
+            targetCompatibility = JAVA_VERSION
+        }
     }
 
     private fun Project.setDependencies() {
@@ -96,4 +102,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     private fun Project.android(action: ApplicationExtension.() -> Unit) {
         action(extensions.getByType(ApplicationExtension::class.java))
     }
+
+    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
+        action(extensions.getByType(JavaPluginExtension::class.java))
+    }
+
 }

@@ -1,3 +1,4 @@
+
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
@@ -6,6 +7,7 @@ import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(project: Project): Unit = with(project) {
@@ -47,12 +49,20 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 sourceCompatibility = Constants.JAVA_VERSION
                 targetCompatibility = Constants.JAVA_VERSION
             }
-
-
         }
+
+        java {
+            sourceCompatibility = Constants.JAVA_VERSION
+            targetCompatibility = Constants.JAVA_VERSION
+        }
+
     }
 
     private fun Project.android(action: LibraryExtension.() -> Unit) {
         action(extensions.getByType(LibraryExtension::class.java))
+    }
+
+    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
+        action(extensions.getByType(JavaPluginExtension::class.java))
     }
 }

@@ -51,5 +51,10 @@ gradlePlugin {
             id = "architectcoders2024.android.library.plugin"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+
+        register("kotlinModuleConventionPlugin") {
+            id = "architectcoders2024.kotlin.module.plugin"
+            implementationClass = "KotlinModuleConventionPlugin"
+        }
     }
 }

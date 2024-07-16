@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
-import com.davidluna.media_domain.media_domain_entities.Details
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
 
 @Composable
 fun MovieDetailsView(
-    movieDetail: Details?,
+    movieDetail: MediaDetails?,
     playTrailer: () -> Unit
 ) {
     ReelTitleView(title = movieDetail?.title)

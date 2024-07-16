@@ -2,17 +2,17 @@ package com.davidluna.architectcoders2024.media_data_framework.remote.datasource
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.buildModel
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteCast
-import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteContentDetail
+import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteMediaDetail
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteGenre
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteImage
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteMedia
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteResults
-import com.davidluna.media_domain.media_domain_entities.Cast
-import com.davidluna.media_domain.media_domain_entities.Details
-import com.davidluna.media_domain.media_domain_entities.Genre
-import com.davidluna.media_domain.media_domain_entities.Image
-import com.davidluna.media_domain.media_domain_entities.Media
-import com.davidluna.media_domain.media_domain_entities.Results
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Cast
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Genre
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Image
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Results
 
 
 fun RemoteResults<RemoteMedia>.toDomain(): Results<Media> = Results(
@@ -28,7 +28,7 @@ fun RemoteMedia.toDomain(): Media = Media(
     posterPath = posterPath?.buildModel() ?: "",
 )
 
-fun RemoteContentDetail.toDomain(): Details = Details(
+fun RemoteMediaDetail.toDomain(): MediaDetails = MediaDetails(
     genres = genres.map { it.toDomain() },
     id = id,
     overview = overview,

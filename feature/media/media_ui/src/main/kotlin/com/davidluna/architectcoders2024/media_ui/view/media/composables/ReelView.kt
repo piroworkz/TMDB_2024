@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
-import com.davidluna.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
 
 @Composable
 fun ReelView(

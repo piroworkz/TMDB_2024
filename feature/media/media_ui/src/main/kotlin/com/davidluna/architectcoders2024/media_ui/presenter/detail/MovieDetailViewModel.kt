@@ -12,13 +12,13 @@ import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
 import com.davidluna.architectcoders2024.navigation.domain.args.Args
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
-import com.davidluna.media_domain.media_domain_entities.Cast
-import com.davidluna.media_domain.media_domain_entities.Details
-import com.davidluna.media_domain.media_domain_entities.Media
-import com.davidluna.media_domain.media_domain_usecases.GetContentUseCase
-import com.davidluna.media_domain.media_domain_usecases.GetMovieCastUseCase
-import com.davidluna.media_domain.media_domain_usecases.GetMovieDetailsUseCase
-import com.davidluna.media_domain.media_domain_usecases.GetMovieImagesUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Cast
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieCastUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieDetailsUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -53,7 +53,7 @@ class MovieDetailViewModel @Inject constructor(
         val appError: AppError? = null,
         val contentKind: ContentKind? = null,
         val destination: Destination? = null,
-        val movieDetail: Details? = null,
+        val movieDetail: MediaDetails? = null,
         val movieCredits: List<Cast> = emptyList(),
         val images: List<String> = emptyList(),
         val recommendations: Flow<PagingData<Media>> = emptyFlow(),

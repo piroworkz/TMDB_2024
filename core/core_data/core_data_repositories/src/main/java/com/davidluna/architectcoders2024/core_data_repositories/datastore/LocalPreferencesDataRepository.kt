@@ -16,18 +16,15 @@ class LocalPreferencesDataRepository @Inject constructor(
     override val userAccount: Flow<UserAccount>
         get() = local.userAccount
 
-    override val isGuest: Flow<Boolean>
-        get() = local.isGuest
-
     override val contentKind: Flow<ContentKind>
         get() = local.contentKind
 
-    override suspend fun closeSession() {
-        local.closeSession()
+    override suspend fun closeSession(): Boolean {
+       return local.closeSession()
     }
 
-    override suspend fun saveContentKind(contentKind: ContentKind) {
-        local.saveContentKind(contentKind)
+    override suspend fun saveContentKind(contentKind: ContentKind): Boolean {
+       return local.saveContentKind(contentKind)
     }
 }
 

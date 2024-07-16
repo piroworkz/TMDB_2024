@@ -22,7 +22,7 @@ import com.davidluna.architectcoders2024.core_ui.composables.appGradient
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
-import com.davidluna.media_domain.media_domain_entities.Cast
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Cast
 
 @Composable
 fun MovieCastView(

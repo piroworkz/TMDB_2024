@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
-import com.davidluna.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
 import kotlinx.coroutines.flow.Flow
 
 @Composable

@@ -1,6 +1,5 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
-import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +18,6 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
-import com.davidluna.architectcoders2024.navigation.domain.destination.AuthNavigation
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -127,10 +125,11 @@ class LoginViewModel @Inject constructor(
     private fun getArguments() {
         val args = savedStateHandle.get<String>(NavArgument.APPROVED)
         if (args.isNullOrEmpty()) return
-        val uri = Uri.parse(AuthNavigation.URI.replace("{${NavArgument.APPROVED}}", args))
-        val approved = uri.getBooleanQueryParameter(NavArgument.APPROVED, false)
-        val requestToken = uri.getQueryParameter(NavArgument.REQUEST_TOKEN)
-        if (approved && requestToken != null) {
+        val (requestToken, approved) = args.split("&").map {
+            it.split("=").last()
+        }.take(2)
+
+        if (approved.toBoolean()) {
             _state.update { it.copy(bioSuccess = true) }
             sendEvent(CreateSessionId(requestToken))
         }

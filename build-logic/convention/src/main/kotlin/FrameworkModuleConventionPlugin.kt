@@ -1,15 +1,11 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
-import com.davidluna.architectcoders2024.build_logic.dependency_utilities.androidTestImplementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
-import com.davidluna.architectcoders2024.build_logic.dependency_utilities.testImplementation
+import com.davidluna.architectcoders2024.build_logic.deps.unitTestingBundle
 import com.davidluna.architectcoders2024.build_logic.libs.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.libs.arrowCore
-import com.davidluna.architectcoders2024.build_logic.libs.espressoCore
-import com.davidluna.architectcoders2024.build_logic.libs.extJunit
 import com.davidluna.architectcoders2024.build_logic.libs.javaxInject
-import com.davidluna.architectcoders2024.build_logic.libs.junit
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinCoroutinesCore
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinSerialization
@@ -18,6 +14,7 @@ import com.davidluna.architectcoders2024.build_logic.libs.libs
 import com.davidluna.architectcoders2024.build_logic.libs.retrofit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.dependencies
 
 class FrameworkModuleConventionPlugin : Plugin<Project> {
@@ -62,8 +59,11 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
                 sourceCompatibility = Constants.JAVA_VERSION
                 targetCompatibility = Constants.JAVA_VERSION
             }
+        }
 
-
+        java {
+            sourceCompatibility = Constants.JAVA_VERSION
+            targetCompatibility = Constants.JAVA_VERSION
         }
     }
 
@@ -74,15 +74,16 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
             implementation(libs.arrowCore)
             implementation(libs.kotlinCoroutinesCore)
             implementation(libs.javaxInject)
-
-            testImplementation(libs.junit)
-            androidTestImplementation(libs.extJunit)
-            androidTestImplementation(libs.espressoCore)
+            unitTestingBundle()
         }
     }
 
     private fun Project.android(action: LibraryExtension.() -> Unit) {
         action(extensions.getByType(LibraryExtension::class.java))
+    }
+
+    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
+        action(extensions.getByType(JavaPluginExtension::class.java))
     }
 
 }

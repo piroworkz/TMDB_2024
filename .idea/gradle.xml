@@ -54,6 +54,9 @@
             <option value="$PROJECT_DIR$/feature/videos/videos_domain" />
             <option value="$PROJECT_DIR$/feature/videos/videos_ui" />
             <option value="$PROJECT_DIR$/navigation" />
+            <option value="$PROJECT_DIR$/test_shared" />
+            <option value="$PROJECT_DIR$/test_shared/test_shared_domain" />
+            <option value="$PROJECT_DIR$/test_shared/test_shared_framework" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

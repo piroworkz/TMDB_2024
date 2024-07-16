@@ -11,6 +11,6 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 interface SessionDatasource {
     suspend fun createRequestToken(): Either<AppError, TokenResponse>
     suspend fun createSessionId(loginRequest: LoginRequest): Either<AppError, SessionId>
-    suspend fun getAccount(): Either<AppError, UserAccount>
+    suspend fun getUserAccount(): Either<AppError, UserAccount>
     suspend fun createGuestSessionId(): Either<AppError, GuestSession>
 }

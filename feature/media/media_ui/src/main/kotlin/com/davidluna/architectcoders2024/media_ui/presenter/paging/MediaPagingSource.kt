@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.media_ui.presenter.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import arrow.core.Either
-import com.davidluna.media_domain.media_domain_entities.Results
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Results
 
 class MediaPagingSource<T : Any>(
     private val invoke: suspend (currentPage: Int) -> Either<Throwable, Results<T>>
