@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
@@ -103,7 +104,7 @@ private fun ErrorDialogPreView() {
         ) {
             ErrorDialogView(
                 error = AppError.Message(
-                    0,
+                    AppErrorCode.BAD_REQUEST,
                     "Invalid API key: You must be granted a valid key."
                 ),
                 onDismissRequest = {},

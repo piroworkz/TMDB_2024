@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.biometric)
     testImplementation(projects.testShared.testSharedDomain)
     testImplementation(projects.testShared.testSharedFramework)
+    testImplementation(projects.core.coreData.coreDataRepositories)
 }

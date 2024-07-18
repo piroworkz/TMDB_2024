@@ -2,7 +2,7 @@ package com.davidluna.architectcoders2024.auth_data_repositories
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.core_data_repositories.datastore.PreferencesDataSource
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeGuestSession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeLoginRequest
 import com.davidluna.architectcoders2024.test_shared.domain.fakeSessionId
@@ -42,7 +42,7 @@ class SessionDataRepositoryTest {
     @Test
     fun `given remote createSessionId() fails when preferences remote createSessionId() is called then should return AppError on left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.createSessionId(any())).thenReturn(expected)
 
             val actual = remote.createSessionId(fakeLoginRequest)
@@ -68,7 +68,7 @@ class SessionDataRepositoryTest {
     @Test
     fun `given remote getUserAccount() fails when preferences remote getUserAccount() is called then should return AppError on left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getUserAccount()).thenReturn(expected)
 
             val actual = remote.getUserAccount()
@@ -94,7 +94,7 @@ class SessionDataRepositoryTest {
     @Test
     fun `given remote createGuestSessionId() fails when preferences remote createGuestSessionId() is called then should return AppError on left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.createGuestSessionId()).thenReturn(expected)
 
             val actual = remote.createGuestSessionId()

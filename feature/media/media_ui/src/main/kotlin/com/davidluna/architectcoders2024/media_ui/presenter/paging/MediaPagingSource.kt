@@ -21,6 +21,7 @@ class MediaPagingSource<T : Any>(
                     ifRight = { it }
                 )
             val data = response?.results ?: emptyList()
+            println("<-- response: ${data.size}")
             val next = if (response?.totalPages == 0 || response?.page == response?.totalPages) {
                 null
             } else {

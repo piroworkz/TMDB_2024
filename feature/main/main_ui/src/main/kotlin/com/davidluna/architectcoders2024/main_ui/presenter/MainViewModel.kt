@@ -2,10 +2,12 @@ package com.davidluna.architectcoders2024.main_ui.presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode.UNKNOWN
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.CloseSessionUseCase
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SaveContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.UserAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val userAccountUseCase: UserAccountUseCase,
-    private val setContentKindUseCase: SaveContentKindUseCase,
-    private val getContentKindUseCase: GetContentKindUseCase,
+    private val saveContentKindUseCase: SaveContentKindUseCase,
     private val closeSessionUseCase: CloseSessionUseCase
 ) : ViewModel() {
 
@@ -33,29 +34,42 @@ class MainViewModel @Inject constructor(
         initViewModel()
     }
 
+    data class MainState(
+        val loading: Boolean = false,
+        val appError: AppError? = null,
+        val user: UserAccount? = null,
+        val closeSession: Boolean = false,
+    )
+
     fun sendEvent(event: MainEvent) {
         when (event) {
             is MainEvent.OnCloseSession -> closeSession()
             is MainEvent.SetContentKind -> setContentKind(event.mediaType)
+            is MainEvent.SetAppError -> setAppError(event.appError)
         }
+    }
+
+    private fun setAppError(appError: AppError?) {
+        _state.update { it.copy(appError = appError) }
     }
 
     private fun initViewModel() {
         sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
         collectUser()
-        collectContentKind()
     }
 
     private fun closeSession() {
         viewModelScope.launch {
-            closeSessionUseCase()
-            _state.update { s -> s.copy(closeSession = true) }
-
+            if (closeSessionUseCase()) {
+                _state.update { it.copy(closeSession = true) }
+            } else {
+                sendEvent(MainEvent.SetAppError(AppError.Message(UNKNOWN, "Error closing session, please try again later")))
+            }
         }
     }
 
     private fun setContentKind(contentKind: ContentKind) = run {
-        setContentKindUseCase(contentKind)
+        saveContentKindUseCase(contentKind)
     }
 
     private fun collectUser() {
@@ -69,17 +83,6 @@ class MainViewModel @Inject constructor(
                 }
         }
     }
-
-    private fun collectContentKind() = viewModelScope.launch {
-        getContentKindUseCase()
-            .catch { throwable: Throwable ->
-                _state.update { s -> s.copy(appError = throwable.toAppError()) }
-            }
-            .collect { contentKind: ContentKind ->
-                _state.update { s -> s.copy(contentKind = contentKind) }
-            }
-    }
-
 
     private fun run(action: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {

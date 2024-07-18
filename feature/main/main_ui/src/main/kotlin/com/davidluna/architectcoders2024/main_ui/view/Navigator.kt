@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import com.davidluna.architectcoders2024.auth_ui.navigation.authNavGraph
 import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent
-import com.davidluna.architectcoders2024.main_ui.presenter.MainState
+import com.davidluna.architectcoders2024.main_ui.presenter.MainViewModel
 import com.davidluna.architectcoders2024.main_ui.view.composables.DrawerScaffoldView
 import com.davidluna.architectcoders2024.main_ui.view.composables.rememberNavigatorState
 import com.davidluna.architectcoders2024.media_ui.navigation.mediaNavGraph
@@ -22,7 +22,7 @@ import com.davidluna.architectcoders2024.videos_ui.navigation.youtubeNavGraph
 
 @Composable
 fun Navigator(
-    state: MainState,
+    state: MainViewModel.MainState,
     sendEvent: (MainEvent) -> Unit
 ) = with(rememberNavigatorState()) {
 
@@ -68,7 +68,7 @@ fun Navigator(
 @Composable
 private fun AppScaffoldPreView() {
     com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
-        Navigator(MainState()) {
+        Navigator(MainViewModel.MainState()) {
 
         }
     }

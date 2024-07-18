@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.media_data_repositories
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaResults
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
@@ -32,7 +32,7 @@ class MediaCatalogDataRepositoryTest {
     @Test
     fun `given getContent() fails when remote getContent() is called then should return AppError on the left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getContent(any(), any())).thenReturn(expected)
 
             val actual = remote.getContent("endpoint", 1)

@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.media_data_repositories
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeCastList
 import com.davidluna.architectcoders2024.test_shared.domain.fakeImages
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaDetail
@@ -34,7 +34,7 @@ class MovieDetailsDataRepositoryTest {
     @Test
     fun `given getMovieDetail() fails when remote getMovieDetail() is called then should return AppError on the left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieDetail(any())).thenReturn(expected)
 
             val actual = remote.getMovieDetail("endpoint")
@@ -57,7 +57,7 @@ class MovieDetailsDataRepositoryTest {
     @Test
     fun `given getMovieCast() fails when remote getMovieCast() is called then should return AppError on the left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieCast(any())).thenReturn(expected)
 
             val actual = remote.getMovieCast("endpoint")
@@ -79,7 +79,7 @@ class MovieDetailsDataRepositoryTest {
     @Test
     fun `given getMovieImages() fails when remote getMovieImages() is called then should return AppError on the left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieImages(any())).thenReturn(expected)
 
             val actual = remote.getMovieImages("endpoint")

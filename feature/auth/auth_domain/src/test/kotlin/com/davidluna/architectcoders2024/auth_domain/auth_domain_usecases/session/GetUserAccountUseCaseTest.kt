@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUserAccount
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
@@ -31,7 +31,7 @@ class GetUserAccountUseCaseTest {
     @Test
     fun `given invoke() fails when getUserAccount() is called then should return AppError on left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.getUserAccount()).thenReturn(expected)
 
             val actual = repository.getUserAccount()

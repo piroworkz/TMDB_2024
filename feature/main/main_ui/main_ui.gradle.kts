@@ -17,4 +17,7 @@ dependencies {
     implementation(projects.feature.media.mediaUi)
     implementation(projects.feature.videos.videosUi)
     implementation(libs.coilCompose)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
+    testImplementation(project(":feature:media:media_domain"))
 }

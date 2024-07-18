@@ -8,24 +8,23 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.navigation.domain.args.Args
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Cast
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieCastUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieImagesUseCase
+import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
+import com.davidluna.architectcoders2024.navigation.domain.args.Args
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -122,41 +121,17 @@ class MovieDetailViewModel @Inject constructor(
         )
     }
 
-    private fun getRecommendations(
-        from: String,
-        movieId: Int
-    ) = run {
-        _state.update {
-            it.copy(
-                recommendations = getContent.asPagingFlow(
-                    endpoint = "$from$movieId$RECOMMENDATIONS",
-                    scope = viewModelScope
-                )
-            )
-        }
+    private fun getRecommendations(from: String, movieId: Int) {
+        _state.update { it.copy(recommendations = getContent.asPagingFlow("$from$movieId$RECOMMENDATIONS", viewModelScope)) }
     }
 
-    private fun getSimilar(
-        from: String,
-        movieId: Int
-    ) = run {
-        _state.update {
-            it.copy(
-                similar = getContent.asPagingFlow(
-                    endpoint = "$from$movieId$SIMILAR",
-                    scope = viewModelScope
-                )
-            )
-        }
-    }
+    private fun getSimilar(from: String, movieId: Int) =
+        _state.update { it.copy(similar = getContent.asPagingFlow("$from$movieId$SIMILAR", viewModelScope)) }
 
     private fun collectContentKind() {
         viewModelScope.launch {
             getContentKindUseCase()
-                .distinctUntilChanged()
-                .catch { e ->
-                    _state.update { it.copy(appError = e.toAppError()) }
-                }
+                .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
                 .collect { contentKind ->
                     _state.update { it.copy(contentKind = contentKind) }
                     getArgs(savedStateHandle)
@@ -182,7 +157,6 @@ class MovieDetailViewModel @Inject constructor(
         private const val SIMILAR = "/similar"
         private const val MOVIES = "movie/"
         private const val TV = "tv/"
-
     }
 
 }

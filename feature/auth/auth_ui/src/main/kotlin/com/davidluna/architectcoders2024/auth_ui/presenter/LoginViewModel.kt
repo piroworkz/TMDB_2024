@@ -4,20 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateGuestSessionIdUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateRequestTokenUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionIdUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GetUserAccountUseCase
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.AskForPermission
+import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateGuestSession
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateRequestToken
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateSessionId
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GetAccount
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.IsLoggedIn
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.OnLoginClicked
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,26 +27,22 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val createRequestTokenUseCase: CreateRequestTokenUseCase,
-    private val createSessionIdUseCase: CreateSessionIdUseCase,
-    private val createGuestSessionIdUseCase: CreateGuestSessionIdUseCase,
-    private val getUserAccountUseCase: GetUserAccountUseCase,
-    private val sessionIdUseCase: SessionIdUseCase
+    private val usecases: LoginViewModelUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
     init {
-        getArguments()
         collectAuth()
+        getArguments()
     }
 
     data class LoginState(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
         val token: String? = null,
-        val intent: Boolean = false,
+        val launchTMDBWeb: Boolean = false,
         val destination: Destination? = null,
         val sessionExists: Boolean = false,
         val bioSuccess: Boolean = false,
@@ -59,12 +50,11 @@ class LoginViewModel @Inject constructor(
 
     fun sendEvent(event: LoginEvent) {
         when (event) {
-            AskForPermission -> askForPermission()
-            CreateRequestToken -> createRequestToken()
+            CreateGuestSession -> createGuestSessionId()
             is CreateSessionId -> createSessionId(event.requestToken)
             GetAccount -> getAccount()
             is IsLoggedIn -> setIsLoggedIn(event.destination)
-            CreateGuestSession -> createGuestSessionId()
+            OnLoginClicked -> createRequestToken()
             is LoginEvent.SetError -> setAppError(event.error)
         }
     }
@@ -78,27 +68,27 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun createRequestToken() = run {
-        createRequestTokenUseCase().fold(
+        usecases.createRequestToken().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
-                _state.update { s -> s.copy(token = r.requestToken, intent = true) }
+                _state.update { s -> s.copy(token = r.requestToken, launchTMDBWeb = true) }
             }
         )
     }
 
-    private fun askForPermission() =
-        _state.update { it.copy(intent = !it.intent) }
-
     private fun createSessionId(requestToken: String) = run {
-        createSessionIdUseCase(requestToken.toLoginRequest()).fold(
+        usecases.createSessionId(requestToken.toLoginRequest()).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { sendEvent(GetAccount) }
+            ifRight = {
+                _state.update { it.copy(bioSuccess = true) }
+                sendEvent(GetAccount)
+            }
         )
     }
 
     private fun createGuestSessionId() {
         run {
-            createGuestSessionIdUseCase().fold(
+            usecases.createGuestSessionId().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
                 ifRight = { sendEvent(IsLoggedIn(MediaCatalog)) }
             )
@@ -106,7 +96,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun getAccount() = run {
-        getUserAccountUseCase().fold(
+        usecases.getUserAccount().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { sendEvent(IsLoggedIn(MediaCatalog)) }
         )
@@ -114,24 +104,19 @@ class LoginViewModel @Inject constructor(
 
     private fun collectAuth() {
         viewModelScope.launch {
-            sessionIdUseCase()
+            usecases.sessionId()
                 .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
-                .collect { id ->
-                    _state.update { it.copy(sessionExists = id.isNotEmpty()) }
-                }
+                .collect { id -> _state.update { it.copy(sessionExists = id.isNotEmpty()) } }
         }
     }
 
     private fun getArguments() {
-        val args = savedStateHandle.get<String>(NavArgument.APPROVED)
-        if (args.isNullOrEmpty()) return
-        val (requestToken, approved) = args.split("&").map {
-            it.split("=").last()
-        }.take(2)
-
-        if (approved.toBoolean()) {
-            _state.update { it.copy(bioSuccess = true) }
-            sendEvent(CreateSessionId(requestToken))
+        savedStateHandle.get<String>(NavArgument.APPROVED)?.let {
+            usecases.extractQueryArguments(it).apply {
+                if (approved) {
+                    sendEvent(CreateSessionId(requestToken))
+                }
+            }
         }
     }
 
@@ -140,12 +125,15 @@ class LoginViewModel @Inject constructor(
     private fun run(action: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             try {
+                println("<-- run try block")
                 _state.update { it.copy(isLoading = true) }
                 action()
             } catch (e: Exception) {
+                println("<-- run catch block")
                 _state.update { it.copy(isLoading = false) }
                 e.printStackTrace()
             } finally {
+                println("<-- run finally block")
                 _state.update { it.copy(isLoading = false) }
             }
         }

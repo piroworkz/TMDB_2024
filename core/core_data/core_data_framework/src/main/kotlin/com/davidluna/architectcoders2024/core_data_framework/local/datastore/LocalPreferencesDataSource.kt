@@ -14,7 +14,9 @@ class LocalPreferencesDataSource @Inject constructor(private val dataStore: Data
     PreferencesDataSource {
 
     override val sessionId: Flow<String>
-        get() = dataStore.data.map { it.toDomain() }
+        get() = dataStore.data.map {
+            it.toDomain().ifEmpty { "" }
+        }
 
     override val userAccount: Flow<UserAccount>
         get() = dataStore.data.map { it.user.toDomain() }

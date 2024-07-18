@@ -11,15 +11,15 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaViewModel
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
-import com.davidluna.architectcoders2024.media_ui.presenter.media.State
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 
 @Composable
 fun MediaScreen(
-    state: State,
+    state: MediaViewModel.State,
     sendEvent: (MoviesEvent) -> Unit
 ) {
     LazyColumn(
@@ -83,7 +83,7 @@ fun MediaScreen(
 private fun MoviesScreenPreview() {
     TmdbTheme {
         MediaScreen(
-            state = State()
+            state = MediaViewModel.State()
         ) {
 
         }

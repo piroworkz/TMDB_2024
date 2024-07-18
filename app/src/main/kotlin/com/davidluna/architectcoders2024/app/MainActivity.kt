@@ -2,6 +2,7 @@ package com.davidluna.architectcoders2024.app
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,8 +17,9 @@ class MainActivity : FragmentActivity() {
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
-            val state by viewModel.state.collectAsState()
+            val state: MainViewModel.MainState by viewModel.state.collectAsState()
             closeSession(state.closeSession)
             TmdbTheme {
                 Navigator(

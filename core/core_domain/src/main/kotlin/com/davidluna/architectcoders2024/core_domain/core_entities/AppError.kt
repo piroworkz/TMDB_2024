@@ -1,9 +1,17 @@
 package com.davidluna.architectcoders2024.core_domain.core_entities
 
+enum class AppErrorCode {
+    UNKNOWN,
+    SERVER,
+    TIMEOUT,
+    NOT_FOUND,
+    BAD_REQUEST,
+}
+
 sealed class AppError() : Throwable() {
 
     data class Message(
-        val code: Int,
+        val code: AppErrorCode,
         val description: String,
         val type: Throwable? = null
     ) : AppError()
@@ -12,7 +20,7 @@ sealed class AppError() : Throwable() {
 
 fun Throwable.toAppError(): AppError =
     AppError.Message(
-        code = hashCode(),
-        description = message ?: "",
+        code = AppErrorCode.NOT_FOUND,
+        description = this.cause?.message ?: this.message ?: "Unknown error",
         type = cause
     )

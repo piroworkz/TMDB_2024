@@ -1,11 +1,10 @@
 package com.davidluna.architectcoders2024.test_shared.domain
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode.UNKNOWN
 
-val fakeAppError: AppError = AppError.Message(
-    code = 0,
-    description = "Fake error message",
-    type = IllegalStateException("Fake exception")
-)
+val fakeUnknownAppError: AppError = AppError.Message(code= UNKNOWN, description="Unknown error", type=null)
+val fakeNotFoundAppError: AppError = AppError.Message(code= AppErrorCode.NOT_FOUND, description="Unknown error", type=null)
 
 

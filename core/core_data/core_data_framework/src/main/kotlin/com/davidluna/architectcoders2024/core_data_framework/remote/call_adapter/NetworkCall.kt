@@ -2,6 +2,7 @@ package com.davidluna.architectcoders2024.core_data_framework.remote.call_adapte
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import okhttp3.Request
 import okhttp3.ResponseBody
@@ -71,7 +72,7 @@ class NetworkCall<L : Any, R : Any>(
                 onResponse(this@NetworkCall, Response.success(Either.Left(errorBody)))
             } else {
                 throw AppError.Message(
-                    code = response.code(),
+                    code = AppErrorCode.SERVER,
                     description = response.message(),
                     type = HttpException(response)
                 )

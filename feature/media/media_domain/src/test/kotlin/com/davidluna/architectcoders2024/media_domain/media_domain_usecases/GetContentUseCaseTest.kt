@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.media_domain.media_domain_usecases
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaResults
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
@@ -31,7 +31,7 @@ class GetContentUseCaseTest {
     @Test
     fun `given invoke() fails when getContent is called then should return AppError on left side of Either`() =
         runTest {
-            val expected = Either.Left(fakeAppError)
+            val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.getContent(any(), any())).thenReturn(expected)
 
             val actual = repository.getContent("popular", 1)

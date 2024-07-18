@@ -2,7 +2,7 @@ package com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases
 
 import arrow.core.Either
 import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.test_shared.domain.fakeAppError
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMovieVideos
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_entities.YoutubeVideo
 import com.google.common.truth.Truth
@@ -34,7 +34,7 @@ class GetVideosUseCaseTest {
     @Test
     fun `given invoke() fails when getVideos is called then should return an AppError on the left side of Either`() =
         runTest {
-            val expected: Either.Left<AppError> = Either.Left(fakeAppError)
+            val expected: Either.Left<AppError> = Either.Left(fakeUnknownAppError)
             whenever(repository.getVideos(any())).thenReturn(expected)
 
             val actual = repository.getVideos("videos")

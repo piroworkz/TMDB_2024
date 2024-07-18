@@ -2,16 +2,21 @@ package com.davidluna.architectcoders2024.media_ui.presenter.media
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +33,17 @@ class MediaViewModel @Inject constructor(
     init {
         collectContentKind()
     }
+
+    data class State(
+        val isLoading: Boolean = false,
+        val appError: AppError? = null,
+        val destination: Destination? = null,
+        val contentKind: ContentKind = ContentKind.UNDEFINED,
+        val firstList: Flow<PagingData<Media>> = emptyFlow(),
+        val secondList: Flow<PagingData<Media>> = emptyFlow(),
+        val thirdList: Flow<PagingData<Media>> = emptyFlow(),
+        val fourthList: Flow<PagingData<Media>> = emptyFlow()
+    )
 
     fun sendEvent(event: MoviesEvent) {
         when (event) {

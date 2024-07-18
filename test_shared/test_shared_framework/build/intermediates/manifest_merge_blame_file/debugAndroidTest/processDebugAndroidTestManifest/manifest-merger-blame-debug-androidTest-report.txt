@@ -1,0 +1,52 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.davidluna.architectcoders2024.test_shared_framework.test" >
+4
+5    <uses-sdk
+5-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:5:5-74
+6        android:minSdkVersion="26"
+6-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:5:15-41
+7        android:targetSdkVersion="26" />
+7-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:5:42-71
+8
+9    <instrumentation
+9-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:11:5-15:110
+10        android:name="androidx.test.runner.AndroidJUnitRunner"
+10-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:11:22-76
+11        android:functionalTest="false"
+11-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:14:22-52
+12        android:handleProfiling="false"
+12-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:13:22-53
+13        android:label="Tests for com.davidluna.architectcoders2024.test_shared_framework.test"
+13-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:15:22-108
+14        android:targetPackage="com.davidluna.architectcoders2024.test_shared_framework.test" />
+14-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:12:22-106
+15
+16    <application
+16-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:7:5-9:19
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.2.0] /Users/davidluna/.gradle/caches/transforms-3/1f3454d8875c153c89d129b331489daf/transformed/core-1.2.0/AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:extractNativeLibs="false" >
+20        <uses-library android:name="android.test.runner" />
+20-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:8:9-60
+20-->/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest1783896134141819800.xml:8:23-57
+21
+22        <activity
+22-->[com.google.android.gms:play-services-base:18.5.0] /Users/davidluna/.gradle/caches/transforms-3/946c92e9588a38e15affecb946a5d15c/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
+23            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+23-->[com.google.android.gms:play-services-base:18.5.0] /Users/davidluna/.gradle/caches/transforms-3/946c92e9588a38e15affecb946a5d15c/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
+24            android:exported="false"
+24-->[com.google.android.gms:play-services-base:18.5.0] /Users/davidluna/.gradle/caches/transforms-3/946c92e9588a38e15affecb946a5d15c/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
+25            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+25-->[com.google.android.gms:play-services-base:18.5.0] /Users/davidluna/.gradle/caches/transforms-3/946c92e9588a38e15affecb946a5d15c/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
+26
+27        <meta-data
+27-->[com.google.android.gms:play-services-basement:18.4.0] /Users/davidluna/.gradle/caches/transforms-3/c82d6601f4ce03ffd9f84b74ba75fe9c/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+28            android:name="com.google.android.gms.version"
+28-->[com.google.android.gms:play-services-basement:18.4.0] /Users/davidluna/.gradle/caches/transforms-3/c82d6601f4ce03ffd9f84b74ba75fe9c/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+29            android:value="@integer/google_play_services_version" />
+29-->[com.google.android.gms:play-services-basement:18.4.0] /Users/davidluna/.gradle/caches/transforms-3/c82d6601f4ce03ffd9f84b74ba75fe9c/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+30    </application>
+31
+32</manifest>

@@ -4,8 +4,7 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 
 sealed interface LoginEvent {
-    data object CreateRequestToken : LoginEvent
-    data object AskForPermission : LoginEvent
+    data object OnLoginClicked : LoginEvent
     data class CreateSessionId(val requestToken: String) : LoginEvent
     data object CreateGuestSession : LoginEvent
     data object GetAccount : LoginEvent

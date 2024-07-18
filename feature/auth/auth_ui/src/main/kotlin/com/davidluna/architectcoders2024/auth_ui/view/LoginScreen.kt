@@ -59,7 +59,7 @@ fun LoginScreen(
         ) {
 
             Button(
-                onClick = { sendEvent(LoginEvent.CreateRequestToken) },
+                onClick = { sendEvent(LoginEvent.OnLoginClicked) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.small
             ) {

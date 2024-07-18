@@ -9,7 +9,7 @@ import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Resu
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_entities.YoutubeVideo
 
 
-val fakeMedia: List<Media> = (0..20).map {
+val fakeMedia: List<Media> = (0..19).map {
     Media(id = it, posterPath = "oporteat", title = "vivamus")
 }
 
@@ -46,12 +46,11 @@ val fakeImages: List<Image> = (0..20).map {
 
 val fakeMovieVideos: List<YoutubeVideo> = (0..20).map {
     YoutubeVideo(
-        id = "ultricies", key = "offendit", site = "enim", type = "antiopam", order = 1845
+        id = "ultricies", key = "offend $it", site = "enim", type = "antiopam", order = 1845
 
     )
 }
 
 val fakeMediaResults = Results(
-    page = 1, results = fakeMedia, totalPages = 2953, totalResults = 5742
-
+    page = 1, results = fakeMedia, totalPages = 1, totalResults = 20
 )

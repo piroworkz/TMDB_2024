@@ -11,13 +11,13 @@ import androidx.compose.ui.graphics.Color
 import com.davidluna.architectcoders2024.core_ui.composables.AppBarView
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
 import com.davidluna.architectcoders2024.main_ui.presenter.MainEvent
-import com.davidluna.architectcoders2024.main_ui.presenter.MainState
+import com.davidluna.architectcoders2024.main_ui.presenter.MainViewModel
 import com.davidluna.architectcoders2024.main_ui.view.NavigatorState
 import com.davidluna.architectcoders2024.navigation.domain.destination.DrawerItem
 
 @Composable
 fun NavigatorState.DrawerScaffoldView(
-    state: MainState,
+    state: MainViewModel.MainState,
     appBarTitle: String?,
     sendEvent: (MainEvent) -> Unit,
     content: @Composable (PaddingValues) -> Unit

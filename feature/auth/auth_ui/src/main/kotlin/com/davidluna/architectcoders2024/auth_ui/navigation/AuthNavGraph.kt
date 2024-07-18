@@ -9,9 +9,9 @@ import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
 import com.davidluna.architectcoders2024.auth_ui.view.LoginScreen
 import com.davidluna.architectcoders2024.auth_ui.view.composables.IntentView
+import com.davidluna.architectcoders2024.navigation.domain.composable
 import com.davidluna.architectcoders2024.navigation.domain.destination.AuthNavigation
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.composable
 import com.davidluna.architectcoders2024.navigation.domain.route
 
 fun NavGraphBuilder.authNavGraph(
@@ -30,7 +30,7 @@ fun NavGraphBuilder.authNavGraph(
                 navigateTo(it)
                 viewModel.sendEvent(LoginEvent.IsLoggedIn(null))
             }
-            if (state.intent) {
+            if (state.launchTMDBWeb) {
                 IntentView(state.token)
             }
             LoginScreen(state = state) { viewModel.sendEvent(it) }

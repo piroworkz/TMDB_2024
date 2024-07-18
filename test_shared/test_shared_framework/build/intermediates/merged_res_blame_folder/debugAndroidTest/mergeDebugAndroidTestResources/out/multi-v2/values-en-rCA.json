@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.davidluna.architectcoders2024.test_shared_framework.test.test_shared_framework-mergeDebugAndroidTestResources-9:/values-en-rCA/values-en-rCA.xml",
+            "map": [
+                {
+                    "source": "/Users/davidluna/.gradle/caches/transforms-3/1f3454d8875c153c89d129b331489daf/transformed/core-1.2.0/res/values-en-rCA/values-en-rCA.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}
