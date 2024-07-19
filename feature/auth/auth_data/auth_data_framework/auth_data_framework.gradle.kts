@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)
 }
 
+
 android {
     namespace = Constants.NAMESPACE.plus(".auth_data_framework")
 }
@@ -12,4 +13,6 @@ dependencies {
     implementation(projects.core.coreData.coreDataFramework)
     implementation(projects.feature.auth.authDomain)
     implementation(projects.feature.auth.authData.authDataRepositories)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }

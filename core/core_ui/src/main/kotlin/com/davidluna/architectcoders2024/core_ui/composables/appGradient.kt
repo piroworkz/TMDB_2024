@@ -2,6 +2,7 @@ package com.davidluna.architectcoders2024.core_ui.composables
 
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 
 @Composable
@@ -12,3 +13,14 @@ fun appGradient() = Brush.linearGradient(
         colorScheme.tertiary
     ),
 )
+
+@Composable
+fun errorGradient(modifier: Modifier = Modifier): Brush {
+   return Brush.linearGradient(
+        colors = listOf(
+            colorScheme.error,
+            colorScheme.onError,
+            colorScheme.error,
+        ),
+    )
+}

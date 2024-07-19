@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface PreferencesDataSource {
     val sessionId: Flow<String>
     val userAccount: Flow<UserAccount>
-    val isGuest: Flow<Boolean>
     val contentKind: Flow<ContentKind>
     suspend fun closeSession(): Boolean
     suspend fun saveIsGuest(isGuest: Boolean): Boolean

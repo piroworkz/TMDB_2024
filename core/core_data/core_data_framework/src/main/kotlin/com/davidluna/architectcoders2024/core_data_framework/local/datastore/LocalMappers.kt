@@ -1,6 +1,8 @@
 package com.davidluna.architectcoders2024.core_data_framework.local.datastore
 
+import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
+import com.davidluna.protodatastore.CONTENT_KIND
 import com.davidluna.protodatastore.ProtoPreferences
 import com.davidluna.protodatastore.ProtoUserAccount
 import com.davidluna.protodatastore.copy
@@ -51,3 +53,6 @@ fun ProtoUserAccount.toDomain(): UserAccount {
         avatarPath = avatarPath
     )
 }
+
+fun ProtoPreferences.setContentKind(contentKind: ContentKind): ProtoPreferences =
+    toBuilder().setContentKind(CONTENT_KIND.valueOf(contentKind.name)).build()

@@ -21,4 +21,11 @@
     <string name="drawer_close_session">Close Session</string>
     <string name="title_airing_today">AIRING TODAY</string>
     <string name="title_on_air">ON AIR</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_login_as_guest">Login as Guest</string>
+    <string name="btn_launch_biometrics">Login with fingerprint</string>
+    <string name="btn_dismiss_message">Press to dismiss</string>
+    <string name="error_dialog_title">Something went wrong</string>
+    <string name="title_cast_row">CAST</string>
+    <string name="title_overview">Overview</string>
 </resources>

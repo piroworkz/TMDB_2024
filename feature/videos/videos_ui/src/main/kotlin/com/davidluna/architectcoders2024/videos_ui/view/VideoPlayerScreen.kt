@@ -1,8 +1,10 @@
 package com.davidluna.architectcoders2024.videos_ui.view
 
-import android.view.View
+import android.content.pm.ActivityInfo
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
@@ -15,43 +17,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.davidluna.architectcoders2024.core_ui.composables.AppBarView
-import com.davidluna.architectcoders2024.core_ui.composables.SlideFromTopAnimation
-import com.davidluna.architectcoders2024.videos_ui.presenter.PlayerState
+import com.davidluna.architectcoders2024.videos_ui.presenter.VideoPlayerViewModel
 
 @Composable
 fun VideoPlayerScreen(
-    state: PlayerState,
+    state: VideoPlayerViewModel.PlayerState,
     navigateUp: () -> Unit
 ) = with(rememberVideoPlayerState()) {
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        SlideFromTopAnimation(
-            target = state.videos.isNotEmpty(),
-            modifier = Modifier.fillMaxSize(),
-            label = "VideoPlayerContent"
-        ) { target: Boolean ->
-            if (target) {
-                AndroidView(
-                    factory = {
-                        webView?.apply {
-                            loadData(loadHtml(state.videos), "text/html", "UTF-8")
-                        } ?: View(it)
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-            } else {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
+
+        AnimatedVisibility(
+            visible = currentScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
+            enter = fadeIn(tween(1000)),
+            exit = fadeOut(tween(1000))
+        ) {
+            AndroidView(
+                factory = {
+                    webView.apply {
+                        loadData(loadHtml(state.videos), "text/html", "UTF-8")
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+            )
         }
+
 
         AnimatedVisibility(
             modifier = Modifier
@@ -67,6 +60,7 @@ fun VideoPlayerScreen(
                     .fillMaxWidth(),
                 topLevel = false,
                 hideAppBar = false,
+                title = null,
                 onNavigationIconClick = {
                     showAppBar.value = false
                     if (!showAppBar.value) {
@@ -74,6 +68,10 @@ fun VideoPlayerScreen(
                     }
                 }
             )
+        }
+
+        if (state.isLoading) {
+            CircularProgressIndicator()
         }
     }
 }
@@ -86,7 +84,7 @@ fun VideoPlayerScreen(
 private fun VideoPlayerScreenPreview() {
     com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
         VideoPlayerScreen(
-            state = PlayerState(),
+            state = VideoPlayerViewModel.PlayerState(),
         ) {}
     }
 }

@@ -85,15 +85,6 @@ val VersionCatalog.hiltNavigationCompose: Provider<MinimalExternalModuleDependen
 val VersionCatalog.javaxInject: Provider<MinimalExternalModuleDependency>
     get() = findLibrary(VersionCatalog::javaxInject.name).get()
 
-val VersionCatalog.junit: Provider<MinimalExternalModuleDependency>
-    get() = findLibrary(VersionCatalog::junit.name).get()
-
-val VersionCatalog.extJunit: Provider<MinimalExternalModuleDependency>
-    get() = findLibrary(VersionCatalog::extJunit.name).get()
-
-val VersionCatalog.espressoCore: Provider<MinimalExternalModuleDependency>
-    get() = findLibrary(VersionCatalog::espressoCore.name).get()
-
 val VersionCatalog.appcompat: Provider<MinimalExternalModuleDependency>
     get() = findLibrary(VersionCatalog::appcompat.name).get()
 
@@ -120,4 +111,10 @@ val VersionCatalog.kotlinxSerializationJson: Provider<MinimalExternalModuleDepen
 
 val VersionCatalog.lifecycleRuntimeKtx: Provider<MinimalExternalModuleDependency>
     get() = findLibrary(VersionCatalog::lifecycleRuntimeKtx.name).get()
+
+val VersionCatalog.runtimeTracing: Provider<MinimalExternalModuleDependency>
+    get() = findLibrary(VersionCatalog::runtimeTracing.name).get()
+
+val VersionCatalog.composeAnimation: Provider<MinimalExternalModuleDependency>
+    get() = findLibrary(VersionCatalog::composeAnimation.name).get()
 

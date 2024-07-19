@@ -29,4 +29,3 @@ object ProtoPreferencesSerializer : Serializer<ProtoPreferences> {
     }
 
 }
-

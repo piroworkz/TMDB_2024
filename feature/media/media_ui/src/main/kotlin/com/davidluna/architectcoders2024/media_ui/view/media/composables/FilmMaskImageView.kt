@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.core_ui.R
+import com.davidluna.architectcoders2024.core_ui.composables.shimmer
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
@@ -36,7 +37,14 @@ fun FilmMaskImageView(
         contentAlignment = Alignment.Center
     ) {
         if (model.isNullOrEmpty()) {
-            CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .size(imageSize)
+                    .shimmer(model.isNullOrEmpty()),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         } else {
             AsyncImage(
                 model = model,

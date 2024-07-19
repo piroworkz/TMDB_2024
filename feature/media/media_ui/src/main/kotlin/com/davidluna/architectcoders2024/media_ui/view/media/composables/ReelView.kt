@@ -17,39 +17,41 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
-import com.davidluna.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
 
 @Composable
 fun ReelView(
     title: String,
     movies: LazyPagingItems<Media>,
-    onMovieSelected: (Int) -> Unit
+    onMovieSelected: (Int, String) -> Unit
 ) {
     val imageSize = LocalConfiguration.current.screenWidthDp.dp / 2
     Spacer(
         modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
+
     if (movies.itemCount != 0) {
         ReelTitleView(title = title)
         LazyRow(
             modifier = Modifier
                 .wrapContentHeight(),
         ) {
-            items(movies.itemCount) {
-                val movie: Media = movies[it] ?: return@items
+            items(movies.itemCount,
+                key = { movies[it]?.id ?: it }) {
+                val movie: Media? = movies[it]
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Black)
-                        .clickable { onMovieSelected(movie.id) },
+                        .clickable { movie?.id?.let { movieId -> onMovieSelected(movieId, movie.title) } },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     FilmMaskImageView(
-                        model = movie.posterPath,
+                        model = movie?.posterPath,
                         imageSize = imageSize
                     )
-                    MovieTitleView(movie.title, imageSize)
+                    MediaTitleView(movie?.title, imageSize)
                 }
             }
         }

@@ -1,8 +1,9 @@
 package com.davidluna.architectcoders2024.core_data_framework.remote.call_adapter
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -71,7 +72,7 @@ class NetworkCall<L : Any, R : Any>(
                 onResponse(this@NetworkCall, Response.success(Either.Left(errorBody)))
             } else {
                 throw AppError.Message(
-                    code = response.code(),
+                    code = AppErrorCode.SERVER,
                     description = response.message(),
                     type = HttpException(response)
                 )

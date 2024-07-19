@@ -28,4 +28,7 @@ val VersionCatalog.kapt: Provider<PluginDependency>
 val VersionCatalog.androidLibrary: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::androidLibrary.name).get()
 
+val VersionCatalog.composeCompiler: Provider<PluginDependency>
+    get() = findPlugin(VersionCatalog::composeCompiler.name).get()
+
 

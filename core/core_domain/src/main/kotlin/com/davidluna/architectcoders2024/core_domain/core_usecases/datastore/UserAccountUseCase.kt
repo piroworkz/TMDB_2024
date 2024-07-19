@@ -4,6 +4,6 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserAccountUseCase @Inject constructor(private val repository: LocalPreferencesRepository) {
+class UserAccountUseCase @Inject constructor(private val repository: PreferencesRepository) {
     operator fun invoke(): Flow<UserAccount> = repository.userAccount
 }

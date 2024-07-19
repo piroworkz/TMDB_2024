@@ -1,7 +1,7 @@
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 
 plugins {
-    alias(libs.plugins.androidLibraryConventionPlugin)
+    alias(libs.plugins.uiModuleConventionPlugin)
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -14,5 +14,7 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(libs.iconsExtended)
     implementation(libs.kotlinxSerializationJson)
+    implementation(platform(libs.composeBom))
+    implementation(libs.composeUi)
     implementation(libs.navigation)
 }

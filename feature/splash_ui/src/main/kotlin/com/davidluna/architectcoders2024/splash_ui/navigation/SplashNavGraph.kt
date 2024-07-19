@@ -1,33 +1,23 @@
 package com.davidluna.architectcoders2024.splash_ui.navigation
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.davidluna.architectcoders2024.navigation.domain.Destination
-import com.davidluna.architectcoders2024.navigation.domain.StartNav
-import com.davidluna.architectcoders2024.splash_ui.presenter.SplashViewModel
+import com.davidluna.architectcoders2024.navigation.domain.composable
+import com.davidluna.architectcoders2024.navigation.domain.destination.AuthNavigation
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.StartNavigation
+import com.davidluna.architectcoders2024.navigation.domain.route
+import com.davidluna.architectcoders2024.splash_ui.view.SplashScreen
 
 fun NavGraphBuilder.splashNavGraph(
     navigateTo: (Destination) -> Unit
 ) {
-    navigation<StartNav.Init>(
-        startDestination = StartNav.Splash(true),
+    navigation(
+        route = StartNavigation.Init.route(),
+        startDestination = StartNavigation.Splash.route(),
     ) {
-
-        composable<StartNav.Splash> {
-            val viewModel: SplashViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsState()
-            state.destination?.let { destination ->
-                navigateTo(destination)
-            }
-            com.davidluna.architectcoders2024.splash_ui.view.SplashScreen(state) {
-                viewModel.sendEvent(
-                    it
-                )
-            }
+        composable(StartNavigation.Splash) {
+            SplashScreen { navigateTo(AuthNavigation.Login) }
         }
     }
 }

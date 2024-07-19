@@ -1,29 +1,30 @@
 package com.davidluna.architectcoders2024.core_ui.composables
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
+import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
 @Composable
@@ -32,60 +33,58 @@ fun ErrorDialogView(
     onDismissRequest: () -> Unit,
 ) {
     if (error == null) return
-    Dialog(
-        onDismissRequest = { onDismissRequest() },
-        properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false,
-        )
+
+    Box(
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(Dimens.margins.large)
+            .shadow(elevation = Dimens.margins.small, shape = MaterialTheme.shapes.large),
+        contentAlignment = Alignment.Center
     ) {
-        Card(
-            modifier = Modifier.wrapContentSize(),
-            shape = RoundedCornerShape(Dimens.margins.medium),
-            colors = CardColors(
-                containerColor = colorScheme.background,
-                contentColor = colorScheme.error,
-                disabledContainerColor = colorScheme.background,
-                disabledContentColor = colorScheme.error
-            )
+        Image(
+            painter = painterResource(id = R.drawable.click_closed),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentScale = androidx.compose.ui.layout.ContentScale.FillWidth,
+        )
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.BottomCenter),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colorScheme.error, RectangleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Something went wrong",
-                    modifier = Modifier.padding(Dimens.margins.medium),
-                    color = colorScheme.onError,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Black
-                )
-            }
+
+            Text(
+                text = stringResource(id = R.string.error_dialog_title),
+                modifier = Modifier.padding(Dimens.margins.medium),
+                color = colorScheme.error,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black
+            )
+            Spacer(modifier = Modifier.padding(Dimens.margins.medium))
 
             Text(
                 text = error.description,
                 modifier = Modifier.padding(Dimens.margins.large),
-                color = colorScheme.primary,
+                color = colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Justify
             )
 
-            Button(
-                onClick = { onDismissRequest() },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorScheme.secondary,
-                )
-            ) {
+            Spacer(modifier = Modifier.padding(Dimens.margins.large))
+
+            TextButton(onClick = { onDismissRequest() }) {
                 Text(
-                    text = "Press to dismiss",
-                    modifier = Modifier.padding(Dimens.margins.medium),
-                    color = colorScheme.primary,
+                    text = stringResource(id = R.string.btn_dismiss_message),
+                    modifier = Modifier
+                        .padding(Dimens.margins.large),
+                    color = colorScheme.onPrimary,
                     style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.End
                 )
             }
         }
@@ -105,7 +104,7 @@ private fun ErrorDialogPreView() {
         ) {
             ErrorDialogView(
                 error = AppError.Message(
-                    0,
+                    AppErrorCode.BAD_REQUEST,
                     "Invalid API key: You must be granted a valid key."
                 ),
                 onDismissRequest = {},

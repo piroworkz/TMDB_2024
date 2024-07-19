@@ -4,45 +4,47 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
-import com.davidluna.architectcoders2024.media_ui.view.details.MovieDetailScreen
+import com.davidluna.architectcoders2024.media_ui.view.details.MediaDetailScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
-import com.davidluna.architectcoders2024.media_ui.view.media.MoviesScreen
-import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaViewModel
-import com.davidluna.architectcoders2024.navigation.domain.Destination
-import com.davidluna.architectcoders2024.navigation.domain.MoviesNavigation
+import com.davidluna.architectcoders2024.media_ui.view.media.MediaScreen
+import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaCatalogViewModel
+import com.davidluna.architectcoders2024.navigation.domain.composable
+import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.navigation.domain.route
 
-fun NavGraphBuilder.moviesNavGraph(
+fun NavGraphBuilder.mediaNavGraph(
     navigateTo: (Destination) -> Unit,
 ) {
-    navigation<MoviesNavigation.Init>(
-        startDestination = MoviesNavigation.Movies()
+    navigation(
+        route = MediaNavigation.Init.route(),
+        startDestination = MediaNavigation.MediaCatalog.route()
     ) {
 
-        composable<MoviesNavigation.Movies> {
-            val viewModel: MediaViewModel = hiltViewModel()
+        composable(MediaNavigation.MediaCatalog) {
+            val viewModel: MediaCatalogViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let {
                 navigateTo(it)
                 viewModel.sendEvent(MoviesEvent.OnMovieClicked(null))
             }
-            MoviesScreen(
+            MediaScreen(
                 state = state,
                 sendEvent = { event: MoviesEvent -> viewModel.sendEvent(event) }
             )
         }
 
-        composable<MoviesNavigation.Detail> {
+        composable(MediaNavigation.Detail(appBarTitle = null)) {
             val viewModel: MovieDetailViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let { destination ->
                 navigateTo(destination)
                 viewModel.sendEvent(MovieDetailEvent.OnNavigate(null))
             }
-            MovieDetailScreen(
+            MediaDetailScreen(
                 state = state,
                 sendEvent = { event: MovieDetailEvent -> viewModel.sendEvent(event) }
             )

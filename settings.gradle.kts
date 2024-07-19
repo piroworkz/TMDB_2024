@@ -21,11 +21,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
-    versionCatalogs {
-        create("appConfig") {
-            from(files("gradle/appConfig.versions.toml"))
-        }
-    }
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
@@ -53,7 +48,9 @@ include(
     ":core:core_data:core_data_framework",
     ":core:core_data:core_data_repositories",
     ":di",
-    ":navigation"
+    ":navigation",
+    ":test_shared:test_shared_domain",
+    ":test_shared:test_shared_framework"
 )
 
 rootProject.children.forEach { levelOne ->

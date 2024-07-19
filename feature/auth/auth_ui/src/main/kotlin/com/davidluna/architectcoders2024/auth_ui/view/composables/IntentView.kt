@@ -10,9 +10,9 @@ import com.davidluna.architectcoders2024.core_ui.R
 
 @Composable
 fun IntentView(token: String?) {
+    if (token.isNullOrBlank()) return
     val context = LocalContext.current
-    val url =
-        if (token.isNullOrBlank()) "" else stringResource(R.string.intent_url, token)
+    val url = stringResource(R.string.intent_url, token)
     LaunchedEffect(key1 = token) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
