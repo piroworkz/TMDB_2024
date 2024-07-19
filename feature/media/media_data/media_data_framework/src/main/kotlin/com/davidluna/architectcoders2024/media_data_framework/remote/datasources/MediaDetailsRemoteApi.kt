@@ -3,8 +3,8 @@ package com.davidluna.architectcoders2024.media_data_framework.remote.datasource
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteCast
 import com.davidluna.architectcoders2024.media_data_framework.remote.media.RemoteImage
 import com.davidluna.architectcoders2024.media_data_framework.remote.services.MediaDetailService

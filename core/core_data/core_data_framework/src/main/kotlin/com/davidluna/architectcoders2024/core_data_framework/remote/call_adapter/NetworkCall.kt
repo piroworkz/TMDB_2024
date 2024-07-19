@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.core_data_framework.remote.call_adapter
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout

@@ -10,8 +10,8 @@ import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.sessio
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.ExtractQueryArgumentsUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GetUserAccountUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.architectcoders2024.test_shared.domain.FAKE_QUERY_PARAMS

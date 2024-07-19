@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeLoginRequest
 import com.davidluna.architectcoders2024.test_shared.domain.fakeSessionId
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -19,7 +19,7 @@ class CreateSessionIdUseCaseTest {
     lateinit var repository: SessionRepository
 
     @Test
-    fun `given invoke() is successful when createSessionId() is called then should return SessionId on the right side of Either`() =
+    fun `GIVEN (invoke is called) WHEN (createSessionId succeeds) THEN (should return SessionId on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeSessionId)
             whenever(repository.createSessionId(fakeLoginRequest)).thenReturn(expected)
@@ -30,7 +30,7 @@ class CreateSessionIdUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when createGuestSessionId() is called then should return AppError on left side of Either`() =
+    fun `GIVEN (invoke is called) WHEN (createGuestSessionId fails) THEN (should return AppError on left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.createSessionId(fakeLoginRequest)).thenReturn(expected)

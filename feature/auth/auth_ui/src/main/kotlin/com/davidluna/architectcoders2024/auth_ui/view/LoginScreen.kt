@@ -24,7 +24,7 @@ import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricsLaunchedEf
 import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme

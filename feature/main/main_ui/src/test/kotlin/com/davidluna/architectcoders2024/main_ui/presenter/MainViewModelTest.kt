@@ -1,8 +1,8 @@
 package com.davidluna.architectcoders2024.main_ui.presenter
 
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.CloseSessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SaveContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.UserAccountUseCase

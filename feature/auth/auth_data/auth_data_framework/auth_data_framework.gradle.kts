@@ -13,4 +13,6 @@ dependencies {
     implementation(projects.core.coreData.coreDataFramework)
     implementation(projects.feature.auth.authDomain)
     implementation(projects.feature.auth.authData.authDataRepositories)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }

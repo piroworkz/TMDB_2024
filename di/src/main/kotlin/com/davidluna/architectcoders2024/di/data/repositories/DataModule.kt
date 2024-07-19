@@ -10,7 +10,7 @@ import com.davidluna.architectcoders2024.media_data_framework.remote.datasources
 import com.davidluna.architectcoders2024.media_data_framework.remote.datasources.MediaDetailsRemoteApi
 import com.davidluna.architectcoders2024.media_data_repositories.MediaCatalogRemoteDatasource
 import com.davidluna.architectcoders2024.media_data_repositories.MovieDetailsDataSource
-import com.davidluna.architectcoders2024.videos_data_framework.remote.datasource.ApiVideosDatasource
+import com.davidluna.architectcoders2024.videos_data_framework.remote.datasource.VideosRemoteApi
 import com.davidluna.architectcoders2024.videos_data_repositories.VideosDataSource
 import dagger.Binds
 import dagger.Module
@@ -37,6 +37,6 @@ abstract class DataModule {
     abstract fun bindLocationDataSource(datasource: LocationDataSource): RegionDataSource
 
     @Binds
-    abstract fun bindVideosDataSource(datasource: ApiVideosDatasource): VideosDataSource
+    abstract fun bindVideosDataSource(datasource: VideosRemoteApi): VideosDataSource
 
 }

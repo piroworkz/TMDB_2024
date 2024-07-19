@@ -18,10 +18,10 @@ import java.io.IOException
 class SessionIdUseCaseTest {
 
     @Mock
-    lateinit var repository: LocalPreferencesRepository
+    lateinit var repository: PreferencesRepository
 
     @Test
-    fun `given invoke() is successful when sessionId is called then should return a flow of String`() =
+    fun `GIVEN (invoke is called) WHEN (sessionId succeeds) THEN (should return a flow of String)`() =
         runTest {
             val expected: String = "sessionID"
             whenever(repository.sessionId).thenReturn(flowOf(expected))
@@ -37,7 +37,7 @@ class SessionIdUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when saveSessionId is called then should throw Exception`() =
+    fun `GIVEN (invoke is called) WHEN (saveSessionId fails) THEN (should throw Exception)`() =
         runTest {
             val expected = IOException("Test Exception")
             whenever(repository.sessionId).thenReturn(flow { throw expected })

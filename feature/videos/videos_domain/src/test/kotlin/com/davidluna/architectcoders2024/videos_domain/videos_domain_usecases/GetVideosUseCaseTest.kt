@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMovieVideos
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_entities.YoutubeVideo

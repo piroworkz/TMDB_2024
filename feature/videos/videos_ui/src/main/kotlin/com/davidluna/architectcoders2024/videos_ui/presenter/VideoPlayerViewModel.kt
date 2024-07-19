@@ -3,13 +3,11 @@ package com.davidluna.architectcoders2024.videos_ui.presenter
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.navigation.domain.args.Args
-import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
-import com.davidluna.architectcoders2024.videos_domain.videos_domain_entities.YoutubeVideo
 import com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope

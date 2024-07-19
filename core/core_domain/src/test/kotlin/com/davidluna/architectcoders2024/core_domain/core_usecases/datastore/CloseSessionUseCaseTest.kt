@@ -12,11 +12,11 @@ import org.mockito.kotlin.whenever
 class CloseSessionUseCaseTest {
 
     @Mock
-    lateinit var repository: LocalPreferencesRepository
+    lateinit var repository: PreferencesRepository
 
     @Test
-    fun `given invoke() is successful when close session is called should return Boolean true`() = runTest {
-        val expected: Boolean = true
+    fun `GIVEN (invoke is called) WHEN (close session succeeds) THEN (should return Boolean true)`() = runTest {
+        val expected = true
         whenever(repository.closeSession()).thenReturn(expected)
 
         val actual = repository.closeSession()
@@ -25,8 +25,8 @@ class CloseSessionUseCaseTest {
     }
 
     @Test
-    fun `given invoke() fails when close session is called should return Boolean false`() = runTest {
-        val expected: Boolean = false
+    fun `GIVEN (invoke is called) WHEN (close session fails) THEN (should return Boolean false)`() = runTest {
+        val expected = false
         whenever(repository.closeSession()).thenReturn(expected)
 
         val actual = repository.closeSession()

@@ -18,7 +18,7 @@ class GetUserAccountUseCaseTest {
     lateinit var repository: SessionRepository
 
     @Test
-    fun `given invoke() is successful when getUserAccount() is called then should return UserAccount on the right side of Either`() =
+    fun `GIVEN (invoke is called) WHEN (getUserAccount succeeds) THEN (should return UserAccount on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeUserAccount)
             whenever(repository.getUserAccount()).thenReturn(expected)
@@ -29,7 +29,7 @@ class GetUserAccountUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when getUserAccount() is called then should return AppError on left side of Either`() =
+    fun `GIVEN (invoke is called) WHEN (getUserAccount fails) THEN (should return AppError on left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.getUserAccount()).thenReturn(expected)

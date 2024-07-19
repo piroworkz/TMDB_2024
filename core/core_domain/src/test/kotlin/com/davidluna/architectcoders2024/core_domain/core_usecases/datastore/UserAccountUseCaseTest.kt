@@ -20,10 +20,10 @@ import java.io.IOException
 class UserAccountUseCaseTest {
 
     @Mock
-    lateinit var repository: LocalPreferencesRepository
+    lateinit var repository: PreferencesRepository
 
     @Test
-    fun `given invoke() is successful when userAccount is called then should return a flow of UserAccount`() =
+    fun `GIVEN (invoke is called) WHEN (userAccount succeeds) THEN (should return a flow of UserAccount)`() =
         runTest {
             val expected = fakeUserAccount
             whenever(repository.userAccount).thenReturn(flowOf(expected))
@@ -39,7 +39,7 @@ class UserAccountUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when userAccount is called then should throw Exception`() =
+    fun `GIVEN (invoke is called) WHEN (userAccount fails) THEN (should throw Exception)`() =
         runTest {
             val expected = IOException("Test Exception")
             whenever(repository.userAccount).thenReturn(flow { throw expected })

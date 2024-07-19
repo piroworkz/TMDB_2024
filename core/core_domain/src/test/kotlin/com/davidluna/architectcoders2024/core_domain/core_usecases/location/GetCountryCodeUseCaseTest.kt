@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.core_domain.core_usecases.location
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,13 +15,13 @@ class GetCountryCodeUseCaseTest {
     lateinit var repository: RegionRepository
 
     @Test
-    fun `given invoke() is successful when getCountryCode is called then should return country code as String`() =
+    fun `GIVEN (invoke is called) WHEN (getCountryCode succeeds) THEN (should return country code as String)`() =
         runTest {
             val expected = "MX"
             whenever(repository.getCountryCode()).thenReturn(expected)
 
             val actual = repository.getCountryCode()
 
-            Truth.assertThat(actual).isEqualTo(expected)
+            assertThat(actual).isEqualTo(expected)
         }
 }

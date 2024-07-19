@@ -18,10 +18,10 @@ import java.io.IOException
 class GetContentKindUseCaseTest {
 
     @Mock
-    lateinit var repository: LocalPreferencesRepository
+    lateinit var repository: PreferencesRepository
 
     @Test
-    fun `given invoke() is successful when get content kind is called should return flow of ContentKind`() =
+    fun `GIVEN (invoke is called) WHEN (get content kind succeeds) THEN (should return flow of ContentKind)`() =
         runTest {
             val expected = flowOf(ContentKind.MOVIE)
             whenever(repository.contentKind).thenReturn(expected)
@@ -38,7 +38,7 @@ class GetContentKindUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when get content kind is called should throw Exception`() = runTest {
+    fun `GIVEN (invoke is called) WHEN (get content kind fails) THEN (should throw Exception)`() = runTest {
         val expected = IOException("Test Exception")
         whenever(repository.contentKind).thenReturn(flow { throw expected })
 

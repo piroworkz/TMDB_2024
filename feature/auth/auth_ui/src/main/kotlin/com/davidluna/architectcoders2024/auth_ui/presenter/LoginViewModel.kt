@@ -10,9 +10,9 @@ import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateSess
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GetAccount
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.IsLoggedIn
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.OnLoginClicked
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,6 +49,7 @@ class LoginViewModel @Inject constructor(
     )
 
     fun sendEvent(event: LoginEvent) {
+        println("<-- ${event.javaClass.simpleName}")
         when (event) {
             CreateGuestSession -> createGuestSessionId()
             is CreateSessionId -> createSessionId(event.requestToken)
@@ -125,15 +126,12 @@ class LoginViewModel @Inject constructor(
     private fun run(action: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             try {
-                println("<-- run try block")
                 _state.update { it.copy(isLoading = true) }
                 action()
             } catch (e: Exception) {
-                println("<-- run catch block")
                 _state.update { it.copy(isLoading = false) }
                 e.printStackTrace()
             } finally {
-                println("<-- run finally block")
                 _state.update { it.copy(isLoading = false) }
             }
         }

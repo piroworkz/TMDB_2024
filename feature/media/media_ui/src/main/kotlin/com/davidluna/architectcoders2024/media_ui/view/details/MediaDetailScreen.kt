@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient

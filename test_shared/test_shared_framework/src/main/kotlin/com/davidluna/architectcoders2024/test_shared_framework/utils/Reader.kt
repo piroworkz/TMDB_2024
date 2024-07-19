@@ -1,17 +1,20 @@
 package com.davidluna.architectcoders2024.test_shared_framework.utils
 
-import com.google.gson.Gson
+import kotlinx.serialization.json.Json
 import java.io.InputStream
-import java.io.InputStreamReader
 
 object Reader {
+
+    val json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
 
     inline fun <reified T> fromJson(fileName: String): T =
         this::class.java.getResourceAsStream("/raw/$fileName").use { stream: InputStream? ->
             requireNotNull(stream) { "File not found" }
-            InputStreamReader(stream).use { reader: InputStreamReader ->
-                Gson().fromJson(reader, T::class.java)
-            }
+            val jsonString = stream.bufferedReader().use { it.readText() }
+            json.decodeFromString<T>(jsonString)
         }
 
 }

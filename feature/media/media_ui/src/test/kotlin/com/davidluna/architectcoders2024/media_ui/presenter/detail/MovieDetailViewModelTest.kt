@@ -7,10 +7,10 @@ import arrow.core.left
 import arrow.core.right
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieCastUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieDetailsUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieImagesUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCastUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaDetailsUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
@@ -45,16 +45,16 @@ class MovieDetailViewModelTest {
     private lateinit var savedStateHandle: SavedStateHandle
 
     @Mock
-    private lateinit var getMovieDetails: GetMovieDetailsUseCase
+    private lateinit var getMovieDetails: GetMediaDetailsUseCase
 
     @Mock
-    private lateinit var getMovieImagesUseCase: GetMovieImagesUseCase
+    private lateinit var getMediaImagesUseCase: GetMediaImagesUseCase
 
     @Mock
-    private lateinit var getMovieCastUseCase: GetMovieCastUseCase
+    private lateinit var getMediaCastUseCase: GetMediaCastUseCase
 
     @Mock
-    private lateinit var getContent: GetContentUseCase
+    private lateinit var getContent: GetMediaCatalogUseCase
 
     @Mock
     private lateinit var getContentKindUseCase: GetContentKindUseCase
@@ -99,8 +99,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeImages.right())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeCastList.right())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeCastList.right())
 
             val viewModel = buildViewModel()
 
@@ -128,8 +128,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeNotFoundAppError.left())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeImages.right())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeCastList.right())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeCastList.right())
 
             val viewModel = buildViewModel()
 
@@ -151,8 +151,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeNotFoundAppError.left())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeCastList.right())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeNotFoundAppError.left())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeCastList.right())
 
             val viewModel = buildViewModel()
 
@@ -177,8 +177,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeImages.right())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeNotFoundAppError.left())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeNotFoundAppError.left())
 
             val viewModel = buildViewModel()
 
@@ -206,8 +206,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeImages.right())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeCastList.right())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeCastList.right())
 
             val viewModel = buildViewModel()
 
@@ -238,8 +238,8 @@ class MovieDetailViewModelTest {
             whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
-            whenever(getMovieImagesUseCase(any())).thenReturn(fakeImages.right())
-            whenever(getMovieCastUseCase(any())).thenReturn(fakeCastList.right())
+            whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
+            whenever(getMediaCastUseCase(any())).thenReturn(fakeCastList.right())
 
             val viewModel = buildViewModel()
 
@@ -267,8 +267,8 @@ class MovieDetailViewModelTest {
         return MovieDetailViewModel(
             savedStateHandle,
             getMovieDetails,
-            getMovieImagesUseCase,
-            getMovieCastUseCase,
+            getMediaImagesUseCase,
+            getMediaCastUseCase,
             getContent,
             getContentKindUseCase
         )

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SessionIdUseCase @Inject constructor(
-    private val repository: LocalPreferencesRepository
+    private val repository: PreferencesRepository
 ) {
     operator fun invoke(): Flow<String> = repository.sessionId
 }

@@ -1,15 +1,17 @@
 package com.davidluna.architectcoders2024.media_data_repositories
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaResults
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -18,25 +20,34 @@ class MediaCatalogDataRepositoryTest {
     @Mock
     lateinit var remote: MediaCatalogRemoteDatasource
 
+    private lateinit var repository: MediaCatalogDataRepository
+
+    @Before
+    fun setUp() {
+        repository = MediaCatalogDataRepository(remote)
+    }
+
     @Test
-    fun `given getContent() is successful when remote getContent() is called then should return Results Media on the right side of Either`() =
+    fun `GIVEN (getContent is called) WHEN (remote getContent succeeds) THEN (should return Results Media on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeMediaResults)
-            whenever(remote.getContent(any(), any())).thenReturn(expected)
+            whenever(remote.getMediaCatalog(any(), any())).thenReturn(expected)
 
-            val actual = remote.getContent("endpoint", 1)
+            val actual = repository.getMediaCatalog("endpoint", 1)
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMediaCatalog("endpoint", 1)
         }
 
     @Test
-    fun `given getContent() fails when remote getContent() is called then should return AppError on the left side of Either`() =
+    fun `GIVEN (getContent fails) WHEN (remote getContent is called) THEN (should return AppError on the left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
-            whenever(remote.getContent(any(), any())).thenReturn(expected)
+            whenever(remote.getMediaCatalog(any(), any())).thenReturn(expected)
 
-            val actual = remote.getContent("endpoint", 1)
+            val actual = remote.getMediaCatalog("endpoint", 1)
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMediaCatalog("endpoint", 1)
         }
 }

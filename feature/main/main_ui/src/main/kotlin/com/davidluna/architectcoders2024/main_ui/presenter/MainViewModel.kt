@@ -2,11 +2,11 @@ package com.davidluna.architectcoders2024.main_ui.presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode.UNKNOWN
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode.UNKNOWN
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.CloseSessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SaveContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.UserAccountUseCase
@@ -42,6 +42,7 @@ class MainViewModel @Inject constructor(
     )
 
     fun sendEvent(event: MainEvent) {
+        println("<--- $event")
         when (event) {
             is MainEvent.OnCloseSession -> closeSession()
             is MainEvent.SetContentKind -> setContentKind(event.mediaType)
@@ -63,7 +64,14 @@ class MainViewModel @Inject constructor(
             if (closeSessionUseCase()) {
                 _state.update { it.copy(closeSession = true) }
             } else {
-                sendEvent(MainEvent.SetAppError(AppError.Message(UNKNOWN, "Error closing session, please try again later")))
+                sendEvent(
+                    MainEvent.SetAppError(
+                        AppError.Message(
+                            UNKNOWN,
+                            "Error closing session, please try again later"
+                        )
+                    )
+                )
             }
         }
     }
@@ -79,7 +87,9 @@ class MainViewModel @Inject constructor(
                     _state.update { it.copy(appError = error.toAppError()) }
                 }
                 .collect { user ->
-                    _state.update { it.copy(user = user) }
+                    if (user.id != 0) {
+                        _state.update { it.copy(user = user) }
+                    }
                 }
         }
     }

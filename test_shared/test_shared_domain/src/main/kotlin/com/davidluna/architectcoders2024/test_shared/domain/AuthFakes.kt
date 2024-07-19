@@ -3,9 +3,9 @@ package com.davidluna.architectcoders2024.test_shared.domain
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.GuestSession
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.QueryArgs
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.SessionId
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.TokenResponse
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.core_entities.SessionId
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 
 const val FAKE_QUERY_PARAMS =

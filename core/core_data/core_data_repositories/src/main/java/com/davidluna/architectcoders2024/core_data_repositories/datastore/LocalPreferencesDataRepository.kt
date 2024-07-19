@@ -2,13 +2,13 @@ package com.davidluna.architectcoders2024.core_data_repositories.datastore
 
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.LocalPreferencesRepository
+import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.PreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalPreferencesDataRepository @Inject constructor(
     private val local: PreferencesDataSource
-) : LocalPreferencesRepository {
+) : PreferencesRepository {
 
     override val sessionId: Flow<String>
         get() = local.sessionId
@@ -27,6 +27,3 @@ class LocalPreferencesDataRepository @Inject constructor(
        return local.saveContentKind(contentKind)
     }
 }
-
-
-

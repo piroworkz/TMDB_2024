@@ -14,4 +14,6 @@ dependencies {
     implementation(projects.core.coreData.coreDataFramework)
     implementation(projects.feature.videos.videosDomain)
     implementation(projects.feature.videos.videosData.videosDataRepositories)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }

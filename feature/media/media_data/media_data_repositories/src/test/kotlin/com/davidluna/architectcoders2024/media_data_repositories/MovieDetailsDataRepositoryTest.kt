@@ -1,17 +1,19 @@
 package com.davidluna.architectcoders2024.media_data_repositories
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeCastList
 import com.davidluna.architectcoders2024.test_shared.domain.fakeImages
 import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaDetail
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -20,71 +22,84 @@ class MovieDetailsDataRepositoryTest {
     @Mock
     lateinit var remote: MovieDetailsDataSource
 
+    private lateinit var repository: MovieDetailsDataRepository
+
+    @Before
+    fun setUp() {
+        repository = MovieDetailsDataRepository(remote)
+    }
+
     @Test
-    fun `given getMovieDetail() is successful when remote getMovieDetail() is called then should return MediaDetails on the right side of Either`() =
+    fun `GIVEN (getMovieDetail is called) WHEN (remote getMovieDetail succeeds) THEN (should return MediaDetails on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeMediaDetail)
             whenever(remote.getMovieDetail(any())).thenReturn(expected)
 
-            val actual = remote.getMovieDetail("endpoint")
+            val actual = repository.getMovieDetail("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieDetail("endpoint")
         }
 
     @Test
-    fun `given getMovieDetail() fails when remote getMovieDetail() is called then should return AppError on the left side of Either`() =
+    fun `GIVEN (getMovieDetail is called) WHEN (remote getMovieDetail fails) THEN (should return AppError on the left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieDetail(any())).thenReturn(expected)
 
-            val actual = remote.getMovieDetail("endpoint")
+            val actual = repository.getMovieDetail("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieDetail("endpoint")
         }
 
 
     @Test
-    fun `given getMovieCast() is successful when remote getMovieCast() is called then should return List of Cast on the right side of Either`() =
+    fun `GIVEN (getMovieCast is called) WHEN (remote getMovieCast succeeds) THEN (should return List of Cast on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeCastList)
             whenever(remote.getMovieCast(any())).thenReturn(expected)
 
-            val actual = remote.getMovieCast("endpoint")
+            val actual = repository.getMovieCast("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieCast("endpoint")
         }
 
     @Test
-    fun `given getMovieCast() fails when remote getMovieCast() is called then should return AppError on the left side of Either`() =
+    fun `GIVEN (getMovieCast is called) WHEN (remote getMovieCast fails) THEN (should return AppError on the left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieCast(any())).thenReturn(expected)
 
-            val actual = remote.getMovieCast("endpoint")
+            val actual = repository.getMovieCast("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieCast("endpoint")
         }
 
     @Test
-    fun `given getMovieImages() is successful when remote getMovieImages() is called then should return List of Image on the right side of Either`() =
+    fun `GIVEN (getMovieImages is called) WHEN (remote getMovieImages succeeds) THEN (should return List of Image on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeImages)
             whenever(remote.getMovieImages(any())).thenReturn(expected)
 
-            val actual = remote.getMovieImages("endpoint")
+            val actual = repository.getMovieImages("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieImages("endpoint")
         }
 
     @Test
-    fun `given getMovieImages() fails when remote getMovieImages() is called then should return AppError on the left side of Either`() =
+    fun `GIVEN (getMovieImages is called) WHEN (remote getMovieImages fails) THEN (should return AppError on the left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(remote.getMovieImages(any())).thenReturn(expected)
 
-            val actual = remote.getMovieImages("endpoint")
+            val actual = repository.getMovieImages("endpoint")
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(remote).getMovieImages("endpoint")
         }
 
 

@@ -10,7 +10,7 @@ import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailVi
 import com.davidluna.architectcoders2024.media_ui.view.details.MediaDetailScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
 import com.davidluna.architectcoders2024.media_ui.view.media.MediaScreen
-import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaViewModel
+import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaCatalogViewModel
 import com.davidluna.architectcoders2024.navigation.domain.composable
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
@@ -25,7 +25,7 @@ fun NavGraphBuilder.mediaNavGraph(
     ) {
 
         composable(MediaNavigation.MediaCatalog) {
-            val viewModel: MediaViewModel = hiltViewModel()
+            val viewModel: MediaCatalogViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
             state.destination?.let {
                 navigateTo(it)

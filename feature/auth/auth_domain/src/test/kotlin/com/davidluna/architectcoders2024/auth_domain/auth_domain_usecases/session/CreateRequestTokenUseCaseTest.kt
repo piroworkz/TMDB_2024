@@ -1,8 +1,8 @@
 package com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeTokenResponse
+import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -18,7 +18,7 @@ class CreateRequestTokenUseCaseTest {
     lateinit var repository: SessionRepository
 
     @Test
-    fun `given invoke() is successful when createRequestToken() is called then should return TokenResponse on right side of Either`() =
+    fun `GIVEN (invoke is called) WHEN (createRequestToken succeeds) THEN (should return TokenResponse on right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeTokenResponse)
             whenever(repository.createRequestToken()).thenReturn(expected)
@@ -29,7 +29,7 @@ class CreateRequestTokenUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when createRequestToken() is called then should return AppError on left side of Either`() =
+    fun `GIVEN (invoke ia called) WHEN (createRequestToken fails) THEN (should return AppError on left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.createRequestToken()).thenReturn(expected)

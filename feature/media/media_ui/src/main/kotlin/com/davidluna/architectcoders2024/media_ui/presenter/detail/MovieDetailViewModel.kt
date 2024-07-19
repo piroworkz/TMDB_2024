@@ -4,17 +4,17 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_entities.toAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Cast
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetContentUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieCastUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieDetailsUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMovieImagesUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCastUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaDetailsUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
 import com.davidluna.architectcoders2024.navigation.domain.args.Args
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
@@ -33,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getMovieDetails: GetMovieDetailsUseCase,
-    private val getMovieImagesUseCase: GetMovieImagesUseCase,
-    private val getMovieCastUseCase: GetMovieCastUseCase,
-    private val getContent: GetContentUseCase,
+    private val getMovieDetails: GetMediaDetailsUseCase,
+    private val getMediaImagesUseCase: GetMediaImagesUseCase,
+    private val getMediaCastUseCase: GetMediaCastUseCase,
+    private val getContent: GetMediaCatalogUseCase,
     private val getContentKindUseCase: GetContentKindUseCase
 ) : ViewModel() {
 
@@ -105,7 +105,7 @@ class MovieDetailViewModel @Inject constructor(
         from: String,
         movieId: Int
     ) = run {
-        getMovieCastUseCase("$from$movieId").fold(
+        getMediaCastUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r -> _state.update { it.copy(movieCredits = r) } }
         )
@@ -115,7 +115,7 @@ class MovieDetailViewModel @Inject constructor(
         from: String,
         movieId: Int
     ) = run {
-        getMovieImagesUseCase("$from$movieId").fold(
+        getMediaImagesUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
             ifRight = { r -> _state.update { s -> s.copy(images = r.map { it.filePath }) } }
         )

@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.splash_ui.animation.AnimationLaunchedEffect

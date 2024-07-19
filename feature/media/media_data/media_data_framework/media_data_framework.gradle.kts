@@ -14,4 +14,6 @@ dependencies {
     implementation(projects.core.coreData.coreDataFramework)
     implementation(projects.feature.media.mediaDomain)
     implementation(projects.feature.media.mediaData.mediaDataRepositories)
+    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared.testSharedFramework)
 }

@@ -3,12 +3,16 @@ package com.davidluna.architectcoders2024.auth_data_repositories
 import arrow.core.Either
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.GuestSession
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.SessionId
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.TokenResponse
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.SessionRepository
 import com.davidluna.architectcoders2024.core_data_repositories.datastore.PreferencesDataSource
-import com.davidluna.architectcoders2024.core_domain.core_entities.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.SessionId
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.DataStoreErrorMessage.SAVE_GUEST_SESSION_ID
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.DataStoreErrorMessage.SAVE_SESSION_ID
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.DataStoreErrorMessage.SAVE_USER_ACCOUNT
+import com.davidluna.architectcoders2024.core_domain.core_entities.errors.buildAppError
 import javax.inject.Inject
 
 class SessionDataRepository @Inject constructor(
@@ -23,8 +27,11 @@ class SessionDataRepository @Inject constructor(
         remote.createSessionId(loginRequest).fold(
             ifLeft = { Either.Left(it) },
             ifRight = {
-                require(local.saveSessionId(it.sessionId)) { "Error saving session id" }
-                Either.Right(it)
+                if (local.saveSessionId(it.sessionId)) {
+                    Either.Right(it)
+                } else {
+                    Either.Left(SAVE_SESSION_ID.buildAppError())
+                }
             }
         )
 
@@ -32,8 +39,11 @@ class SessionDataRepository @Inject constructor(
         remote.getUserAccount().fold(
             ifLeft = { Either.Left(it) },
             ifRight = {
-                require(local.saveUser(it)) { "Error saving user account" }
-                Either.Right(it)
+                if (local.saveUser(it)) {
+                    Either.Right(it)
+                } else {
+                    Either.Left(SAVE_USER_ACCOUNT.buildAppError())
+                }
             }
         )
 
@@ -41,11 +51,11 @@ class SessionDataRepository @Inject constructor(
         remote.createGuestSessionId().fold(
             ifLeft = { Either.Left(it) },
             ifRight = {
-                require(
-                    local.saveIsGuest(it.guestSessionId.isNotEmpty()) &&
-                            local.saveSessionId(it.guestSessionId)
-                ) { "Error saving guest session id" }
-                Either.Right(it)
+                if (local.saveIsGuest(true) && local.saveSessionId(it.guestSessionId)) {
+                    Either.Right(it)
+                } else {
+                    Either.Left(SAVE_GUEST_SESSION_ID.buildAppError())
+                }
             }
         )
 }

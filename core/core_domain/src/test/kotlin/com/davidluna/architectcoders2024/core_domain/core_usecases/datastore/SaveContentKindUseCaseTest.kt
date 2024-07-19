@@ -13,10 +13,10 @@ import org.mockito.kotlin.whenever
 class SaveContentKindUseCaseTest {
 
     @Mock
-    lateinit var repository: LocalPreferencesRepository
+    lateinit var repository: PreferencesRepository
 
     @Test
-    fun `given invoke() is successful when saveContent is called then should return Boolean true`() =
+    fun `GIVEN (invoke is called) WHEN (saveContent succeeds) THEN (should return Boolean true)`() =
         runTest {
             val expected: Boolean = true
             whenever(repository.saveContentKind(ContentKind.MOVIE)).thenReturn(expected)
@@ -27,7 +27,7 @@ class SaveContentKindUseCaseTest {
         }
 
     @Test
-    fun `given invoke() fails when saveContent is called then should return Boolean false`() =
+    fun `GIVEN (invoke is called) WHEN (saveContent fails) THEN (should return Boolean false)`() =
         runTest {
             val expected: Boolean = false
             whenever(repository.saveContentKind(ContentKind.MOVIE)).thenReturn(expected)
