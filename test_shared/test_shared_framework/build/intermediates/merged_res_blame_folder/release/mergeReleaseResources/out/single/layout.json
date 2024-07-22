@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/layout/custom_dialog.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/layout/notification_template_part_chronometer.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/layout/notification_template_part_time.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/layout/notification_template_part_time.xml"
+    }
+]

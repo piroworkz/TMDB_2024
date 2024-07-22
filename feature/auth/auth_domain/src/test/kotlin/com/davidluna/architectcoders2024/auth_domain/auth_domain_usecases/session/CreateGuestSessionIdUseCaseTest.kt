@@ -3,12 +3,13 @@ package com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.sessi
 import arrow.core.Either
 import com.davidluna.architectcoders2024.test_shared.domain.fakeGuestSession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -17,15 +18,18 @@ class CreateGuestSessionIdUseCaseTest {
     @Mock
     lateinit var repository: SessionRepository
 
+    private val useCase by lazy { CreateGuestSessionIdUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (createGuestSessionId succeeds) THEN (should return GuestSession on right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeGuestSession)
             whenever(repository.createGuestSessionId()).thenReturn(expected)
 
-            val actual = repository.createGuestSessionId()
+            val actual = useCase()
 
-            Truth.assertThat(actual).isEqualTo(expected)
+            assertThat(actual).isEqualTo(expected)
+            verify(repository).createGuestSessionId()
         }
 
     @Test
@@ -34,8 +38,9 @@ class CreateGuestSessionIdUseCaseTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.createGuestSessionId()).thenReturn(expected)
 
-            val actual = repository.createGuestSessionId()
+            val actual = useCase()
 
-            Truth.assertThat(actual).isEqualTo(expected)
+            assertThat(actual).isEqualTo(expected)
+            verify(repository).createGuestSessionId()
         }
 }

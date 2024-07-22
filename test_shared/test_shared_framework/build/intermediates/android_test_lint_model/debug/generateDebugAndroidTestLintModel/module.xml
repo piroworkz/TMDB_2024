@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="/Volumes/SolidStateDisk/davidluna/StudioProjects/ArchitectCoders2024/test_shared/test_shared_framework"
+    name=":test_shared:test_shared_framework"
+    type="LIBRARY"
+    maven="ArchitectCoders2024.test_shared:test_shared_framework:"
+    agpVersion="8.3.2"
+    buildFolder="build"
+    bootClassPath="/Users/davidluna/Library/Android/sdk/platforms/android-34/android.jar:/Users/davidluna/Library/Android/sdk/build-tools/34.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="17"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

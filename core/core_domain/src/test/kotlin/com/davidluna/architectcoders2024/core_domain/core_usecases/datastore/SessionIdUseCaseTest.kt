@@ -5,12 +5,12 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import java.io.IOException
 
@@ -20,20 +20,23 @@ class SessionIdUseCaseTest {
     @Mock
     lateinit var repository: PreferencesRepository
 
+    private val useCase by lazy { SessionIdUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (sessionId succeeds) THEN (should return a flow of String)`() =
         runTest {
-            val expected: String = "sessionID"
+            val expected = "sessionID"
             whenever(repository.sessionId).thenReturn(flowOf(expected))
 
-            val actual = repository.sessionId
+            val actual = useCase()
 
-            actual.onEach { println("<-- $it") }.test {
+            actual.test {
                 val collected = awaitItem()
                 assertThat(collected).isEqualTo(expected)
                 awaitComplete()
                 cancel()
             }
+            verify(repository).sessionId
         }
 
     @Test
@@ -42,12 +45,13 @@ class SessionIdUseCaseTest {
             val expected = IOException("Test Exception")
             whenever(repository.sessionId).thenReturn(flow { throw expected })
 
-            val actual: Flow<String> = repository.sessionId
+            val actual: Flow<String> = useCase()
 
             actual.test {
                 val catchException = awaitError()
                 assertThat(catchException).isEqualTo(expected)
                 cancel()
             }
+            verify(repository).sessionId
         }
 }

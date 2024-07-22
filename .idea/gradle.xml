@@ -38,8 +38,7 @@
             <option value="$PROJECT_DIR$/feature/auth/auth_data/auth_data_repositories" />
             <option value="$PROJECT_DIR$/feature/auth/auth_domain" />
             <option value="$PROJECT_DIR$/feature/auth/auth_ui" />
-            <option value="$PROJECT_DIR$/feature/main" />
-            <option value="$PROJECT_DIR$/feature/main/main_ui" />
+            <option value="$PROJECT_DIR$/feature/main_ui" />
             <option value="$PROJECT_DIR$/feature/media" />
             <option value="$PROJECT_DIR$/feature/media/media_data" />
             <option value="$PROJECT_DIR$/feature/media/media_data/media_data_framework" />

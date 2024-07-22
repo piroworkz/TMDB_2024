@@ -20,20 +20,21 @@ class GetContentKindUseCaseTest {
     @Mock
     lateinit var repository: PreferencesRepository
 
+    private val useCase by lazy { GetContentKindUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (get content kind succeeds) THEN (should return flow of ContentKind)`() =
         runTest {
             val expected = flowOf(ContentKind.MOVIE)
             whenever(repository.contentKind).thenReturn(expected)
 
-            val actual: Flow<ContentKind> = repository.contentKind
-            assertThat(actual).isEqualTo(expected)
+            val actual: Flow<ContentKind> = useCase()
 
+            assertThat(actual).isEqualTo(expected)
             actual.test {
                 val collected = awaitItem()
                 assertThat(collected).isEqualTo(ContentKind.MOVIE)
-                awaitComplete()
-                cancel()
+                cancelAndIgnoreRemainingEvents()
             }
         }
 
@@ -42,7 +43,7 @@ class GetContentKindUseCaseTest {
         val expected = IOException("Test Exception")
         whenever(repository.contentKind).thenReturn(flow { throw expected })
 
-        val actual: Flow<ContentKind> = repository.contentKind
+        val actual: Flow<ContentKind> = useCase()
 
         actual.test {
             val catchException = awaitError()

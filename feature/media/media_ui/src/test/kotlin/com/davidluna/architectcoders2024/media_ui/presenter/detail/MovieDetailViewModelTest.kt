@@ -5,10 +5,11 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
+import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCastUseCase
+import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
@@ -42,9 +43,6 @@ class MovieDetailViewModelTest {
     val coroutineTestRule = CoroutineTestRule()
 
     @Mock
-    private lateinit var savedStateHandle: SavedStateHandle
-
-    @Mock
     private lateinit var getMovieDetails: GetMediaDetailsUseCase
 
     @Mock
@@ -64,7 +62,7 @@ class MovieDetailViewModelTest {
     @Test
     fun `GIVEN (viewModel is initialized) WHEN (getContentKindUseCase succeeds) THEN (should update contentKind state = ContentKind)`() =
         runTest {
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
+
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
 
             val viewModel = buildViewModel()
@@ -96,7 +94,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (getContentKindUseCase collect succeeds) WHEN (getMovieDetails, getMovieImagesUseCase, getMovieCastUseCase succeed) THEN (should update respective state fields with results)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
@@ -125,7 +122,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (getContentKindUseCase collect succeeds) WHEN (getMovieDetails fails) THEN (should update appError = AppError)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeNotFoundAppError.left())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
@@ -148,7 +144,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (getContentKindUseCase collect succeeds) WHEN (getMovieImagesUseCase fails) THEN (should update appError = AppError)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeNotFoundAppError.left())
@@ -174,7 +169,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (getContentKindUseCase collect succeeds) WHEN (getMovieCastUseCase fails) THEN (should update appError = AppError)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
@@ -203,7 +197,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (user selects a similar or recommended movie) WHEN (event is OnMovieSelected) THEN (should update destination state = MediaNavigation Detail)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
@@ -225,8 +218,14 @@ class MovieDetailViewModelTest {
                 Truth.assertThat(awaitItem().isLoading).isTrue()
                 Truth.assertThat(awaitItem().movieCredits).isEqualTo(fakeCastList)
                 Truth.assertThat(awaitItem().isLoading).isFalse()
-                viewModel.sendEvent(MovieDetailEvent.OnMovieSelected(fakeDetails.id, fakeDetails.title))
-                Truth.assertThat(awaitItem().destination).isEqualTo(MediaNavigation.Detail(fakeDetails.id, fakeDetails.title))
+                viewModel.sendEvent(
+                    MovieDetailEvent.OnMovieSelected(
+                        fakeDetails.id,
+                        fakeDetails.title
+                    )
+                )
+                Truth.assertThat(awaitItem().destination)
+                    .isEqualTo(MediaNavigation.Detail(fakeDetails.id, fakeDetails.title))
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -235,7 +234,6 @@ class MovieDetailViewModelTest {
     fun `GIVEN (user clicks Play Trailer Button) WHEN (event is OnNavigate) THEN (should update destination state = YoutubeNavigation Video)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(fakeDetails.id)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getMovieDetails(any())).thenReturn(fakeMediaDetail.right())
             whenever(getMediaImagesUseCase(any())).thenReturn(fakeImages.right())
@@ -258,12 +256,19 @@ class MovieDetailViewModelTest {
                 Truth.assertThat(awaitItem().movieCredits).isEqualTo(fakeCastList)
                 Truth.assertThat(awaitItem().isLoading).isFalse()
                 viewModel.sendEvent(MovieDetailEvent.OnNavigate(YoutubeNavigation.Video(fakeDetails.id)))
-                Truth.assertThat(awaitItem().destination).isEqualTo(YoutubeNavigation.Video(fakeDetails.id))
+                Truth.assertThat(awaitItem().destination)
+                    .isEqualTo(YoutubeNavigation.Video(fakeDetails.id))
                 cancelAndIgnoreRemainingEvents()
             }
         }
 
-    private fun buildViewModel(): MovieDetailViewModel {
+    private fun buildViewModel(
+        savedStateHandle: SavedStateHandle = SavedStateHandle(
+            mapOf(
+                NavArgument.MEDIA_ID to fakeDetails.id
+            )
+        )
+    ): MovieDetailViewModel {
         return MovieDetailViewModel(
             savedStateHandle,
             getMovieDetails,

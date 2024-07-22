@@ -29,7 +29,7 @@ rootProject.name = "ArchitectCoders2024"
 
 include(
     ":app",
-    ":feature:main:main_ui",
+    ":feature:main_ui",
     ":feature:splash_ui",
     ":feature:auth:auth_ui",
     ":feature:auth:auth_domain",

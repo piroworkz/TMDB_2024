@@ -10,6 +10,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -18,25 +20,29 @@ class CreateSessionIdUseCaseTest {
     @Mock
     lateinit var repository: SessionRepository
 
+    private val useCase by lazy { CreateSessionIdUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (createSessionId succeeds) THEN (should return SessionId on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeSessionId)
-            whenever(repository.createSessionId(fakeLoginRequest)).thenReturn(expected)
+            whenever(repository.createSessionId(any())).thenReturn(expected)
 
-            val actual = repository.createSessionId(fakeLoginRequest)
+            val actual = useCase(fakeLoginRequest)
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).createSessionId(fakeLoginRequest)
         }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (createGuestSessionId fails) THEN (should return AppError on left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
-            whenever(repository.createSessionId(fakeLoginRequest)).thenReturn(expected)
+            whenever(repository.createSessionId(any())).thenReturn(expected)
 
-            val actual = repository.createSessionId(fakeLoginRequest)
+            val actual = useCase(fakeLoginRequest)
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).createSessionId(fakeLoginRequest)
         }
 }

@@ -7,6 +7,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -15,26 +17,30 @@ class SaveContentKindUseCaseTest {
     @Mock
     lateinit var repository: PreferencesRepository
 
+    private val useCase by lazy { SaveContentKindUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (saveContent succeeds) THEN (should return Boolean true)`() =
         runTest {
-            val expected: Boolean = true
-            whenever(repository.saveContentKind(ContentKind.MOVIE)).thenReturn(expected)
+            val expected = true
+            whenever(repository.saveContentKind(any())).thenReturn(expected)
 
-            val actual: Boolean = repository.saveContentKind(ContentKind.MOVIE)
+            val actual: Boolean = useCase(ContentKind.MOVIE)
 
             assertThat(actual).isEqualTo(expected)
+            verify(repository).saveContentKind(ContentKind.MOVIE)
         }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (saveContent fails) THEN (should return Boolean false)`() =
         runTest {
-            val expected: Boolean = false
-            whenever(repository.saveContentKind(ContentKind.MOVIE)).thenReturn(expected)
+            val expected = false
+            whenever(repository.saveContentKind(any())).thenReturn(expected)
 
-            val actual: Boolean = repository.saveContentKind(ContentKind.MOVIE)
+            val actual: Boolean = useCase(ContentKind.MOVIE)
 
             assertThat(actual).isEqualTo(expected)
+            verify(repository).saveContentKind(ContentKind.MOVIE)
         }
 
 }

@@ -9,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -17,15 +18,18 @@ class GetUserAccountUseCaseTest {
     @Mock
     lateinit var repository: SessionRepository
 
+    private val useCase by lazy { GetUserAccountUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (getUserAccount succeeds) THEN (should return UserAccount on the right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeUserAccount)
             whenever(repository.getUserAccount()).thenReturn(expected)
 
-            val actual = repository.getUserAccount()
+            val actual = useCase()
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).getUserAccount()
         }
 
     @Test
@@ -34,9 +38,10 @@ class GetUserAccountUseCaseTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.getUserAccount()).thenReturn(expected)
 
-            val actual = repository.getUserAccount()
+            val actual = useCase()
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).getUserAccount()
         }
 
 }

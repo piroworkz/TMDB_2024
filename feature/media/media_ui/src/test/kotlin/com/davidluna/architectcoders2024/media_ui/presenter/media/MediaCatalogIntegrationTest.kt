@@ -31,6 +31,7 @@ class MediaCatalogIntegrationTest {
     fun `GIVEN (contentKind state = MOVIE) WHEN (viewModel is initialized) THEN (should fetch movies catalogs from service)`() =
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
+
             val viewModel = buildViewModel()
 
             viewModel.state.onEach { println("<-- $it") }.test {

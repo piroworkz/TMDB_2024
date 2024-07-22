@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/notification_bg.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_light_normal.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_dark.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_dark_focused.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_dark_normal.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/notification_icon_background.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/notification_tile_bg.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_disabled.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_light.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_dark_focused.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_light_focused.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_light.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_light_normal.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_dark_normal.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/notification_bg_low.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-core-1.2.0-2:/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_dark.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_text_light_focused.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "com.davidluna.architectcoders2024.test_shared_framework-release-11:/drawable/common_google_signin_btn_icon_disabled.xml",
+        "source": "com.davidluna.architectcoders2024.test_shared_framework-play-services-base-18.5.0-3:/drawable/common_google_signin_btn_icon_disabled.xml"
+    }
+]

@@ -23,6 +23,7 @@ class MediaDetailIntegrationTest {
     private val initialState = MovieDetailViewModel.State()
     private val savedStateHandle = SavedStateHandle(mapOf(Args.DetailId.name to 1022789))
 
+
     @Test
     fun `GIVEN (content kind is not null) WHEN (viewModel init) THEN (should fetch data from service)`() =
         runTest {

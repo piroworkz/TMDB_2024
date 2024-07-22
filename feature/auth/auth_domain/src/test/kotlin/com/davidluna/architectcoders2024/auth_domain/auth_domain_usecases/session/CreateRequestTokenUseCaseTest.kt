@@ -9,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -17,15 +18,18 @@ class CreateRequestTokenUseCaseTest {
     @Mock
     lateinit var repository: SessionRepository
 
+    private val useCase by lazy { CreateRequestTokenUseCase(repository) }
+
     @Test
     fun `GIVEN (invoke is called) WHEN (createRequestToken succeeds) THEN (should return TokenResponse on right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeTokenResponse)
             whenever(repository.createRequestToken()).thenReturn(expected)
 
-            val actual = repository.createRequestToken()
+            val actual = useCase()
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).createRequestToken()
         }
 
     @Test
@@ -34,9 +38,10 @@ class CreateRequestTokenUseCaseTest {
             val expected = Either.Left(fakeUnknownAppError)
             whenever(repository.createRequestToken()).thenReturn(expected)
 
-            val actual = repository.createRequestToken()
+            val actual = useCase()
 
             Truth.assertThat(actual).isEqualTo(expected)
+            verify(repository).createRequestToken()
         }
 
 }
