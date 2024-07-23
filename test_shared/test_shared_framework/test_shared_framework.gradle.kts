@@ -27,4 +27,6 @@ dependencies {
     implementation(libs.datastoreCore)
     implementation(libs.protobufJavalite)
     implementation(libs.protobufKotlinLite)
+    implementation(libs.coroutinesTest)
+    implementation(libs.junit)
 }
