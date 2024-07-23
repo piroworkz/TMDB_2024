@@ -49,7 +49,6 @@ class LoginViewModel @Inject constructor(
     )
 
     fun sendEvent(event: LoginEvent) {
-        println("<-- ${event.javaClass.simpleName}")
         when (event) {
             CreateGuestSession -> createGuestSessionId()
             is CreateSessionId -> createSessionId(event.requestToken)
@@ -91,7 +90,10 @@ class LoginViewModel @Inject constructor(
         run {
             usecases.createGuestSessionId().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
-                ifRight = { sendEvent(IsLoggedIn(MediaCatalog)) }
+                ifRight = {
+                    sendEvent(IsLoggedIn(MediaCatalog))
+                    _state.update { it.copy(bioSuccess = true) }
+                }
             )
         }
     }

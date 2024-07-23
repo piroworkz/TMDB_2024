@@ -42,7 +42,6 @@ class MainViewModel @Inject constructor(
     )
 
     fun sendEvent(event: MainEvent) {
-        println("<--- $event")
         when (event) {
             is MainEvent.OnCloseSession -> closeSession()
             is MainEvent.SetContentKind -> setContentKind(event.mediaType)

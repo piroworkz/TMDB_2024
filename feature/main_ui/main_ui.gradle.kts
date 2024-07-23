@@ -18,6 +18,7 @@ dependencies {
     implementation(projects.feature.media.mediaDomain)
     implementation(projects.feature.videos.videosUi)
     implementation(libs.coilCompose)
+    implementation(libs.navigation)
     testImplementation(projects.testShared.testSharedDomain)
     testImplementation(projects.testShared.testSharedFramework)
 }

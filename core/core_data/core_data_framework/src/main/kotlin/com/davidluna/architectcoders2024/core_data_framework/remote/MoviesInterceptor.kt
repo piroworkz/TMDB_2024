@@ -42,6 +42,7 @@ class MoviesInterceptor @Inject constructor(
     }.build()
 
     private fun buildUrl(request: Request) = request.url.newBuilder().apply {
+        addQueryParameter(LIMIT, LIMIT_VALUE)
         if (id.isNotEmpty()) {
             addQueryParameter(SESSION_ID_NAME, id)
         }
@@ -51,13 +52,6 @@ class MoviesInterceptor @Inject constructor(
         addQueryParameter(API_KEY_NAME, apiKey)
     }.build()
 
-
-    companion object {
-        private const val API_KEY_NAME = "api_key"
-        private const val SESSION_ID_NAME = "session_id"
-        private const val AUTHORIZATION = "Authorization"
-        private const val REGION = "region"
-    }
 
     private fun collectAuth() {
         scope.launch {
@@ -74,6 +68,15 @@ class MoviesInterceptor @Inject constructor(
         scope.launch {
             region = getCountryCodeUseCase()
         }
+    }
+
+    companion object {
+        private const val API_KEY_NAME = "api_key"
+        private const val SESSION_ID_NAME = "session_id"
+        private const val AUTHORIZATION = "Authorization"
+        private const val REGION = "region"
+        private const val LIMIT = "limit"
+        private const val LIMIT_VALUE = "20"
     }
 
 }
