@@ -13,7 +13,6 @@ dependencies {
     implementation(projects.core.coreDomain)
     implementation(projects.core.coreUi)
     implementation(projects.feature.auth.authDomain)
-    implementation(libs.arrowCore)
     implementation(libs.biometric)
     testImplementation(projects.testShared.testSharedDomain)
     testImplementation(projects.testShared.testSharedFramework)

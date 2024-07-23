@@ -15,9 +15,9 @@ dependencies {
     implementation(projects.feature.splashUi)
     implementation(projects.feature.auth.authUi)
     implementation(projects.feature.media.mediaUi)
+    implementation(projects.feature.media.mediaDomain)
     implementation(projects.feature.videos.videosUi)
     implementation(libs.coilCompose)
     testImplementation(projects.testShared.testSharedDomain)
     testImplementation(projects.testShared.testSharedFramework)
-    testImplementation(project(":feature:media:media_domain"))
 }

@@ -56,5 +56,10 @@ gradlePlugin {
             id = "architectcoders2024.kotlin.module.plugin"
             implementationClass = "KotlinModuleConventionPlugin"
         }
+
+        register("jacocoConventionPlugin") {
+            id = "architectcoders2024.jacoco.plugin"
+            implementationClass = "JacocoConventionPlugin"
+        }
     }
 }

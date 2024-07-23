@@ -1,9 +1,8 @@
-import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.debugImplementation
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
-import com.davidluna.architectcoders2024.build_logic.dependency_utilities.kapt
+import com.davidluna.architectcoders2024.build_logic.dependency_utilities.ksp
 import com.davidluna.architectcoders2024.build_logic.deps.unitTestingBundle
 import com.davidluna.architectcoders2024.build_logic.libs.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.libs.arrowCore
@@ -11,7 +10,6 @@ import com.davidluna.architectcoders2024.build_logic.libs.composeAnimation
 import com.davidluna.architectcoders2024.build_logic.libs.composeBom
 import com.davidluna.architectcoders2024.build_logic.libs.composeCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.composeMaterial3
-import com.davidluna.architectcoders2024.build_logic.libs.composeNavigation
 import com.davidluna.architectcoders2024.build_logic.libs.composeUi
 import com.davidluna.architectcoders2024.build_logic.libs.composeUiGraphics
 import com.davidluna.architectcoders2024.build_logic.libs.composeUiTooling
@@ -21,13 +19,14 @@ import com.davidluna.architectcoders2024.build_logic.libs.hiltCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.hiltNavigationCompose
 import com.davidluna.architectcoders2024.build_logic.libs.hiltPlugin
 import com.davidluna.architectcoders2024.build_logic.libs.iconsExtended
-import com.davidluna.architectcoders2024.build_logic.libs.kapt
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
+import com.davidluna.architectcoders2024.build_logic.libs.ksp
 import com.davidluna.architectcoders2024.build_logic.libs.libs
 import com.davidluna.architectcoders2024.build_logic.libs.runtimeTracing
+import com.davidluna.architectcoders2024.build_logic.utils.android
+import com.davidluna.architectcoders2024.build_logic.utils.java
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.dependencies
 
 class UiModuleConventionPlugin : Plugin<Project> {
@@ -42,7 +41,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
         pluginManager.apply {
             alias(libs.androidLibrary)
             alias(libs.kotlinAndroid)
-            alias(libs.kapt)
+            alias(libs.ksp)
             alias(libs.hiltPlugin)
             alias(libs.composeCompiler)
         }
@@ -82,7 +81,6 @@ class UiModuleConventionPlugin : Plugin<Project> {
             sourceCompatibility = Constants.JAVA_VERSION
             targetCompatibility = Constants.JAVA_VERSION
         }
-
     }
 
     private fun Project.dependencies() {
@@ -91,7 +89,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
             implementation(libs.arrowCore)
             implementation(libs.hiltNavigationCompose)
             implementation(libs.hiltAndroid)
-            kapt(libs.hiltCompiler)
+            ksp(libs.hiltCompiler)
             unitTestingBundle()
         }
     }
@@ -105,19 +103,10 @@ class UiModuleConventionPlugin : Plugin<Project> {
             implementation(libs.composeUiToolingPreview)
             implementation(libs.composeMaterial3)
             implementation(libs.iconsExtended)
-            implementation(libs.composeNavigation)
             implementation(libs.composeAnimation)
             debugImplementation(libs.runtimeTracing)
             debugImplementation(libs.composeUiTooling)
         }
-    }
-
-    private fun Project.android(action: LibraryExtension.() -> Unit) {
-        action(extensions.getByType(LibraryExtension::class.java))
-    }
-
-    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
-        action(extensions.getByType(JavaPluginExtension::class.java))
     }
 
 }

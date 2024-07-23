@@ -12,9 +12,5 @@ android {
 dependencies {
     implementation(projects.core.coreDomain)
     implementation(projects.core.coreUi)
-    implementation(libs.iconsExtended)
     implementation(libs.kotlinxSerializationJson)
-    implementation(platform(libs.composeBom))
-    implementation(libs.composeUi)
-    implementation(libs.navigation)
 }

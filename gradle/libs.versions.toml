@@ -36,7 +36,7 @@ hiltNavigationCompose = "1.2.0"
 hiltWork = "1.2.0"
 javaxInject = "1"
 #annotation processor
-kapt = "1.9.23"
+ksp = "2.0.0-1.0.23"
 appcompat = "1.7.0"
 material = "1.12.0"
 fragmentKtx = "1.8.1"
@@ -47,7 +47,7 @@ mockito-inline = "5.2.0"
 turbine = "1.0.0"
 truth = "1.4.2"
 androidx-test = "1.6.1"
-okhttp3 = "4.11.0"
+okhttp3 = "4.12.0"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
@@ -129,7 +129,7 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobufPlugin = { id = "com.google.protobuf", version.ref = "protobuf" }
 hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #Convention plugins

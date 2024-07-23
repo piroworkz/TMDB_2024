@@ -17,7 +17,4 @@ dependencies {
     implementation(libs.coilCompose)
     testImplementation(projects.testShared.testSharedDomain)
     testImplementation(projects.testShared.testSharedFramework)
-    testImplementation("androidx.paging:paging-common:3.3.0")
-    testImplementation("androidx.paging:paging-testing:3.3.0")
-
 }

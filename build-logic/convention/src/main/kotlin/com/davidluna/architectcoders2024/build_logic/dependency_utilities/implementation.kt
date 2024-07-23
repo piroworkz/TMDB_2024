@@ -6,3 +6,4 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 internal fun DependencyHandlerScope.implementation(dependencyNotation: Any): Dependency? {
     return add("implementation", dependencyNotation)
 }
+

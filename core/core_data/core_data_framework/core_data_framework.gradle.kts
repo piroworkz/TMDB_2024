@@ -18,7 +18,6 @@ dependencies {
     implementation(libs.protobufJavalite)
     implementation(libs.protobufKotlinLite)
     implementation(libs.playServicesLocation)
-    implementation(libs.javaxInject)
     implementation(libs.okhttpClient)
 
     testImplementation(projects.testShared.testSharedDomain)

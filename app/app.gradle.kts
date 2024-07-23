@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.architectCodersAndroidApplication)
+    jacoco
+    `jacoco-report-aggregation`
+    `test-report-aggregation`
 }
 
 dependencies {
@@ -8,8 +11,4 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(projects.core.coreDomain)
     implementation(projects.feature.mainUi)
-}
-
-kapt {
-    correctErrorTypes = true
 }

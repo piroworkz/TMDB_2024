@@ -9,19 +9,19 @@ import com.davidluna.architectcoders2024.build_logic.constants.Constants.VERSION
 import com.davidluna.architectcoders2024.build_logic.constants.Constants.VERSION_NAME
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
-import com.davidluna.architectcoders2024.build_logic.dependency_utilities.kapt
+import com.davidluna.architectcoders2024.build_logic.dependency_utilities.ksp
 import com.davidluna.architectcoders2024.build_logic.libs.androidApplication
 import com.davidluna.architectcoders2024.build_logic.libs.composeActivity
 import com.davidluna.architectcoders2024.build_logic.libs.composeCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.hiltAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.hiltCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.hiltPlugin
-import com.davidluna.architectcoders2024.build_logic.libs.kapt
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
+import com.davidluna.architectcoders2024.build_logic.libs.ksp
 import com.davidluna.architectcoders2024.build_logic.libs.libs
+import com.davidluna.architectcoders2024.build_logic.utils.java
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.dependencies
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
@@ -36,7 +36,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         pluginManager.apply {
             alias(libs.androidApplication)
             alias(libs.kotlinAndroid)
-            alias(libs.kapt)
+            alias(libs.ksp)
             alias(libs.hiltPlugin)
             alias(libs.composeCompiler)
         }
@@ -94,17 +94,13 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         dependencies {
             implementation(libs.composeActivity)
             implementation(libs.hiltAndroid)
-            kapt(libs.hiltCompiler)
+            ksp(libs.hiltCompiler)
         }
     }
-
 
     private fun Project.android(action: ApplicationExtension.() -> Unit) {
         action(extensions.getByType(ApplicationExtension::class.java))
     }
 
-    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
-        action(extensions.getByType(JavaPluginExtension::class.java))
-    }
 
 }

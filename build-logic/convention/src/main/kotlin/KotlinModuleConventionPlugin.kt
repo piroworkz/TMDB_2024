@@ -1,3 +1,4 @@
+
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.alias
 import com.davidluna.architectcoders2024.build_logic.dependency_utilities.implementation
@@ -7,9 +8,9 @@ import com.davidluna.architectcoders2024.build_logic.libs.javaxInject
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinCoroutinesCore
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinJvm
 import com.davidluna.architectcoders2024.build_logic.libs.libs
+import com.davidluna.architectcoders2024.build_logic.utils.java
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.dependencies
 
 class KotlinModuleConventionPlugin : Plugin<Project> {
@@ -42,7 +43,4 @@ class KotlinModuleConventionPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.java(action: JavaPluginExtension.() -> Unit) {
-        action(extensions.getByType(JavaPluginExtension::class.java))
-    }
 }

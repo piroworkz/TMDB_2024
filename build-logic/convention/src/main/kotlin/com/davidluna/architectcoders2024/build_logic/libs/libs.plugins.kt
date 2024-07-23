@@ -22,13 +22,11 @@ val VersionCatalog.protobufPlugin: Provider<PluginDependency>
 val VersionCatalog.hiltPlugin: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::hiltPlugin.name).get()
 
-val VersionCatalog.kapt: Provider<PluginDependency>
-    get() = findPlugin(VersionCatalog::kapt.name).get()
+val VersionCatalog.ksp: Provider<PluginDependency>
+    get() = findPlugin(VersionCatalog::ksp.name).get()
 
 val VersionCatalog.androidLibrary: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::androidLibrary.name).get()
 
 val VersionCatalog.composeCompiler: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::composeCompiler.name).get()
-
-

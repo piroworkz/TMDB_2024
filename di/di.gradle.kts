@@ -5,7 +5,7 @@ import com.davidluna.architectcoders2024.build_logic.constants.Constants.BASE_UR
 plugins {
     alias(libs.plugins.androidLibraryConventionPlugin)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hiltPlugin)
 }
 
@@ -51,7 +51,7 @@ dependencies {
     implementation(libs.protobufKotlinLite)
 
     implementation(libs.hiltAndroid)
-    kapt(libs.hiltCompiler)
+    ksp(libs.hiltCompiler)
     implementation(libs.retrofit)
     implementation(libs.okhttpClient)
     implementation(libs.okhttpLoggingInterceptor)
