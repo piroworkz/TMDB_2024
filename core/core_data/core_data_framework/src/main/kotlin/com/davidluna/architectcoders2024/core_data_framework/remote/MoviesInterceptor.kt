@@ -1,7 +1,8 @@
 package com.davidluna.architectcoders2024.core_data_framework.remote
 
 import com.davidluna.architectcoders2024.core_data_framework.di.qualifiers.ApiKey
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
+import com.davidluna.architectcoders2024.core_domain.core_entities.Session
+import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.location.GetCountryCodeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class MoviesInterceptor @Inject constructor(
     @ApiKey private val apiKey: String,
-    private val sessionIdUseCase: SessionIdUseCase,
+    private val sessionUseCase: SessionUseCase,
     private val getCountryCodeUseCase: GetCountryCodeUseCase,
     private val scope: CoroutineScope
 ) : Interceptor {
@@ -45,9 +46,9 @@ class MoviesInterceptor @Inject constructor(
         addQueryParameter(LIMIT, LIMIT_VALUE)
         if (id.isNotEmpty()) {
             addQueryParameter(SESSION_ID_NAME, id)
-        }
-        if (region.isNotEmpty()) {
-            addQueryParameter(REGION, region)
+            if (region.isNotEmpty()) {
+                addQueryParameter(REGION, region)
+            }
         }
         addQueryParameter(API_KEY_NAME, apiKey)
     }.build()
@@ -55,11 +56,10 @@ class MoviesInterceptor @Inject constructor(
 
     private fun collectAuth() {
         scope.launch {
-            sessionIdUseCase().collect { sessionId: String ->
-                id = sessionId
-                if (sessionId.isNotEmpty()) {
-                    setRegion()
-                }
+            sessionUseCase().collect { session: Session ->
+                println("<-- $session")
+                id = session.id.ifEmpty { session.guestSession.id }
+                setRegion()
             }
         }
     }
@@ -76,7 +76,7 @@ class MoviesInterceptor @Inject constructor(
         private const val AUTHORIZATION = "Authorization"
         private const val REGION = "region"
         private const val LIMIT = "limit"
-        private const val LIMIT_VALUE = "20"
+        private const val LIMIT_VALUE = "10"
     }
 
 }

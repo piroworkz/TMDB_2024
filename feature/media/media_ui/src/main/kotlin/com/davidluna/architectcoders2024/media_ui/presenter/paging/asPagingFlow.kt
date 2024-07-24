@@ -13,6 +13,6 @@ fun GetMediaCatalogUseCase.asPagingFlow(
     endpoint: String,
     scope: CoroutineScope
 ): Flow<PagingData<Media>> = Pager(
-    config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+    config = PagingConfig(pageSize = 10, prefetchDistance = 2),
     pagingSourceFactory = { MediaPagingSource { this(endpoint, it) } }
 ).flow.cachedIn(scope)

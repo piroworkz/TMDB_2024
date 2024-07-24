@@ -6,28 +6,25 @@ import arrow.core.left
 import arrow.core.right
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateGuestSessionIdUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateRequestTokenUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionIdUseCase
+import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.ExtractQueryArgumentsUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GetUserAccountUseCase
+import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GuestSessionNotExpiredUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
-import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErrorCode
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
+import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.architectcoders2024.test_shared.domain.FAKE_QUERY_PARAMS
-import com.davidluna.architectcoders2024.test_shared.domain.FAKE_SESSION_ID
+import com.davidluna.architectcoders2024.test_shared.domain.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeGuestSession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeLoginRequest
 import com.davidluna.architectcoders2024.test_shared.domain.fakeQueryArgs
-import com.davidluna.architectcoders2024.test_shared.domain.fakeSessionId
+import com.davidluna.architectcoders2024.test_shared.domain.fakeSession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeTokenResponse
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUserAccount
 import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
 import com.google.common.truth.Truth
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
@@ -51,7 +48,7 @@ class LoginViewModelTest {
     lateinit var createRequestTokenUseCase: CreateRequestTokenUseCase
 
     @Mock
-    lateinit var createSessionIdUseCase: CreateSessionIdUseCase
+    lateinit var createSessionUseCase: CreateSessionUseCase
 
     @Mock
     lateinit var createGuestSessionIdUseCase: CreateGuestSessionIdUseCase
@@ -60,10 +57,13 @@ class LoginViewModelTest {
     lateinit var getUserAccountUseCase: GetUserAccountUseCase
 
     @Mock
-    lateinit var sessionIdUseCase: SessionIdUseCase
+    lateinit var sessionUseCase: SessionUseCase
 
     @Mock
     lateinit var extractQueryArgumentsUseCase: ExtractQueryArgumentsUseCase
+
+    @Mock
+    lateinit var guestSessionNotExpiredUseCase: GuestSessionNotExpiredUseCase
 
     private lateinit var useCases: LoginViewModelUseCases
 
@@ -71,264 +71,253 @@ class LoginViewModelTest {
 
     @Before
     fun setUp() {
-
         useCases = LoginViewModelUseCases(
             createRequestTokenUseCase,
-            createSessionIdUseCase,
+            createSessionUseCase,
             createGuestSessionIdUseCase,
             getUserAccountUseCase,
-            sessionIdUseCase,
-            extractQueryArgumentsUseCase
+            sessionUseCase,
+            extractQueryArgumentsUseCase,
+            guestSessionNotExpiredUseCase
         )
     }
 
     @Test
-    fun `GIVEN (not loggedIn and event is CreateGuestSession) WHEN (useCase createGuestSessionId succeeds sends event IsLoggedIn) THEN (should update destination state with MediaCatalog)`() =
-        runTest {
-            val savedStateHandle = SavedStateHandle()
-
-            whenever(useCases.sessionId()).thenReturn(emptyFlow())
-            whenever(useCases.createGuestSessionId()).thenReturn(fakeGuestSession.right())
-
-            val viewModel = buildViewModel(savedStateHandle)
-            viewModel.sendEvent(LoginEvent.CreateGuestSession)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().destination).isEqualTo(MediaNavigation.MediaCatalog)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.createGuestSessionId).invoke()
-            verify(useCases.sessionId).invoke()
-        }
-
-
-    @Test
-    fun `GIVEN (not loggedIn and event is CreateGuestSession) WHEN (useCase createGuestSessionId fails) THEN (should update appError state with AppError)`() =
-        runTest {
-            val savedStateHandle = SavedStateHandle()
-
-            whenever(useCases.sessionId.invoke()).thenReturn(emptyFlow())
-            whenever(useCases.createGuestSessionId()).thenReturn(fakeUnknownAppError.left())
-
-            val viewModel = buildViewModel(savedStateHandle)
-            viewModel.sendEvent(LoginEvent.CreateGuestSession)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().appError).isEqualTo(fakeUnknownAppError)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.createGuestSessionId).invoke()
-            verify(useCases.sessionId).invoke()
-        }
-
-    @Test
-    fun `GIVEN (not loggedIn and event is OnLoginClicked) WHEN (useCase createRequestToken succeeds) THEN (should update token state with received RequestToken)`() =
-        runTest {
-            val savedStateHandle = SavedStateHandle()
-
-            val expected = initialState.copy(
-                token = fakeTokenResponse.requestToken,
-                launchTMDBWeb = true,
-                isLoading = true
-            )
-
-            whenever(useCases.sessionId()).thenReturn(emptyFlow())
-            whenever(useCases.createRequestToken()).thenReturn(fakeTokenResponse.right())
-
-            val viewModel = buildViewModel(savedStateHandle)
-            viewModel.sendEvent(LoginEvent.OnLoginClicked)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem()).isEqualTo(expected)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.createRequestToken).invoke()
-            verify(useCases.sessionId).invoke()
-        }
-
-
-    @Test
-    fun `GIVEN (not loggedIn and event is OnLoginClicked) WHEN (useCase createRequestToken fails) THEN (should update appError state = AppError)`() =
+    fun `GIVEN (Session !exists and event received is GuestButtonClicked) WHEN (createGuestSessionUseCase invoke succeeds) THEN (should update destination state = MediaNavigation MediaCatalog)`() =
         runTest {
             val savedStateHandle = SavedStateHandle()
             val expected = initialState.copy(
-                token = fakeTokenResponse.requestToken,
-                launchTMDBWeb = true,
-                isLoading = true
+                destination = MediaNavigation.MediaCatalog,
+                session = fakeEmptySession
             )
-
-            whenever(useCases.sessionId()).thenReturn(emptyFlow())
-            whenever(useCases.createRequestToken()).thenReturn(fakeTokenResponse.right())
+            whenever(createGuestSessionIdUseCase()).thenReturn(fakeGuestSession.right())
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel(savedStateHandle)
-            viewModel.sendEvent(LoginEvent.OnLoginClicked)
+            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.onEach { println("<-- $it") }.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
+                awaitItem()
+                awaitItem()
+                awaitItem()
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
-                cancelAndIgnoreRemainingEvents()
+                cancelAndConsumeRemainingEvents()
             }
-
-            verify(useCases.createRequestToken).invoke()
-            verify(useCases.sessionId).invoke()
+            verify(createGuestSessionIdUseCase).invoke()
+            verify(sessionUseCase).invoke()
         }
 
     @Test
-    fun `GIVEN (navigated from Deeplink getArgs succeeds and event is CreateSessionId) WHEN (useCase createSessionId succeeds) THEN (should update bioSuccess state = true and trigger event GetAccount)`() =
-        runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
-
-            whenever(useCases.extractQueryArguments(FAKE_QUERY_PARAMS)).thenReturn(fakeQueryArgs)
-            whenever(useCases.sessionId()).thenReturn(flowOf(""))
-            whenever(useCases.createSessionId(fakeLoginRequest)).thenReturn(fakeSessionId.right())
-            whenever(useCases.getUserAccount()).thenReturn(fakeUserAccount.right())
-
-            val viewModel = buildViewModel(savedStateHandle)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().bioSuccess).isTrue()
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.extractQueryArguments).invoke(any())
-            verify(useCases.sessionId).invoke()
-            verify(useCases.createSessionId).invoke(any())
-            verify(useCases.getUserAccount).invoke()
-        }
-
-    @Test
-    fun `GIVEN (navigated from Deeplink getArgs succeeds and event is CreateSessionId) WHEN (useCase createSessionId fails) THEN (should update appError state = AppError)`() =
-        runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
-
-            whenever(useCases.extractQueryArguments(FAKE_QUERY_PARAMS)).thenReturn(fakeQueryArgs)
-            whenever(useCases.sessionId()).thenReturn(flowOf(""))
-            whenever(useCases.createSessionId(fakeLoginRequest)).thenReturn(fakeUnknownAppError.left())
-
-            val viewModel = buildViewModel(savedStateHandle)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().appError).isEqualTo(fakeUnknownAppError)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.extractQueryArguments).invoke(any())
-            verify(useCases.sessionId).invoke()
-            verify(useCases.createSessionId).invoke(any())
-        }
-
-
-    @Test
-    fun `GIVEN (navigated from Deeplink and event is GetAccount) WHEN (useCase getUserAccount succeeds) THEN (should update destination state = MediaCatalog)`() =
-        runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
-
-            whenever(useCases.extractQueryArguments(FAKE_QUERY_PARAMS)).thenReturn(fakeQueryArgs)
-            whenever(useCases.sessionId()).thenReturn(flowOf(""))
-            whenever(useCases.createSessionId(fakeLoginRequest)).thenReturn(fakeSessionId.right())
-            whenever(useCases.getUserAccount()).thenReturn(fakeUserAccount.right())
-
-            val viewModel = buildViewModel(savedStateHandle)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().bioSuccess).isTrue()
-                Truth.assertThat(awaitItem().isLoading).isFalse()
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().destination).isEqualTo(MediaNavigation.MediaCatalog)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.extractQueryArguments).invoke(any())
-            verify(useCases.sessionId).invoke()
-            verify(useCases.createSessionId).invoke(any())
-            verify(useCases.getUserAccount).invoke()
-        }
-
-    @Test
-    fun `GIVEN (navigated from Deeplink and event is GetAccount) WHEN (useCase getUserAccount fails) THEN (should update appError state = AppError)`() =
-        runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
-
-            whenever(useCases.extractQueryArguments(FAKE_QUERY_PARAMS)).thenReturn(fakeQueryArgs)
-            whenever(useCases.sessionId()).thenReturn(flowOf(""))
-            whenever(useCases.createSessionId(fakeLoginRequest)).thenReturn(fakeSessionId.right())
-            whenever(useCases.getUserAccount()).thenReturn(fakeUnknownAppError.left())
-
-            val viewModel = buildViewModel(savedStateHandle)
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().bioSuccess).isTrue()
-                Truth.assertThat(awaitItem().isLoading).isFalse()
-                Truth.assertThat(awaitItem().isLoading).isTrue()
-                Truth.assertThat(awaitItem().appError).isEqualTo(fakeUnknownAppError)
-                cancelAndIgnoreRemainingEvents()
-            }
-
-            verify(useCases.extractQueryArguments).invoke(any())
-            verify(useCases.sessionId).invoke()
-            verify(useCases.createSessionId).invoke(any())
-            verify(useCases.getUserAccount).invoke()
-        }
-
-    @Test
-    fun `GIVEN (session already exists) WHEN (useCase sessionId collect succeeds) THEN (should update sessionExists state = true which launches biometrics prompt)`() =
+    fun `GIVEN (Session !exists and event received is GuestButtonClicked) WHEN (createGuestSessionUseCase invoke fails) THEN (should update appError state = AppError Message)`() =
         runTest {
             val savedStateHandle = SavedStateHandle()
-
-            whenever(useCases.sessionId()).thenReturn(flowOf(FAKE_SESSION_ID))
+            val expected =
+                initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
+            whenever(createGuestSessionIdUseCase()).thenReturn(fakeUnknownAppError.left())
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel(savedStateHandle)
+            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.onEach { println("<-- $it") }.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().sessionExists).isTrue()
-                cancelAndIgnoreRemainingEvents()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
             }
-
-            verify(useCases.sessionId).invoke()
-
+            verify(createGuestSessionIdUseCase).invoke()
+            verify(sessionUseCase).invoke()
         }
 
     @Test
-    fun `GIVEN (session already exists) WHEN (useCase sessionId collect fails) THEN (should update appError state = AppError)`() =
+    fun `GIVEN (Session exists and event received is GuestButtonClicked) WHEN (sessionUseCase invoke succeeds) THEN (should update destination state = MediaNavigation MediaCatalog)`() =
         runTest {
             val savedStateHandle = SavedStateHandle()
-            val expected = AppError.Message(AppErrorCode.NOT_FOUND, "Unknown error", null)
+            val expected = initialState.copy(
+                destination = MediaNavigation.MediaCatalog,
+                session = fakeGuestSession
+            )
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeGuestSession))
+            whenever(guestSessionNotExpiredUseCase(any())).thenReturn(true)
 
-            whenever(useCases.sessionId()).thenReturn(flow { throw expected })
+            val viewModel = buildViewModel(savedStateHandle)
+            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(sessionUseCase).invoke()
+            verify(guestSessionNotExpiredUseCase).invoke(any())
+        }
+
+
+    @Test
+    fun `GIVEN (Session !exists and event received is LoginButtonClicked) WHEN (createRequestTokenUseCase invoke succeeds) THEN (should update launchTMDBWeb state = true)`() =
+        runTest {
+            val savedStateHandle = SavedStateHandle()
+            val expected =
+                initialState.copy(
+                    launchTMDBWeb = true,
+                    token = fakeTokenResponse.requestToken,
+                    session = fakeEmptySession
+                )
+            whenever(createRequestTokenUseCase()).thenReturn(fakeTokenResponse.right())
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+
+            val viewModel = buildViewModel(savedStateHandle)
+            viewModel.sendEvent(LoginEvent.LoginButtonClicked)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(createRequestTokenUseCase).invoke()
+            verify(sessionUseCase).invoke()
+        }
+
+    @Test
+    fun `GIVEN (Session !exists and event received is LoginButtonClicked) WHEN (createRequestTokenUseCase invoke fails) THEN (should update appError state = AppError Message)`() =
+        runTest {
+            val savedStateHandle = SavedStateHandle()
+            val expected =
+                initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
+            whenever(createRequestTokenUseCase()).thenReturn(fakeUnknownAppError.left())
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+
+            val viewModel = buildViewModel(savedStateHandle)
+            viewModel.sendEvent(LoginEvent.LoginButtonClicked)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(createRequestTokenUseCase).invoke()
+            verify(sessionUseCase).invoke()
+        }
+
+    @Test
+    fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue) THEN (should fetch user session and update destination state = MediaNavigation MediaCatalog)`() =
+        runTest {
+            val savedStateHandle =
+                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val expected = initialState.copy(
+                destination = MediaNavigation.MediaCatalog,
+                session = fakeEmptySession,
+            )
+            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeSession.right())
+            whenever(getUserAccountUseCase()).thenReturn(fakeUserAccount.right())
 
             val viewModel = buildViewModel(savedStateHandle)
 
             viewModel.state.onEach { println("<-- $it") }.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().appError).isEqualTo(expected)
-                cancelAndIgnoreRemainingEvents()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
             }
-            verify(useCases.sessionId).invoke()
+            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
+            verify(sessionUseCase).invoke()
+            verify(createSessionUseCase).invoke(fakeLoginRequest)
+            verify(getUserAccountUseCase).invoke()
         }
 
+    @Test
+    fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue and createSessionUseCase fails) THEN (should update appError state = AppError Message)`() =
+        runTest {
+            val savedStateHandle =
+                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val expected =
+                initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
+
+            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeUnknownAppError.left())
+
+            val viewModel = buildViewModel(savedStateHandle)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
+            verify(sessionUseCase).invoke()
+            verify(createSessionUseCase).invoke(fakeLoginRequest)
+        }
+
+
+    @Test
+    fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue and getUserAccountUseCase fails) THEN (should update appError state = AppError Message)`() =
+        runTest {
+            val savedStateHandle =
+                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val expected =
+                initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
+
+            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeSession.right())
+            whenever(getUserAccountUseCase()).thenReturn(fakeUnknownAppError.left())
+
+            val viewModel = buildViewModel(savedStateHandle)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                awaitItem()
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
+            verify(sessionUseCase).invoke()
+            verify(createSessionUseCase).invoke(fakeLoginRequest)
+            verify(getUserAccountUseCase).invoke()
+        }
+
+    @Test
+    fun `GIVEN (Session exists) WHEN (sessionUseCase collect succeeds) THEN (should update launchBioPrompt state = true)`() =
+        runTest {
+            val savedStateHandle = SavedStateHandle()
+            val expected = initialState.copy(session = fakeSession, launchBioPrompt = true)
+            whenever(sessionUseCase()).thenReturn(flowOf(fakeSession))
+
+            val viewModel = buildViewModel(savedStateHandle)
+
+            viewModel.state.onEach { println("<-- $it") }.test {
+                Truth.assertThat(awaitItem()).isEqualTo(initialState)
+                Truth.assertThat(awaitItem()).isEqualTo(expected)
+                cancelAndConsumeRemainingEvents()
+            }
+            verify(sessionUseCase).invoke()
+        }
 
     private fun buildViewModel(savedStateHandle: SavedStateHandle): LoginViewModel =
         LoginViewModel(savedStateHandle, useCases)

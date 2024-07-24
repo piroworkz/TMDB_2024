@@ -1,10 +1,11 @@
 package com.davidluna.architectcoders2024.test_shared.domain
 
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.GuestSession
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.QueryArgs
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.TokenResponse
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.core_entities.GuestSession
+import com.davidluna.architectcoders2024.core_domain.core_entities.Session
 import com.davidluna.architectcoders2024.core_domain.core_entities.SessionId
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 
@@ -25,17 +26,29 @@ val fakeTokenResponse: TokenResponse = TokenResponse(
     success = true
 )
 
-val fakeSessionId: SessionId = SessionId(sessionId = FAKE_SESSION_ID)
+val fakeSession: Session = Session(
+    id = FAKE_SESSION_ID,
+    guestSession = GuestSession(id = "", isGuest = false, expiresAt = "")
+)
 
-val fakeGuestSession: GuestSession =
-    GuestSession(expiresAt = "nam", guestSessionId = FAKE_SESSION_ID)
+val fakeEmptySession =
+    Session(
+        id = "",
+        guestSession = GuestSession(id = "", isGuest = false, expiresAt = "")
+    )
+
+val guestSessionFake = GuestSession(id = FAKE_SESSION_ID, isGuest = true, expiresAt = "12/13/24")
+
+val fakeGuestSession = fakeSession.copy(id = "", guestSession = guestSessionFake)
+
+val fakeSessionId = SessionId(sessionId = FAKE_SESSION_ID)
 
 val fakeLoginRequest = LoginRequest(requestToken = FAKE_REQUEST_TOKEN)
 
 val fakeContentKind = ContentKind.MOVIE
 
 val fakeEmptyQueryArgs = QueryArgs(
-    requestToken = "vis", approved = false
+    requestToken = "", approved = false
 )
 
 val fakeQueryArgs = QueryArgs(

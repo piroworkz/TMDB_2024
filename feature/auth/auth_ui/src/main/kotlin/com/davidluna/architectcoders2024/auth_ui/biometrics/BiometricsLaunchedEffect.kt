@@ -7,22 +7,32 @@ import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavi
 
 @Composable
 fun BiometricsLaunchedEffect(
+    launchPrompt: Boolean,
     biometricAuthState: BiometricAuthenticationState,
     sendEvent: (LoginEvent) -> Unit
 ) {
     LaunchedEffect(
         key1 = biometricAuthState.biometricState,
+        key2 = launchPrompt
     ) {
         when (biometricAuthState.biometricState) {
             BiometricState.SUCCESS -> {
-                sendEvent(LoginEvent.IsLoggedIn(MediaNavigation.MediaCatalog))
+                sendEvent(LoginEvent.Navigate(MediaNavigation.MediaCatalog))
             }
 
             BiometricState.SHOW_PROMPT -> {
-                biometricAuthState.launchPrompt()
+                if (launchPrompt) {
+                    biometricAuthState.launchPrompt()
+                }
             }
 
-            else -> {}
+            BiometricState.ERROR -> {
+
+            }
+
+            BiometricState.UNAVAILABLE -> {
+
+            }
         }
     }
 }

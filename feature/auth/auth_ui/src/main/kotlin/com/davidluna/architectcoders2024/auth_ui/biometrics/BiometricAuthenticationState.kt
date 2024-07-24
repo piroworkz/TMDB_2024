@@ -1,19 +1,21 @@
 package com.davidluna.architectcoders2024.auth_ui.biometrics
 
+import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.SHOW_PROMPT
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.ERROR
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.SUCCESS
 import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.UNAVAILABLE
 import com.davidluna.architectcoders2024.core_ui.R
+import com.davidluna.architectcoders2024.core_ui.log
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 
@@ -38,21 +40,43 @@ class BiometricAuthenticationState(
             .setNegativeButtonText(it.getString(R.string.biometric_use_password_instead))
     }
 
-    val canAuthenticate: MutableState<Boolean> =
-        mutableStateOf(biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS)
-
     val biometricState: BiometricState
         get() = state.value
 
     init {
-        state.value = if (canAuthenticate.value) SHOW_PROMPT else UNAVAILABLE
+        canAuthenticate()
     }
 
     fun launchPrompt() {
         try {
             promptInfo?.build()?.let { getBiometricPrompt()?.authenticate(it) }
         } catch (e: Exception) {
-            state.value = BiometricState.ERROR
+            state.value = ERROR
+        }
+    }
+
+    fun changeState(newState: BiometricState) {
+        state.value = newState
+    }
+
+    private fun canAuthenticate() {
+        when (biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
+
+
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> state.value = UNAVAILABLE
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> launchEnrollIntent()
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> state.value = UNAVAILABLE
+
+            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> state.value = ERROR
+
+            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> state.value = UNAVAILABLE
+
+            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> state.value = ERROR
+
+            BiometricManager.BIOMETRIC_SUCCESS -> state.value = BiometricState.SHOW_PROMPT
+
         }
     }
 
@@ -67,13 +91,16 @@ class BiometricAuthenticationState(
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                promptInfo?.setSubtitle(errString)
-                state.value = BiometricState.ERROR
+                "$errString: $errorCode ".log()
+                if (errorCode == BiometricPrompt.ERROR_USER_CANCELED) {
+                    promptInfo?.setSubtitle(errString)
+                    state.value = ERROR
+                }
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                state.value = BiometricState.SUCCESS
+                state.value = SUCCESS
             }
 
             override fun onAuthenticationFailed() {
@@ -81,10 +108,22 @@ class BiometricAuthenticationState(
                 promptInfo?.setSubtitle(
                     fragmentActivity.get()?.getString(R.string.biometric_auth_failed)
                 )
-                state.value = SHOW_PROMPT
+                state.value = ERROR
             }
 
         }
+
+    private fun launchEnrollIntent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                putExtra(
+                    Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                    BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                )
+                fragmentActivity.get()?.startActivity(this)
+            }
+        }
+    }
 
     fun clearReferences() {
         fragmentActivity.clear()

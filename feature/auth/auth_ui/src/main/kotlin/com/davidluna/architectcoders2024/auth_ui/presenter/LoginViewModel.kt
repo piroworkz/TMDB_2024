@@ -5,21 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateGuestSession
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.CreateSessionId
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GetAccount
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.IsLoggedIn
-import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.OnLoginClicked
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GuestButtonCLicked
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.LaunchBioPrompt
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.LoginButtonClicked
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.Navigate
+import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.SetAppError
+import com.davidluna.architectcoders2024.core_domain.core_entities.Session
 import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
-import com.davidluna.architectcoders2024.core_domain.core_entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
+import com.davidluna.architectcoders2024.navigation.domain.args.DefaultArgs.Auth.defaultValue
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,36 +35,39 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        collectAuth()
+        collectSession()
         getArguments()
     }
 
     data class LoginState(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
+        val session: Session? = null,
         val token: String? = null,
         val launchTMDBWeb: Boolean = false,
-        val destination: Destination? = null,
-        val sessionExists: Boolean = false,
-        val bioSuccess: Boolean = false,
+        val launchBioPrompt: Boolean = false,
+        val destination: Destination? = null
     )
 
     fun sendEvent(event: LoginEvent) {
         when (event) {
-            CreateGuestSession -> createGuestSessionId()
-            is CreateSessionId -> createSessionId(event.requestToken)
-            GetAccount -> getAccount()
-            is IsLoggedIn -> setIsLoggedIn(event.destination)
-            OnLoginClicked -> createRequestToken()
-            is LoginEvent.SetError -> setAppError(event.error)
+            GuestButtonCLicked -> createGuestSessionId()
+            LoginButtonClicked -> createRequestToken()
+            is Navigate -> setDestination(event.destination)
+            is SetAppError -> setAppError(event.error)
+            is LaunchBioPrompt -> setLaunchBioPrompt(event.value)
         }
+    }
+
+    private fun setLaunchBioPrompt(value: Boolean) {
+        _state.update { it.copy(launchBioPrompt = value) }
     }
 
     private fun setAppError(error: AppError?) {
         _state.update { it.copy(appError = error) }
     }
 
-    private fun setIsLoggedIn(destination: Destination?) {
+    private fun setDestination(destination: Destination?) {
         _state.update { it.copy(destination = destination) }
     }
 
@@ -76,23 +80,25 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    private fun createSessionId(requestToken: String) = run {
+    private fun fetchSession(requestToken: String) = run {
         usecases.createSessionId(requestToken.toLoginRequest()).fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = {
-                _state.update { it.copy(bioSuccess = true) }
-                sendEvent(GetAccount)
-            }
+            ifRight = { getAccount() }
         )
     }
 
-    private fun createGuestSessionId() {
-        run {
+    private fun createGuestSessionId() = run {
+        val isNotExpired = usecases
+            .guestSessionNotExpired
+            .invoke(_state.value.session?.guestSession?.expiresAt ?: "")
+
+        if (isNotExpired) {
+            setDestination(MediaCatalog)
+        } else {
             usecases.createGuestSessionId().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
                 ifRight = {
-                    sendEvent(IsLoggedIn(MediaCatalog))
-                    _state.update { it.copy(bioSuccess = true) }
+                    setDestination(MediaCatalog)
                 }
             )
         }
@@ -101,24 +107,27 @@ class LoginViewModel @Inject constructor(
     private fun getAccount() = run {
         usecases.getUserAccount().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { sendEvent(IsLoggedIn(MediaCatalog)) }
+            ifRight = { setDestination(MediaCatalog) }
         )
     }
 
-    private fun collectAuth() {
+    private fun collectSession() {
         viewModelScope.launch {
-            usecases.sessionId()
-                .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
-                .collect { id -> _state.update { it.copy(sessionExists = id.isNotEmpty()) } }
+            val currentSession = usecases.sessionId().firstOrNull()
+            _state.update {
+                it.copy(
+                    session = currentSession,
+                    launchBioPrompt = !currentSession?.id.isNullOrEmpty()
+                )
+            }
         }
     }
 
     private fun getArguments() {
-        savedStateHandle.get<String>(NavArgument.APPROVED)?.let {
-            usecases.extractQueryArguments(it).apply {
-                if (approved) {
-                    sendEvent(CreateSessionId(requestToken))
-                }
+        val args: String = savedStateHandle.get<String>(NavArgument.APPROVED) ?: defaultValue
+        if (args != defaultValue) {
+            usecases.extractQueryArguments(args).apply {
+                if (approved) fetchSession(requestToken)
             }
         }
     }

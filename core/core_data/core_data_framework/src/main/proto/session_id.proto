@@ -6,7 +6,6 @@ option java_package = "com.davidluna.protodatastore";
 option java_multiple_files = true;
 
 message ProtoSession {
-  string session_id = 1;
+  string id = 1;
   ProtoGuestSessionId guest = 2;
-  bool isGuest = 3;
 }

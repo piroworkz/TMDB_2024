@@ -13,7 +13,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
-class CreateGuestSessionIdUseCaseTest {
+class CreateGuestSessionUseCaseTest {
 
     @Mock
     lateinit var repository: SessionRepository
@@ -24,23 +24,23 @@ class CreateGuestSessionIdUseCaseTest {
     fun `GIVEN (invoke is called) WHEN (createGuestSessionId succeeds) THEN (should return GuestSession on right side of Either)`() =
         runTest {
             val expected = Either.Right(fakeGuestSession)
-            whenever(repository.createGuestSessionId()).thenReturn(expected)
+            whenever(repository.createGuestSession()).thenReturn(expected)
 
             val actual = useCase()
 
             assertThat(actual).isEqualTo(expected)
-            verify(repository).createGuestSessionId()
+            verify(repository).createGuestSession()
         }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (createGuestSessionId fails) THEN (should return AppError on left side of Either)`() =
         runTest {
             val expected = Either.Left(fakeUnknownAppError)
-            whenever(repository.createGuestSessionId()).thenReturn(expected)
+            whenever(repository.createGuestSession()).thenReturn(expected)
 
             val actual = useCase()
 
             assertThat(actual).isEqualTo(expected)
-            verify(repository).createGuestSessionId()
+            verify(repository).createGuestSession()
         }
 }

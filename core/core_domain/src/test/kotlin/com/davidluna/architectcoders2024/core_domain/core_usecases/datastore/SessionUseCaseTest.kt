@@ -15,18 +15,18 @@ import org.mockito.kotlin.whenever
 import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
-class SessionIdUseCaseTest {
+class SessionUseCaseTest {
 
     @Mock
     lateinit var repository: PreferencesRepository
 
-    private val useCase by lazy { SessionIdUseCase(repository) }
+    private val useCase by lazy { SessionUseCase(repository) }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (sessionId succeeds) THEN (should return a flow of String)`() =
         runTest {
             val expected = "sessionID"
-            whenever(repository.sessionId).thenReturn(flowOf(expected))
+            whenever(repository.session).thenReturn(flowOf(expected))
 
             val actual = useCase()
 
@@ -36,14 +36,14 @@ class SessionIdUseCaseTest {
                 awaitComplete()
                 cancel()
             }
-            verify(repository).sessionId
+            verify(repository).session
         }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (saveSessionId fails) THEN (should throw Exception)`() =
         runTest {
             val expected = IOException("Test Exception")
-            whenever(repository.sessionId).thenReturn(flow { throw expected })
+            whenever(repository.session).thenReturn(flow { throw expected })
 
             val actual: Flow<String> = useCase()
 
@@ -52,6 +52,6 @@ class SessionIdUseCaseTest {
                 assertThat(catchException).isEqualTo(expected)
                 cancel()
             }
-            verify(repository).sessionId
+            verify(repository).session
         }
 }

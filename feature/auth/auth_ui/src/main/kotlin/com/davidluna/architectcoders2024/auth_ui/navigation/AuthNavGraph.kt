@@ -28,7 +28,7 @@ fun NavGraphBuilder.authNavGraph(
             val state by viewModel.state.collectAsState()
             state.destination?.let {
                 navigateTo(it)
-                viewModel.sendEvent(LoginEvent.IsLoggedIn(null))
+                viewModel.sendEvent(LoginEvent.Navigate(null))
             }
             if (state.launchTMDBWeb) {
                 IntentView(state.token)

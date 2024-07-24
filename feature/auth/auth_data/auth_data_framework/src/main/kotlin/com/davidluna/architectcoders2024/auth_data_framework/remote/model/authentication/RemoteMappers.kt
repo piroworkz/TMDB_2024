@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.auth_data_framework.remote.model.authentication
 
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.GuestSession
+import com.davidluna.architectcoders2024.core_domain.core_entities.GuestSession
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.LoginRequest
 import com.davidluna.architectcoders2024.core_domain.core_entities.SessionId
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_entities.session.TokenResponse
@@ -29,5 +29,5 @@ fun RemoteTokenResponse.toDomain(): TokenResponse = TokenResponse(
 
 fun RemoteGuestSession.toDomain(): GuestSession = GuestSession(
     expiresAt = expiresAt,
-    guestSessionId = guestSessionId
+    id = guestSessionId
 )

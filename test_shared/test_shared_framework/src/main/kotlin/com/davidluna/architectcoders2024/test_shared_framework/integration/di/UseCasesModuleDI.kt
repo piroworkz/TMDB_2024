@@ -1,15 +1,16 @@
 package com.davidluna.architectcoders2024.test_shared_framework.integration.di
 
+import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GuestSessionNotExpiredUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateGuestSessionIdUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateRequestTokenUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionIdUseCase
+import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.ExtractQueryArgumentsUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GetUserAccountUseCase
 import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.CloseSessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SaveContentKindUseCase
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionIdUseCase
+import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.UserAccountUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.FormatDateUseCase
 import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCastUseCase
@@ -24,8 +25,8 @@ class UseCasesModuleDI {
         CreateRequestTokenUseCase(RepositoriesModuleDI().sessionRepository)
     }
 
-    private val createSessionId: CreateSessionIdUseCase by lazy {
-        CreateSessionIdUseCase(RepositoriesModuleDI().sessionRepository)
+    private val createSessionId: CreateSessionUseCase by lazy {
+        CreateSessionUseCase(RepositoriesModuleDI().sessionRepository)
     }
     private val createGuestSessionId: CreateGuestSessionIdUseCase by lazy {
         CreateGuestSessionIdUseCase(RepositoriesModuleDI().sessionRepository)
@@ -33,12 +34,17 @@ class UseCasesModuleDI {
     private val getUserAccount: GetUserAccountUseCase by lazy {
         GetUserAccountUseCase(RepositoriesModuleDI().sessionRepository)
     }
-    private val sessionId: SessionIdUseCase by lazy {
-        SessionIdUseCase(RepositoriesModuleDI().preferencesRepository)
+    private val sessionId: SessionUseCase by lazy {
+        SessionUseCase(RepositoriesModuleDI().preferencesRepository)
     }
     private val extractQueryArguments: ExtractQueryArgumentsUseCase by lazy {
         ExtractQueryArgumentsUseCase()
     }
+
+    private val guestSessionNotExpiredUseCase: GuestSessionNotExpiredUseCase by lazy {
+        GuestSessionNotExpiredUseCase()
+    }
+
     val loginViewModelUseCases: LoginViewModelUseCases by lazy {
         LoginViewModelUseCases(
             createRequestToken,
@@ -46,7 +52,8 @@ class UseCasesModuleDI {
             createGuestSessionId,
             getUserAccount,
             sessionId,
-            extractQueryArguments
+            extractQueryArguments,
+            guestSessionNotExpiredUseCase
         )
     }
 

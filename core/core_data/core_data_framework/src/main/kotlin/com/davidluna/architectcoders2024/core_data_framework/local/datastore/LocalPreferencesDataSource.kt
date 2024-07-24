@@ -3,6 +3,7 @@ package com.davidluna.architectcoders2024.core_data_framework.local.datastore
 import androidx.datastore.core.DataStore
 import com.davidluna.architectcoders2024.core_data_repositories.datastore.PreferencesDataSource
 import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.core_entities.Session
 import com.davidluna.architectcoders2024.core_domain.core_entities.UserAccount
 import com.davidluna.architectcoders2024.core_domain.core_entities.tryCatch
 import com.davidluna.protodatastore.ProtoPreferences
@@ -13,9 +14,9 @@ import javax.inject.Inject
 class LocalPreferencesDataSource @Inject constructor(private val dataStore: DataStore<ProtoPreferences>) :
     PreferencesDataSource {
 
-    override val sessionId: Flow<String>
+    override val session: Flow<Session>
         get() = dataStore.data.map {
-            it.toDomain().ifEmpty { "" }
+            it.toDomain()
         }
 
     override val userAccount: Flow<UserAccount>
@@ -29,12 +30,8 @@ class LocalPreferencesDataSource @Inject constructor(private val dataStore: Data
         dataStore.updateData { ProtoPreferences.getDefaultInstance() }
     }.isRight()
 
-    override suspend fun saveIsGuest(isGuest: Boolean): Boolean = tryCatch {
-        dataStore.updateData { preferences -> preferences.setIsGuest(isGuest) }
-    }.isRight()
-
-    override suspend fun saveSessionId(sessionId: String): Boolean = tryCatch {
-        dataStore.updateData { preferences -> preferences.setSessionId(sessionId) }
+    override suspend fun saveSession(session: Session): Boolean = tryCatch {
+        dataStore.updateData { preferences -> preferences.setSession(session) }
     }.isRight()
 
     override suspend fun saveUser(user: UserAccount): Boolean = tryCatch {

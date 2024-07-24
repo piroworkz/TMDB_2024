@@ -5,7 +5,7 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.PreferencesRepository
 import com.davidluna.architectcoders2024.test_shared.domain.fakeContentKind
 import com.davidluna.architectcoders2024.test_shared.domain.fakeNotFoundAppError
-import com.davidluna.architectcoders2024.test_shared.domain.fakeSessionId
+import com.davidluna.architectcoders2024.test_shared.domain.fakeSession
 import com.davidluna.architectcoders2024.test_shared.domain.fakeUserAccount
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.flow
@@ -37,10 +37,10 @@ class LocalLocalPreferencesDataRepositoryTest {
     @Test
     fun `GIVEN (sessionId is called) WHEN (local sessionId succeeds) THEN (should return a Flow of String)`() =
         runTest {
-            val expected: String = fakeSessionId.sessionId
-            whenever(local.sessionId).thenReturn(flowOf(expected))
+            val expected: String = fakeSession.id
+            whenever(local.session).thenReturn(flowOf(expected))
 
-            val actual = repository.sessionId
+            val actual = repository.session
 
             actual.test {
                 val collected = awaitItem()
@@ -48,23 +48,23 @@ class LocalLocalPreferencesDataRepositoryTest {
                 awaitComplete()
                 cancel()
             }
-            verify(local).sessionId
+            verify(local).session
         }
 
     @Test
     fun `GIVEN (sessionId is called) WHEN (local sessionId fails) THEN (should throw Exception)`() =
         runTest {
             val expected = fakeNotFoundAppError
-            whenever(local.sessionId).thenReturn(flow { throw expected })
+            whenever(local.session).thenReturn(flow { throw expected })
 
-            val actual = repository.sessionId
+            val actual = repository.session
 
             actual.test {
                 val catchException = awaitError()
                 Truth.assertThat(catchException).isEqualTo(expected)
                 cancel()
             }
-            verify(local).sessionId
+            verify(local).session
         }
 
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState
 import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
@@ -37,6 +38,14 @@ fun LoginScreen(
 ) {
 
     val bioState = rememberBiometricAuth()
+
+    BiometricsLaunchedEffect(
+        launchPrompt = state.launchBioPrompt,
+        biometricAuthState = bioState
+    ) {
+        sendEvent(it)
+    }
+
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -59,8 +68,9 @@ fun LoginScreen(
         ) {
 
             Button(
-                onClick = { sendEvent(LoginEvent.OnLoginClicked) },
+                onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
                 modifier = Modifier.fillMaxWidth(),
+                enabled = state.isLoading.not(),
                 shape = MaterialTheme.shapes.small
             ) {
                 Text(
@@ -70,8 +80,9 @@ fun LoginScreen(
             }
 
             TextButton(
-                onClick = { sendEvent(LoginEvent.CreateGuestSession) },
-                modifier = Modifier.fillMaxWidth()
+                onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = state.isLoading.not()
             ) {
                 Text(
                     text = stringResource(id = R.string.btn_login_as_guest),
@@ -79,14 +90,11 @@ fun LoginScreen(
                 )
             }
 
-            if (state.sessionExists && bioState.canAuthenticate.value && !state.bioSuccess) {
-                BiometricsLaunchedEffect(biometricAuthState = bioState) {
-                    sendEvent(it)
-                }
-
+            if (state.session?.id?.isNotEmpty() == true) {
                 TextButton(
-                    onClick = { bioState.launchPrompt() },
-                    modifier = Modifier.fillMaxWidth()
+                    onClick = { bioState.changeState(BiometricState.SHOW_PROMPT) },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = state.isLoading.not(),
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_launch_biometrics),
@@ -94,15 +102,17 @@ fun LoginScreen(
                     )
                 }
             }
-
-
         }
 
         if (state.isLoading) {
             CircularProgressIndicator()
         }
+
         ErrorDialogView(error = state.appError as? AppError.Message) {
-            sendEvent(LoginEvent.SetError(null))
+            if (state.launchBioPrompt) {
+                sendEvent(LoginEvent.LaunchBioPrompt(false))
+            }
+            sendEvent(LoginEvent.SetAppError(null))
         }
     }
 }

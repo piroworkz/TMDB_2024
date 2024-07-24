@@ -6,5 +6,3 @@ import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppErr
 
 val fakeUnknownAppError: AppError = AppError.Message(code= UNKNOWN, description="Unknown error", type=null)
 val fakeNotFoundAppError: AppError = AppError.Message(code= AppErrorCode.NOT_FOUND, description="Unknown error", type=null)
-
-
