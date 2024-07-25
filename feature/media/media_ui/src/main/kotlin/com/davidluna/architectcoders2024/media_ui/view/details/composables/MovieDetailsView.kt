@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
 
 @Composable
 fun MovieDetailsView(

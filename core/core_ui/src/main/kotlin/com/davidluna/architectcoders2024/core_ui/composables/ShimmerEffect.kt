@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.Animation
+import com.davidluna.architectcoders2024.core_domain.entities.labels.Animation
 
 fun Modifier.shimmer(enabled: Boolean, duration: Int = 1000): Modifier = composed {
     var intSize by remember { mutableStateOf(IntSize.Zero) }

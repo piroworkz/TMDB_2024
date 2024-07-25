@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.MediaDetails
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Genre
+import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.entities.Genre
 
 @Composable
 fun TextDetailsView(movieDetail: MediaDetails?) {

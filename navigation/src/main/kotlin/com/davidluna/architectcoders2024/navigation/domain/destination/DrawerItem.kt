@@ -5,7 +5,7 @@ import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_ui.R
 
 sealed class DrawerItem(

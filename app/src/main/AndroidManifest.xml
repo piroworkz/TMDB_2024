@@ -18,23 +18,25 @@
         android:theme="@style/Theme.ArchitectCoders2024"
         tools:targetApi="31">
         <activity
-            android:name=".app.MainActivity"
+            android:name=".main_ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ArchitectCoders2024">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <intent-filter android:autoVerify="true">
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="tmdb.davidluna.com" />
+                <data android:host="david-luna.com" />
+                <data android:path="/tmdb" />
             </intent-filter>
 
         </activity>

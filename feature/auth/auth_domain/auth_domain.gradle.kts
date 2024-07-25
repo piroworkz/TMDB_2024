@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     implementation(projects.core.coreDomain)
-    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared)
 }

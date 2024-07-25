@@ -2,18 +2,17 @@ package com.davidluna.architectcoders2024.media_ui.presenter.media
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
-import com.davidluna.architectcoders2024.test_shared.domain.fakeNotFoundAppError
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.media_domain.entities.Media
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeNotFoundAppError
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +44,7 @@ class MediaCatalogViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem().contentKind).isEqualTo(ContentKind.MOVIE)
                 cancelAndIgnoreRemainingEvents()
@@ -59,7 +58,7 @@ class MediaCatalogViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)
                 cancelAndIgnoreRemainingEvents()
@@ -74,7 +73,7 @@ class MediaCatalogViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem().contentKind).isEqualTo(ContentKind.MOVIE)
                 //  PagingData is not a data class, so any equality check would fail. Need to find a way to compare the contents of the PagingData object. Meanwhile, we can check if is not empty.

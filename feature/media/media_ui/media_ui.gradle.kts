@@ -15,6 +15,9 @@ dependencies {
     implementation(projects.navigation)
     implementation(libs.pagingCompose)
     implementation(libs.coilCompose)
-    testImplementation(projects.testShared.testSharedDomain)
-    testImplementation(projects.testShared.testSharedFramework)
+    testImplementation(projects.testShared)
+    testImplementation(projects.feature.media.mediaFramework)
+    testImplementation(projects.feature.videos.videosDomain)
+    testImplementation(projects.feature.videos.videosFramework)
+    testImplementation(projects.core.coreFramework)
 }

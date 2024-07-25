@@ -2,11 +2,10 @@ package com.davidluna.architectcoders2024.videos_ui.presenter
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.davidluna.architectcoders2024.fakes.FakeVideosDI
 import com.davidluna.architectcoders2024.navigation.domain.args.Args
-import com.davidluna.architectcoders2024.test_shared_framework.integration.di.UseCasesModuleDI
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -28,7 +27,7 @@ class VideoPlayerIntegrationTest {
         runTest {
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().isLoading).isTrue()
                 Truth.assertThat(awaitItem().videos).isNotEmpty()
@@ -40,8 +39,8 @@ class VideoPlayerIntegrationTest {
     private fun buildViewModel(): VideoPlayerViewModel {
         return VideoPlayerViewModel(
             savedStateHandle,
-            UseCasesModuleDI().getVideosUseCase,
-            UseCasesModuleDI().getContentKindUseCase
+            FakeVideosDI().getVideosUseCase,
+            FakeVideosDI().getContentKindUseCase
         )
     }
 

@@ -14,4 +14,6 @@ object Constants {
     const val BASE_URL = "BASE_URL"
 
     val JAVA_VERSION: JavaVersion = JavaVersion.VERSION_17
+
+    val ABI_FILTERS = listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
 }

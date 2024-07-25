@@ -8,12 +8,12 @@ kotlin = "2.0.0"
 kotlin-coroutines = "1.8.0"
 coreKtx = "1.13.1"
 kotlinxSerializationJson = "1.6.3"
-lifecycleRuntimeKtx = "2.8.3"
+lifecycleRuntimeKtx = "2.8.4"
 #compose
 composeBom = "2024.06.00"
 compose-navigation = "2.7.7"
 compose-constraint-layout = "1.0.1"
-activityCompose = "1.9.0"
+activityCompose = "1.9.1"
 navigation = "2.7.7"
 coil-compose = "2.6.0"
 composeAndroidPermissions = "1.0.0"
@@ -24,8 +24,8 @@ kotlin-converter = "1.0.0"
 okhttp = "4.12.0"
 arrow = "1.2.1"
 #paging
-pagingCompose = "3.3.0"
-pagingRuntime = "3.3.0"
+pagingCompose = "3.3.1"
+pagingRuntime = "3.3.1"
 #protobuf
 protobufJavalite = "4.26.0"
 protobufKotlinLite = "4.26.0"
@@ -39,10 +39,10 @@ javaxInject = "1"
 ksp = "2.0.0-1.0.23"
 appcompat = "1.7.0"
 material = "1.12.0"
-fragmentKtx = "1.8.1"
+fragmentKtx = "1.8.2"
 #testing
 junit = "4.13.2"
-mockito-kotlin = "5.1.0"
+mockito-kotlin = "5.3.1"
 mockito-inline = "5.2.0"
 turbine = "1.0.0"
 truth = "1.4.2"
@@ -66,7 +66,7 @@ composeUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 composeUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 composeUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 composeMaterial3 = { group = "androidx.compose.material3", name = "material3" }
-composeAnimation = { group = "androidx.compose.animation", name = "animation", version = "1.7.0-beta05"}
+composeAnimation = { group = "androidx.compose.animation", name = "animation", version = "1.7.0-beta06"}
 composeActivity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 composeNavigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 composeConstraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraint-layout" }
@@ -133,8 +133,8 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #Convention plugins
+architectCodersAndroidApplication = { id = "architectcoders2024.android.application", version = "unspecified" }
 frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.plugin", version = "unspecified" }
 uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }
-architectCodersAndroidApplication = { id = "architectcoders2024.android.application", version = "unspecified" }
-androidLibraryConventionPlugin = { id = "architectcoders2024.android.library.plugin", version = "unspecified" }
 kotlinModuleConventionPlugin = { id = "architectcoders2024.kotlin.module.plugin", version = "unspecified" }
+testSharedConventionPlugin = { id = "architectcoders2024.test.shared.plugin", version = "unspecified" }

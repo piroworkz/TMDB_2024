@@ -2,15 +2,14 @@ package com.davidluna.architectcoders2024.auth_ui.presenter
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
+import com.davidluna.architectcoders2024.fakes.FakeAuthDi
 import com.davidluna.architectcoders2024.navigation.domain.args.DefaultArgs
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
-import com.davidluna.architectcoders2024.test_shared.domain.FAKE_QUERY_PARAMS
-import com.davidluna.architectcoders2024.test_shared.domain.fakeEmptySession
-import com.davidluna.architectcoders2024.test_shared_framework.integration.di.UseCasesModuleDI
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +37,7 @@ class LoginIntegrationTest {
 
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -62,7 +61,7 @@ class LoginIntegrationTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.LoginButtonClicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -80,7 +79,7 @@ class LoginIntegrationTest {
                 SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
             val newViewModel = buildViewModel(secondSavedStateHandle)
 
-            newViewModel.state.onEach { println("<-- SECOND $it") }.test {
+            newViewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -93,9 +92,11 @@ class LoginIntegrationTest {
         }
 
     private fun buildViewModel(
-        savedStateHandle: SavedStateHandle
+        savedStateHandle: SavedStateHandle,
     ): LoginViewModel {
-        return LoginViewModel(savedStateHandle, UseCasesModuleDI().loginViewModelUseCases)
+        return LoginViewModel(savedStateHandle, FakeAuthDi().loginViewModelUseCases)
     }
+
+
 }
 

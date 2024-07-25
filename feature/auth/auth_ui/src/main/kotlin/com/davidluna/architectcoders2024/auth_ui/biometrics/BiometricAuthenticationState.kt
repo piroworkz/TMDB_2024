@@ -15,7 +15,6 @@ import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.ERROR
 import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.SUCCESS
 import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.UNAVAILABLE
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.core_ui.log
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 
@@ -91,7 +90,6 @@ class BiometricAuthenticationState(
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                "$errString: $errorCode ".log()
                 if (errorCode == BiometricPrompt.ERROR_USER_CANCELED) {
                     promptInfo?.setSubtitle(errString)
                     state.value = ERROR

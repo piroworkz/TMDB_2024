@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Mantén los métodos nativos sin cambios
+-printmapping out.map
+-keep class com.davidluna.architectcoders2024.di.MainModule {
+    native <methods>;
+}
+

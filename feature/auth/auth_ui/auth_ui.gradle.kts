@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(projects.feature.auth.authDomain)
     implementation(libs.biometric)
-    testImplementation(projects.testShared.testSharedDomain)
-    testImplementation(projects.testShared.testSharedFramework)
+    testImplementation(projects.testShared)
+    testImplementation(projects.feature.auth.authFramework)
+    testImplementation(projects.core.coreFramework)
 }

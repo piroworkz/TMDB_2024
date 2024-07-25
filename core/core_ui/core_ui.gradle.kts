@@ -10,7 +10,6 @@ android {
 
 dependencies {
     implementation(projects.core.coreDomain)
-    implementation(libs.fragmentKtx)
     implementation(libs.coilCompose)
-    testImplementation(projects.testShared.testSharedDomain)
+    testImplementation(projects.testShared)
 }
