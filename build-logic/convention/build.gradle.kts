@@ -34,32 +34,27 @@ gradlePlugin {
     plugins {
         register("androidAppPlugin") {
             id = "architectcoders2024.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
+            implementationClass = "com.davidluna.architectcoders2024.build_logic.plugins.AndroidApplicationConventionPlugin"
         }
 
         register("frameworkModuleConventionPlugin") {
             id = "architectcoders2024.framework.module.plugin"
-            implementationClass = "FrameworkModuleConventionPlugin"
+            implementationClass = "com.davidluna.architectcoders2024.build_logic.plugins.FrameworkModuleConventionPlugin"
         }
 
         register("uiModuleConventionPlugin") {
             id = "architectcoders2024.ui.module.plugin"
-            implementationClass = "UiModuleConventionPlugin"
-        }
-
-        register("androidLibraryConventionPlugin") {
-            id = "architectcoders2024.android.library.plugin"
-            implementationClass = "AndroidLibraryConventionPlugin"
+            implementationClass = "com.davidluna.architectcoders2024.build_logic.plugins.UiModuleConventionPlugin"
         }
 
         register("kotlinModuleConventionPlugin") {
             id = "architectcoders2024.kotlin.module.plugin"
-            implementationClass = "KotlinModuleConventionPlugin"
+            implementationClass = "com.davidluna.architectcoders2024.build_logic.plugins.KotlinModuleConventionPlugin"
         }
 
-        register("jacocoConventionPlugin") {
-            id = "architectcoders2024.jacoco.plugin"
-            implementationClass = "JacocoConventionPlugin"
+        register("testSharedConventionPlugin") {
+            id = "architectcoders2024.test.shared.plugin"
+            implementationClass = "com.davidluna.architectcoders2024.build_logic.plugins.TestSharedConventionPlugin"
         }
     }
 }

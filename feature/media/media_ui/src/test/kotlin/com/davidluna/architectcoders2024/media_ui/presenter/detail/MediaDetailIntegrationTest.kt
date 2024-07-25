@@ -2,12 +2,11 @@ package com.davidluna.architectcoders2024.media_ui.presenter.detail
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.media_ui.presenter.empty
+import com.davidluna.architectcoders2024.fakes.FakeMediaDI
+import com.davidluna.architectcoders2024.fakes.empty
 import com.davidluna.architectcoders2024.navigation.domain.args.Args
-import com.davidluna.architectcoders2024.test_shared_framework.integration.di.UseCasesModuleDI
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +28,7 @@ class MediaDetailIntegrationTest {
         runTest {
             val viewModel = buildViewModel(savedStateHandle)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isNotNull()
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(empty)
@@ -51,11 +50,11 @@ class MediaDetailIntegrationTest {
     private fun buildViewModel(savedStateHandle: SavedStateHandle) =
         MovieDetailViewModel(
             savedStateHandle = savedStateHandle,
-            getMovieDetails = UseCasesModuleDI().getMediaDetailsUseCase,
-            getMediaImagesUseCase = UseCasesModuleDI().getMediaImagesUseCase,
-            getMediaCastUseCase = UseCasesModuleDI().getMediaCastUseCase,
-            getContent = UseCasesModuleDI().getMediaCatalogUseCase,
-            getContentKindUseCase = UseCasesModuleDI().getContentKindUseCase
+            getMovieDetails = FakeMediaDI().getMediaDetailsUseCase,
+            getMediaImagesUseCase = FakeMediaDI().getMediaImagesUseCase,
+            getMediaCastUseCase = FakeMediaDI().getMediaCastUseCase,
+            getContent = FakeMediaDI().getMediaCatalogUseCase,
+            getContentKindUseCase = FakeMediaDI().getContentKindUseCase
         )
 
 }

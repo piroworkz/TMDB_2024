@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.Animation
+import com.davidluna.architectcoders2024.core_domain.entities.labels.Animation
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.SlideFromTopAnimation
 import com.davidluna.architectcoders2024.core_ui.composables.shimmer

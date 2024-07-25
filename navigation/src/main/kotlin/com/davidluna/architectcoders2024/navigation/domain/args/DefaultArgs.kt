@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.navigation.domain.args
 
 import androidx.navigation.NavType
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 
 sealed class DefaultArgs<out T>(
     override val name: String,

@@ -4,29 +4,29 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.provider.Provider
 import org.gradle.plugin.use.PluginDependency
 
-val VersionCatalog.androidApplication: Provider<PluginDependency>
+internal val VersionCatalog.androidApplication: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::androidApplication.name).get()
 
-val VersionCatalog.kotlinAndroid: Provider<PluginDependency>
+internal val VersionCatalog.kotlinAndroid: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::kotlinAndroid.name).get()
 
-val VersionCatalog.kotlinJvm: Provider<PluginDependency>
+internal val VersionCatalog.kotlinJvm: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::kotlinJvm.name).get()
 
-val VersionCatalog.kotlinSerialization: Provider<PluginDependency>
+internal val VersionCatalog.kotlinSerialization: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::kotlinSerialization.name).get()
 
-val VersionCatalog.protobufPlugin: Provider<PluginDependency>
+internal val VersionCatalog.protobufPlugin: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::protobufPlugin.name).get()
 
-val VersionCatalog.hiltPlugin: Provider<PluginDependency>
+internal val VersionCatalog.hiltPlugin: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::hiltPlugin.name).get()
 
-val VersionCatalog.ksp: Provider<PluginDependency>
+internal val VersionCatalog.ksp: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::ksp.name).get()
 
-val VersionCatalog.androidLibrary: Provider<PluginDependency>
+internal val VersionCatalog.androidLibrary: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::androidLibrary.name).get()
 
-val VersionCatalog.composeCompiler: Provider<PluginDependency>
+internal val VersionCatalog.composeCompiler: Provider<PluginDependency>
     get() = findPlugin(VersionCatalog::composeCompiler.name).get()

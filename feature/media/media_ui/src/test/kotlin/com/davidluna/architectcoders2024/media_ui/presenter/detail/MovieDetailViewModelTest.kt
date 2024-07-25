@@ -5,28 +5,27 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCastUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaDetailsUseCase
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaImagesUseCase
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
+import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.media_domain.entities.Media
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCastUseCase
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
-import com.davidluna.architectcoders2024.test_shared.domain.fakeCastList
-import com.davidluna.architectcoders2024.test_shared.domain.fakeContentKind
-import com.davidluna.architectcoders2024.test_shared.domain.fakeImages
-import com.davidluna.architectcoders2024.test_shared.domain.fakeMediaDetail
-import com.davidluna.architectcoders2024.test_shared.domain.fakeNotFoundAppError
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeCastList
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeContentKind
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeImages
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeMediaDetail
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeNotFoundAppError
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -67,7 +66,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 cancelAndIgnoreRemainingEvents()
@@ -82,7 +81,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)
                 cancelAndIgnoreRemainingEvents()
@@ -101,7 +100,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)
@@ -129,7 +128,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)
@@ -151,7 +150,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)
@@ -176,7 +175,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)
@@ -204,7 +203,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)
@@ -241,7 +240,7 @@ class MovieDetailViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().recommendations).isNotEqualTo(expected)

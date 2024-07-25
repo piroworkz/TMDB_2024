@@ -4,16 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.test_shared.domain.fakeContentKind
-import com.davidluna.architectcoders2024.test_shared.domain.fakeMovieVideos
-import com.davidluna.architectcoders2024.test_shared.domain.fakeNotFoundAppError
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
-import com.davidluna.architectcoders2024.videos_domain.videos_domain_usecases.GetVideosUseCase
+import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeContentKind
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeMovieVideos
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeNotFoundAppError
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.videos_domain.usecases.GetVideosUseCase
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -49,7 +48,7 @@ class VideoPlayerViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 cancelAndIgnoreRemainingEvents()
@@ -63,7 +62,7 @@ class VideoPlayerViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)
                 cancelAndIgnoreRemainingEvents()
@@ -80,7 +79,7 @@ class VideoPlayerViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().videos).isEqualTo(fakeMovieVideos.sortedBy { it.order }.map { it.key })
@@ -99,7 +98,7 @@ class VideoPlayerViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 Truth.assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)

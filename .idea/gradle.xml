@@ -25,37 +25,26 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core/core_data" />
-            <option value="$PROJECT_DIR$/core/core_data/core_data_framework" />
-            <option value="$PROJECT_DIR$/core/core_data/core_data_repositories" />
             <option value="$PROJECT_DIR$/core/core_domain" />
+            <option value="$PROJECT_DIR$/core/core_framework" />
             <option value="$PROJECT_DIR$/core/core_ui" />
-            <option value="$PROJECT_DIR$/di" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
-            <option value="$PROJECT_DIR$/feature/auth/auth_data" />
-            <option value="$PROJECT_DIR$/feature/auth/auth_data/auth_data_framework" />
-            <option value="$PROJECT_DIR$/feature/auth/auth_data/auth_data_repositories" />
             <option value="$PROJECT_DIR$/feature/auth/auth_domain" />
+            <option value="$PROJECT_DIR$/feature/auth/auth_framework" />
             <option value="$PROJECT_DIR$/feature/auth/auth_ui" />
-            <option value="$PROJECT_DIR$/feature/main_ui" />
             <option value="$PROJECT_DIR$/feature/media" />
-            <option value="$PROJECT_DIR$/feature/media/media_data" />
-            <option value="$PROJECT_DIR$/feature/media/media_data/media_data_framework" />
-            <option value="$PROJECT_DIR$/feature/media/media_data/media_data_repositories" />
             <option value="$PROJECT_DIR$/feature/media/media_domain" />
+            <option value="$PROJECT_DIR$/feature/media/media_framework" />
             <option value="$PROJECT_DIR$/feature/media/media_ui" />
-            <option value="$PROJECT_DIR$/feature/splash_ui" />
+            <option value="$PROJECT_DIR$/feature/splash" />
             <option value="$PROJECT_DIR$/feature/videos" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_data" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_data/videos_data_framework" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_data/videos_data_repositories" />
             <option value="$PROJECT_DIR$/feature/videos/videos_domain" />
+            <option value="$PROJECT_DIR$/feature/videos/videos_framework" />
             <option value="$PROJECT_DIR$/feature/videos/videos_ui" />
+            <option value="$PROJECT_DIR$/main" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/test_shared" />
-            <option value="$PROJECT_DIR$/test_shared/test_shared_domain" />
-            <option value="$PROJECT_DIR$/test_shared/test_shared_framework" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

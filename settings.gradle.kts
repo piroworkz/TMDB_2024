@@ -29,28 +29,22 @@ rootProject.name = "ArchitectCoders2024"
 
 include(
     ":app",
-    ":feature:main_ui",
-    ":feature:splash_ui",
+    ":main",
+    ":navigation",
+    ":feature:splash",
     ":feature:auth:auth_ui",
     ":feature:auth:auth_domain",
-    ":feature:auth:auth_data:auth_data_repositories",
-    ":feature:auth:auth_data:auth_data_framework",
+    ":feature:auth:auth_framework",
     ":feature:media:media_ui",
     ":feature:media:media_domain",
-    ":feature:media:media_data:media_data_framework",
-    ":feature:media:media_data:media_data_repositories",
+    ":feature:media:media_framework",
     ":feature:videos:videos_ui",
     ":feature:videos:videos_domain",
-    ":feature:videos:videos_data:videos_data_framework",
-    ":feature:videos:videos_data:videos_data_repositories",
+    ":feature:videos:videos_framework",
     ":core:core_ui",
     ":core:core_domain",
-    ":core:core_data:core_data_framework",
-    ":core:core_data:core_data_repositories",
-    ":di",
-    ":navigation",
-    ":test_shared:test_shared_domain",
-    ":test_shared:test_shared_framework"
+    ":core:core_framework",
+    ":test_shared",
 )
 
 rootProject.children.forEach { levelOne ->

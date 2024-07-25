@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
-import com.davidluna.architectcoders2024.core_domain.core_entities.errors.AppError
+import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
 
 sealed interface LoginEvent {

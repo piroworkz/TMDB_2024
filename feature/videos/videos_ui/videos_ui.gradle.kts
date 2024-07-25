@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.feature.videos.videosDomain)
     implementation(projects.navigation)
     implementation(libs.pagingCompose)
-    testImplementation(projects.testShared.testSharedDomain)
-    testImplementation(projects.testShared.testSharedFramework)
+    testImplementation(projects.testShared)
+    testImplementation(projects.feature.videos.videosFramework)
+    testImplementation(projects.core.coreFramework)
 }

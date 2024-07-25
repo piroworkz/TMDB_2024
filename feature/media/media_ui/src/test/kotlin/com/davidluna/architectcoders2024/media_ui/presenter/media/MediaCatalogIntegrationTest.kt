@@ -2,17 +2,16 @@ package com.davidluna.architectcoders2024.media_ui.presenter.media
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.core_domain.core_entities.ContentKind
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
+import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.fakes.FakeMediaDI
+import com.davidluna.architectcoders2024.fakes.fakeMediaItem
+import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.Detail
-import com.davidluna.architectcoders2024.test_shared_framework.integration.di.UseCasesModuleDI
-import com.davidluna.architectcoders2024.test_shared_framework.remote.fakeMediaItem
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +33,7 @@ class MediaCatalogIntegrationTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem())
                     .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
@@ -53,7 +52,7 @@ class MediaCatalogIntegrationTest {
             val media = fakeMediaItem
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem())
                     .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
@@ -69,7 +68,8 @@ class MediaCatalogIntegrationTest {
 
 
     private fun buildViewModel() = MediaCatalogViewModel(
-        UseCasesModuleDI().getMediaCatalogUseCase, UseCasesModuleDI().getContentKindUseCase
+        FakeMediaDI().mediaCatalogUseCase,
+        FakeMediaDI().getContentKindUseCase
     )
 
 }

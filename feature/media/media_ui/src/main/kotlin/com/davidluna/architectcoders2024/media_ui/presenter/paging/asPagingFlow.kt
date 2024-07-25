@@ -4,8 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.davidluna.architectcoders2024.media_domain.media_domain_entities.Media
-import com.davidluna.architectcoders2024.media_domain.media_domain_usecases.GetMediaCatalogUseCase
+import com.davidluna.architectcoders2024.media_domain.entities.Media
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 

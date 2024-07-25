@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.navigation.domain.destination
 import android.content.Intent
 import androidx.navigation.NavDeepLink
 import androidx.navigation.navDeepLink
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 import com.davidluna.architectcoders2024.navigation.domain.args.DefaultArgs
 import com.davidluna.architectcoders2024.navigation.domain.args.SafeArgs
 
@@ -28,13 +28,11 @@ sealed class AuthNavigation(
                 action = Intent.ACTION_VIEW
             }
         )
-    ) {
-
-    }
+    )
 
     companion object {
         private const val INIT = "AUTH_INIT"
         private const val LOGIN = "LOGIN"
-        const val URI = "https://tmdb.davidluna.com/{${NavArgument.APPROVED}}"
+        const val URI = "https://com.davidluna.architectcoder2024/{${NavArgument.APPROVED}}"
     }
 }

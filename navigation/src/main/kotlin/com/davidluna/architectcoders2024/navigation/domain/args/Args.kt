@@ -1,8 +1,8 @@
 package com.davidluna.architectcoders2024.navigation.domain.args
 
 import androidx.navigation.NavType
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument.APP_BAR_TITLE
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument.MEDIA_ID
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument.APP_BAR_TITLE
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument.MEDIA_ID
 
 sealed class Args(
     override val name: String,

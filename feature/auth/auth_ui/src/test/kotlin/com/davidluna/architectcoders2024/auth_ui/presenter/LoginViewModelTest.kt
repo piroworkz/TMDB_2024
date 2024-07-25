@@ -4,29 +4,28 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateGuestSessionIdUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateRequestTokenUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.CreateSessionUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.ExtractQueryArgumentsUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GetUserAccountUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.GuestSessionNotExpiredUseCase
-import com.davidluna.architectcoders2024.auth_domain.auth_domain_usecases.session.LoginViewModelUseCases
-import com.davidluna.architectcoders2024.core_domain.core_entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_domain.core_usecases.datastore.SessionUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.CreateGuestSessionIdUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.CreateRequestTokenUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.CreateSessionUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.ExtractQueryArgumentsUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.GetUserAccountUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.GuestSessionNotExpiredUseCase
+import com.davidluna.architectcoders2024.auth_domain.usecases.LoginViewModelUseCases
+import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
+import com.davidluna.architectcoders2024.core_domain.usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
-import com.davidluna.architectcoders2024.test_shared.domain.FAKE_QUERY_PARAMS
-import com.davidluna.architectcoders2024.test_shared.domain.fakeEmptySession
-import com.davidluna.architectcoders2024.test_shared.domain.fakeGuestSession
-import com.davidluna.architectcoders2024.test_shared.domain.fakeLoginRequest
-import com.davidluna.architectcoders2024.test_shared.domain.fakeQueryArgs
-import com.davidluna.architectcoders2024.test_shared.domain.fakeSession
-import com.davidluna.architectcoders2024.test_shared.domain.fakeTokenResponse
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUnknownAppError
-import com.davidluna.architectcoders2024.test_shared.domain.fakeUserAccount
-import com.davidluna.architectcoders2024.test_shared_framework.rules.CoroutineTestRule
+import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeGuestSession
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeLoginRequest
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeQueryArgs
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeSession
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeTokenResponse
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeUnknownAppError
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeUserAccount
+import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -96,7 +95,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -120,7 +119,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -146,7 +145,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -175,7 +174,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.LoginButtonClicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -199,7 +198,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.LoginButtonClicked)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -227,7 +226,7 @@ class LoginViewModelTest {
 
             val viewModel = buildViewModel(savedStateHandle)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -253,11 +252,12 @@ class LoginViewModelTest {
 
             whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
             whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
-            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeUnknownAppError.left())
+            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
+                fakeUnknownAppError.left())
 
             val viewModel = buildViewModel(savedStateHandle)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -281,12 +281,13 @@ class LoginViewModelTest {
 
             whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
             whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
-            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeSession.right())
+            whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
+                fakeSession.right())
             whenever(getUserAccountUseCase()).thenReturn(fakeUnknownAppError.left())
 
             val viewModel = buildViewModel(savedStateHandle)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 awaitItem()
                 awaitItem()
@@ -311,7 +312,7 @@ class LoginViewModelTest {
 
             val viewModel = buildViewModel(savedStateHandle)
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
