@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.build_logic.bundles
 
 import com.davidluna.architectcoders2024.build_logic.libs.coroutinesTest
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.testImplementation
+import com.davidluna.architectcoders2024.build_logic.helpers.testImplementation
 import com.davidluna.architectcoders2024.build_logic.libs.junit
 import com.davidluna.architectcoders2024.build_logic.libs.libs
 import com.davidluna.architectcoders2024.build_logic.libs.mockitoInline

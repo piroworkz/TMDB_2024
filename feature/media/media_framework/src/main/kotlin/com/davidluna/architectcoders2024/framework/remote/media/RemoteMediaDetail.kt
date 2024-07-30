@@ -12,7 +12,7 @@ data class RemoteMediaDetail(
     @SerialName("overview")
     val overview: String,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("release_date")
     val releaseDate: String? = null,
     @SerialName("first_air_date")

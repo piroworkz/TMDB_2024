@@ -20,9 +20,15 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Mantén los métodos nativos sin cambios
--printmapping out.map
+-printconfiguration ../full-r8-config.txt
 -keep class com.davidluna.architectcoders2024.di.MainModule {
     native <methods>;
 }
+-keep class com.davidluna.architectcoders2024.build_logic.libs.** { *; }
 
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
+   <fields>;
+}
+
+-keep class retrofit2.** { *; }
+-keep class arrow.core.** { *; }

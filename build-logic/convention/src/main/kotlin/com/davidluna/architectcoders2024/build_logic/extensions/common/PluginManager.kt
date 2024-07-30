@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.build_logic.extensions.common
 
+import com.davidluna.architectcoders2024.build_logic.helpers.alias
 import com.davidluna.architectcoders2024.build_logic.libs.androidApplication
 import com.davidluna.architectcoders2024.build_logic.libs.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.libs.composeCompiler
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.alias
 import com.davidluna.architectcoders2024.build_logic.libs.hiltPlugin
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinSerialization
@@ -41,11 +41,5 @@ internal val Project.applicationPluginManager: PluginManager
         alias(libs.androidApplication)
         alias(libs.kotlinAndroid)
         alias(libs.hiltPlugin)
-        alias(libs.ksp)
-    }
-
-internal val Project.testSharedPluginManager: PluginManager
-    get() = baseAndroidLibraryPluginManager.apply {
-        alias(libs.kotlinSerialization)
         alias(libs.ksp)
     }

@@ -5,8 +5,8 @@ import com.davidluna.architectcoders2024.build_logic.bundles.unitTestingBundle
 import com.davidluna.architectcoders2024.build_logic.extensions.android_library.androidLibrary
 import com.davidluna.architectcoders2024.build_logic.extensions.common.uiPluginManager
 import com.davidluna.architectcoders2024.build_logic.libs.arrowCore
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.implementation
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.ksp
+import com.davidluna.architectcoders2024.build_logic.helpers.implementation
+import com.davidluna.architectcoders2024.build_logic.helpers.ksp
 import com.davidluna.architectcoders2024.build_logic.libs.hiltAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.hiltCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.hiltNavigationCompose

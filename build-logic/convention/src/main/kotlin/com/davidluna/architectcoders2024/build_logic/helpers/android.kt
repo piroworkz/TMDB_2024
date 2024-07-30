@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.build_logic.libs.helpers
+package com.davidluna.architectcoders2024.build_logic.helpers
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension

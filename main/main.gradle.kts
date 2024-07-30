@@ -60,4 +60,6 @@ dependencies {
     implementation(libs.kotlinConverter)
 
     testImplementation(projects.testShared)
+    testImplementation(projects.core.coreDomain)
+    testImplementation(projects.core.coreFramework)
 }

@@ -2,9 +2,9 @@ package com.davidluna.architectcoders2024.build_logic.plugins
 import com.davidluna.architectcoders2024.build_logic.bundles.unitTestingBundle
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
 import com.davidluna.architectcoders2024.build_logic.libs.arrowCore
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.alias
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.implementation
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.java
+import com.davidluna.architectcoders2024.build_logic.helpers.alias
+import com.davidluna.architectcoders2024.build_logic.helpers.implementation
+import com.davidluna.architectcoders2024.build_logic.helpers.java
 import com.davidluna.architectcoders2024.build_logic.libs.javaxInject
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinCoroutinesCore
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinJvm

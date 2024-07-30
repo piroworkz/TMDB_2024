@@ -2,8 +2,8 @@ package com.davidluna.architectcoders2024.main_ui.presenter
 
 import app.cash.turbine.test
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.fakes.FakeMainDI
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeUnknownAppError
-import com.davidluna.architectcoders2024.test_shared_framework.integration.di.UseCasesModuleDI
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
@@ -45,8 +45,12 @@ class MainIntegrationTest {
             }
         }
 
-    private fun buildViewModel(): MainViewModel = with(UseCasesModuleDI()) {
-        MainViewModel(userAccountUseCase, saveContentKindUseCase, closeSessionUseCase)
-    }
+    private fun buildViewModel(): MainViewModel =
+        MainViewModel(
+            FakeMainDI().userAccountUseCase,
+            FakeMainDI().saveContentKindUseCase,
+            FakeMainDI().closeSessionUseCase
+        )
+
 
 }

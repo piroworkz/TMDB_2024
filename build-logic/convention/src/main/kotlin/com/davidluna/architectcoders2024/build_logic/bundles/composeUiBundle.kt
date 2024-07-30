@@ -7,8 +7,8 @@ import com.davidluna.architectcoders2024.build_logic.libs.composeUi
 import com.davidluna.architectcoders2024.build_logic.libs.composeUiGraphics
 import com.davidluna.architectcoders2024.build_logic.libs.composeUiTooling
 import com.davidluna.architectcoders2024.build_logic.libs.composeUiToolingPreview
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.debugImplementation
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.implementation
+import com.davidluna.architectcoders2024.build_logic.helpers.debugImplementation
+import com.davidluna.architectcoders2024.build_logic.helpers.implementation
 import com.davidluna.architectcoders2024.build_logic.libs.iconsExtended
 import com.davidluna.architectcoders2024.build_logic.libs.libs
 import com.davidluna.architectcoders2024.build_logic.libs.runtimeTracing

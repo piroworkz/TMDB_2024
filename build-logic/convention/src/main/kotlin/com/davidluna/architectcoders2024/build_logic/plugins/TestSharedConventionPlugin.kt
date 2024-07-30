@@ -2,8 +2,8 @@ package com.davidluna.architectcoders2024.build_logic.plugins
 
 import com.davidluna.architectcoders2024.build_logic.extensions.common.setJavaVersions
 import com.davidluna.architectcoders2024.build_logic.libs.coroutinesTest
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.alias
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.implementation
+import com.davidluna.architectcoders2024.build_logic.helpers.alias
+import com.davidluna.architectcoders2024.build_logic.helpers.implementation
 import com.davidluna.architectcoders2024.build_logic.libs.junit
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinJvm
 import com.davidluna.architectcoders2024.build_logic.libs.kotlinxSerializationJson

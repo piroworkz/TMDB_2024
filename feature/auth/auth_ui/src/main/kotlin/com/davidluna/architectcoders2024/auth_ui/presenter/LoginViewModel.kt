@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val usecases: LoginViewModelUseCases
+    private val usecases: LoginViewModelUseCases,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
         val token: String? = null,
         val launchTMDBWeb: Boolean = false,
         val launchBioPrompt: Boolean = false,
-        val destination: Destination? = null
+        val destination: Destination? = null,
     )
 
     fun sendEvent(event: LoginEvent) {

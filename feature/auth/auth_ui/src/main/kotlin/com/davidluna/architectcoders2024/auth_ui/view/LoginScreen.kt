@@ -34,7 +34,7 @@ import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 @Composable
 fun LoginScreen(
     state: LoginViewModel.LoginState,
-    sendEvent: (event: LoginEvent) -> Unit
+    sendEvent: (event: LoginEvent) -> Unit,
 ) {
 
     val bioState = rememberBiometricAuth()
@@ -59,50 +59,53 @@ fun LoginScreen(
             colorFilter = ColorFilter.tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.margins.xLarge)
-                .align(Alignment.BottomCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Button(
-                onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = state.isLoading.not(),
-                shape = MaterialTheme.shapes.small
+        if (bioState.biometricState != BiometricState.SHOW_PROMPT) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.margins.xLarge)
+                    .align(Alignment.BottomCenter),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = stringResource(R.string.btn_login),
-                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-                )
-            }
 
-            TextButton(
-                onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = state.isLoading.not()
-            ) {
-                Text(
-                    text = stringResource(id = R.string.btn_login_as_guest),
-                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-                )
-            }
-
-            if (state.session?.id?.isNotEmpty() == true) {
-                TextButton(
-                    onClick = { bioState.changeState(BiometricState.SHOW_PROMPT) },
+                Button(
+                    onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = state.isLoading.not(),
+                    shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = stringResource(id = R.string.btn_launch_biometrics),
+                        text = stringResource(R.string.btn_login),
                         modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
                     )
                 }
+
+                TextButton(
+                    onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = state.isLoading.not()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.btn_login_as_guest),
+                        modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                    )
+                }
+
+                if (state.session?.id?.isNotEmpty() == true) {
+                    TextButton(
+                        onClick = { bioState.changeState(BiometricState.SHOW_PROMPT) },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = state.isLoading.not(),
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.btn_launch_biometrics),
+                            modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                        )
+                    }
+                }
             }
         }
+
 
         if (state.isLoading) {
             CircularProgressIndicator()

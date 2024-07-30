@@ -2,8 +2,8 @@ package com.davidluna.architectcoders2024.build_logic.plugins
 
 import com.davidluna.architectcoders2024.build_logic.extensions.application.application
 import com.davidluna.architectcoders2024.build_logic.extensions.common.applicationPluginManager
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.implementation
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.ksp
+import com.davidluna.architectcoders2024.build_logic.helpers.implementation
+import com.davidluna.architectcoders2024.build_logic.helpers.ksp
 import com.davidluna.architectcoders2024.build_logic.libs.hiltAndroid
 import com.davidluna.architectcoders2024.build_logic.libs.hiltCompiler
 import com.davidluna.architectcoders2024.build_logic.libs.libs

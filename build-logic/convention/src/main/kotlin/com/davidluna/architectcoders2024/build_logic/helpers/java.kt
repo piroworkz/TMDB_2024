@@ -1,4 +1,4 @@
-package com.davidluna.architectcoders2024.build_logic.libs.helpers
+package com.davidluna.architectcoders2024.build_logic.helpers
 
 import org.gradle.api.Action
 import org.gradle.api.Project

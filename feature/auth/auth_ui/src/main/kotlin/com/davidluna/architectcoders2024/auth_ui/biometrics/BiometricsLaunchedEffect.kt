@@ -27,12 +27,13 @@ fun BiometricsLaunchedEffect(
             }
 
             BiometricState.ERROR -> {
-
+                // Show error dialog?
             }
 
             BiometricState.UNAVAILABLE -> {
-
+                // Show error dialog?
             }
+
         }
     }
 }

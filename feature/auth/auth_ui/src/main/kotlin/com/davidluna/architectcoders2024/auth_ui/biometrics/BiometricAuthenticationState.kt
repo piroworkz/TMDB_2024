@@ -94,6 +94,10 @@ class BiometricAuthenticationState(
                     promptInfo?.setSubtitle(errString)
                     state.value = ERROR
                 }
+                if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                    promptInfo?.setSubtitle(errString)
+                    state.value = UNAVAILABLE
+                }
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {

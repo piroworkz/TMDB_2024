@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.build_logic.extensions.common
 
 import com.davidluna.architectcoders2024.build_logic.constants.Constants
-import com.davidluna.architectcoders2024.build_logic.libs.helpers.java
+import com.davidluna.architectcoders2024.build_logic.helpers.java
 import org.gradle.api.Project
 
 internal fun Project.setJavaVersions(){
