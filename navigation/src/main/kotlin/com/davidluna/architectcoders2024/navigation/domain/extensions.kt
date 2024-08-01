@@ -1,12 +1,10 @@
 package com.davidluna.architectcoders2024.navigation.domain
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import com.davidluna.architectcoders2024.navigation.domain.args.DefaultSafeArgs
 import com.davidluna.architectcoders2024.navigation.domain.args.SafeArgs
@@ -21,23 +19,6 @@ fun NavGraphBuilder.composable(
         route = destination.route(),
         arguments = destination.setNavArgs(),
         deepLinks = if (destination is DeepLink) destination.deepLinks else emptyList()
-    ) { backStackEntry: NavBackStackEntry ->
-        content(backStackEntry)
-    }
-}
-
-fun NavGraphBuilder.dialog(
-    destination: Destination,
-    content: @Composable (NavBackStackEntry) -> Unit
-) {
-    dialog(
-        route = destination.route(),
-        arguments = destination.setNavArgs(),
-        deepLinks = if (destination is DeepLink) destination.deepLinks else emptyList(),
-        dialogProperties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false
-        )
     ) { backStackEntry: NavBackStackEntry ->
         content(backStackEntry)
     }

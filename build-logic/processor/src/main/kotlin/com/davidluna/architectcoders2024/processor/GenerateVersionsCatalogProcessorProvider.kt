@@ -8,7 +8,6 @@ class GenerateVersionsCatalogProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         val libs = environment.options["libsPath"]
         val packageName = environment.options["packageName"]
-        environment.logger.info("Creating GenerateVersionsCatalogProcessor")
         return GenerateVersionsCatalogProcessor(
             logger = environment.logger,
             codeGenerator = environment.codeGenerator,

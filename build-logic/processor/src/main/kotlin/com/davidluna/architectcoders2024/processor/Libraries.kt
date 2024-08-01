@@ -10,6 +10,7 @@ data class Libraries(
 ) {
     companion object {
         fun parseFile(file: File): Libraries {
+
             val fileContent = file.readText()
 
             val versions = mutableListOf<String>()
@@ -28,7 +29,10 @@ data class Libraries(
 
             sections.forEachIndexed { index, section ->
                 val sectionContent = sectionContents[index]
-                val keys = keyValueRegex.findAll(sectionContent).map { it.groupValues[1] }.toList()
+                val keys = keyValueRegex
+                    .findAll(sectionContent)
+                    .map { it.groupValues[1].lowerCamelCase() }
+                    .toList()
 
                 when (section) {
                     "versions" -> versions.addAll(keys)
@@ -39,5 +43,14 @@ data class Libraries(
             }
             return Libraries(versions, libraries, plugins, bundles)
         }
+
+        private fun String.lowerCamelCase(): String =
+            if (!contains("-") || !contains(".")) {
+                this
+            } else split('_', '.')
+                .mapIndexed { index, s ->
+                    if (index == 0) s.lowercase()
+                    else s.replaceFirstChar { it.uppercase() }
+                }.joinToString("")
     }
 }

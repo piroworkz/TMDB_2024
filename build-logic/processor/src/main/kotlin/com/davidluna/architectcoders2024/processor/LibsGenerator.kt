@@ -21,7 +21,6 @@ class LibsGenerator(private val codeGenerator: CodeGenerator) {
         val fileSpec: FileSpec = FileSpec
             .builder(packageName = packageName, fileName = "GeneratedVersionsCatalog")
             .buildLibsProperty()
-            .buildVersions(libraries.versions)
             .buildLibraries(libraries.libraries)
             .buildPlugins(libraries.plugins)
             .build()
@@ -41,26 +40,6 @@ class LibsGenerator(private val codeGenerator: CodeGenerator) {
                 build()
             }.build()
         )
-        return this
-    }
-
-    private fun FileSpec.Builder.buildVersions(versions: List<String>): FileSpec.Builder {
-        versions.forEach { name ->
-            val propertySpec = PropertySpec.builder(
-                name = name.plus("Version"),
-                type = ClassName("org.gradle.api.artifacts", "VersionConstraint"),
-                modifiers = listOf(KModifier.INTERNAL)
-            )
-                .receiver(ClassName("org.gradle.api.artifacts", "VersionCatalog"))
-                .getter(
-                    FunSpec.getterBuilder()
-                        .addStatement("return findVersion(\"$name\").get()")
-                        .build()
-                )
-                .build()
-
-            addProperty(propertySpec)
-        }
         return this
     }
 

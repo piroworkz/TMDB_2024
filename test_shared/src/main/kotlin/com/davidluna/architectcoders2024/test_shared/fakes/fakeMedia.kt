@@ -8,7 +8,6 @@ import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
 import com.davidluna.architectcoders2024.media_domain.entities.Results
 import com.davidluna.architectcoders2024.videos_domain.entities.YoutubeVideo
 
-
 val fakeMedia: List<Media> = (0..19).map {
     Media(id = it, posterPath = "oporteat", title = "vivamus")
 }
@@ -27,7 +26,6 @@ val fakeMediaDetail: MediaDetails = MediaDetails(
     title = "has",
     voteAverage = 2.3,
     hasVideo = false
-
 )
 
 val fakeCastList: List<Cast> = (0..20).map {
@@ -36,7 +34,6 @@ val fakeCastList: List<Cast> = (0..20).map {
         id = 9174,
         name = "Joanne Hanson",
         profilePath = null
-
     )
 }
 

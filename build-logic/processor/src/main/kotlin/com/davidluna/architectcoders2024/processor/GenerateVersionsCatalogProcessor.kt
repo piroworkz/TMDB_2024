@@ -16,7 +16,6 @@ class GenerateVersionsCatalogProcessor(
     private val libsGenerator = LibsGenerator(codeGenerator = codeGenerator)
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        logger.info("Processing GenerateVersionsCatalogProcessor with libs: $libs")
         val file = File(libs)
         val libraries: Libraries = Libraries.parseFile(file)
         try {
