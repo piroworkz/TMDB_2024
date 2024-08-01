@@ -5,6 +5,7 @@ biometric = "1.2.0-alpha05"
 datastoreCore = "1.1.1"
 gson = "2.10.1"
 kotlin = "2.0.0"
+kotlinpoet = "1.18.1"
 kotlin-coroutines = "1.8.0"
 coreKtx = "1.13.1"
 kotlinxSerializationJson = "1.6.3"
@@ -119,6 +120,9 @@ androidRunner = { module = "androidx.test:runner", version.ref = "androidx-test"
 #build logic dependencies
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinPoet = { group = "com.squareup", name = "kotlinpoet-ksp", version.ref = "kotlinpoet"}
+symbolProcessingApi = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref ="ksp" }
+
 extJunit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
@@ -138,3 +142,5 @@ frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.p
 uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }
 kotlinModuleConventionPlugin = { id = "architectcoders2024.kotlin.module.plugin", version = "unspecified" }
 testSharedConventionPlugin = { id = "architectcoders2024.test.shared.plugin", version = "unspecified" }
+
+[bundles]

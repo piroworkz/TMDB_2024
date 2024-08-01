@@ -1,4 +1,4 @@
-import com.davidluna.architectcoders2024.build_logic.constants.Constants.NAMESPACE
+import com.davidluna.architectcoders2024.convention.constants.Constants.NAMESPACE
 
 plugins {
     alias(libs.plugins.uiModuleConventionPlugin)

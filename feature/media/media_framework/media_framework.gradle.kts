@@ -1,4 +1,4 @@
-import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.convention.constants.Constants
 
 plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)

@@ -1,4 +1,4 @@
-import com.davidluna.architectcoders2024.build_logic.constants.Constants
+import com.davidluna.architectcoders2024.convention.constants.Constants
 import com.google.protobuf.gradle.id
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
