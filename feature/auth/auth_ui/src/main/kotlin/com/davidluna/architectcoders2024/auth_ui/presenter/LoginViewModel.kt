@@ -60,7 +60,11 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun setLaunchBioPrompt(value: Boolean) {
-        _state.update { it.copy(launchBioPrompt = value) }
+        _state.update {
+            it.copy(
+                launchBioPrompt = value && _state.value.session?.id?.isNotEmpty() == true
+            )
+        }
     }
 
     private fun setAppError(error: AppError?) {

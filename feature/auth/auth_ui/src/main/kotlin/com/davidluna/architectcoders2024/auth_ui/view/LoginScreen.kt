@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -20,7 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState
+import com.davidluna.architectcoders2024.auth_ui.biometrics.BioResult
 import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
@@ -30,21 +31,31 @@ import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 
 @Composable
 fun LoginScreen(
     state: LoginViewModel.LoginState,
     sendEvent: (event: LoginEvent) -> Unit,
 ) {
-
     val bioState = rememberBiometricAuth()
 
-    BiometricsLaunchedEffect(
-        launchPrompt = state.launchBioPrompt,
-        biometricAuthState = bioState
-    ) {
-        sendEvent(it)
+    LaunchedEffect(state.session) {
+        bioState.canAuthenticate { canAuthenticate ->
+            sendEvent(LoginEvent.LaunchBioPrompt(canAuthenticate))
+        }
     }
+
+    LaunchedEffect(bioState.printAuthenticated.value) {
+        if (bioState.printAuthenticated.value == BioResult.SUCCESS) {
+            sendEvent(LoginEvent.Navigate(MediaNavigation.MediaCatalog))
+            sendEvent(LoginEvent.LaunchBioPrompt(false))
+        } else {
+            sendEvent(LoginEvent.LaunchBioPrompt(false))
+        }
+    }
+
+    BiometricsLaunchedEffect(state.launchBioPrompt, bioState)
 
 
     Box(
@@ -59,53 +70,50 @@ fun LoginScreen(
             colorFilter = ColorFilter.tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
 
-        if (bioState.biometricState != BiometricState.SHOW_PROMPT) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.margins.xLarge)
-                    .align(Alignment.BottomCenter),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimens.margins.xLarge)
+                .align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-                Button(
-                    onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
+            Button(
+                onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = state.isLoading.not(),
+                shape = MaterialTheme.shapes.small
+            ) {
+                Text(
+                    text = stringResource(R.string.btn_login),
+                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                )
+            }
+
+            TextButton(
+                onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = state.isLoading.not()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.btn_login_as_guest),
+                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                )
+            }
+
+            if (state.session?.id?.isNotEmpty() == true) {
+                TextButton(
+                    onClick = { sendEvent(LoginEvent.LaunchBioPrompt(true)) },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = state.isLoading.not(),
-                    shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = stringResource(R.string.btn_login),
+                        text = stringResource(id = R.string.btn_launch_biometrics),
                         modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
                     )
-                }
-
-                TextButton(
-                    onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = state.isLoading.not()
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.btn_login_as_guest),
-                        modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-                    )
-                }
-
-                if (state.session?.id?.isNotEmpty() == true) {
-                    TextButton(
-                        onClick = { bioState.changeState(BiometricState.SHOW_PROMPT) },
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = state.isLoading.not(),
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.btn_launch_biometrics),
-                            modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-                        )
-                    }
                 }
             }
         }
-
 
         if (state.isLoading) {
             CircularProgressIndicator()

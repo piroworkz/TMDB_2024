@@ -3,8 +3,6 @@ package com.davidluna.architectcoders2024.auth_ui.biometrics
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
@@ -14,13 +12,9 @@ import java.lang.ref.WeakReference
 @Composable
 fun rememberBiometricAuth(
     context: Context = LocalContext.current,
-    state: MutableState<BiometricState> = remember { mutableStateOf(BiometricState.UNAVAILABLE) }
 ): BiometricAuthenticationState {
-    val biometricState = remember(context, state) {
-        BiometricAuthenticationState(
-            WeakReference(context.findActivity() as FragmentActivity),
-            state
-        )
+    val biometricState = remember(context) {
+        BiometricAuthenticationState(WeakReference(context.findActivity() as FragmentActivity))
     }
     DisposableEffect(context) {
         onDispose {

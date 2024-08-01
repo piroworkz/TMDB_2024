@@ -8,19 +8,15 @@ import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.ERROR
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.SUCCESS
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricState.UNAVAILABLE
 import com.davidluna.architectcoders2024.core_ui.R
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 
 class BiometricAuthenticationState(
     private val fragmentActivity: WeakReference<FragmentActivity>,
-    private val state: MutableState<BiometricState>
 ) {
     private val executor: Executor? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -39,43 +35,23 @@ class BiometricAuthenticationState(
             .setNegativeButtonText(it.getString(R.string.biometric_use_password_instead))
     }
 
-    val biometricState: BiometricState
-        get() = state.value
+    val printAuthenticated = mutableStateOf(BioResult.UNDEFINED)
 
-    init {
-        canAuthenticate()
+    fun canAuthenticate(onResult: (Boolean) -> Unit) {
+        val result = biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+        when (result) {
+            BiometricManager.BIOMETRIC_SUCCESS -> onResult(true)
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> launchEnrollIntent()
+            else -> onResult(false)
+        }
     }
 
     fun launchPrompt() {
         try {
+            printAuthenticated.value = BioResult.UNDEFINED
             promptInfo?.build()?.let { getBiometricPrompt()?.authenticate(it) }
         } catch (e: Exception) {
-            state.value = ERROR
-        }
-    }
-
-    fun changeState(newState: BiometricState) {
-        state.value = newState
-    }
-
-    private fun canAuthenticate() {
-        when (biometricManager?.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
-
-
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> state.value = UNAVAILABLE
-
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> launchEnrollIntent()
-
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> state.value = UNAVAILABLE
-
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> state.value = ERROR
-
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> state.value = UNAVAILABLE
-
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> state.value = ERROR
-
-            BiometricManager.BIOMETRIC_SUCCESS -> state.value = BiometricState.SHOW_PROMPT
-
+            e.printStackTrace()
         }
     }
 
@@ -92,17 +68,16 @@ class BiometricAuthenticationState(
                 super.onAuthenticationError(errorCode, errString)
                 if (errorCode == BiometricPrompt.ERROR_USER_CANCELED) {
                     promptInfo?.setSubtitle(errString)
-                    state.value = ERROR
                 }
                 if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     promptInfo?.setSubtitle(errString)
-                    state.value = UNAVAILABLE
                 }
+                printAuthenticated.value = BioResult.FAILED
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                state.value = SUCCESS
+                printAuthenticated.value = BioResult.SUCCESS
             }
 
             override fun onAuthenticationFailed() {
@@ -110,7 +85,7 @@ class BiometricAuthenticationState(
                 promptInfo?.setSubtitle(
                     fragmentActivity.get()?.getString(R.string.biometric_auth_failed)
                 )
-                state.value = ERROR
+                printAuthenticated.value = BioResult.FAILED
             }
 
         }
