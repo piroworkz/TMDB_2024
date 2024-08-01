@@ -12,8 +12,13 @@ object Constants {
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
     const val API_KEY = "MY_API_KEY"
     const val BASE_URL = "BASE_URL"
+    const val KEY_ALIAS = "MY_KEY_ALIAS"
+    const val KEY_PASSWORD = "MY_KEY_PASSWORD"
+    const val STORE_FILE = "MY_STORE_FILE"
+    const val STORE_PASSWORD = "MY_STORE_PASSWORD"
 
     val JAVA_VERSION: JavaVersion = JavaVersion.VERSION_17
 
     val ABI_FILTERS = listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+
 }

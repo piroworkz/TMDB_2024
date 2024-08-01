@@ -9,14 +9,13 @@ internal val Project.application: Unit
     get() {
         androidApplication {
             setDefaultConfig()
+            setSigningConfig(this)
             setBuildTypes()
             setJavaVersions()
             compileOptions.setVersions()
-
             buildFeatures {
                 buildConfig = true
             }
-
             packaging {
                 resources {
                     excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -24,5 +23,7 @@ internal val Project.application: Unit
             }
         }
     }
+
+
 
 
