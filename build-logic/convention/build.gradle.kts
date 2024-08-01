@@ -1,8 +1,5 @@
-
-
 plugins {
     `kotlin-dsl`
-    alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.ksp)
 }
 
@@ -11,8 +8,9 @@ group = "com.davidluna.architectcoders2024"
 dependencies {
     compileOnly(libs.androidGradlePlugin)
     compileOnly(libs.kotlinGradlePlugin)
-    ksp(projects.processor)
+    ksp(libs.piroworkzVersionsCatalog)
 }
+
 tasks {
     validatePlugins {
         enableStricterValidation = true
@@ -25,7 +23,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-ksp{
+ksp {
     arg("libsPath", "${rootDir.parentFile}/gradle/libs.versions.toml")
     arg("packageName", "com.davidluna.architectcoders2024.processed.libs")
 }

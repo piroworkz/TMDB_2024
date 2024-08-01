@@ -15,7 +15,7 @@ compose-navigation = "2.7.7"
 activityCompose = "1.9.1"
 navigation = "2.7.7"
 coil-compose = "2.6.0"
-composeAndroidPermissions = "1.0.0"
+piroworkz = "1.0.0"
 #other
 playServicesLocation = "21.3.0"
 retrofit = "2.11.0"
@@ -51,7 +51,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 [libraries]
-composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "composeAndroidPermissions" }
+composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "piroworkz" }
 coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 datastoreCore = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
@@ -121,6 +121,7 @@ symbolProcessingApi = { group = "com.google.devtools.ksp", name = "symbol-proces
 
 extJunit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+piroworkzVersionsCatalog = { module = "com.piroworkz:versions-catalog", version.ref = "piroworkz" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
