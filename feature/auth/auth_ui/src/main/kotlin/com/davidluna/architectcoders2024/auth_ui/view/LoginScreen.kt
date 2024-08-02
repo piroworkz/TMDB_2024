@@ -13,7 +13,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -21,8 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BioResult
-import com.davidluna.architectcoders2024.auth_ui.biometrics.BiometricsLaunchedEffect
 import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
@@ -31,7 +28,6 @@ import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
 
 @Composable
 fun LoginScreen(
@@ -40,23 +36,9 @@ fun LoginScreen(
 ) {
     val bioState = rememberBiometricAuth()
 
-    LaunchedEffect(state.session) {
-        bioState.canAuthenticate { canAuthenticate ->
-            sendEvent(LoginEvent.LaunchBioPrompt(canAuthenticate))
-        }
-    }
-
-    LaunchedEffect(bioState.printAuthenticated.value) {
-        if (bioState.printAuthenticated.value == BioResult.SUCCESS) {
-            sendEvent(LoginEvent.Navigate(MediaNavigation.MediaCatalog))
-            sendEvent(LoginEvent.LaunchBioPrompt(false))
-        } else {
-            sendEvent(LoginEvent.LaunchBioPrompt(false))
-        }
-    }
-
-    BiometricsLaunchedEffect(state.launchBioPrompt, bioState)
-
+    bioState.CanAuthenticateEffect(state.session) { sendEvent(it) }
+    bioState.BioResultEffect { sendEvent(it) }
+    bioState.BiometricsLaunchedEffect(state.launchBioPrompt)
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -127,6 +109,7 @@ fun LoginScreen(
         }
     }
 }
+
 
 @Preview(
     showBackground = true,
