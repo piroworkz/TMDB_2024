@@ -22,3 +22,4 @@ internal val Project.unitTestingBundle: Unit
             testImplementation(libs.truth)
         }
     }
+

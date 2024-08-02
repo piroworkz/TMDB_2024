@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.convention.plugins
 
+import com.davidluna.architectcoders2024.convention.bundles.androidTestingBundle
 import com.davidluna.architectcoders2024.convention.extensions.application.application
 import com.davidluna.architectcoders2024.convention.extensions.common.applicationPluginManager
 import com.davidluna.architectcoders2024.convention.helpers.implementation
@@ -23,8 +24,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         dependencies {
             implementation(libs.hiltAndroid)
             ksp(libs.hiltCompiler)
+            androidTestingBundle
         }
     }
-
 
 }

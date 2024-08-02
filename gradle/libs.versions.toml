@@ -15,7 +15,8 @@ compose-navigation = "2.7.7"
 activityCompose = "1.9.1"
 navigation = "2.7.7"
 coil-compose = "2.6.0"
-piroworkz = "1.0.0"
+piroworkz-permissions = "1.0.0"
+piroworkz-catalogs = "1.0.2"
 #other
 playServicesLocation = "21.3.0"
 retrofit = "2.11.0"
@@ -51,7 +52,6 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 [libraries]
-composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "piroworkz" }
 coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 datastoreCore = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
@@ -97,6 +97,10 @@ javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+#piroworkz
+composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "piroworkz-permissions" }
+piroworkzVersionsCatalog = { module = "com.piroworkz:versions-catalog", version.ref = "piroworkz-catalogs" }
+
 #testing
 junit = { module = "junit:junit", version.ref = "junit" }
 coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
@@ -104,6 +108,7 @@ mockitoKotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "m
 mockitoInline = { module = "org.mockito:mockito-inline", version.ref = "mockito-inline" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
 
 ##COMPOSE TESTING
 uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
@@ -121,7 +126,6 @@ symbolProcessingApi = { group = "com.google.devtools.ksp", name = "symbol-proces
 
 extJunit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-piroworkzVersionsCatalog = { module = "com.piroworkz:versions-catalog", version.ref = "piroworkz" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
