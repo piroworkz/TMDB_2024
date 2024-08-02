@@ -4,6 +4,8 @@
 A Modern, Scalable Android Application
 
 ArchitectCoders2024 is a cutting-edge Android application built with Kotlin and Jetpack Compose, adhering to Clean Architecture and SOLID principles. This project showcases a robust approach to building maintainable, scalable, and testable Android applications using best-in-class practices.
+
+
 Why Kotlin and Clean Architecture?
 
 
@@ -52,3 +54,7 @@ Greater code reusability: Promotes the creation of reusable components.
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/ArchitectCoders2024.git
+   ```
+
+   [![Watch Video](https://img.youtube.com/vi/8OOVcnH2qE8/0.jpg)](https://www.youtube.com/watch?v=8OOVcnH2qE8)
+
