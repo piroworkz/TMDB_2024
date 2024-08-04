@@ -12,7 +12,7 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(projects.core.coreDomain)
     implementation(projects.feature.videos.videosDomain)
-    implementation(projects.navigation)
+    
     implementation(libs.pagingCompose)
     testImplementation(projects.testShared)
     testImplementation(projects.feature.videos.videosFramework)

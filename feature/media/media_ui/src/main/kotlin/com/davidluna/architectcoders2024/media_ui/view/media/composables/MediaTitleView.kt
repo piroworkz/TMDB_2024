@@ -6,10 +6,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag
 
 @Composable
 fun MediaTitleView(movieTitle: String?, imageSize: Dp) {
@@ -18,7 +20,8 @@ fun MediaTitleView(movieTitle: String?, imageSize: Dp) {
         text = movieTitle,
         modifier = Modifier
             .padding(Dimens.margins.medium)
-            .sizeIn(maxWidth = imageSize),
+            .sizeIn(maxWidth = imageSize)
+            .testTag(MediaTag.MEDIA_TITLE_TEXT),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.onPrimary,
         maxLines = 1,

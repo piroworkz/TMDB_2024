@@ -1,24 +1,25 @@
 package com.davidluna.architectcoders2024.media_ui.view.details.composables
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
-import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
 import com.davidluna.architectcoders2024.media_domain.entities.Genre
+import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag
 
 @Composable
 fun TextDetailsView(movieDetail: MediaDetails?) {
@@ -27,18 +28,20 @@ fun TextDetailsView(movieDetail: MediaDetails?) {
         CircularProgressIndicator()
     }
 
-    Row(modifier = Modifier.padding(horizontal = Dimens.margins.large)) {
-        Text(
-            text = annotatedString(movieDetail),
-        )
-    }
+    Text(
+        text = annotatedString(movieDetail),
+        modifier = Modifier
+            .padding(horizontal = Dimens.margins.large)
+            .testTag(MediaTag.TEXT_RELEASE_DATE)
+    )
 
     Text(
         text = movieDetail?.tagline ?: "",
         modifier = Modifier.padding(
             horizontal = Dimens.margins.large,
             vertical = Dimens.margins.medium
-        ),
+        )
+            .testTag(MediaTag.TEXT_TAGLINE),
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
         fontStyle = FontStyle.Italic
@@ -49,7 +52,8 @@ fun TextDetailsView(movieDetail: MediaDetails?) {
         modifier = Modifier.padding(
             horizontal = Dimens.margins.large,
             vertical = Dimens.margins.medium
-        ),
+        )
+            .testTag(MediaTag.TEXT_OVERVIEW_TITLE),
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onPrimary,
         fontWeight = FontWeight.Black
@@ -57,7 +61,8 @@ fun TextDetailsView(movieDetail: MediaDetails?) {
 
     Text(
         text = movieDetail?.overview ?: "",
-        modifier = Modifier.padding(horizontal = Dimens.margins.large),
+        modifier = Modifier.padding(horizontal = Dimens.margins.large)
+            .testTag(MediaTag.TEXT_OVERVIEW),
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
         textAlign = TextAlign.Justify

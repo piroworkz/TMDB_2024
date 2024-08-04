@@ -13,7 +13,7 @@ import com.davidluna.architectcoders2024.auth_domain.usecases.GuestSessionNotExp
 import com.davidluna.architectcoders2024.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.SessionUseCase
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeGuestSession

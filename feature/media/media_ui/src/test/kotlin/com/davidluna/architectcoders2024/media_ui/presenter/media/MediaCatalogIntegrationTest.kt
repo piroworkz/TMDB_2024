@@ -7,7 +7,7 @@ import com.davidluna.architectcoders2024.fakes.FakeMediaDI
 import com.davidluna.architectcoders2024.fakes.fakeMediaItem
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent.OnMovieClicked
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.Detail
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.Detail
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.Flow

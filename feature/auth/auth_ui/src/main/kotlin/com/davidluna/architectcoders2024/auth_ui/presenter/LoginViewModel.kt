@@ -13,9 +13,9 @@ import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.SetAppErro
 import com.davidluna.architectcoders2024.core_domain.entities.Session
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
-import com.davidluna.architectcoders2024.navigation.domain.args.DefaultArgs.Auth.defaultValue
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation.MediaCatalog
+import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs.Auth.defaultValue
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow

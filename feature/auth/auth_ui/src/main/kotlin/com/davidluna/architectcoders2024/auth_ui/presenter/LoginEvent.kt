@@ -1,7 +1,7 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 
 sealed interface LoginEvent {
     data object LoginButtonClicked : LoginEvent

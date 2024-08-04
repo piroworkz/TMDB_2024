@@ -16,9 +16,9 @@ import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCastUseCa
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.navigation.domain.args.Args
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

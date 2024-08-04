@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 -printconfiguration ../full-r8-config.txt
--keep class com.davidluna.architectcoders2024.di.MainModule {
+-keep class com.davidluna.architectcoders2024.app.di.MainModule {
     native <methods>;
 }
 -keep class com.davidluna.architectcoders2024.build_logic.libs.** { *; }

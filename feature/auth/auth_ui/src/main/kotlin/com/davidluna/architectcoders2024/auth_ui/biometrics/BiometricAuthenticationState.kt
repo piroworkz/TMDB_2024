@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.core_domain.entities.Session
 import com.davidluna.architectcoders2024.core_ui.R
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executor
 

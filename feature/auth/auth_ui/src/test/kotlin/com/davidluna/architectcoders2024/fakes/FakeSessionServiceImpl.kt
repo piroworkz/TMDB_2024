@@ -2,13 +2,13 @@ package com.davidluna.architectcoders2024.fakes
 
 import arrow.core.Either
 import arrow.core.right
-import com.davidluna.architectcoders2024.framework.remote.SessionService
-import com.davidluna.architectcoders2024.framework.remote.model.RemoteError
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteGuestSession
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteLoginRequest
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteSessionIdResponse
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteTokenResponse
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteUserAccountDetail
+import com.davidluna.architectcoders2024.auth_framework.data.remote.SessionService
+import com.davidluna.architectcoders2024.core_framework.data.remote.model.RemoteError
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteGuestSession
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteLoginRequest
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteSessionIdResponse
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteTokenResponse
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteUserAccountDetail
 
 class FakeSessionServiceImpl : SessionService {
 

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppErrorCode
+import com.davidluna.architectcoders2024.core_domain.entities.tags.CoreTag
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 
@@ -38,7 +40,8 @@ fun ErrorDialogView(
         modifier = Modifier
             .wrapContentSize()
             .padding(Dimens.margins.large)
-            .shadow(elevation = Dimens.margins.small, shape = MaterialTheme.shapes.large),
+            .shadow(elevation = Dimens.margins.small, shape = MaterialTheme.shapes.large)
+            .testTag(CoreTag.ERROR_DIALOG_VIEW),
         contentAlignment = Alignment.Center
     ) {
         Image(

@@ -13,8 +13,8 @@ import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUs
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
-import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeCastList
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeContentKind
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeImages

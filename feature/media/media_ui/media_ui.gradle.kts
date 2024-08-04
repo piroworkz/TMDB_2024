@@ -12,7 +12,7 @@ dependencies {
     implementation(projects.core.coreUi)
     implementation(projects.core.coreDomain)
     implementation(projects.feature.media.mediaDomain)
-    implementation(projects.navigation)
+    
     implementation(libs.pagingCompose)
     implementation(libs.coilCompose)
     testImplementation(projects.testShared)

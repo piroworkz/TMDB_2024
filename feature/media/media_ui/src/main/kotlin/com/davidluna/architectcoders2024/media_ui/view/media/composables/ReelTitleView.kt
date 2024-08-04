@@ -9,10 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_TITLE_TEXT
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_TITLE_VIEW
 
 @Composable
 fun ReelTitleView(title: String?) {
@@ -21,13 +24,15 @@ fun ReelTitleView(title: String?) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Black)
+                .testTag(REEL_TITLE_VIEW)
 
         ) {
             Text(
                 text = title,
                 modifier = Modifier
                     .padding(Dimens.margins.small)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(REEL_TITLE_TEXT),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary,

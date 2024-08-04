@@ -9,12 +9,12 @@ import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEv
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
 import com.davidluna.architectcoders2024.media_ui.view.details.MediaDetailScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
-import com.davidluna.architectcoders2024.media_ui.view.media.MediaScreen
+import com.davidluna.architectcoders2024.media_ui.view.media.MediaCatalogScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaCatalogViewModel
-import com.davidluna.architectcoders2024.navigation.domain.composable
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
-import com.davidluna.architectcoders2024.navigation.domain.route
+import com.davidluna.architectcoders2024.core_ui.navigation.composable
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.route
 
 fun NavGraphBuilder.mediaNavGraph(
     navigateTo: (Destination) -> Unit,
@@ -31,7 +31,7 @@ fun NavGraphBuilder.mediaNavGraph(
                 navigateTo(it)
                 viewModel.sendEvent(MoviesEvent.OnMovieClicked(null))
             }
-            MediaScreen(
+            MediaCatalogScreen(
                 state = state,
                 sendEvent = { event: MoviesEvent -> viewModel.sendEvent(event) }
             )

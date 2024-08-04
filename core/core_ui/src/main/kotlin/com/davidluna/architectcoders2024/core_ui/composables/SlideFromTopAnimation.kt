@@ -11,6 +11,8 @@ import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import com.davidluna.architectcoders2024.core_domain.entities.tags.CoreTag
 
 @Composable
 fun SlideFromTopAnimation(
@@ -23,7 +25,8 @@ fun SlideFromTopAnimation(
 
     AnimatedContent(
         targetState = target,
-        modifier = modifier,
+        modifier = modifier
+            .testTag(CoreTag.SLIDE_ANIMATED_CONTENT),
         transitionSpec = {
             contentTransform(duration)
         },

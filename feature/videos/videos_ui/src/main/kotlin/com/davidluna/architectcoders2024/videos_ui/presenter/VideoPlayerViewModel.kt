@@ -7,7 +7,7 @@ import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.navigation.domain.args.Args
+import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
 import com.davidluna.architectcoders2024.videos_domain.usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope

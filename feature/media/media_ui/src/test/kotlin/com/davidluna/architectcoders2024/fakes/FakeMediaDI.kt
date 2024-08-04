@@ -4,9 +4,9 @@ import com.davidluna.architectcoders2024.core_domain.data.datastore.LocalPrefere
 import com.davidluna.architectcoders2024.core_domain.data.datastore.PreferencesDataSource
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.PreferencesRepository
-import com.davidluna.architectcoders2024.framework.remote.datasource.VideosRemoteApi
-import com.davidluna.architectcoders2024.framework.remote.datasources.MediaCatalogRemoteApi
-import com.davidluna.architectcoders2024.framework.remote.datasources.MediaDetailsRemoteApi
+import com.davidluna.architectcoders2024.videos_framework.data.remote.datasource.VideosRemoteApi
+import com.davidluna.architectcoders2024.media_framework.data.remote.datasources.MediaCatalogRemoteApi
+import com.davidluna.architectcoders2024.media_framework.data.remote.datasources.MediaDetailsRemoteApi
 import com.davidluna.architectcoders2024.media_domain.data.MediaCatalogDataRepository
 import com.davidluna.architectcoders2024.media_domain.data.MediaCatalogRemoteDatasource
 import com.davidluna.architectcoders2024.media_domain.data.MovieDetailsDataRepository

@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.convention.plugins
 
+import com.davidluna.architectcoders2024.convention.bundles.androidTestingBundle
 import com.davidluna.architectcoders2024.convention.bundles.composeUiBundle
 import com.davidluna.architectcoders2024.convention.bundles.unitTestingBundle
 import com.davidluna.architectcoders2024.convention.extensions.android_library.androidLibrary
@@ -31,6 +32,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
             ksp(libs.hiltCompiler)
             composeUiBundle
             unitTestingBundle
+            androidTestingBundle
         }
     }
 }

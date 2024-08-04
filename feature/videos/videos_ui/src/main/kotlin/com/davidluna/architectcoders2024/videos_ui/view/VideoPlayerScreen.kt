@@ -14,23 +14,32 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.davidluna.architectcoders2024.core_ui.composables.AppBarView
+import com.davidluna.architectcoders2024.videos_domain.entities.PlayerTag.PLAYER_ANIMATED_VISIBILITY
+import com.davidluna.architectcoders2024.videos_domain.entities.PlayerTag.PLAYER_APP_BAR
+import com.davidluna.architectcoders2024.videos_domain.entities.PlayerTag.PLAYER_APP_BAR_ANIMATED_VISIBILITY
+import com.davidluna.architectcoders2024.videos_domain.entities.PlayerTag.PLAYER_WEB_VIEW
+import com.davidluna.architectcoders2024.videos_domain.entities.PlayerTag.VIDEO_PLAYER_SCREEN
 import com.davidluna.architectcoders2024.videos_ui.presenter.VideoPlayerViewModel
 
 @Composable
 fun VideoPlayerScreen(
     state: VideoPlayerViewModel.PlayerState,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) = with(rememberVideoPlayerState()) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .testTag(VIDEO_PLAYER_SCREEN),
         contentAlignment = Alignment.Center
     ) {
 
         AnimatedVisibility(
             visible = currentScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
+            modifier = Modifier
+                .testTag(PLAYER_ANIMATED_VISIBILITY),
             enter = fadeIn(tween(1000)),
             exit = fadeOut(tween(1000))
         ) {
@@ -42,6 +51,7 @@ fun VideoPlayerScreen(
                 },
                 modifier = Modifier
                     .fillMaxSize()
+                    .testTag(PLAYER_WEB_VIEW)
             )
         }
 
@@ -49,7 +59,8 @@ fun VideoPlayerScreen(
         AnimatedVisibility(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .testTag(PLAYER_APP_BAR_ANIMATED_VISIBILITY),
             visible = showAppBar.value,
             enter = slideInVertically(tween(100)),
             exit = slideOutVertically(tween(100))
@@ -57,7 +68,8 @@ fun VideoPlayerScreen(
 
             AppBarView(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(PLAYER_APP_BAR),
                 topLevel = false,
                 hideAppBar = false,
                 title = null,

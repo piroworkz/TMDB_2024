@@ -2,11 +2,11 @@ package com.davidluna.architectcoders2024.fakes
 
 import arrow.core.Either
 import arrow.core.right
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteCredits
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteImages
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteMediaDetail
-import com.davidluna.architectcoders2024.framework.remote.model.RemoteError
-import com.davidluna.architectcoders2024.framework.remote.services.MediaDetailService
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteCredits
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteImages
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteMediaDetail
+import com.davidluna.architectcoders2024.core_framework.data.remote.model.RemoteError
+import com.davidluna.architectcoders2024.media_framework.data.remote.services.MediaDetailService
 
 class FakeMediaDetailServiceImpl : MediaDetailService {
     override suspend fun getDetailById(endpoint: String): Either<RemoteError, RemoteMediaDetail> =

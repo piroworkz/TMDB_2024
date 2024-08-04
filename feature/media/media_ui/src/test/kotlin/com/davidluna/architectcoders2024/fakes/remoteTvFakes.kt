@@ -1,10 +1,10 @@
 package com.davidluna.architectcoders2024.fakes
 
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteCredits
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteImages
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteMedia
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteMediaDetail
-import com.davidluna.architectcoders2024.framework.remote.media.RemoteResults
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteCredits
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteImages
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteMedia
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteMediaDetail
+import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteResults
 import com.davidluna.architectcoders2024.test_shared.reader.MockFiles
 import com.davidluna.architectcoders2024.test_shared.reader.Reader
 

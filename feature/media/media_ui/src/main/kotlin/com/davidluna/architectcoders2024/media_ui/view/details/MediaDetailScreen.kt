@@ -13,27 +13,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAIL_MAIN_COLUMN
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAIL_SCREEN
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
+import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent.OnNavigate
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
-import com.davidluna.architectcoders2024.media_ui.view.details.composables.MovieCastView
-import com.davidluna.architectcoders2024.media_ui.view.details.composables.MovieDetailsView
+import com.davidluna.architectcoders2024.media_ui.view.details.composables.MediaCastView
+import com.davidluna.architectcoders2024.media_ui.view.details.composables.MediaDetailsView
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.PostersPagerView
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.joinImages
-import com.davidluna.architectcoders2024.media_ui.view.media.composables.MediaLazyRow
-import com.davidluna.architectcoders2024.navigation.domain.destination.YoutubeNavigation
+import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelView
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation.Video
 
 @Composable
 fun MediaDetailScreen(
     state: MovieDetailViewModel.State,
-    sendEvent: (MovieDetailEvent) -> Unit
+    sendEvent: (MovieDetailEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -42,42 +48,37 @@ fun MediaDetailScreen(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .testTag(MEDIA_DETAIL_SCREEN),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
+                .testTag(MEDIA_DETAIL_MAIN_COLUMN)
         ) {
+
             PostersPagerView(images = joinImages(state))
-            MovieDetailsView(state.movieDetail) {
-                sendEvent(
-                    MovieDetailEvent.OnNavigate(
-                        YoutubeNavigation.Video(
-                            movieId = state.movieDetail?.id ?: 0
-                        )
-                    )
-                )
+
+            MediaDetailsView(state.movieDetail) {
+                sendEvent(OnNavigate(Video(movieId = state.movieDetail?.id ?: 0)))
             }
+
             Spacer(modifier = Modifier.padding(all = 16.dp))
 
-            MovieCastView(state.movieCredits)
+            MediaCastView(state.movieCredits)
 
 
-            MediaLazyRow(
-                title = R.string.title_recommended_movies,
-                flow = state.recommendations
-            ) { movieId, movieTitle ->
-                sendEvent(MovieDetailEvent.OnMovieSelected(movieId, movieTitle))
-            }
+            ReelView(
+                title = stringResource(R.string.title_recommended_movies),
+                list = state.recommendations.collectAsLazyPagingItems()
+            ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }
 
-            MediaLazyRow(
-                title = R.string.title_similar_movies,
-                flow = state.similar
-            ) { movieId, movieTitle ->
-                sendEvent(MovieDetailEvent.OnMovieSelected(movieId, movieTitle))
-            }
+            ReelView(
+                title = stringResource(R.string.title_similar_movies),
+                list = state.similar.collectAsLazyPagingItems()
+            ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))
         }

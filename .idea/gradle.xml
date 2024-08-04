@@ -42,8 +42,6 @@
             <option value="$PROJECT_DIR$/feature/videos/videos_domain" />
             <option value="$PROJECT_DIR$/feature/videos/videos_framework" />
             <option value="$PROJECT_DIR$/feature/videos/videos_ui" />
-            <option value="$PROJECT_DIR$/main" />
-            <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/test_shared" />
           </set>
         </option>

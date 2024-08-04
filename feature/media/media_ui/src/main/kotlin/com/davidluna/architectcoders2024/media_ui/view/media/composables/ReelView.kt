@@ -14,45 +14,53 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_domain.entities.Media
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_IMAGE_COLUMN_CONTAINER
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_VIEW
 
 @Composable
 fun ReelView(
     title: String,
-    movies: LazyPagingItems<Media>,
-    onMovieSelected: (Int, String) -> Unit
+    list: LazyPagingItems<Media>,
+    onMovieSelected: (Int, String) -> Unit,
 ) {
     val imageSize = LocalConfiguration.current.screenWidthDp.dp / 2
+
     Spacer(
         modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
 
-    if (movies.itemCount != 0) {
-        ReelTitleView(title = title)
-        LazyRow(
-            modifier = Modifier
-                .wrapContentHeight(),
+    ReelTitleView(title = title)
+
+    LazyRow(
+        modifier = Modifier
+            .wrapContentHeight()
+            .testTag(REEL_VIEW),
+    ) {
+        items(list.itemCount,
+            key = { list[it]?.id ?: it }
         ) {
-            items(movies.itemCount,
-                key = { movies[it]?.id ?: it }) {
-                val movie: Media? = movies[it]
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black)
-                        .clickable { movie?.id?.let { movieId -> onMovieSelected(movieId, movie.title) } },
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    FilmMaskImageView(
-                        model = movie?.posterPath,
-                        imageSize = imageSize
-                    )
-                    MediaTitleView(movie?.title, imageSize)
-                }
+            val media: Media? = list[it]
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black)
+                    .clickable { media?.id?.let { id -> onMovieSelected(id, media.title) } }
+                    .testTag(REEL_IMAGE_COLUMN_CONTAINER),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                FilmMaskImageView(
+                    model = media?.posterPath,
+                    imageSize = imageSize
+                )
+
+                MediaTitleView(media?.title, imageSize)
             }
         }
     }

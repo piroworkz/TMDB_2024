@@ -8,7 +8,7 @@ import org.gradle.api.Project
 internal val Project.application: Unit
     get() {
         androidApplication {
-            setDefaultConfig()
+            setDefaultConfig(project)
             setSigningConfig(this)
             setBuildTypes()
             setJavaVersions()

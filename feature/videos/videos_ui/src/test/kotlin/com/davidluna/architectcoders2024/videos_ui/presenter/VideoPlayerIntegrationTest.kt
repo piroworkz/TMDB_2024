@@ -3,7 +3,7 @@ package com.davidluna.architectcoders2024.videos_ui.presenter
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.davidluna.architectcoders2024.fakes.FakeVideosDI
-import com.davidluna.architectcoders2024.navigation.domain.args.Args
+import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest

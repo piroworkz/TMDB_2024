@@ -17,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidluna.architectcoders2024.auth_domain.entities.tags.AuthTag
 import com.davidluna.architectcoders2024.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
@@ -41,7 +43,7 @@ fun LoginScreen(
     bioState.BiometricsLaunchedEffect(state.launchBioPrompt)
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().testTag(AuthTag.AUTH_SCREEN_VIEW),
         contentAlignment = Alignment.Center
     ) {
 
@@ -53,16 +55,13 @@ fun LoginScreen(
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.margins.xLarge)
-                .align(Alignment.BottomCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth().padding(Dimens.margins.xLarge)
+                .align(Alignment.BottomCenter), horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Button(
                 onClick = { sendEvent(LoginEvent.LoginButtonClicked) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(AuthTag.AUTH_LOGIN_BUTTON),
                 enabled = state.isLoading.not(),
                 shape = MaterialTheme.shapes.small
             ) {
@@ -74,7 +73,7 @@ fun LoginScreen(
 
             TextButton(
                 onClick = { sendEvent(LoginEvent.GuestButtonCLicked) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag(AuthTag.AUTH_GUEST_BUTTON),
                 enabled = state.isLoading.not()
             ) {
                 Text(
@@ -86,7 +85,7 @@ fun LoginScreen(
             if (state.session?.id?.isNotEmpty() == true) {
                 TextButton(
                     onClick = { sendEvent(LoginEvent.LaunchBioPrompt(true)) },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().testTag(AuthTag.AUTH_BIOMETRIC_BUTTON),
                     enabled = state.isLoading.not(),
                 ) {
                     Text(
@@ -112,8 +111,7 @@ fun LoginScreen(
 
 
 @Preview(
-    showBackground = true,
-    showSystemUi = true
+    showBackground = true, showSystemUi = true
 )
 @Composable
 private fun LoginScreenPreview() {

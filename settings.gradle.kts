@@ -29,8 +29,6 @@ rootProject.name = "ArchitectCoders2024"
 
 include(
     ":app",
-    ":main",
-    ":navigation",
     ":feature:splash",
     ":feature:auth:auth_ui",
     ":feature:auth:auth_domain",

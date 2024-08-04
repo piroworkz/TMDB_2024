@@ -14,7 +14,7 @@ import com.davidluna.architectcoders2024.core_domain.data.datastore.LocalPrefere
 import com.davidluna.architectcoders2024.core_domain.data.datastore.PreferencesDataSource
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.PreferencesRepository
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.SessionUseCase
-import com.davidluna.architectcoders2024.framework.remote.RemoteSessionDataSource
+import com.davidluna.architectcoders2024.auth_framework.data.remote.RemoteSessionDataSource
 import com.davidluna.architectcoders2024.test_shared.framework.FakeLocalPreferencesDataSource
 
 class FakeAuthDi {

@@ -17,4 +17,10 @@ object Reader {
             json.decodeFromString<T>(jsonString)
         }
 
+    fun fetchJson(fileName: String): String =
+        this::class.java.getResourceAsStream("/raw/$fileName").use { stream: InputStream? ->
+            requireNotNull(stream) { "File not found" }
+            stream.bufferedReader().use { it.readText() }
+        }
+
 }

@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 import com.davidluna.architectcoders2024.fakes.FakeAuthDi
-import com.davidluna.architectcoders2024.navigation.domain.args.DefaultArgs
-import com.davidluna.architectcoders2024.navigation.domain.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule

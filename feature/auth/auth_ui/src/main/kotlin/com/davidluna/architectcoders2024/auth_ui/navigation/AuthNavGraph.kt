@@ -9,10 +9,10 @@ import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginViewModel
 import com.davidluna.architectcoders2024.auth_ui.view.LoginScreen
 import com.davidluna.architectcoders2024.auth_ui.view.composables.IntentView
-import com.davidluna.architectcoders2024.navigation.domain.composable
-import com.davidluna.architectcoders2024.navigation.domain.destination.AuthNavigation
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
-import com.davidluna.architectcoders2024.navigation.domain.route
+import com.davidluna.architectcoders2024.core_ui.navigation.composable
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.route
 
 fun NavGraphBuilder.authNavGraph(
     navigateTo: (Destination) -> Unit

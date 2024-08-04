@@ -11,17 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.shimmer
-import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
+import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens.margins
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_CIRCULAR_PROGRESS_INDICATOR
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE_BOX_CONTAINER
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE_MASK
 
 @Composable
 fun FilmMaskImageView(
     model: String?,
-    imageSize: Dp
+    imageSize: Dp,
 ) {
 
     Box(
@@ -29,18 +34,20 @@ fun FilmMaskImageView(
             .wrapContentSize()
             .size(imageSize)
             .sizeIn(
-                minWidth = Dimens.margins.minImageSize,
-                minHeight = Dimens.margins.minImageSize,
+                minWidth = margins.minImageSize,
+                minHeight = margins.minImageSize,
                 maxWidth = imageSize,
                 maxHeight = imageSize
-            ),
+            )
+            .testTag(FILM_IMAGE_BOX_CONTAINER),
         contentAlignment = Alignment.Center
     ) {
         if (model.isNullOrEmpty()) {
             Box(
                 modifier = Modifier
                     .size(imageSize)
-                    .shimmer(model.isNullOrEmpty()),
+                    .shimmer(model.isNullOrEmpty())
+                    .testTag(FILM_CIRCULAR_PROGRESS_INDICATOR),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
@@ -49,7 +56,8 @@ fun FilmMaskImageView(
             AsyncImage(
                 model = model,
                 contentDescription = "film reel",
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .testTag(FILM_IMAGE),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.TopCenter
             )
@@ -59,7 +67,8 @@ fun FilmMaskImageView(
             painter = painterResource(id = R.drawable.film_mask),
             contentDescription = "film reel",
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .testTag(FILM_IMAGE_MASK),
             contentScale = ContentScale.FillBounds
         )
     }

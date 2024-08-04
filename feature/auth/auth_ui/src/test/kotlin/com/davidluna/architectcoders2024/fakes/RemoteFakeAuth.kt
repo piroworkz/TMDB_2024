@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.fakes
 
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteGuestSession
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteSessionIdResponse
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteTokenResponse
-import com.davidluna.architectcoders2024.framework.remote.model.authentication.RemoteUserAccountDetail
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteGuestSession
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteSessionIdResponse
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteTokenResponse
+import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteUserAccountDetail
 import com.davidluna.architectcoders2024.test_shared.reader.MockFiles
 import com.davidluna.architectcoders2024.test_shared.reader.Reader
 

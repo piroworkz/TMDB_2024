@@ -1,6 +1,6 @@
 package com.davidluna.architectcoders2024.media_ui.presenter.detail
 
-import com.davidluna.architectcoders2024.navigation.domain.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 
 sealed interface MovieDetailEvent {
     data class OnNavigate(val destination: Destination?) : MovieDetailEvent
