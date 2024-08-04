@@ -7,11 +7,11 @@ import com.davidluna.architectcoders2024.convention.extensions.android_library.a
 import com.davidluna.architectcoders2024.convention.extensions.common.uiPluginManager
 import com.davidluna.architectcoders2024.convention.helpers.implementation
 import com.davidluna.architectcoders2024.convention.helpers.ksp
-import com.davidluna.architectcoders2024.processed.libs.arrowCore
-import com.davidluna.architectcoders2024.processed.libs.hiltAndroid
-import com.davidluna.architectcoders2024.processed.libs.hiltCompiler
-import com.davidluna.architectcoders2024.processed.libs.hiltNavigationCompose
-import com.davidluna.architectcoders2024.processed.libs.libs
+import com.davidluna.architectcoders2024.convention.libs.arrowCore
+import com.davidluna.architectcoders2024.convention.libs.hiltAndroid
+import com.davidluna.architectcoders2024.convention.libs.hiltCompiler
+import com.davidluna.architectcoders2024.convention.libs.hiltNavigationCompose
+import com.davidluna.architectcoders2024.convention.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

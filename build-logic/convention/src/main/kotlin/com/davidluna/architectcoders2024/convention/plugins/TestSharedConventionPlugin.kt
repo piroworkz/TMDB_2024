@@ -3,11 +3,11 @@ package com.davidluna.architectcoders2024.convention.plugins
 import com.davidluna.architectcoders2024.convention.extensions.common.setJavaVersions
 import com.davidluna.architectcoders2024.convention.helpers.alias
 import com.davidluna.architectcoders2024.convention.helpers.implementation
-import com.davidluna.architectcoders2024.processed.libs.coroutinesTest
-import com.davidluna.architectcoders2024.processed.libs.junit
-import com.davidluna.architectcoders2024.processed.libs.kotlinJvm
-import com.davidluna.architectcoders2024.processed.libs.kotlinxSerializationJson
-import com.davidluna.architectcoders2024.processed.libs.libs
+import com.davidluna.architectcoders2024.convention.libs.coroutinesTest
+import com.davidluna.architectcoders2024.convention.libs.junit
+import com.davidluna.architectcoders2024.convention.libs.kotlinJvm
+import com.davidluna.architectcoders2024.convention.libs.kotlinxSerializationJson
+import com.davidluna.architectcoders2024.convention.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

@@ -1,14 +1,14 @@
 package com.davidluna.architectcoders2024.convention.extensions.common
 
 import com.davidluna.architectcoders2024.convention.helpers.alias
-import com.davidluna.architectcoders2024.processed.libs.androidApplication
-import com.davidluna.architectcoders2024.processed.libs.androidLibrary
-import com.davidluna.architectcoders2024.processed.libs.composeCompiler
-import com.davidluna.architectcoders2024.processed.libs.hiltPlugin
-import com.davidluna.architectcoders2024.processed.libs.kotlinAndroid
-import com.davidluna.architectcoders2024.processed.libs.kotlinSerialization
-import com.davidluna.architectcoders2024.processed.libs.ksp
-import com.davidluna.architectcoders2024.processed.libs.libs
+import com.davidluna.architectcoders2024.convention.libs.androidApplication
+import com.davidluna.architectcoders2024.convention.libs.androidLibrary
+import com.davidluna.architectcoders2024.convention.libs.composeCompiler
+import com.davidluna.architectcoders2024.convention.libs.hiltPlugin
+import com.davidluna.architectcoders2024.convention.libs.kotlinAndroid
+import com.davidluna.architectcoders2024.convention.libs.kotlinSerialization
+import com.davidluna.architectcoders2024.convention.libs.ksp
+import com.davidluna.architectcoders2024.convention.libs.libs
 import org.gradle.api.Project
 import org.gradle.api.plugins.PluginManager
 
@@ -37,9 +37,8 @@ internal val Project.uiPluginManager: PluginManager
     }
 
 internal val Project.applicationPluginManager: PluginManager
-    get() = pluginManager.apply {
+    get() = hiltPluginManager.apply {
         alias(libs.androidApplication)
         alias(libs.kotlinAndroid)
-        alias(libs.hiltPlugin)
-        alias(libs.ksp)
+        alias(libs.composeCompiler)
     }

@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    
+
     implementation(projects.feature.splash)
     implementation(projects.core.coreUi)
     implementation(projects.core.coreDomain)
@@ -19,4 +19,9 @@ dependencies {
     implementation(projects.feature.videos.videosFramework)
     testImplementation(projects.testShared)
     androidTestImplementation(projects.testShared)
+    androidTestImplementation(libs.datastoreCore)
+    androidTestImplementation(libs.protobufJavalite)
+    androidTestImplementation(libs.protobufKotlinLite)
+    androidTestImplementation(libs.playServicesLocation)
+    implementation(libs.android.tracing)
 }

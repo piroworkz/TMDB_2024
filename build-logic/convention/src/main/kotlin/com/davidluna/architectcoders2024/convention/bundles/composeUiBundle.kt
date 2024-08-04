@@ -2,16 +2,16 @@ package com.davidluna.architectcoders2024.convention.bundles
 
 import com.davidluna.architectcoders2024.convention.helpers.debugImplementation
 import com.davidluna.architectcoders2024.convention.helpers.implementation
-import com.davidluna.architectcoders2024.processed.libs.composeAnimation
-import com.davidluna.architectcoders2024.processed.libs.composeBom
-import com.davidluna.architectcoders2024.processed.libs.composeUi
-import com.davidluna.architectcoders2024.processed.libs.composeUiGraphics
-import com.davidluna.architectcoders2024.processed.libs.composeUiTooling
-import com.davidluna.architectcoders2024.processed.libs.composeUiToolingPreview
-import com.davidluna.architectcoders2024.processed.libs.composeMaterial3
-import com.davidluna.architectcoders2024.processed.libs.iconsExtended
-import com.davidluna.architectcoders2024.processed.libs.libs
-import com.davidluna.architectcoders2024.processed.libs.runtimeTracing
+import com.davidluna.architectcoders2024.convention.libs.composeAnimation
+import com.davidluna.architectcoders2024.convention.libs.composeBom
+import com.davidluna.architectcoders2024.convention.libs.composeUi
+import com.davidluna.architectcoders2024.convention.libs.composeUiGraphics
+import com.davidluna.architectcoders2024.convention.libs.composeUiTooling
+import com.davidluna.architectcoders2024.convention.libs.composeUiToolingPreview
+import com.davidluna.architectcoders2024.convention.libs.composeMaterial3
+import com.davidluna.architectcoders2024.convention.libs.iconsExtended
+import com.davidluna.architectcoders2024.convention.libs.libs
+import com.davidluna.architectcoders2024.convention.libs.runtimeTracing
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 

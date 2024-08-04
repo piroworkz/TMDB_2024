@@ -13,10 +13,10 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="shouldStartAppAndEnterAsGuestUser()">
+      <SelectionState runConfigName="shouldStartAppAndEnterAsGuestUser() (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="shouldStartAppAndEnterAsGuestUser() (1)">
+      <SelectionState runConfigName="shouldSignInGuestUser()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

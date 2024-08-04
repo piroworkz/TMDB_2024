@@ -4,11 +4,11 @@ import com.davidluna.architectcoders2024.convention.constants.Constants
 import com.davidluna.architectcoders2024.convention.helpers.alias
 import com.davidluna.architectcoders2024.convention.helpers.implementation
 import com.davidluna.architectcoders2024.convention.helpers.java
-import com.davidluna.architectcoders2024.processed.libs.arrowCore
-import com.davidluna.architectcoders2024.processed.libs.javaxInject
-import com.davidluna.architectcoders2024.processed.libs.kotlinCoroutinesCore
-import com.davidluna.architectcoders2024.processed.libs.kotlinJvm
-import com.davidluna.architectcoders2024.processed.libs.libs
+import com.davidluna.architectcoders2024.convention.libs.arrowCore
+import com.davidluna.architectcoders2024.convention.libs.javaxInject
+import com.davidluna.architectcoders2024.convention.libs.kotlinCoroutinesCore
+import com.davidluna.architectcoders2024.convention.libs.kotlinJvm
+import com.davidluna.architectcoders2024.convention.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

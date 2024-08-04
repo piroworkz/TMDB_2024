@@ -15,9 +15,5 @@ object MockFiles {
     const val AUTH_TOKEN_NEW = "auth_token_new.json"
     const val AUTH_SESSION_NEW = "auth_session_new.json"
     const val AUTH_GUEST_SESSION = "auth_guest_session.json"
-    const val REMOTE_ERROR = "remote_error.json"
-}
-
-object Endpoint{
-
+    const val REMOTE_ERROR = "remote_error_message.json"
 }

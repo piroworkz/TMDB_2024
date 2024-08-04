@@ -25,7 +25,7 @@ java {
 
 ksp {
     arg("libsPath", "${rootDir.parentFile}/gradle/libs.versions.toml")
-    arg("packageName", "com.davidluna.architectcoders2024.processed.libs")
+    arg("packageName", "com.davidluna.architectcoders2024.convention.libs")
 }
 
 gradlePlugin {
