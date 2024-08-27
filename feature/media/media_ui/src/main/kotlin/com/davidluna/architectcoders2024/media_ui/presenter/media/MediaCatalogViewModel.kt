@@ -7,10 +7,10 @@ import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MediaCatalogViewModel @Inject constructor(
     private val getContent: GetMediaCatalogUseCase,
-    private val getContentKind: GetContentKindUseCase
+    private val getContentKind: GetContentKindUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -42,18 +42,19 @@ class MediaCatalogViewModel @Inject constructor(
         val firstList: Flow<PagingData<Media>> = emptyFlow(),
         val secondList: Flow<PagingData<Media>> = emptyFlow(),
         val thirdList: Flow<PagingData<Media>> = emptyFlow(),
-        val fourthList: Flow<PagingData<Media>> = emptyFlow()
+        val fourthList: Flow<PagingData<Media>> = emptyFlow(),
     )
 
-    fun sendEvent(event: MoviesEvent) {
+    fun sendEvent(event: MediaEvent) {
         when (event) {
-            is MoviesEvent.OnMovieClicked -> setDestinationArgs(event.destination)
-            MoviesEvent.ResetError -> resetError()
+            is MediaEvent.OnMovieClicked -> setDestinationArgs(event.destination)
+            MediaEvent.ResetError -> resetError()
+            is MediaEvent.OnUiReady -> fetchContent(event.contentKind)
         }
     }
 
-    private fun fetchContent() {
-        if (_state.value.contentKind == ContentKind.MOVIE) {
+    private fun fetchContent(contentKind: ContentKind) {
+        if (contentKind == ContentKind.MOVIE) {
             getPopularMovies()
             getTopRatedMovies()
             getNowPlayingMovies()
@@ -111,7 +112,6 @@ class MediaCatalogViewModel @Inject constructor(
                 }
                 .collect { contentKind ->
                     _state.update { it.copy(contentKind = contentKind) }
-                    fetchContent()
                 }
         }
     }

@@ -33,6 +33,6 @@ sealed class AuthNavigation(
     companion object {
         private const val INIT = "AUTH_INIT"
         private const val LOGIN = "LOGIN"
-        const val URI = "https://tmdb.davidluna.com/{${NavArgument.APPROVED}}"
+        const val URI = "https://deeplinks-d440b.web.app/login/{${NavArgument.APPROVED}}"
     }
 }

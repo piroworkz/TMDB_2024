@@ -9,8 +9,7 @@ object Constants {
     const val TARGET_SDK = 34
     const val VERSION_CODE = 1
     const val VERSION_NAME = "1.0"
-    const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
-    const val HILT_TEST_RUNNER = "com.davidluna.architectcoders2024.app.utils.HiltTestRunner"
+    const val HILT_TEST_RUNNER = "com.davidluna.architectcoders2024.app.di.HiltTestRunner"
     const val API_KEY = "MY_API_KEY"
     const val BASE_URL = "BASE_URL"
     const val KEY_ALIAS = "MY_KEY_ALIAS"

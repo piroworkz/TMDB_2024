@@ -1,9 +1,9 @@
 package com.davidluna.architectcoders2024.core_framework.data.remote
 
-import com.davidluna.architectcoders2024.core_framework.di.qualifiers.ApiKey
 import com.davidluna.architectcoders2024.core_domain.entities.Session
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.core_domain.usecases.location.GetCountryCodeUseCase
+import com.davidluna.architectcoders2024.core_framework.di.qualifiers.ApiKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
@@ -43,7 +43,7 @@ class MoviesInterceptor @Inject constructor(
     }.build()
 
     private fun buildUrl(request: Request) = request.url.newBuilder().apply {
-        addQueryParameter(LIMIT, LIMIT_VALUE)
+//        addQueryParameter(LIMIT, PAGE_SIZE.toString())
         if (id.isNotEmpty()) {
             addQueryParameter(SESSION_ID_NAME, id)
             if (region.isNotEmpty()) {
@@ -75,7 +75,6 @@ class MoviesInterceptor @Inject constructor(
         private const val AUTHORIZATION = "Authorization"
         private const val REGION = "region"
         private const val LIMIT = "limit"
-        private const val LIMIT_VALUE = "10"
     }
 
 }

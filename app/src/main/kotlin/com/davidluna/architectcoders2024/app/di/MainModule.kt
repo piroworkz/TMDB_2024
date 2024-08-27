@@ -1,9 +1,8 @@
 package com.davidluna.architectcoders2024.app.di
 
-import com.davidluna.architectcoders2024.core_framework.di.qualifiers.ApiKey
-import com.davidluna.architectcoders2024.core_framework.di.qualifiers.BaseUrl
 import com.davidluna.architectcoders2024.core_framework.data.remote.MoviesInterceptor
 import com.davidluna.architectcoders2024.core_framework.data.remote.call_adapter.NetworkCallAdapterFactory
+import com.davidluna.architectcoders2024.core_framework.di.qualifiers.BaseUrl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,23 +18,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
-
-    init {
-        System.loadLibrary("native")
-    }
-
-    private external fun getApiKey(): String
-    private external fun getBaseUrl(): String
-
-    @Singleton
-    @Provides
-    @ApiKey
-    fun provideApiKey(): String = getApiKey()
-
-    @Singleton
-    @Provides
-    @BaseUrl
-    fun provideBaseUrl(): String = getBaseUrl()
 
     @Singleton
     @Provides

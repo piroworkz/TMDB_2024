@@ -5,13 +5,13 @@
 #define UNUSED(x) (void)(x)
 
 JNIEXPORT jstring JNICALL
-Java_com_davidluna_architectcoders2024_app_di_MainModule_getApiKey__(JNIEnv *env, jobject pVoid) {
+Java_com_davidluna_architectcoders2024_app_di_NativeModule_getApiKey__(JNIEnv *env, jobject pVoid) {
     UNUSED(pVoid);
     return (*env)->NewStringUTF(env, MY_API_KEY);
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_davidluna_architectcoders2024_app_di_MainModule_getBaseUrl__(JNIEnv *env, jobject pVoid) {
+Java_com_davidluna_architectcoders2024_app_di_NativeModule_getBaseUrl__(JNIEnv *env, jobject pVoid) {
     UNUSED(pVoid);
     return (*env)->NewStringUTF(env, BASE_URL);
 }

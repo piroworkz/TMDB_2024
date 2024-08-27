@@ -1,11 +1,13 @@
-package com.davidluna.architectcoders2024.app.utils
+package com.davidluna.architectcoders2024.app.di
 
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 import dagger.hilt.android.testing.HiltTestApplication
 
+@Suppress("unused")
 class HiltTestRunner : AndroidJUnitRunner() {
+
     override fun newApplication(
         cl: ClassLoader?,
         className: String?,

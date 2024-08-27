@@ -11,6 +11,9 @@ import com.davidluna.architectcoders2024.core_domain.entities.UserAccount
 
 const val FAKE_QUERY_PARAMS =
     "?request_token=e0efa7d264a599220d2ad42df936a735d4319054&approved=true"
+const val FAKE_TMDB_URL =
+    "https://www.themoviedb.org/authenticate/a84c69ad82b2759b5fa9e52ab11f788de81cb464?redirect_to=https://deeplinks-d440b.web.app/login/"
+const val FAKE_DEEP_LINK = "https://deeplinks-d440b.web.app/login/$FAKE_QUERY_PARAMS"
 const val FAKE_REQUEST_TOKEN = "e0efa7d264a599220d2ad42df936a735d4319054"
 const val FAKE_SESSION_ID = "e0efaf145sdljg64sdg53g13fd"
 

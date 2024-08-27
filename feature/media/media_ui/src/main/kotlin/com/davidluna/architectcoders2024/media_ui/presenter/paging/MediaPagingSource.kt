@@ -6,7 +6,7 @@ import arrow.core.Either
 import com.davidluna.architectcoders2024.media_domain.entities.Results
 
 class MediaPagingSource<T : Any>(
-    private val invoke: suspend (currentPage: Int) -> Either<Throwable, Results<T>>
+    private val invoke: suspend (currentPage: Int) -> Either<Throwable, Results<T>>,
 ) : PagingSource<Int, T>() {
     override fun getRefreshKey(state: PagingState<Int, T>): Int? {
         return state.anchorPosition

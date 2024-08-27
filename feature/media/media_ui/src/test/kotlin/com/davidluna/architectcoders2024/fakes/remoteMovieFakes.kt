@@ -8,25 +8,25 @@ import com.davidluna.architectcoders2024.media_framework.data.remote.media.Remot
 import com.davidluna.architectcoders2024.media_framework.data.remote.media.RemoteResults
 import com.davidluna.architectcoders2024.videos_framework.data.remote.model.RemoteVideos
 import com.davidluna.architectcoders2024.media_domain.entities.Media
-import com.davidluna.architectcoders2024.test_shared.reader.MockFiles
+import com.davidluna.architectcoders2024.test_shared.reader.TestConstants
 import com.davidluna.architectcoders2024.test_shared.reader.Reader
 
 val fakeRemoteMedia: RemoteResults<RemoteMedia> =
-    Reader.fromJson<RemoteResults<RemoteMedia>>(MockFiles.MOVIE_LIST)
+    Reader.fromJson<RemoteResults<RemoteMedia>>(TestConstants.MOVIE_LIST)
 
 val fakeRemoteMediaDetail: RemoteMediaDetail =
-    Reader.fromJson<RemoteMediaDetail>(MockFiles.MOVIE_DETAIL)
+    Reader.fromJson<RemoteMediaDetail>(TestConstants.MOVIE_DETAIL)
 
 val fakeRemoteCredits: RemoteCredits =
-    Reader.fromJson<RemoteCredits>(MockFiles.MOVIE_CREDITS)
+    Reader.fromJson<RemoteCredits>(TestConstants.MOVIE_CREDITS)
 
 val fakeRemoteImages: RemoteImages =
-    Reader.fromJson<RemoteImages>(MockFiles.MOVIE_IMAGES)
+    Reader.fromJson<RemoteImages>(TestConstants.MOVIE_IMAGES)
 
 val fakeMediaItem: Media = fakeRemoteMedia.results.first().toDomain()
 
 val fakeRemoteMovieVideos =
-    Reader.fromJson<RemoteVideos>(MockFiles.MOVIE_VIDEOS)
+    Reader.fromJson<RemoteVideos>(TestConstants.MOVIE_VIDEOS)
 
 val fakeRemoteTvShowVideos =
-    Reader.fromJson<RemoteVideos>(MockFiles.TV_SHOW_VIDEOS)
+    Reader.fromJson<RemoteVideos>(TestConstants.TV_SHOW_VIDEOS)

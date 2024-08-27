@@ -8,7 +8,7 @@ import androidx.navigation.navigation
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailViewModel
 import com.davidluna.architectcoders2024.media_ui.view.details.MediaDetailScreen
-import com.davidluna.architectcoders2024.media_ui.presenter.media.MoviesEvent
+import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaEvent
 import com.davidluna.architectcoders2024.media_ui.view.media.MediaCatalogScreen
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaCatalogViewModel
 import com.davidluna.architectcoders2024.core_ui.navigation.composable
@@ -29,11 +29,11 @@ fun NavGraphBuilder.mediaNavGraph(
             val state by viewModel.state.collectAsState()
             state.destination?.let {
                 navigateTo(it)
-                viewModel.sendEvent(MoviesEvent.OnMovieClicked(null))
+                viewModel.sendEvent(MediaEvent.OnMovieClicked(null))
             }
             MediaCatalogScreen(
                 state = state,
-                sendEvent = { event: MoviesEvent -> viewModel.sendEvent(event) }
+                sendEvent = { event: MediaEvent -> viewModel.sendEvent(event) }
             )
         }
 

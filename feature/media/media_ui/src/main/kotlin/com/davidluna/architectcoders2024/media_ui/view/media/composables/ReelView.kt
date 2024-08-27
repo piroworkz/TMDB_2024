@@ -41,11 +41,8 @@ fun ReelView(
             .wrapContentHeight()
             .testTag(REEL_VIEW),
     ) {
-        items(list.itemCount,
-            key = { list[it]?.id ?: it }
-        ) {
+        items(list.itemCount) {
             val media: Media? = list[it]
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()

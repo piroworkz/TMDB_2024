@@ -1,6 +1,7 @@
 package com.davidluna.architectcoders2024.test_shared.reader
 
-object MockFiles {
+object TestConstants {
+
     const val USER_ACCOUNT = "user_account.json"
     const val MOVIE_LIST = "movie_list.json"
     const val MOVIE_DETAIL = "movie_detail.json"
