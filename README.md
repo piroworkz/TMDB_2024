@@ -3,7 +3,7 @@
 
 A Modern, Scalable Android Application
 
-ArchitectCoders2024 is a cutting-edge Android application built with Kotlin and Jetpack Compose, adhering to Clean Architecture and SOLID principles. This project showcases a robust approach to building maintainable, scalable, and testable Android applications using best-in-class practices.
+TMDB 2024 is a cutting-edge Android application built with Kotlin and Jetpack Compose, adhering to Clean Architecture and SOLID principles. This project showcases a robust approach to building maintainable, scalable, and testable Android applications using best-in-class practices.
 
 
 Why Kotlin and Clean Architecture?
