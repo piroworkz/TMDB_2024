@@ -56,5 +56,67 @@ Greater code reusability: Promotes the creation of reusable components.
    git clone https://github.com/yourusername/ArchitectCoders2024.git
    ```
 
+## Dependencies Used
+
+### AndroidX
+- `androidx.appcompat:appcompat` - Backwards compatibility for Android.
+- `androidx.core:core-ktx` - Kotlin extensions for Android core libraries.
+- `androidx.datastore:datastore-core` - Preferences storage using DataStore.
+- `androidx.lifecycle:lifecycle-runtime-ktx` - Lifecycle management in Kotlin.
+- `androidx.navigation:navigation-common-ktx` - Jetpack Navigation in Kotlin.
+- `androidx.fragment:fragment-ktx` - Kotlin extensions for Fragment.
+- `androidx.biometric:biometric` - Biometric authentication support.
+
+### Kotlin
+- `org.jetbrains.kotlinx:kotlinx-coroutines-core` - Support for asynchronous programming using coroutines.
+- `org.jetbrains.kotlinx:kotlinx-serialization-json` - JSON serialization and deserialization library.
+
+### Jetpack Compose
+- `androidx.compose.ui:ui` - UI framework based on Composable functions.
+- `androidx.compose.material3:material3` - Material Design 3 components.
+- `androidx.activity:activity-compose` - Integration between Jetpack Compose and Android's Activity.
+- `androidx.navigation:navigation-compose` - Navigation library for Jetpack Compose applications.
+- `io.coil-kt:coil-compose` - Asynchronous image loading in Compose.
+
+### Retrofit & OkHttp
+- `com.squareup.retrofit2:retrofit` - HTTP client for interacting with REST APIs.
+- `com.squareup.okhttp3:okhttp` - HTTP client for efficient network operations.
+- `com.squareup.okhttp3:logging-interceptor` - Logging interceptor for OkHttp.
+
+### Protobuf
+- `com.google.protobuf:protobuf-javalite` - Protobuf implementation for Java Lite.
+- `com.google.protobuf:protobuf-kotlin-lite` - Protobuf implementation for Kotlin Lite.
+
+### Arrow
+- `io.arrow-kt:arrow-core` - Functional programming library for Kotlin.
+
+### Paging
+- `androidx.paging:paging-compose` - Pagination support for Jetpack Compose.
+- `androidx.paging:paging-runtime` - Pagination support for Android runtime.
+
+### Google Services
+- `com.google.android.gms:play-services-location` - Google Play Services Location APIs.
+- `com.google.android.material:material` - Material Design components from Google.
+
+### Hilt
+- `com.google.dagger:hilt-android` - Dependency injection framework for Android.
+- `androidx.hilt:hilt-navigation-compose` - Hilt integration for Jetpack Compose navigation.
+
+### Piroworkz
+- `com.piroworkz:compose-android-permissions` - Permission handling in Jetpack Compose.
+- `com.piroworkz:versions-catalog` - A version catalog utility build-logic module.
+
+### Unit Testing
+- `junit:junit` - JUnit framework for unit testing.
+- `org.mockito.kotlin:mockito-kotlin` - Mockito library for Kotlin.
+- `app.cash.turbine:turbine` - Flow testing utilities.
+- `com.google.truth:truth` - Assertion library for testing.
+
+### Instrumentation Testing (Compose)
+- `androidx.compose.ui:ui-test-junit4` - JUnit4 testing support for Jetpack Compose.
+- `com.squareup.okhttp3:mockwebserver` - Mock server for OkHttp.
+- `androidx.test.espresso:espresso-intents` - Intent interception for Espresso testing.
+
+
    [![Watch Video](https://img.youtube.com/vi/8OOVcnH2qE8/0.jpg)](https://www.youtube.com/watch?v=8OOVcnH2qE8)
 
