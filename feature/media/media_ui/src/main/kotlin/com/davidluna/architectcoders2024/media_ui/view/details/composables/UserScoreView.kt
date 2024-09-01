@@ -74,7 +74,6 @@ fun UserScoreView(
             color = Color.White
         )
 
-
         TextButton(
             onClick = { playTrailer() },
             modifier = Modifier

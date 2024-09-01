@@ -20,10 +20,11 @@ import androidx.paging.compose.LazyPagingItems
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_IMAGE_COLUMN_CONTAINER
-import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_VIEW
 
 @Composable
 fun ReelView(
+    modifier: Modifier = Modifier,
+    lazyRowModifier: Modifier = Modifier,
     title: String,
     list: LazyPagingItems<Media>,
     onMovieSelected: (Int, String) -> Unit,
@@ -34,12 +35,11 @@ fun ReelView(
         modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
 
-    ReelTitleView(title = title)
+    ReelTitleView(modifier = modifier, title = title)
 
     LazyRow(
-        modifier = Modifier
-            .wrapContentHeight()
-            .testTag(REEL_VIEW),
+        modifier = lazyRowModifier
+            .wrapContentHeight(),
     ) {
         items(list.itemCount) {
             val media: Media? = list[it]

@@ -28,7 +28,7 @@
     <string name="error_dialog_title">Something went wrong</string>
     <string name="title_cast_row">CAST</string>
     <string name="title_overview">Overview</string>
-    <string name="user_score_label">User\nlabel</string>
+    <string name="user_score_label">User\nscore</string>
     <string name="asset_statements">
 [
   {

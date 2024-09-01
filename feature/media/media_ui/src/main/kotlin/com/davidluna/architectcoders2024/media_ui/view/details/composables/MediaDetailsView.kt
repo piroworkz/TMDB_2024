@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_TITLE_VIEW
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_VIEW
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelTitleView
 
@@ -18,7 +19,10 @@ fun MediaDetailsView(
     movieDetail: MediaDetails?,
     playTrailer: () -> Unit,
 ) {
-    ReelTitleView(title = movieDetail?.title)
+    ReelTitleView(
+        modifier = Modifier.testTag(MEDIA_DETAILS_TITLE_VIEW),
+        title = movieDetail?.title
+    )
 
     Card(
         modifier = Modifier

@@ -32,8 +32,8 @@ fun PostersPagerView(
             .fillMaxWidth()
             .aspectRatio(3 / 5F, matchHeightConstraintsFirst = true),
         label = Animation.SHIMMER
-    ) { target ->
-        if (target) {
+    ) { listIsNotEmpty ->
+        if (listIsNotEmpty) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
@@ -56,7 +56,6 @@ fun PostersPagerView(
                     .fillMaxWidth()
                     .aspectRatio(3 / 5F, matchHeightConstraintsFirst = true)
                     .shimmer(images.isEmpty())
-                    .testTag(MediaTag.PAGER_IMAGE_PLACEHOLDER),
             )
         }
     }

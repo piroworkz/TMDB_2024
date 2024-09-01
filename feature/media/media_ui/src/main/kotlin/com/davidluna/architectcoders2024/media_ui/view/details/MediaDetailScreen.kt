@@ -22,7 +22,12 @@ import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
 import com.davidluna.architectcoders2024.core_ui.composables.appGradient
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation.Video
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_RECOMMENDED_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_RECOMMENDED_TITLE_VIEW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_SIMILAR_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAILS_SIMILAR_TITLE_VIEW
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAIL_MAIN_COLUMN
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_DETAIL_SCREEN
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
@@ -34,7 +39,6 @@ import com.davidluna.architectcoders2024.media_ui.view.details.composables.Poste
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.joinImages
 import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelView
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation.Video
 
 @Composable
 fun MediaDetailScreen(
@@ -71,11 +75,15 @@ fun MediaDetailScreen(
 
 
             ReelView(
+                modifier = Modifier.testTag(MEDIA_DETAILS_RECOMMENDED_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_DETAILS_RECOMMENDED_LAZY_ROW),
                 title = stringResource(R.string.title_recommended_movies),
                 list = state.recommendations.collectAsLazyPagingItems()
             ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }
 
             ReelView(
+                modifier = Modifier.testTag(MEDIA_DETAILS_SIMILAR_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_DETAILS_SIMILAR_LAZY_ROW),
                 title = stringResource(R.string.title_similar_movies),
                 list = state.similar.collectAsLazyPagingItems()
             ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }

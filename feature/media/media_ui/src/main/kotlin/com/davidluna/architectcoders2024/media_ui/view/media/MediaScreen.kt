@@ -17,6 +17,14 @@ import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNav
 import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_CATALOG_SCREEN_VIEW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_FIRST_LIST_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_FIRST_LIST_TITLE_VIEW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_FOURTH_LIST_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_FOURTH_LIST_TITLE_VIEW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_SECOND_LIST_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_SECOND_LIST_TITLE_VIEW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_THIRD_LIST_LAZY_ROW
+import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.MEDIA_THIRD_LIST_TITLE_VIEW
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaCatalogViewModel
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaEvent
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaEvent.OnMovieClicked
@@ -46,6 +54,8 @@ fun MediaCatalogScreen(
         item {
             Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
             ReelView(
+                modifier = Modifier.testTag(MEDIA_FIRST_LIST_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_FIRST_LIST_LAZY_ROW),
                 title = stringResource(R.string.title_popular_movies),
                 list = firstList,
             ) { id, title ->
@@ -57,6 +67,8 @@ fun MediaCatalogScreen(
 
         item {
             ReelView(
+                modifier = Modifier.testTag(MEDIA_SECOND_LIST_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_SECOND_LIST_LAZY_ROW),
                 title = stringResource(R.string.title_top_rated_movies),
                 list = secondList,
                 onMovieSelected = { id, title ->
@@ -70,6 +82,8 @@ fun MediaCatalogScreen(
             val resourceId =
                 if (state.contentKind == ContentKind.MOVIE) R.string.title_upcoming_movies else R.string.title_airing_today
             ReelView(
+                modifier = Modifier.testTag(MEDIA_THIRD_LIST_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_THIRD_LIST_LAZY_ROW),
                 title = stringResource(resourceId),
                 list = thirdList,
                 onMovieSelected = { id, title ->
@@ -83,6 +97,8 @@ fun MediaCatalogScreen(
             val resourceId =
                 if (state.contentKind == ContentKind.MOVIE) R.string.title_now_playing_movies else R.string.title_on_air
             ReelView(
+                modifier = Modifier.testTag(MEDIA_FOURTH_LIST_TITLE_VIEW),
+                lazyRowModifier = Modifier.testTag(MEDIA_FOURTH_LIST_LAZY_ROW),
                 title = stringResource(resourceId),
                 list = fourthList,
                 onMovieSelected = { id, title ->

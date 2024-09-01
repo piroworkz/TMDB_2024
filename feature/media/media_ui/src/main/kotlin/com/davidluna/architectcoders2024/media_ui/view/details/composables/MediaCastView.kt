@@ -32,7 +32,10 @@ fun MediaCastView(
 ) {
     val width = LocalConfiguration.current.screenWidthDp.dp
 
-    ReelTitleView(stringResource(R.string.title_cast_row))
+    ReelTitleView(
+        modifier = Modifier.testTag(MediaTag.MEDIA_CAST_TITLE_VIEW),
+        stringResource(R.string.title_cast_row)
+    )
 
     cast?.let {
         LazyRow(

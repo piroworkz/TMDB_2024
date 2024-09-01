@@ -15,17 +15,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_TITLE_TEXT
-import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.REEL_TITLE_VIEW
 
 @Composable
-fun ReelTitleView(title: String?) {
+fun ReelTitleView(
+    modifier: Modifier = Modifier,
+    title: String?,
+) {
     title?.let {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .background(Color.Black)
-                .testTag(REEL_TITLE_VIEW)
-
         ) {
             Text(
                 text = title,

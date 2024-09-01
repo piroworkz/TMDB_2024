@@ -18,7 +18,6 @@ import coil.compose.AsyncImage
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.shimmer
 import com.davidluna.architectcoders2024.core_ui.theme.dimens.Dimens.margins
-import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_CIRCULAR_PROGRESS_INDICATOR
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE_BOX_CONTAINER
 import com.davidluna.architectcoders2024.media_domain.entities.tags.MediaTag.FILM_IMAGE_MASK
@@ -46,8 +45,7 @@ fun FilmMaskImageView(
             Box(
                 modifier = Modifier
                     .size(imageSize)
-                    .shimmer(model.isNullOrEmpty())
-                    .testTag(FILM_CIRCULAR_PROGRESS_INDICATOR),
+                    .shimmer(model.isNullOrEmpty()),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()

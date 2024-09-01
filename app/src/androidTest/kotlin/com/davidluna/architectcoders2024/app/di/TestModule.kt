@@ -49,7 +49,7 @@ object TestModule {
     @Provides
     fun provideDataStore(
         testScope: CoroutineScope,
-        testContext: Context
+        testContext: Context,
     ): DataStore<ProtoPreferences> =
         MultiProcessDataStoreFactory.create(
             serializer = ProtoPreferencesSerializer,
@@ -61,3 +61,4 @@ object TestModule {
             }
         )
 }
+
