@@ -25,7 +25,7 @@ dependencyResolutionManagement {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "ArchitectCoders2024"
+rootProject.name = "Tmdb2024"
 
 include(
     ":app",
