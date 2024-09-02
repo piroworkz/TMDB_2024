@@ -3,13 +3,13 @@ package com.davidluna.architectcoders2024.media_ui.presenter.media
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.Detail
 import com.davidluna.architectcoders2024.fakes.FakeMediaDI
 import com.davidluna.architectcoders2024.fakes.fakeMediaItem
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_ui.presenter.media.MediaEvent.OnMovieClicked
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.Detail
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runTest
@@ -34,13 +34,14 @@ class MediaCatalogIntegrationTest {
             val viewModel = buildViewModel()
 
             viewModel.state.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem())
+                assertThat(awaitItem()).isEqualTo(initialState)
+                assertThat(awaitItem())
                     .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
-                Truth.assertThat(awaitItem().firstList).isNotEqualTo(expected)
-                Truth.assertThat(awaitItem().secondList).isNotEqualTo(expected)
-                Truth.assertThat(awaitItem().fourthList).isNotEqualTo(expected)
-                Truth.assertThat(awaitItem().thirdList).isNotEqualTo(expected)
+                viewModel.sendEvent(MediaEvent.OnUiReady(ContentKind.MOVIE))
+                assertThat(awaitItem().firstList).isNotEqualTo(expected)
+                assertThat(awaitItem().secondList).isNotEqualTo(expected)
+                assertThat(awaitItem().fourthList).isNotEqualTo(expected)
+                assertThat(awaitItem().thirdList).isNotEqualTo(expected)
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -53,15 +54,16 @@ class MediaCatalogIntegrationTest {
             val viewModel = buildViewModel()
 
             viewModel.state.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem())
+                assertThat(awaitItem()).isEqualTo(initialState)
+                assertThat(awaitItem())
                     .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
-                Truth.assertThat(awaitItem().firstList).isNotEqualTo(empty)
-                Truth.assertThat(awaitItem().secondList).isNotEqualTo(empty)
-                Truth.assertThat(awaitItem().fourthList).isNotEqualTo(empty)
-                Truth.assertThat(awaitItem().thirdList).isNotEqualTo(empty)
+                viewModel.sendEvent(MediaEvent.OnUiReady(ContentKind.MOVIE))
+                assertThat(awaitItem().firstList).isNotEqualTo(empty)
+                assertThat(awaitItem().secondList).isNotEqualTo(empty)
+                assertThat(awaitItem().fourthList).isNotEqualTo(empty)
+                assertThat(awaitItem().thirdList).isNotEqualTo(empty)
                 viewModel.sendEvent(OnMovieClicked(Detail(media.id, media.title)))
-                Truth.assertThat(awaitItem().destination).isEqualTo(Detail(media.id, media.title))
+                assertThat(awaitItem().destination).isEqualTo(Detail(media.id, media.title))
                 cancelAndIgnoreRemainingEvents()
             }
         }

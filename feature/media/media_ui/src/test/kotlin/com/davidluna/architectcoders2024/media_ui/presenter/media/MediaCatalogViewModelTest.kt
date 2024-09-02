@@ -70,12 +70,12 @@ class MediaCatalogViewModelTest {
         runTest {
             val expected = emptyFlow<Flow<PagingData<Media>>>()
             whenever(getContentKind()).thenReturn(flowOf(ContentKind.MOVIE))
-
             val viewModel = buildViewModel()
 
             viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem().contentKind).isEqualTo(ContentKind.MOVIE)
+                viewModel.sendEvent(MediaEvent.OnUiReady(ContentKind.MOVIE))
                 //  PagingData is not a data class, so any equality check would fail. Need to find a way to compare the contents of the PagingData object. Meanwhile, we can check if is not empty.
                 assertThat(awaitItem().firstList).isNotEqualTo(expected)
                 assertThat(awaitItem().secondList).isNotEqualTo(expected)

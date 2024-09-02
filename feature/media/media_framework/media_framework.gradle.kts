@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = Constants.NAMESPACE.plus(".media_data_framework")
+    namespace = Constants.NAMESPACE.plus(".media_framework")
 }
 
 dependencies {
