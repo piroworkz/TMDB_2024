@@ -9,15 +9,15 @@ kotlin-converter = "1.0.0"
 appcompat = "1.7.0"
 coreKtx = "1.13.1"
 datastoreCore = "1.1.1"
-lifecycleRuntimeKtx = "2.8.4"
-navigation = "2.7.7"
-fragmentKtx = "1.8.2"
+lifecycleRuntimeKtx = "2.8.5"
+navigation = "2.8.0"
+fragmentKtx = "1.8.3"
 biometric = "1.2.0-alpha05"
 #compose
-composeBom = "2024.08.00"
+composeBom = "2024.09.00"
 compose-animation = "1.7.0-rc01"
-activityCompose = "1.9.1"
-compose-navigation = "2.7.7"
+activityCompose = "1.9.2"
+compose-navigation = "2.8.0"
 coil-compose = "2.6.0"
 #piroworkz
 piroworkz-permissions = "1.0.0"
@@ -132,9 +132,6 @@ navigationTesting = { module = "androidx.navigation:navigation-testing", version
 androidRunner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidTestCore = { group = "androidx.test", name = "core-ktx", version.ref = "androidx-rules" }
 # Rules
-# GrantPermissionRule - GrantPermissionRule is a JUnit TestRule that grants permissions to the Android application under test.
-# PortForwardingRule - PortForwardingRule is a JUnit TestRule that forwards ports from the device to the host machine.
-# ServiceTestRule - ServiceTestRule is a JUnit TestRule that provides a simplified mechanism to start and shutdown services for testing.
 androidTestRules = { group = "androidx.test", name = "rules", version.ref = "androidx-rules" }
 # Espresso
 espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espresso-intents" }

@@ -15,7 +15,7 @@ import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.rule.GrantPermissionRule
-import com.davidluna.architectcoders2024.app.main_ui.common.getPermissions
+import com.davidluna.architectcoders2024.app.main_ui.common.permissions
 import com.davidluna.architectcoders2024.app.rules.MockWebServerRule
 import com.davidluna.architectcoders2024.auth_domain.entities.tags.AuthTag.AUTH_GUEST_BUTTON
 import com.davidluna.architectcoders2024.auth_domain.entities.tags.AuthTag.AUTH_LOGIN_BUTTON
@@ -44,7 +44,7 @@ class AuthInstrumentedTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 3)
-    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*getPermissions())
+    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
 
     @get:Rule(order = 4)
     val intentsTestRule = IntentsRule()
