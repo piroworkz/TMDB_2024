@@ -1,25 +1,13 @@
 package com.davidluna.architectcoders2024.core_ui.navigation.destination
 
-import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs
-import com.davidluna.architectcoders2024.core_ui.navigation.args.SafeArgs
+import kotlinx.serialization.Serializable
 
-sealed class StartNavigation(
-    override val name: String,
-    override val args: List<Pair<SafeArgs, Any?>>,
-) : Destination {
+@Serializable
+sealed interface StartNavigation : Destination {
 
-    data object Init : StartNavigation(
-        name = INIT,
-        args = emptyList()
-    )
+    @Serializable
+    data object Init : StartNavigation
 
-    data object Splash : StartNavigation(
-        name = SPLASH,
-        args = listOf(DefaultArgs.HideAppBar to DefaultArgs.HideAppBar.defaultValue)
-    )
-
-    companion object {
-        private const val INIT = "SPLASH_INIT"
-        private const val SPLASH = "SPLASH"
-    }
+    @Serializable
+    data class Splash(val hideAppBar: Boolean = true) : StartNavigation
 }

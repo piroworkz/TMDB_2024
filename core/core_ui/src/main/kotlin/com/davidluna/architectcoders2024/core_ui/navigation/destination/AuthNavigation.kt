@@ -1,38 +1,22 @@
 package com.davidluna.architectcoders2024.core_ui.navigation.destination
 
-import android.content.Intent
-import androidx.navigation.NavDeepLink
-import androidx.navigation.navDeepLink
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs
-import com.davidluna.architectcoders2024.core_ui.navigation.args.SafeArgs
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
+sealed interface AuthNavigation : Destination {
 
-sealed class AuthNavigation(
-    override val name: String,
-    override val args: List<Pair<SafeArgs, Any?>> = emptyList(),
-    override val deepLinks: List<NavDeepLink> = emptyList()
-) : DeepLink {
+    @Serializable
+    data object Init : AuthNavigation
 
-    data object Init : AuthNavigation(name = INIT)
+    @Serializable
+    data class Login(
+        @SerialName("request_token")
+        val requestToken: String = String(),
+        @SerialName("approved")
+        val approved: Boolean = false,
+        val hideAppBar: Boolean = true
+    ) : AuthNavigation
 
-    data object Login : AuthNavigation(
-        name = LOGIN,
-        args = listOf(
-            DefaultArgs.HideAppBar to DefaultArgs.HideAppBar.defaultValue,
-            DefaultArgs.Auth to DefaultArgs.Auth.defaultValue
-        ),
-        deepLinks = listOf(
-            navDeepLink {
-                uriPattern = URI
-                action = Intent.ACTION_VIEW
-            }
-        )
-    )
-
-    companion object {
-        private const val INIT = "AUTH_INIT"
-        private const val LOGIN = "LOGIN"
-        const val URI = "https://deeplinks-d440b.web.app/login/{${NavArgument.APPROVED}}"
-    }
 }
+

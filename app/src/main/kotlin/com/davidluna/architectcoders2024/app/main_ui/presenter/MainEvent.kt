@@ -1,5 +1,6 @@
 package com.davidluna.architectcoders2024.app.main_ui.presenter
 
+import androidx.compose.material3.DrawerState
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 
@@ -7,4 +8,5 @@ sealed interface MainEvent {
     data object OnCloseSession : MainEvent
     data class SetContentKind(val mediaType: ContentKind) : MainEvent
     data class SetAppError(val appError: AppError?) : MainEvent
+    data class SetDrawerState(val drawerState: DrawerState) : MainEvent
 }

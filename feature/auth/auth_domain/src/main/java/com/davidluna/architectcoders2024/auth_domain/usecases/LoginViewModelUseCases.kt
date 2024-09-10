@@ -9,6 +9,5 @@ data class LoginViewModelUseCases @Inject constructor(
     val createGuestSessionId: CreateGuestSessionIdUseCase,
     val getUserAccount: GetUserAccountUseCase,
     val sessionId: SessionUseCase,
-    val extractQueryArguments: ExtractQueryArgumentsUseCase,
     val guestSessionNotExpired: GuestSessionNotExpiredUseCase
 )

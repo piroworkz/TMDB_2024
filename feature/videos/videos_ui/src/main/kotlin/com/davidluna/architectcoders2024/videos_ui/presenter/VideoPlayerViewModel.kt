@@ -3,11 +3,12 @@ package com.davidluna.architectcoders2024.videos_ui.presenter
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
+import androidx.navigation.toRoute
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
-import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation
 import com.davidluna.architectcoders2024.videos_domain.usecases.GetVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +25,7 @@ import javax.inject.Inject
 class VideoPlayerViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getVideosUseCase: GetVideosUseCase,
-    private val getContentKindUseCase: GetContentKindUseCase
+    private val getContentKindUseCase: GetContentKindUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlayerState())
@@ -38,7 +39,7 @@ class VideoPlayerViewModel @Inject constructor(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
         val videos: List<String> = emptyList(),
-        val contentKind: ContentKind = ContentKind.MOVIE
+        val contentKind: ContentKind = ContentKind.MOVIE,
     )
 
     private fun collectContentKind() {
@@ -57,13 +58,11 @@ class VideoPlayerViewModel @Inject constructor(
 
     private fun getVideos() = run {
         val from = if (_state.value.contentKind == ContentKind.MOVIE) MOVIE else TV
-        savedStateHandle.get<Int>(Args.DetailId.name)?.let { movieId ->
-            getVideosUseCase("$from/$movieId").fold(
-                ifLeft = { e: AppError -> _state.update { it.copy(appError = e) } },
-                ifRight = { r -> _state.update { s -> s.copy(videos = r.sortedBy { it.order }.map { it.key }) } }
-            )
-        }
-
+        val movieId = savedStateHandle.toRoute<YoutubeNavigation.Video>().movieId
+        getVideosUseCase("$from/$movieId").fold(
+            ifLeft = { e: AppError -> _state.update { it.copy(appError = e) } },
+            ifRight = { r -> _state.update { s -> s.copy(videos = r.sortedBy { it.order }.map { it.key }) } }
+        )
     }
 
     private fun run(action: suspend CoroutineScope.() -> Unit) {

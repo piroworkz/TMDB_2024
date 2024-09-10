@@ -1,35 +1,20 @@
 package com.davidluna.architectcoders2024.core_ui.navigation.destination
 
-import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
-import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs
-import com.davidluna.architectcoders2024.core_ui.navigation.args.SafeArgs
+import kotlinx.serialization.Serializable
 
-sealed class MediaNavigation(
-    override val name: String,
-    override val args: List<Pair<SafeArgs, Any?>> = emptyList()
-) : Destination {
+@Serializable
+sealed interface MediaNavigation : Destination {
 
-    data object Init : MediaNavigation(
-        name = INIT
-    )
+    @Serializable
+    data object Init : MediaNavigation
 
-    data object MediaCatalog : MediaNavigation(
-        name = MAIN,
-        args = listOf(DefaultArgs.TopLevel to DefaultArgs.TopLevel.defaultValue)
-    )
+    @Serializable
+    data class MediaCatalog(val topLevel: Boolean = true) : MediaNavigation
 
-    data class Detail(val movieId: Int? = null, val appBarTitle: String?) : MediaNavigation(
-        name = DETAIL,
-        args = listOf(
-            Args.DetailId to movieId,
-            Args.AppBarTitle to appBarTitle
-        )
-    )
-
-    companion object {
-        private const val INIT = "INIT"
-        private const val MAIN = "MAIN"
-        private const val DETAIL = "DETAIL"
-    }
-
+    @Serializable
+    data class Detail(
+        val movieId: Int,
+        val appBarTitle: String,
+        val topLevel: Boolean = false,
+    ) : MediaNavigation
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class NavDrawerState(
     private val drawerState: DrawerState,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
 ) {
     val state: DrawerState = drawerState
 
@@ -25,5 +25,5 @@ class NavDrawerState(
 @Composable
 fun rememberNavDrawerState(
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    scope: CoroutineScope
+    scope: CoroutineScope,
 ): NavDrawerState = remember(drawerState) { NavDrawerState(drawerState, scope) }

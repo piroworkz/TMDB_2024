@@ -3,6 +3,7 @@ package com.davidluna.architectcoders2024.auth_ui.presenter
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.davidluna.architectcoders2024.auth_domain.entities.session.LoginRequest
 import com.davidluna.architectcoders2024.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GuestButtonCLicked
@@ -12,8 +13,7 @@ import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.Navigate
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.SetAppError
 import com.davidluna.architectcoders2024.core_domain.entities.Session
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
-import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs.Auth.defaultValue
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.MediaCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -97,12 +97,12 @@ class LoginViewModel @Inject constructor(
             .invoke(_state.value.session?.guestSession?.expiresAt ?: "")
 
         if (isNotExpired) {
-            setDestination(MediaCatalog)
+            setDestination(MediaCatalog())
         } else {
             usecases.createGuestSessionId().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
                 ifRight = {
-                    setDestination(MediaCatalog)
+                    setDestination(MediaCatalog())
                 }
             )
         }
@@ -111,7 +111,7 @@ class LoginViewModel @Inject constructor(
     private fun getAccount() = run {
         usecases.getUserAccount().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { setDestination(MediaCatalog) }
+            ifRight = { setDestination(MediaCatalog()) }
         )
     }
 
@@ -128,13 +128,14 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun getArguments() {
-        val args: String = savedStateHandle.get<String>(NavArgument.APPROVED) ?: defaultValue
-        if (args != defaultValue) {
-            usecases.extractQueryArguments(args).apply {
-                if (approved) fetchSession(requestToken)
-            }
+        val loginArgs = savedStateHandle.toRoute<AuthNavigation.Login>()
+        if (userApprovedApp(loginArgs)) {
+            fetchSession(loginArgs.requestToken)
         }
     }
+
+    private fun userApprovedApp(loginArgs: AuthNavigation.Login) =
+        loginArgs.requestToken.isNotEmpty() && loginArgs.approved
 
     private fun String.toLoginRequest(): LoginRequest = LoginRequest(this)
 
@@ -153,6 +154,3 @@ class LoginViewModel @Inject constructor(
     }
 
 }
-
-
-

@@ -10,13 +10,13 @@ import com.davidluna.architectcoders2024.convention.helpers.ksp
 import com.davidluna.architectcoders2024.convention.libs.arrowCore
 import com.davidluna.architectcoders2024.convention.libs.coilCompose
 import com.davidluna.architectcoders2024.convention.libs.composeActivity
+import com.davidluna.architectcoders2024.convention.libs.composeNavigation
 import com.davidluna.architectcoders2024.convention.libs.hiltAndroid
 import com.davidluna.architectcoders2024.convention.libs.hiltCompiler
 import com.davidluna.architectcoders2024.convention.libs.hiltNavigationCompose
 import com.davidluna.architectcoders2024.convention.libs.kotlinConverter
 import com.davidluna.architectcoders2024.convention.libs.kotlinxSerializationJson
 import com.davidluna.architectcoders2024.convention.libs.libs
-import com.davidluna.architectcoders2024.convention.libs.navigation
 import com.davidluna.architectcoders2024.convention.libs.okhttpClient
 import com.davidluna.architectcoders2024.convention.libs.okhttpLoggingInterceptor
 import com.davidluna.architectcoders2024.convention.libs.retrofit
@@ -39,7 +39,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             implementation(libs.hiltNavigationCompose)
             implementation(libs.composeActivity)
             implementation(libs.coilCompose)
-            implementation(libs.navigation)
+            implementation(libs.composeNavigation)
             implementation(libs.retrofit)
             implementation(libs.okhttpClient)
             implementation(libs.okhttpLoggingInterceptor)

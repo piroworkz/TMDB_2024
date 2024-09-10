@@ -3,22 +3,22 @@ package com.davidluna.architectcoders2024.media_ui.presenter.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.media_domain.entities.Cast
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_domain.entities.MediaDetails
-import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCastUseCase
+import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -68,8 +68,7 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private fun getArgs(savedStateHandle: SavedStateHandle) {
-        savedStateHandle.get<Int>(Args.DetailId.name)
-            ?.let { movieId -> _state.value.contentKind?.let { _ -> fetchData(movieId) } }
+        _state.value.contentKind?.let { _ -> fetchData(savedStateHandle.toRoute<MediaNavigation.Detail>().movieId) }
     }
 
     private fun onMovieSelected(movieId: Int, appBarTitle: String) {

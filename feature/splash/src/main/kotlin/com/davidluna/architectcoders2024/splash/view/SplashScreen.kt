@@ -24,6 +24,7 @@ import com.davidluna.architectcoders2024.core_domain.entities.errors.AppErrorCod
 import com.davidluna.architectcoders2024.core_domain.entities.tags.CoreTag
 import com.davidluna.architectcoders2024.core_ui.R
 import com.davidluna.architectcoders2024.core_ui.composables.ErrorDialogView
+import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
 import com.davidluna.architectcoders2024.splash.animation.AnimationLaunchedEffect
 import com.davidluna.architectcoders2024.splash.animation.AnimationState
 import com.davidluna.architectcoders2024.splash.animation.AnimationStateHolder
@@ -101,7 +102,7 @@ private fun GraphicsLayerScope.createBlurEffect(animationState: AnimationStateHo
 )
 @Composable
 private fun SplashScreenPreview() {
-    com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
+    TmdbTheme {
         SplashScreen { }
     }
 }

@@ -15,10 +15,10 @@ import com.davidluna.architectcoders2024.app.main_ui.view.composables.DrawerScaf
 import com.davidluna.architectcoders2024.app.main_ui.view.composables.rememberNavigatorState
 import com.davidluna.architectcoders2024.auth_ui.navigation.authNavGraph
 import com.davidluna.architectcoders2024.core_domain.entities.tags.CoreTag
-import com.davidluna.architectcoders2024.media_ui.navigation.mediaNavGraph
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.StartNavigation
-import com.davidluna.architectcoders2024.core_ui.navigation.route
+import com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme
+import com.davidluna.architectcoders2024.media_ui.navigation.mediaNavGraph
 import com.davidluna.architectcoders2024.splash.navigation.splashNavGraph
 import com.davidluna.architectcoders2024.videos_ui.navigation.youtubeNavGraph
 
@@ -28,6 +28,7 @@ fun Navigator(
     sendEvent: (MainEvent) -> Unit,
 ) = with(rememberNavigatorState()) {
 
+
     DrawerScaffoldView(
         state = state,
         appBarTitle = appBarTitle,
@@ -35,7 +36,7 @@ fun Navigator(
     ) { paddingValues: PaddingValues ->
         NavHost(
             navController = controller,
-            startDestination = StartNavigation.Init.route(),
+            startDestination = StartNavigation.Init,
             modifier = Modifier
                 .padding(paddingValues)
                 .testTag(CoreTag.NAV_HOST_VIEW),
@@ -45,14 +46,14 @@ fun Navigator(
 
             splashNavGraph {
                 navigateTo(it) {
-                    popUpTo(StartNavigation.Init.route()) { inclusive = true }
+                    popUpTo(StartNavigation.Init) { inclusive = true }
                     launchSingleTop = true
                 }
             }
 
             authNavGraph {
                 navigateTo(it) {
-                    popUpTo(AuthNavigation.Init.route()) { inclusive = true }
+                    popUpTo(AuthNavigation.Init) { inclusive = true }
                     launchSingleTop = true
                 }
             }
@@ -70,7 +71,7 @@ fun Navigator(
 )
 @Composable
 private fun AppScaffoldPreView() {
-    com.davidluna.architectcoders2024.core_ui.theme.TmdbTheme {
+    TmdbTheme {
         Navigator(MainViewModel.MainState()) {
 
         }

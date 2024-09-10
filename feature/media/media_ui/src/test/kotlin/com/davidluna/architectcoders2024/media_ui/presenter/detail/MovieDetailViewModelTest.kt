@@ -5,16 +5,15 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation
 import com.davidluna.architectcoders2024.media_domain.entities.Media
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCastUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.view.details.composables.fakeDetails
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
-import com.davidluna.architectcoders2024.core_ui.navigation.destination.YoutubeNavigation
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeCastList
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeContentKind
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeImages
@@ -254,9 +253,9 @@ class MovieDetailViewModelTest {
                 Truth.assertThat(awaitItem().isLoading).isTrue()
                 Truth.assertThat(awaitItem().movieCredits).isEqualTo(fakeCastList)
                 Truth.assertThat(awaitItem().isLoading).isFalse()
-                viewModel.sendEvent(MovieDetailEvent.OnNavigate(YoutubeNavigation.Video(fakeDetails.id)))
+                viewModel.sendEvent(MovieDetailEvent.OnNavigate(YoutubeNavigation.Video(movieId = fakeDetails.id)))
                 Truth.assertThat(awaitItem().destination)
-                    .isEqualTo(YoutubeNavigation.Video(fakeDetails.id))
+                    .isEqualTo(YoutubeNavigation.Video(movieId = fakeDetails.id))
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -264,7 +263,7 @@ class MovieDetailViewModelTest {
     private fun buildViewModel(
         savedStateHandle: SavedStateHandle = SavedStateHandle(
             mapOf(
-                NavArgument.MEDIA_ID to fakeDetails.id
+                "movieId" to fakeDetails.id
             )
         )
     ): MovieDetailViewModel {

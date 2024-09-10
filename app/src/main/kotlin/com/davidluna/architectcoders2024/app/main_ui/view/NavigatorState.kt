@@ -9,13 +9,10 @@ import androidx.navigation.NavOptionsBuilder
 import com.davidluna.architectcoders2024.app.main_ui.presenter.MainEvent
 import com.davidluna.architectcoders2024.app.main_ui.view.composables.NavDrawerState
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument.APP_BAR_TITLE
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument.HIDE_APP_BAR
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument.IS_TOP_LEVEL
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.DrawerItem
-import com.davidluna.architectcoders2024.core_ui.navigation.route
-import com.davidluna.architectcoders2024.core_ui.navigation.setArgs
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.StartNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -24,7 +21,7 @@ class NavigatorState(
     private val navController: NavHostController,
     private val drawerState: NavDrawerState,
     backStackEntry: Flow<NavBackStackEntry>,
-    scope: CoroutineScope
+    scope: CoroutineScope,
 ) {
 
     init {
@@ -61,20 +58,19 @@ class NavigatorState(
     fun navigateTo(
         destination: Destination,
         optionsBuilder: (NavOptionsBuilder.() -> Unit) = {
-            popUpTo(destination.route()) { inclusive = true }
-        }
+            popUpTo(destination) { inclusive = true }
+        },
     ) {
         navController.navigate(
-            route = destination.setArgs(),
+            route = destination,
             builder = { optionsBuilder() }
         )
     }
 
     fun onDrawerItemSelected(
         drawerDestination: DrawerItem?,
-        sendEvent: (MainEvent) -> Unit
+        sendEvent: (MainEvent) -> Unit,
     ) {
-
         when (drawerDestination) {
             DrawerItem.CloseSession -> sendEvent(MainEvent.OnCloseSession)
             DrawerItem.Movies -> sendEvent(MainEvent.SetContentKind(ContentKind.MOVIE))
@@ -86,14 +82,14 @@ class NavigatorState(
 
     private fun collectFlow(
         scope: CoroutineScope,
-        backStackEntry: Flow<NavBackStackEntry>
+        backStackEntry: Flow<NavBackStackEntry>,
     ) {
         scope.launch {
             backStackEntry.collect {
                 it.arguments?.let { args ->
-                    hideAppBar = args.getBoolean(HIDE_APP_BAR)
-                    isTopLevel = args.getBoolean(IS_TOP_LEVEL)
-                    appBarTitle = args.getString(APP_BAR_TITLE)
+                    hideAppBar = args.getBoolean(StartNavigation.Splash::hideAppBar.name)
+                    isTopLevel = args.getBoolean(MediaNavigation.MediaCatalog::topLevel.name)
+                    appBarTitle = args.getString(MediaNavigation.Detail::appBarTitle.name)
                 }
             }
         }

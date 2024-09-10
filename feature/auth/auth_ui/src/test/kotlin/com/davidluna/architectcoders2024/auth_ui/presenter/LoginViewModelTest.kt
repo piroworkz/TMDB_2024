@@ -7,18 +7,14 @@ import arrow.core.right
 import com.davidluna.architectcoders2024.auth_domain.usecases.CreateGuestSessionIdUseCase
 import com.davidluna.architectcoders2024.auth_domain.usecases.CreateRequestTokenUseCase
 import com.davidluna.architectcoders2024.auth_domain.usecases.CreateSessionUseCase
-import com.davidluna.architectcoders2024.auth_domain.usecases.ExtractQueryArgumentsUseCase
 import com.davidluna.architectcoders2024.auth_domain.usecases.GetUserAccountUseCase
 import com.davidluna.architectcoders2024.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.architectcoders2024.auth_domain.usecases.LoginViewModelUseCases
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.SessionUseCase
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
-import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeGuestSession
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeLoginRequest
-import com.davidluna.architectcoders2024.test_shared.fakes.fakeQueryArgs
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeSession
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeTokenResponse
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeUnknownAppError
@@ -59,9 +55,6 @@ class LoginViewModelTest {
     lateinit var sessionUseCase: SessionUseCase
 
     @Mock
-    lateinit var extractQueryArgumentsUseCase: ExtractQueryArgumentsUseCase
-
-    @Mock
     lateinit var guestSessionNotExpiredUseCase: GuestSessionNotExpiredUseCase
 
     private lateinit var useCases: LoginViewModelUseCases
@@ -76,7 +69,6 @@ class LoginViewModelTest {
             createGuestSessionIdUseCase,
             getUserAccountUseCase,
             sessionUseCase,
-            extractQueryArgumentsUseCase,
             guestSessionNotExpiredUseCase
         )
     }
@@ -86,7 +78,7 @@ class LoginViewModelTest {
         runTest {
             val savedStateHandle = SavedStateHandle()
             val expected = initialState.copy(
-                destination = MediaNavigation.MediaCatalog,
+                destination = MediaNavigation.MediaCatalog(),
                 session = fakeEmptySession
             )
             whenever(createGuestSessionIdUseCase()).thenReturn(fakeGuestSession.right())
@@ -136,7 +128,7 @@ class LoginViewModelTest {
         runTest {
             val savedStateHandle = SavedStateHandle()
             val expected = initialState.copy(
-                destination = MediaNavigation.MediaCatalog,
+                destination = MediaNavigation.MediaCatalog(),
                 session = fakeGuestSession
             )
             whenever(sessionUseCase()).thenReturn(flowOf(fakeGuestSession))
@@ -213,13 +205,11 @@ class LoginViewModelTest {
     @Test
     fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue) THEN (should fetch user session and update destination state = MediaNavigation MediaCatalog)`() =
         runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val savedStateHandle = SavedStateHandle()
             val expected = initialState.copy(
-                destination = MediaNavigation.MediaCatalog,
+                destination = MediaNavigation.MediaCatalog(),
                 session = fakeEmptySession,
             )
-            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
             whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeSession.right())
             whenever(getUserAccountUseCase()).thenReturn(fakeUserAccount.right())
@@ -236,7 +226,6 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
             verify(sessionUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
             verify(getUserAccountUseCase).invoke()
@@ -245,15 +234,14 @@ class LoginViewModelTest {
     @Test
     fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue and createSessionUseCase fails) THEN (should update appError state = AppError Message)`() =
         runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val savedStateHandle = SavedStateHandle()
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
 
-            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
             whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
-                fakeUnknownAppError.left())
+                fakeUnknownAppError.left()
+            )
 
             val viewModel = buildViewModel(savedStateHandle)
 
@@ -265,7 +253,6 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
             verify(sessionUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
         }
@@ -274,15 +261,14 @@ class LoginViewModelTest {
     @Test
     fun `GIVEN (launched and approved login on TMDB site) WHEN (deeplink args != defaultValue and getUserAccountUseCase fails) THEN (should update appError state = AppError Message)`() =
         runTest {
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val savedStateHandle = SavedStateHandle()
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
 
-            whenever(extractQueryArgumentsUseCase(any())).thenReturn(fakeQueryArgs)
             whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
-                fakeSession.right())
+                fakeSession.right()
+            )
             whenever(getUserAccountUseCase()).thenReturn(fakeUnknownAppError.left())
 
             val viewModel = buildViewModel(savedStateHandle)
@@ -297,7 +283,6 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(extractQueryArgumentsUseCase).invoke(FAKE_QUERY_PARAMS)
             verify(sessionUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
             verify(getUserAccountUseCase).invoke()

@@ -2,11 +2,8 @@ package com.davidluna.architectcoders2024.auth_ui.presenter
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.davidluna.architectcoders2024.core_domain.entities.labels.NavArgument
-import com.davidluna.architectcoders2024.fakes.FakeAuthDi
-import com.davidluna.architectcoders2024.core_ui.navigation.args.DefaultArgs
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
-import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_QUERY_PARAMS
+import com.davidluna.architectcoders2024.fakes.FakeAuthDi
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
@@ -28,11 +25,10 @@ class LoginIntegrationTest {
     fun `GIVEN (user is guest) WHEN (event is GuestButtonCLicked) THEN (should go through guest session authentication process)`() =
         runTest {
             val expected = initialState.copy(
-                destination = MediaNavigation.MediaCatalog,
+                destination = MediaNavigation.MediaCatalog(),
                 session = fakeEmptySession
             )
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to DefaultArgs.Auth.defaultValue))
+            val savedStateHandle = SavedStateHandle()
             val viewModel = buildViewModel(savedStateHandle)
 
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
@@ -55,8 +51,7 @@ class LoginIntegrationTest {
                 launchTMDBWeb = true,
                 session = fakeEmptySession
             )
-            val savedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to DefaultArgs.Auth.defaultValue))
+            val savedStateHandle = SavedStateHandle()
 
             val viewModel = buildViewModel(savedStateHandle)
             viewModel.sendEvent(LoginEvent.LoginButtonClicked)
@@ -72,11 +67,10 @@ class LoginIntegrationTest {
 
             val secondExpected =
                 initialState.copy(
-                    destination = MediaNavigation.MediaCatalog,
+                    destination = MediaNavigation.MediaCatalog(),
                     session = fakeEmptySession
                 )
-            val secondSavedStateHandle =
-                SavedStateHandle(mapOf(NavArgument.APPROVED to FAKE_QUERY_PARAMS))
+            val secondSavedStateHandle = SavedStateHandle()
             val newViewModel = buildViewModel(secondSavedStateHandle)
 
             newViewModel.state.test {

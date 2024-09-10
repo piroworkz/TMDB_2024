@@ -11,6 +11,7 @@ import com.davidluna.architectcoders2024.convention.libs.arrowCore
 import com.davidluna.architectcoders2024.convention.libs.hiltAndroid
 import com.davidluna.architectcoders2024.convention.libs.hiltCompiler
 import com.davidluna.architectcoders2024.convention.libs.hiltNavigationCompose
+import com.davidluna.architectcoders2024.convention.libs.kotlinxSerializationJson
 import com.davidluna.architectcoders2024.convention.libs.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -29,6 +30,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
             implementation(libs.arrowCore)
             implementation(libs.hiltNavigationCompose)
             implementation(libs.hiltAndroid)
+            implementation(libs.kotlinxSerializationJson)
             ksp(libs.hiltCompiler)
             composeUiBundle
             unitTestingBundle

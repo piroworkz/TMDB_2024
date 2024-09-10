@@ -25,7 +25,6 @@ fun NavigatorState.DrawerScaffoldView(
     sendEvent: (MainEvent) -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
-
     ModalNavigationDrawer(
         drawerContent = {
             if (isTopLevel) {

@@ -34,6 +34,7 @@ internal val Project.uiPluginManager: PluginManager
     get() = frameworkPluginManager.apply {
         hiltPluginManager
         alias(libs.composeCompiler)
+        alias(libs.kotlinSerialization)
     }
 
 internal val Project.applicationPluginManager: PluginManager

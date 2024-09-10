@@ -22,14 +22,14 @@ sealed class DrawerItem(
     data object Movies : DrawerItem(
         titleResource = R.string.drawer_movies,
         iconResource = Icons.Outlined.Movie,
-        destination = MediaNavigation.MediaCatalog,
+        destination = MediaNavigation.MediaCatalog(),
         contentKind = ContentKind.MOVIE
     )
 
     data object TvShows : DrawerItem(
         titleResource = R.string.drawer_tv_shows,
         iconResource = Icons.Outlined.Tv,
-        destination = MediaNavigation.MediaCatalog,
+        destination = MediaNavigation.MediaCatalog(),
         contentKind = ContentKind.TV_SHOW
     )
 

@@ -58,7 +58,7 @@ class BiometricAuthenticationState(
     fun BioResultEffect(sendEvent: (event: LoginEvent) -> Unit) {
         LaunchedEffect(bioResult.value) {
             if (bioResult.value == BioResult.SUCCESS) {
-                sendEvent(LoginEvent.Navigate(MediaNavigation.MediaCatalog))
+                sendEvent(LoginEvent.Navigate(MediaNavigation.MediaCatalog()))
                 sendEvent(LoginEvent.LaunchBioPrompt(false))
             } else {
                 sendEvent(LoginEvent.LaunchBioPrompt(false))

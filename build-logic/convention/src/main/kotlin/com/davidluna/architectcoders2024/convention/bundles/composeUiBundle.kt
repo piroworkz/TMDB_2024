@@ -5,6 +5,7 @@ import com.davidluna.architectcoders2024.convention.helpers.implementation
 import com.davidluna.architectcoders2024.convention.libs.composeAnimation
 import com.davidluna.architectcoders2024.convention.libs.composeBom
 import com.davidluna.architectcoders2024.convention.libs.composeMaterial3
+import com.davidluna.architectcoders2024.convention.libs.composeNavigation
 import com.davidluna.architectcoders2024.convention.libs.composeUi
 import com.davidluna.architectcoders2024.convention.libs.composeUiGraphics
 import com.davidluna.architectcoders2024.convention.libs.composeUiTooling
@@ -22,8 +23,9 @@ internal val Project.composeUiBundle: Unit
             implementation(libs.composeUiGraphics)
             implementation(libs.composeUiToolingPreview)
             implementation(libs.composeMaterial3)
-            implementation(libs.iconsExtended)
+            implementation(libs.composeNavigation)
             implementation(libs.composeAnimation)
+            implementation(libs.iconsExtended)
             debugImplementation(libs.composeUiTooling)
         }
     }

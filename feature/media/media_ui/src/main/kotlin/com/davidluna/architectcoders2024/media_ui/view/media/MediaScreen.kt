@@ -33,7 +33,7 @@ import com.davidluna.architectcoders2024.media_ui.view.media.composables.ReelVie
 @Composable
 fun MediaCatalogScreen(
     state: MediaCatalogViewModel.State,
-    sendEvent: (MediaEvent) -> Unit,
+    sendEvent: (MediaEvent) -> Unit
 ) {
     val firstList = state.firstList.collectAsLazyPagingItems()
     val secondList = state.secondList.collectAsLazyPagingItems()
