@@ -1,6 +1,5 @@
 package com.davidluna.architectcoders2024.videos_ui.presenter
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
@@ -29,9 +28,6 @@ class VideoPlayerViewModelTest {
     val coroutineTestRule = CoroutineTestRule()
 
     @Mock
-    private lateinit var savedStateHandle: SavedStateHandle
-
-    @Mock
     private lateinit var getVideosUseCase: GetVideosUseCase
 
     @Mock
@@ -39,10 +35,11 @@ class VideoPlayerViewModelTest {
 
     private val initialState = VideoPlayerViewModel.PlayerState()
 
+    private val mediaId = 123456
+
     @Test
     fun `GIVEN (viewModel is initialized) WHEN (getContentKindUseCase succeeds) THEN (should update contentKind state = ContentKind)`() =
         runTest {
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(1)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getVideosUseCase(any())).thenReturn(fakeMovieVideos.right())
 
@@ -73,26 +70,24 @@ class VideoPlayerViewModelTest {
     @Test
     fun `GIVEN (getContentKindUseCase succeeds) WHEN (getVideosUseCase succeeds) THEN (should update videos state = List of Video)`() =
         runTest {
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(1)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getVideosUseCase(any())).thenReturn(fakeMovieVideos.right())
 
-            val viewModel = buildViewModel()
+            val viewModel = buildViewModel(mediaId)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
-                Truth.assertThat(awaitItem().videos).isEqualTo(fakeMovieVideos.sortedBy { it.order }.map { it.key })
+                Truth.assertThat(awaitItem().videos)
+                    .isEqualTo(fakeMovieVideos.sortedBy { it.order }.map { it.key })
                 cancelAndIgnoreRemainingEvents()
             }
         }
 
 
-
     @Test
     fun `GIVEN (getContentKindUseCase succeeds) WHEN (getVideosUseCase fails) THEN (should update appError state = AppError)`() =
         runTest {
-            whenever(savedStateHandle.get<Int>(any())).thenReturn(1)
             whenever(getContentKindUseCase.invoke()).thenReturn(flowOf(fakeContentKind))
             whenever(getVideosUseCase(any())).thenReturn(fakeNotFoundAppError.left())
 
@@ -107,7 +102,6 @@ class VideoPlayerViewModelTest {
         }
 
 
-
-    private fun buildViewModel() =
-        VideoPlayerViewModel(savedStateHandle, getVideosUseCase, getContentKindUseCase)
+    private fun buildViewModel(mediaId: Int = -1) =
+        VideoPlayerViewModel(mediaId, getVideosUseCase, getContentKindUseCase)
 }

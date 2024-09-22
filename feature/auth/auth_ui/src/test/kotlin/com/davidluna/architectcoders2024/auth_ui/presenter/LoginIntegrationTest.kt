@@ -1,9 +1,10 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation.Login
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.fakes.FakeAuthDi
+import com.davidluna.architectcoders2024.test_shared.fakes.FAKE_REQUEST_TOKEN
 import com.davidluna.architectcoders2024.test_shared.fakes.fakeEmptySession
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
@@ -20,7 +21,11 @@ class LoginIntegrationTest {
     val coroutineTestRule = CoroutineTestRule()
 
     private val initialState = LoginViewModel.LoginState()
-
+    private val loginArgs: Login = Login(
+        requestToken = FAKE_REQUEST_TOKEN,
+        approved = true,
+        hideAppBar = true
+    )
     @Test
     fun `GIVEN (user is guest) WHEN (event is GuestButtonCLicked) THEN (should go through guest session authentication process)`() =
         runTest {
@@ -28,8 +33,7 @@ class LoginIntegrationTest {
                 destination = MediaNavigation.MediaCatalog(),
                 session = fakeEmptySession
             )
-            val savedStateHandle = SavedStateHandle()
-            val viewModel = buildViewModel(savedStateHandle)
+            val viewModel = buildViewModel()
 
             viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
 
@@ -51,9 +55,8 @@ class LoginIntegrationTest {
                 launchTMDBWeb = true,
                 session = fakeEmptySession
             )
-            val savedStateHandle = SavedStateHandle()
 
-            val viewModel = buildViewModel(savedStateHandle)
+            val viewModel = buildViewModel()
             viewModel.sendEvent(LoginEvent.LoginButtonClicked)
 
             viewModel.state.test {
@@ -70,8 +73,7 @@ class LoginIntegrationTest {
                     destination = MediaNavigation.MediaCatalog(),
                     session = fakeEmptySession
                 )
-            val secondSavedStateHandle = SavedStateHandle()
-            val newViewModel = buildViewModel(secondSavedStateHandle)
+            val newViewModel = buildViewModel(loginArgs)
 
             newViewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -86,11 +88,10 @@ class LoginIntegrationTest {
         }
 
     private fun buildViewModel(
-        savedStateHandle: SavedStateHandle,
+        loginArgs: Login = Login(),
     ): LoginViewModel {
-        return LoginViewModel(savedStateHandle, FakeAuthDi().loginViewModelUseCases)
+        return LoginViewModel(loginArgs, FakeAuthDi().loginViewModelUseCases)
     }
-
 
 }
 

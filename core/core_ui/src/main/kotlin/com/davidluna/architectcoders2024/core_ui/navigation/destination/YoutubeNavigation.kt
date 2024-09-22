@@ -11,6 +11,6 @@ sealed interface YoutubeNavigation : Destination {
     @Serializable
     data class Video(
         val hideAppBar: Boolean = true,
-        val movieId: Int = -1,
+        val mediaId: Int = -1,
     ) : MediaNavigation
 }

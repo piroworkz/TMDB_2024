@@ -1,6 +1,5 @@
 package com.davidluna.architectcoders2024.media_ui.presenter.detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import arrow.core.left
@@ -56,6 +55,8 @@ class MovieDetailViewModelTest {
     private lateinit var getContentKindUseCase: GetContentKindUseCase
 
     private val initialState = MovieDetailViewModel.State()
+
+    private val mediaId = 123456
 
     @Test
     fun `GIVEN (viewModel is initialized) WHEN (getContentKindUseCase succeeds) THEN (should update contentKind state = ContentKind)`() =
@@ -253,22 +254,16 @@ class MovieDetailViewModelTest {
                 Truth.assertThat(awaitItem().isLoading).isTrue()
                 Truth.assertThat(awaitItem().movieCredits).isEqualTo(fakeCastList)
                 Truth.assertThat(awaitItem().isLoading).isFalse()
-                viewModel.sendEvent(MovieDetailEvent.OnNavigate(YoutubeNavigation.Video(movieId = fakeDetails.id)))
+                viewModel.sendEvent(MovieDetailEvent.OnNavigate(YoutubeNavigation.Video(mediaId = fakeDetails.id)))
                 Truth.assertThat(awaitItem().destination)
-                    .isEqualTo(YoutubeNavigation.Video(movieId = fakeDetails.id))
+                    .isEqualTo(YoutubeNavigation.Video(mediaId = fakeDetails.id))
                 cancelAndIgnoreRemainingEvents()
             }
         }
 
-    private fun buildViewModel(
-        savedStateHandle: SavedStateHandle = SavedStateHandle(
-            mapOf(
-                "movieId" to fakeDetails.id
-            )
-        )
-    ): MovieDetailViewModel {
+    private fun buildViewModel(): MovieDetailViewModel {
         return MovieDetailViewModel(
-            savedStateHandle,
+            mediaId,
             getMovieDetails,
             getMediaImagesUseCase,
             getMediaCastUseCase,

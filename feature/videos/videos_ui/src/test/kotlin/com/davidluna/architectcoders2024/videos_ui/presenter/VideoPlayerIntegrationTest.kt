@@ -1,9 +1,8 @@
 package com.davidluna.architectcoders2024.videos_ui.presenter
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.davidluna.architectcoders2024.fakes.FakeVideosDI
-import com.davidluna.architectcoders2024.core_ui.navigation.args.Args
+import com.davidluna.architectcoders2024.test_shared.fakes.fakeMovieVideos
 import com.davidluna.architectcoders2024.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
@@ -18,9 +17,8 @@ class VideoPlayerIntegrationTest {
     @get:Rule
     val coroutineTestRule = CoroutineTestRule()
 
-    private val savedStateHandle = SavedStateHandle(mapOf(Args.DetailId.name to 1022789))
-
     private val initialState = VideoPlayerViewModel.PlayerState()
+    private val mediaId = fakeMovieVideos.first().id.toInt()
 
     @Test
     fun `GIVEN (viewmodel init) WHEN (contentKind state = MOVIE) THEN (should fetch videos from service)`() =
@@ -38,7 +36,7 @@ class VideoPlayerIntegrationTest {
 
     private fun buildViewModel(): VideoPlayerViewModel {
         return VideoPlayerViewModel(
-            savedStateHandle,
+            mediaId,
             FakeVideosDI().getVideosUseCase,
             FakeVideosDI().getContentKindUseCase
         )

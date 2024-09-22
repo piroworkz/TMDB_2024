@@ -1,9 +1,7 @@
 package com.davidluna.architectcoders2024.media_ui.presenter.detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
@@ -19,6 +17,9 @@ import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUs
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -28,11 +29,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MovieDetailViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+@HiltViewModel(assistedFactory = MovieDetailViewModel.MediaIdFactory::class)
+class MovieDetailViewModel @AssistedInject constructor(
+    @Assisted
+    private val movieId: Int,
     private val getMovieDetails: GetMediaDetailsUseCase,
     private val getMediaImagesUseCase: GetMediaImagesUseCase,
     private val getMediaCastUseCase: GetMediaCastUseCase,
@@ -67,8 +68,8 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getArgs(savedStateHandle: SavedStateHandle) {
-        _state.value.contentKind?.let { _ -> fetchData(savedStateHandle.toRoute<MediaNavigation.Detail>().movieId) }
+    private fun getArgs() {
+        _state.value.contentKind?.let { _ -> fetchData(movieId) }
     }
 
     private fun onMovieSelected(movieId: Int, appBarTitle: String) {
@@ -133,7 +134,7 @@ class MovieDetailViewModel @Inject constructor(
                 .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
                 .collect { contentKind ->
                     _state.update { it.copy(contentKind = contentKind) }
-                    getArgs(savedStateHandle)
+                    getArgs()
                 }
         }
     }
@@ -156,6 +157,11 @@ class MovieDetailViewModel @Inject constructor(
         private const val SIMILAR = "/similar"
         private const val MOVIES = "movie/"
         private const val TV = "tv/"
+    }
+
+    @AssistedFactory
+    interface MediaIdFactory {
+        fun create(mediaId: Int): MovieDetailViewModel
     }
 
 }

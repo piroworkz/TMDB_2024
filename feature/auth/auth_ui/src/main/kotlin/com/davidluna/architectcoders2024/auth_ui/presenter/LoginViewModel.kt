@@ -1,9 +1,7 @@
 package com.davidluna.architectcoders2024.auth_ui.presenter
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.davidluna.architectcoders2024.auth_domain.entities.session.LoginRequest
 import com.davidluna.architectcoders2024.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.architectcoders2024.auth_ui.presenter.LoginEvent.GuestButtonCLicked
@@ -16,6 +14,9 @@ import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.MediaCatalog
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,11 +24,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+@HiltViewModel(assistedFactory = LoginViewModel.Factory::class)
+class LoginViewModel @AssistedInject constructor(
+    @Assisted
+    private val loginArgs: AuthNavigation.Login,
     private val usecases: LoginViewModelUseCases,
 ) : ViewModel() {
 
@@ -42,6 +43,8 @@ class LoginViewModel @Inject constructor(
     data class LoginState(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
+        val userName: String = String(),
+        val password: String = String(),
         val session: Session? = null,
         val token: String? = null,
         val launchTMDBWeb: Boolean = false,
@@ -76,6 +79,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun createRequestToken() = run {
+        setLaunchBioPrompt(false)
         usecases.createRequestToken().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
             ifRight = { r ->
@@ -128,13 +132,12 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun getArguments() {
-        val loginArgs = savedStateHandle.toRoute<AuthNavigation.Login>()
-        if (userApprovedApp(loginArgs)) {
+        if (userApprovedApp()) {
             fetchSession(loginArgs.requestToken)
         }
     }
 
-    private fun userApprovedApp(loginArgs: AuthNavigation.Login) =
+    private fun userApprovedApp() =
         loginArgs.requestToken.isNotEmpty() && loginArgs.approved
 
     private fun String.toLoginRequest(): LoginRequest = LoginRequest(this)
@@ -151,6 +154,11 @@ class LoginViewModel @Inject constructor(
                 _state.update { it.copy(isLoading = false) }
             }
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(loginArgs: AuthNavigation.Login): LoginViewModel
     }
 
 }

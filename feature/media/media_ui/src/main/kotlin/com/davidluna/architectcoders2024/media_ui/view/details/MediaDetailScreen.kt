@@ -66,7 +66,7 @@ fun MediaDetailScreen(
             PostersPagerView(images = joinImages(state))
 
             MediaDetailsView(state.movieDetail) {
-                sendEvent(OnNavigate(Video(movieId = state.movieDetail?.id ?: 0)))
+                sendEvent(OnNavigate(Video(mediaId = state.movieDetail?.id ?: 0)))
             }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))

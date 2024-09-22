@@ -13,8 +13,12 @@ sealed interface MediaNavigation : Destination {
 
     @Serializable
     data class Detail(
-        val movieId: Int,
-        val appBarTitle: String,
+        val movieId: Int = DEFAULT_ID,
+        val appBarTitle: String = String(),
         val topLevel: Boolean = false,
     ) : MediaNavigation
+
+    companion object {
+        const val DEFAULT_ID = -1
+    }
 }

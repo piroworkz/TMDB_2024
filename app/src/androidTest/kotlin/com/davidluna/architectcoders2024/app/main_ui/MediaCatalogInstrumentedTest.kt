@@ -254,6 +254,4 @@ class MediaCatalogInstrumentedTest {
         voteAverage = 7.7,
         hasVideo = true
     )
-
-
 }
