@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
+import com.davidluna.architectcoders2024.core_domain.entities.ContentKind.MOVIE
 import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_domain.entities.errors.toAppError
 import com.davidluna.architectcoders2024.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.architectcoders2024.core_ui.di.MediaId
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.media_domain.entities.Cast
@@ -17,9 +19,6 @@ import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaCatalogUs
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.architectcoders2024.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.architectcoders2024.media_ui.presenter.paging.asPagingFlow
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -29,16 +28,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@HiltViewModel(assistedFactory = MovieDetailViewModel.MediaIdFactory::class)
-class MovieDetailViewModel @AssistedInject constructor(
-    @Assisted
+@HiltViewModel
+class MovieDetailViewModel @Inject constructor(
+    @MediaId
     private val movieId: Int,
     private val getMovieDetails: GetMediaDetailsUseCase,
     private val getMediaImagesUseCase: GetMediaImagesUseCase,
     private val getMediaCastUseCase: GetMediaCastUseCase,
     private val getContent: GetMediaCatalogUseCase,
-    private val getContentKindUseCase: GetContentKindUseCase
+    private val getContentKindUseCase: GetContentKindUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -83,7 +83,7 @@ class MovieDetailViewModel @AssistedInject constructor(
     private fun resetError() = _state.update { it.copy(appError = null) }
 
     private fun fetchData(movieId: Int) {
-        val from = if (_state.value.contentKind == ContentKind.MOVIE) MOVIES else TV
+        val from = if (_state.value.contentKind == MOVIE) MOVIES else TV
         getDetails(from, movieId)
         getImages(from, movieId)
         getRecommendations(from, movieId)
@@ -93,7 +93,7 @@ class MovieDetailViewModel @AssistedInject constructor(
 
     private fun getDetails(
         from: String,
-        movieId: Int
+        movieId: Int,
     ) = run {
         getMovieDetails("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
@@ -103,7 +103,7 @@ class MovieDetailViewModel @AssistedInject constructor(
 
     private fun getCredits(
         from: String,
-        movieId: Int
+        movieId: Int,
     ) = run {
         getMediaCastUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
@@ -113,7 +113,7 @@ class MovieDetailViewModel @AssistedInject constructor(
 
     private fun getImages(
         from: String,
-        movieId: Int
+        movieId: Int,
     ) = run {
         getMediaImagesUseCase("$from$movieId").fold(
             ifLeft = { e -> _state.update { it.copy(appError = e.toAppError()) } },
@@ -122,11 +122,25 @@ class MovieDetailViewModel @AssistedInject constructor(
     }
 
     private fun getRecommendations(from: String, movieId: Int) {
-        _state.update { it.copy(recommendations = getContent.asPagingFlow("$from$movieId$RECOMMENDATIONS", viewModelScope)) }
+        _state.update {
+            it.copy(
+                recommendations = getContent.asPagingFlow(
+                    "$from$movieId$RECOMMENDATIONS",
+                    viewModelScope
+                )
+            )
+        }
     }
 
     private fun getSimilar(from: String, movieId: Int) =
-        _state.update { it.copy(similar = getContent.asPagingFlow("$from$movieId$SIMILAR", viewModelScope)) }
+        _state.update {
+            it.copy(
+                similar = getContent.asPagingFlow(
+                    "$from$movieId$SIMILAR",
+                    viewModelScope
+                )
+            )
+        }
 
     private fun collectContentKind() {
         viewModelScope.launch {
@@ -157,11 +171,6 @@ class MovieDetailViewModel @AssistedInject constructor(
         private const val SIMILAR = "/similar"
         private const val MOVIES = "movie/"
         private const val TV = "tv/"
-    }
-
-    @AssistedFactory
-    interface MediaIdFactory {
-        fun create(mediaId: Int): MovieDetailViewModel
     }
 
 }

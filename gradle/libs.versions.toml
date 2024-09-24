@@ -6,12 +6,8 @@ kotlin-coroutines = "1.8.0"
 kotlinxSerializationJson = "1.7.1"
 kotlin-converter = "1.0.0"
 #androidX
-appcompat = "1.7.0"
-coreKtx = "1.13.1"
 datastoreCore = "1.1.1"
-lifecycleRuntimeKtx = "2.8.6"
 navigation = "2.8.0"
-fragmentKtx = "1.8.3"
 biometric = "1.2.0-alpha05"
 #compose
 composeBom = "2024.08.00"
@@ -31,7 +27,6 @@ okhttp = "4.12.0"
 arrow = "1.2.1"
 #paging
 pagingCompose = "3.3.2"
-pagingRuntime = "3.3.2"
 #protobuf
 protobufJavalite = "4.26.0"
 protobufKotlinLite = "4.26.0"
@@ -43,7 +38,6 @@ hiltWork = "1.2.0"
 javaxInject = "1"
 #annotation processor
 ksp = "2.0.0-1.0.23"
-material = "1.12.0"
 
 #testing
 junit = "4.13.2"
@@ -59,18 +53,12 @@ espresso-intents = "3.6.1"
 
 [libraries]
 #androidX
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 datastoreCore = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
-lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-#navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
-fragmentKtx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 
 #kotlin
 kotlinCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-kotlinSerializationCore = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationJson" }
 #compose
 composeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 composeUi = { group = "androidx.compose.ui", name = "ui" }
@@ -99,11 +87,9 @@ arrowCore = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 
 #Paging
 pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
-pagingRuntime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 
 #google
 playServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 #hilt
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -158,5 +144,6 @@ frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.p
 uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }
 kotlinModuleConventionPlugin = { id = "architectcoders2024.kotlin.module.plugin", version = "unspecified" }
 testSharedConventionPlugin = { id = "architectcoders2024.test.shared.plugin", version = "unspecified" }
+jacocoConventionPlugin = { id = "architectcoders2024.jacoco.plugin", version = "unspecified" }
 
 [bundles]

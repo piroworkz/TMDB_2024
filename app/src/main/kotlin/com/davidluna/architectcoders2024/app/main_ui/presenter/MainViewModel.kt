@@ -1,7 +1,5 @@
 package com.davidluna.architectcoders2024.app.main_ui.presenter
 
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.architectcoders2024.core_domain.entities.ContentKind
@@ -41,7 +39,6 @@ class MainViewModel @Inject constructor(
         val appError: AppError? = null,
         val user: UserAccount? = null,
         val closeSession: Boolean = false,
-        val drawerState: DrawerState = DrawerState(DrawerValue.Closed)
     )
 
     fun sendEvent(event: MainEvent) {
@@ -49,12 +46,7 @@ class MainViewModel @Inject constructor(
             is MainEvent.OnCloseSession -> closeSession()
             is MainEvent.SetContentKind -> setContentKind(event.mediaType)
             is MainEvent.SetAppError -> setAppError(event.appError)
-            is MainEvent.SetDrawerState -> setDrawerState(event.drawerState)
         }
-    }
-
-    private fun setDrawerState(drawerState: DrawerState) {
-        _state.update { it.copy(drawerState = drawerState) }
     }
 
     private fun setAppError(appError: AppError?) {

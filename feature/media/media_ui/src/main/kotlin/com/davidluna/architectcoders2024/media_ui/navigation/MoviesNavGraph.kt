@@ -3,11 +3,9 @@ package com.davidluna.architectcoders2024.media_ui.navigation
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import androidx.navigation.toRoute
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.architectcoders2024.media_ui.presenter.detail.MovieDetailEvent
@@ -37,11 +35,8 @@ fun NavGraphBuilder.mediaNavGraph(
             )
         }
 
-        composable<MediaNavigation.Detail> { backStackEntry: NavBackStackEntry ->
-            val viewModel: MovieDetailViewModel =
-                hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.MediaIdFactory> { factory ->
-                    factory.create(backStackEntry.toRoute<MediaNavigation.Detail>().movieId)
-                }
+        composable<MediaNavigation.Detail> {
+            val viewModel = hiltViewModel<MovieDetailViewModel>()
             val state by viewModel.state.collectAsState()
             state.destination?.let { destination ->
                 navigateTo(destination)

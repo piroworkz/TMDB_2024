@@ -14,9 +14,6 @@ import com.davidluna.architectcoders2024.core_domain.entities.errors.AppError
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.Destination
 import com.davidluna.architectcoders2024.core_ui.navigation.destination.MediaNavigation.MediaCatalog
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,10 +21,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@HiltViewModel(assistedFactory = LoginViewModel.Factory::class)
-class LoginViewModel @AssistedInject constructor(
-    @Assisted
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginArgs: AuthNavigation.Login,
     private val usecases: LoginViewModelUseCases,
 ) : ViewModel() {
@@ -155,10 +152,4 @@ class LoginViewModel @AssistedInject constructor(
             }
         }
     }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(loginArgs: AuthNavigation.Login): LoginViewModel
-    }
-
 }

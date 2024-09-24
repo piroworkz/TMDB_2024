@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-
     implementation(projects.feature.splash)
     implementation(projects.core.coreUi)
     implementation(projects.core.coreDomain)

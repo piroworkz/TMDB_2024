@@ -13,7 +13,7 @@ sealed interface MediaNavigation : Destination {
 
     @Serializable
     data class Detail(
-        val movieId: Int = DEFAULT_ID,
+        val mediaId: Int = DEFAULT_ID,
         val appBarTitle: String = String(),
         val topLevel: Boolean = false,
     ) : MediaNavigation
