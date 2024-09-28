@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.davidluna.architectcoders2024",
+  "applicationId": "com.davidluna.tmdb",
   "variantName": "release",
   "elements": [
     {

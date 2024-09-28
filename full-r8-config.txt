@@ -114,10 +114,10 @@
 #-renamesourcefileattribute SourceFile
 
 -printconfiguration ../full-r8-config.txt
--keep class com.davidluna.architectcoders2024.app.di.MainModule {
+-keep class com.davidluna.tmdb.app.di.MainModule {
     native <methods>;
 }
--keep class com.davidluna.architectcoders2024.build_logic.libs.** { *; }
+-keep class com.davidluna.tmdb.build_logic.libs.** { *; }
 
 -keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
    <fields>;
@@ -131,8 +131,8 @@
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.profileinstaller.ProfileInstallReceiver { <init>(); }
 -keep class androidx.startup.InitializationProvider { <init>(); }
--keep class com.davidluna.architectcoders2024.app.App { <init>(); }
--keep class com.davidluna.architectcoders2024.app.main_ui.MainActivity { <init>(); }
+-keep class com.davidluna.tmdb.app.App { <init>(); }
+-keep class com.davidluna.tmdb.app.main_ui.MainActivity { <init>(); }
 -keep class com.google.android.gms.common.api.GoogleApiActivity { <init>(); }
 -keep class android.widget.Space { <init>(android.content.Context, android.util.AttributeSet); }
 

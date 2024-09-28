@@ -21,4 +21,4 @@
 #-renamesourcefileattribute SourceFile
 
 # Preserva las clases y métodos necesarios para el adaptador de Retrofit
--keep class com.davidluna.architectcoders2024.framework.remote.call_adapter.** { *; }
+-keep class com.davidluna.tmdb.framework.remote.call_adapter.** { *; }

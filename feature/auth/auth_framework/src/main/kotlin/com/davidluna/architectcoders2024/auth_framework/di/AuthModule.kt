@@ -1,6 +1,6 @@
-package com.davidluna.architectcoders2024.auth_framework.di
+package com.davidluna.tmdb.auth_framework.di
 
-import com.davidluna.architectcoders2024.auth_framework.data.remote.SessionService
+import com.davidluna.tmdb.auth_framework.data.remote.SessionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

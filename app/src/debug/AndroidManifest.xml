@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.davidluna.architectcoders2024">
+    package="com.davidluna.tmdb">
 
     <application
         android:networkSecurityConfig="@xml/network_security_config"

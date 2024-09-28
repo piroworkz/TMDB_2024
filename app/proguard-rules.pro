@@ -21,10 +21,10 @@
 #-renamesourcefileattribute SourceFile
 
 -printconfiguration ../full-r8-config.txt
--keep class com.davidluna.architectcoders2024.app.di.MainModule {
+-keep class com.davidluna.tmdb.app.di.MainModule {
     native <methods>;
 }
--keep class com.davidluna.architectcoders2024.build_logic.libs.** { *; }
+-keep class com.davidluna.tmdb.build_logic.libs.** { *; }
 
 -keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
    <fields>;

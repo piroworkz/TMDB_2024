@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-group = "com.davidluna.architectcoders2024"
+group = "com.davidluna.tmdb"
 
 dependencies {
     compileOnly(libs.androidGradlePlugin)
@@ -25,40 +25,40 @@ java {
 
 ksp {
     arg("libsPath", "${rootDir.parentFile}/gradle/libs.versions.toml")
-    arg("packageName", "com.davidluna.architectcoders2024.convention.libs")
+    arg("packageName", "com.davidluna.tmdb.convention.libs")
 }
 
 gradlePlugin {
 
     plugins {
         register("androidAppPlugin") {
-            id = "architectcoders2024.android.application"
+            id = "tmdb.android.application"
             implementationClass =
-                "com.davidluna.architectcoders2024.convention.plugins.AndroidApplicationConventionPlugin"
+                "com.davidluna.tmdb.convention.plugins.AndroidApplicationConventionPlugin"
         }
 
         register("frameworkModuleConventionPlugin") {
-            id = "architectcoders2024.framework.module.plugin"
+            id = "tmdb.framework.module.plugin"
             implementationClass =
-                "com.davidluna.architectcoders2024.convention.plugins.FrameworkModuleConventionPlugin"
+                "com.davidluna.tmdb.convention.plugins.FrameworkModuleConventionPlugin"
         }
 
         register("uiModuleConventionPlugin") {
-            id = "architectcoders2024.ui.module.plugin"
+            id = "tmdb.ui.module.plugin"
             implementationClass =
-                "com.davidluna.architectcoders2024.convention.plugins.UiModuleConventionPlugin"
+                "com.davidluna.tmdb.convention.plugins.UiModuleConventionPlugin"
         }
 
         register("kotlinModuleConventionPlugin") {
-            id = "architectcoders2024.kotlin.module.plugin"
+            id = "tmdb.kotlin.module.plugin"
             implementationClass =
-                "com.davidluna.architectcoders2024.convention.plugins.KotlinModuleConventionPlugin"
+                "com.davidluna.tmdb.convention.plugins.KotlinModuleConventionPlugin"
         }
 
         register("testSharedConventionPlugin") {
-            id = "architectcoders2024.test.shared.plugin"
+            id = "tmdb.test.shared.plugin"
             implementationClass =
-                "com.davidluna.architectcoders2024.convention.plugins.TestSharedConventionPlugin"
+                "com.davidluna.tmdb.convention.plugins.TestSharedConventionPlugin"
         }
     }
 }

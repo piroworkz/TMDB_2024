@@ -1,12 +1,12 @@
-package com.davidluna.architectcoders2024.auth_framework.data.remote
+package com.davidluna.tmdb.auth_framework.data.remote
 
 import arrow.core.Either
-import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteGuestSession
-import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteLoginRequest
-import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteSessionIdResponse
-import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteTokenResponse
-import com.davidluna.architectcoders2024.auth_framework.data.remote.model.RemoteUserAccountDetail
-import com.davidluna.architectcoders2024.core_framework.data.remote.model.RemoteError
+import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteGuestSession
+import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteLoginRequest
+import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteSessionIdResponse
+import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteTokenResponse
+import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteUserAccountDetail
+import com.davidluna.tmdb.core_framework.data.remote.model.RemoteError
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

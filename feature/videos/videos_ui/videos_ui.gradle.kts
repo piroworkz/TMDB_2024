@@ -1,4 +1,4 @@
-import com.davidluna.architectcoders2024.convention.constants.Constants
+import com.davidluna.tmdb.convention.constants.Constants
 
 plugins {
     alias(libs.plugins.uiModuleConventionPlugin)

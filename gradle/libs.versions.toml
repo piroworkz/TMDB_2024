@@ -139,11 +139,9 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 #Convention plugins
-architectCodersAndroidApplication = { id = "architectcoders2024.android.application", version = "unspecified" }
-frameworkModuleConventionPlugin = { id = "architectcoders2024.framework.module.plugin", version = "unspecified" }
-uiModuleConventionPlugin = { id = "architectcoders2024.ui.module.plugin", version = "unspecified" }
-kotlinModuleConventionPlugin = { id = "architectcoders2024.kotlin.module.plugin", version = "unspecified" }
-testSharedConventionPlugin = { id = "architectcoders2024.test.shared.plugin", version = "unspecified" }
-jacocoConventionPlugin = { id = "architectcoders2024.jacoco.plugin", version = "unspecified" }
-
+architectCodersAndroidApplication = { id = "tmdb.android.application", version = "unspecified" }
+frameworkModuleConventionPlugin = { id = "tmdb.framework.module.plugin", version = "unspecified" }
+uiModuleConventionPlugin = { id = "tmdb.ui.module.plugin", version = "unspecified" }
+kotlinModuleConventionPlugin = { id = "tmdb.kotlin.module.plugin", version = "unspecified" }
+testSharedConventionPlugin = { id = "tmdb.test.shared.plugin", version = "unspecified" }
 [bundles]
