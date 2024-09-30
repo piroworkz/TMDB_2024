@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class MediaCatalogViewModel (
+class MediaCatalogViewModel(
     private val getContent: GetMediaCatalogUseCase,
     private val getContentKind: GetContentKindUseCase,
 ) : ViewModel() {
@@ -35,7 +35,7 @@ class MediaCatalogViewModel (
         val isLoading: Boolean = false,
         val appError: AppError? = null,
         val destination: Destination? = null,
-        val contentKind: com.davidluna.tmdb.core_domain.entities.ContentKind = com.davidluna.tmdb.core_domain.entities.ContentKind.UNDEFINED,
+        val contentKind: ContentKind = ContentKind.UNDEFINED,
         val firstList: Flow<PagingData<Media>> = emptyFlow(),
         val secondList: Flow<PagingData<Media>> = emptyFlow(),
         val thirdList: Flow<PagingData<Media>> = emptyFlow(),
@@ -50,8 +50,8 @@ class MediaCatalogViewModel (
         }
     }
 
-    private fun fetchContent(contentKind: com.davidluna.tmdb.core_domain.entities.ContentKind) {
-        if (contentKind == com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE) {
+    private fun fetchContent(contentKind: ContentKind) {
+        if (contentKind == ContentKind.MOVIE) {
             getPopularMovies()
             getTopRatedMovies()
             getNowPlayingMovies()
@@ -65,35 +65,28 @@ class MediaCatalogViewModel (
     }
 
     private fun getPopularMovies() =
-        _state.update { it.copy(firstList = getContent.asPagingFlow(POPULAR, viewModelScope)) }
+        _state.update { it.copy(firstList = getContent.asPagingFlow(viewModelScope, POPULAR)) }
 
     private fun getTopRatedMovies() =
-        _state.update { it.copy(secondList = getContent.asPagingFlow(TOP_RATED, viewModelScope)) }
+        _state.update { it.copy(secondList = getContent.asPagingFlow(viewModelScope, TOP_RATED)) }
 
     private fun getUpcomingMovies() =
-        _state.update { it.copy(thirdList = getContent.asPagingFlow(UPCOMING, viewModelScope)) }
+        _state.update { it.copy(thirdList = getContent.asPagingFlow(viewModelScope, UPCOMING)) }
 
     private fun getNowPlayingMovies() =
-        _state.update { it.copy(fourthList = getContent.asPagingFlow(NOW_PLAYING, viewModelScope)) }
+        _state.update { it.copy(fourthList = getContent.asPagingFlow(viewModelScope, NOW_PLAYING)) }
 
     private fun getTvPopular() =
-        _state.update { it.copy(firstList = getContent.asPagingFlow(TV_POPULAR, viewModelScope)) }
+        _state.update { it.copy(firstList = getContent.asPagingFlow(viewModelScope, TV_POPULAR)) }
 
     private fun getTvTopRated() =
-        _state.update {
-            it.copy(
-                secondList = getContent.asPagingFlow(
-                    TV_TOP_RATED,
-                    viewModelScope
-                )
-            )
-        }
+        _state.update { it.copy(secondList = getContent.asPagingFlow(viewModelScope, TV_TOP_RATED)) }
 
     private fun getAiringToday() =
-        _state.update { it.copy(thirdList = getContent.asPagingFlow(AIRING_TODAY, viewModelScope)) }
+        _state.update { it.copy(thirdList = getContent.asPagingFlow(viewModelScope, AIRING_TODAY)) }
 
     private fun getOnAir() =
-        _state.update { it.copy(fourthList = getContent.asPagingFlow(ON_THE_AIR, viewModelScope)) }
+        _state.update { it.copy(fourthList = getContent.asPagingFlow(viewModelScope, ON_THE_AIR)) }
 
     private fun resetError() =
         _state.update { it.copy(appError = null) }

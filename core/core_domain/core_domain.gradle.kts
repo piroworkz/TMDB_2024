@@ -1,7 +1,7 @@
-plugins {
+  plugins {
     alias(libs.plugins.kotlinModuleConventionPlugin)
 }
 
-dependencies{
+dependencies {
     testImplementation(projects.testShared)
 }

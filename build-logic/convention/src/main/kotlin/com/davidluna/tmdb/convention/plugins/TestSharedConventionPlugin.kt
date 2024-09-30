@@ -1,6 +1,6 @@
 package com.davidluna.tmdb.convention.plugins
 
-import com.davidluna.tmdb.convention.extensions.common.setJavaVersions
+import com.davidluna.tmdb.convention.extensions.javaVersion
 import com.davidluna.tmdb.convention.helpers.alias
 import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.libs.coroutinesTest
@@ -19,7 +19,7 @@ class TestSharedConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 alias(libs.kotlinJvm)
             }
-            setJavaVersions()
+            javaVersion
             dependencies()
         }
     }

@@ -1,4 +1,4 @@
-package com.davidluna.tmdb.convention.extensions.android_library
+package com.davidluna.tmdb.convention.extensions
 
 
 import com.android.build.api.dsl.LibraryExtension

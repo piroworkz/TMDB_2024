@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class MovieDetailViewModel (
+class MovieDetailViewModel(
     private val movieId: Int,
     private val getMovieDetails: GetMediaDetailsUseCase,
     private val getMediaImagesUseCase: GetMediaImagesUseCase,
@@ -117,25 +117,11 @@ class MovieDetailViewModel (
     }
 
     private fun getRecommendations(from: String, movieId: Int) {
-        _state.update {
-            it.copy(
-                recommendations = getContent.asPagingFlow(
-                    "$from$movieId$RECOMMENDATIONS",
-                    viewModelScope
-                )
-            )
-        }
+        _state.update { it.copy(recommendations = getContent.asPagingFlow(viewModelScope, "$from$movieId$RECOMMENDATIONS")) }
     }
 
     private fun getSimilar(from: String, movieId: Int) =
-        _state.update {
-            it.copy(
-                similar = getContent.asPagingFlow(
-                    "$from$movieId$SIMILAR",
-                    viewModelScope
-                )
-            )
-        }
+        _state.update { it.copy(similar = getContent.asPagingFlow(viewModelScope, "$from$movieId$SIMILAR")) }
 
     private fun collectContentKind() {
         viewModelScope.launch {

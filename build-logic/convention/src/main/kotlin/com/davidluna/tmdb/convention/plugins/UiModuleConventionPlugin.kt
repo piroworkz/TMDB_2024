@@ -1,28 +1,61 @@
 package com.davidluna.tmdb.convention.plugins
 
+import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.tmdb.convention.bundles.androidTestingBundle
 import com.davidluna.tmdb.convention.bundles.composeUiBundle
 import com.davidluna.tmdb.convention.bundles.koinAndroidBundle
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
-import com.davidluna.tmdb.convention.extensions.android_library.androidLibrary
-import com.davidluna.tmdb.convention.extensions.common.uiPluginManager
+import com.davidluna.tmdb.convention.constants.Constants
+import com.davidluna.tmdb.convention.extensions.defaultConfig
+import com.davidluna.tmdb.convention.extensions.javaVersion
+import com.davidluna.tmdb.convention.extensions.kotlin
+import com.davidluna.tmdb.convention.extensions.plugins
+import com.davidluna.tmdb.convention.extensions.setBuildTypes
+import com.davidluna.tmdb.convention.helpers.alias
 import com.davidluna.tmdb.convention.helpers.implementation
+import com.davidluna.tmdb.convention.libs.androidLibrary
 import com.davidluna.tmdb.convention.libs.arrowCore
+import com.davidluna.tmdb.convention.libs.composeCompiler
+import com.davidluna.tmdb.convention.libs.kotlinAndroid
+import com.davidluna.tmdb.convention.libs.kotlinSerialization
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
+import com.davidluna.tmdb.convention.libs.ksp
 import com.davidluna.tmdb.convention.libs.libs
+import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.ExtensionAware
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.dependencies
 
 class UiModuleConventionPlugin : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
-        uiPluginManager
-        androidLibrary
-        dependencies()
-    }
+        plugins {
+            alias(libs.composeCompiler)
+            alias(libs.androidLibrary)
+            alias(libs.kotlinAndroid)
+            alias(libs.ksp)
+            alias(libs.kotlinSerialization)
+        }
 
-    private fun Project.dependencies() {
+        android {
+            defaultConfig()
+            setBuildTypes()
+            compileOptions.apply {
+                sourceCompatibility = Constants.JAVA_VERSION
+                targetCompatibility = Constants.JAVA_VERSION
+            }
+        }
+
+        kotlin {
+            jvmToolchain {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }
+        }
+
+        javaVersion
+
         dependencies {
             implementation(libs.arrowCore)
             implementation(libs.kotlinxSerializationJson)
@@ -32,4 +65,8 @@ class UiModuleConventionPlugin : Plugin<Project> {
             androidTestingBundle
         }
     }
+
+    private fun Project.android(config: Action<LibraryExtension>) =
+        (this as ExtensionAware).extensions.configure("android", config)
+
 }

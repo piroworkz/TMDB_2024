@@ -1,19 +1,16 @@
-package com.davidluna.tmdb.convention.extensions.application
+package com.davidluna.tmdb.convention.extensions
 
-import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 
-internal fun ApplicationExtension.setBuildTypes() {
+internal fun LibraryExtension.setBuildTypes() {
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-
         debug {
             isMinifyEnabled = false
             proguardFiles(
@@ -23,3 +20,5 @@ internal fun ApplicationExtension.setBuildTypes() {
         }
     }
 }
+
+
