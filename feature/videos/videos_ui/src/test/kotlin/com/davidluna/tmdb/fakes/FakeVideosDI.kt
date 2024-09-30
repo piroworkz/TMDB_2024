@@ -1,9 +1,7 @@
 package com.davidluna.tmdb.fakes
 
-import com.davidluna.tmdb.core_domain.data.datastore.LocalPreferencesDataRepository
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.PreferencesRepository
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.davidluna.tmdb.videos_framework.data.remote.datasource.VideosRemoteApi
 import com.davidluna.tmdb.test_shared.framework.FakeLocalPreferencesDataSource
 import com.davidluna.tmdb.videos_domain.data.VideosDataRepository

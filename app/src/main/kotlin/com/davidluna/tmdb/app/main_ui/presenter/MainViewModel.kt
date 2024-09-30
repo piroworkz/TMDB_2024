@@ -2,15 +2,12 @@ package com.davidluna.tmdb.app.main_ui.presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.tmdb.core_domain.entities.ContentKind
-import com.davidluna.tmdb.core_domain.entities.UserAccount
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.AppErrorCode.UNKNOWN
 import com.davidluna.tmdb.core_domain.entities.errors.toAppError
-import com.davidluna.tmdb.core_domain.usecases.datastore.CloseSessionUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.SaveContentKindUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.UserAccountUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.davidluna.tmdb.core_domain.usecases.CloseSessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SaveContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.UserAccountUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,10 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+
+class MainViewModel (
     private val userAccountUseCase: UserAccountUseCase,
     private val saveContentKindUseCase: SaveContentKindUseCase,
     private val closeSessionUseCase: CloseSessionUseCase

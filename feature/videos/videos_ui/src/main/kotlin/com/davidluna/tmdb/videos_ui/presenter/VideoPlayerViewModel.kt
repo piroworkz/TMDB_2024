@@ -2,13 +2,10 @@ package com.davidluna.tmdb.videos_ui.presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.toAppError
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
-import com.davidluna.tmdb.core_ui.di.MediaId
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,11 +14,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class VideoPlayerViewModel @Inject constructor(
-    @MediaId
+
+class VideoPlayerViewModel (
     private val mediaId: Int,
     private val getVideosUseCase: GetVideosUseCase,
     private val getContentKindUseCase: GetContentKindUseCase,

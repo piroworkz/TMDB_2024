@@ -2,18 +2,15 @@ package com.davidluna.tmdb.convention.plugins
 
 import com.davidluna.tmdb.convention.bundles.androidTestingBundle
 import com.davidluna.tmdb.convention.bundles.composeUiBundle
+import com.davidluna.tmdb.convention.bundles.koinAppBundle
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
 import com.davidluna.tmdb.convention.extensions.application.application
 import com.davidluna.tmdb.convention.extensions.common.applicationPluginManager
 import com.davidluna.tmdb.convention.helpers.implementation
-import com.davidluna.tmdb.convention.helpers.ksp
 import com.davidluna.tmdb.convention.libs.arrowCore
 import com.davidluna.tmdb.convention.libs.coilCompose
 import com.davidluna.tmdb.convention.libs.composeActivity
 import com.davidluna.tmdb.convention.libs.composeNavigation
-import com.davidluna.tmdb.convention.libs.hiltAndroid
-import com.davidluna.tmdb.convention.libs.hiltCompiler
-import com.davidluna.tmdb.convention.libs.hiltNavigationCompose
 import com.davidluna.tmdb.convention.libs.kotlinConverter
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
 import com.davidluna.tmdb.convention.libs.libs
@@ -35,8 +32,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     private fun Project.setDependencies() {
         dependencies {
             composeUiBundle
+            koinAppBundle
             implementation(libs.arrowCore)
-            implementation(libs.hiltNavigationCompose)
             implementation(libs.composeActivity)
             implementation(libs.coilCompose)
             implementation(libs.composeNavigation)
@@ -45,8 +42,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             implementation(libs.okhttpLoggingInterceptor)
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.kotlinConverter)
-            implementation(libs.hiltAndroid)
-            ksp(libs.hiltCompiler)
             unitTestingBundle
             androidTestingBundle
         }

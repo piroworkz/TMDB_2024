@@ -3,9 +3,9 @@ package com.davidluna.tmdb.app.main_ui.presenter
 import app.cash.turbine.test
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.AppErrorCode
-import com.davidluna.tmdb.core_domain.usecases.datastore.CloseSessionUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.SaveContentKindUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.UserAccountUseCase
+import com.davidluna.tmdb.core_domain.usecases.CloseSessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SaveContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.UserAccountUseCase
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
 import com.davidluna.tmdb.test_shared.fakes.fakeUserAccount
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule

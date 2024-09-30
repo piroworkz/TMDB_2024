@@ -8,9 +8,8 @@ import com.davidluna.tmdb.core_domain.entities.errors.toAppError
 import com.davidluna.tmdb.videos_domain.data.VideosDataSource
 import com.davidluna.tmdb.videos_domain.entities.YoutubeVideo
 import com.davidluna.tmdb.videos_framework.data.remote.service.VideosService
-import javax.inject.Inject
 
-class VideosRemoteApi @Inject constructor(
+class VideosRemoteApi (
     private val service: VideosService
 ) : VideosDataSource {
 

@@ -2,8 +2,7 @@ package com.davidluna.tmdb.media_ui.presenter.media
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.entities.ContentKind
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.media_domain.entities.Media
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.tmdb.test_shared.fakes.fakeNotFoundAppError

@@ -5,10 +5,10 @@ import arrow.core.left
 import arrow.core.right
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.media_domain.entities.MediaDetails
+import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
 import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import javax.inject.Inject
 
-class GetMediaDetailsUseCase @Inject constructor(
+class GetMediaDetailsUseCase (
     private val repository: MovieDetailsRepository,
     private val formatDate: FormatDateUseCase,
     private val getVideosUseCase: GetVideosUseCase

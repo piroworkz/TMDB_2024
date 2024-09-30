@@ -9,7 +9,7 @@ import com.davidluna.tmdb.auth_domain.usecases.CreateSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
-import com.davidluna.tmdb.core_domain.usecases.datastore.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation.Login
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.test_shared.fakes.FAKE_REQUEST_TOKEN
@@ -21,8 +21,6 @@ import com.davidluna.tmdb.test_shared.fakes.fakeTokenResponse
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
 import com.davidluna.tmdb.test_shared.fakes.fakeUserAccount
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
-import com.davidluna.tmdb.auth_ui.presenter.LoginEvent
-import com.davidluna.tmdb.auth_ui.presenter.LoginViewModel
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest

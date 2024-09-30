@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.core_ui.navigation.destination.YoutubeNavigation
 import com.davidluna.tmdb.media_domain.entities.Media

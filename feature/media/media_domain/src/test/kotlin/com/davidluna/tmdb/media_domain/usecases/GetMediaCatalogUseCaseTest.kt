@@ -3,8 +3,7 @@ package com.davidluna.tmdb.media_domain.usecases
 import arrow.core.Either
 import com.davidluna.tmdb.test_shared.fakes.fakeMediaResults
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
-import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
-import com.davidluna.tmdb.media_domain.usecases.MediaRepository
+import com.davidluna.tmdb.media_domain.repositories.MediaRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

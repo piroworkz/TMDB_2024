@@ -1,7 +1,8 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.entities.ContentKind
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

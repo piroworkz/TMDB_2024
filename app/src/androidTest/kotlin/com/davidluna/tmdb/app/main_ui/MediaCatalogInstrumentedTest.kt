@@ -20,7 +20,6 @@ import androidx.compose.ui.test.swipeUp
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
-import com.davidluna.tmdb.app.main_ui.MainActivity
 import com.davidluna.tmdb.app.main_ui.common.permissions
 import com.davidluna.tmdb.app.rules.MockWebServerRule
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_GUEST_BUTTON
@@ -71,27 +70,21 @@ import com.davidluna.tmdb.media_domain.entities.tags.MediaTag.USER_SCORE_LABEL
 import com.davidluna.tmdb.media_domain.entities.tags.MediaTag.USER_SCORE_PERCENTAGE
 import com.davidluna.tmdb.media_domain.entities.tags.MediaTag.USER_SCORE_PROGRESS
 import com.davidluna.tmdb.media_domain.entities.tags.MediaTag.USER_SCORE_VIEW
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
 class MediaCatalogInstrumentedTest {
 
     @get:Rule(order = 0)
-    val hiltRule: HiltAndroidRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
     val mockWebServerRule: MockWebServerRule = MockWebServerRule()
 
-    @get:Rule(order = 2)
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @get:Rule(order = 3)
+    @get:Rule(order = 2)
     val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
 
-    @get:Rule(order = 4)
+    @get:Rule(order = 3)
     val intentsTestRule = IntentsRule()
 
     @Test
@@ -191,7 +184,15 @@ class MediaCatalogInstrumentedTest {
             .assert(hasAnyChild(hasTestTag(REEL_TITLE_TEXT).and(hasText(getMediaDetails().title))))
             .assertExists()
         onNodeWithTag(TEXT_RELEASE_DATE)
-            .assert(hasText("${getMediaDetails().releaseDate} • ${getMediaDetails().genres.joinToString(", ") { it.name }}"))
+            .assert(
+                hasText(
+                    "${getMediaDetails().releaseDate} • ${
+                        getMediaDetails().genres.joinToString(
+                            ", "
+                        ) { it.name }
+                    }"
+                )
+            )
         onNodeWithTag(TEXT_TAGLINE)
             .assert(hasText(getMediaDetails().tagline))
         onNodeWithTag(TEXT_OVERVIEW_TITLE)

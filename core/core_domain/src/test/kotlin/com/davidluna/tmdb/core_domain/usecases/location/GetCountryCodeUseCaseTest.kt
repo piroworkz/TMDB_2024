@@ -1,5 +1,7 @@
 package com.davidluna.tmdb.core_domain.usecases.location
 
+import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
+import com.davidluna.tmdb.core_domain.repositories.RegionRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

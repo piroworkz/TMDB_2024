@@ -4,17 +4,11 @@ import arrow.core.Either
 import com.davidluna.tmdb.auth_domain.entities.session.LoginRequest
 import com.davidluna.tmdb.auth_domain.entities.session.TokenResponse
 import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-import com.davidluna.tmdb.core_domain.entities.GuestSession
-import com.davidluna.tmdb.core_domain.entities.Session
-import com.davidluna.tmdb.core_domain.entities.SessionId
-import com.davidluna.tmdb.core_domain.entities.UserAccount
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.DataStoreErrorMessage
 import com.davidluna.tmdb.core_domain.entities.errors.buildAppError
-import javax.inject.Inject
 
-class SessionDataRepository @Inject constructor(
+class SessionDataRepository (
     private val remote: SessionDataSource,
     private val local: com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
 ): SessionRepository {

@@ -13,10 +13,9 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
-import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class LocationDataSource @Inject constructor(
+class LocationDataSource (
     private val client: FusedLocationProviderClient,
     private val coder: Geocoder
 ) : RegionDataSource {

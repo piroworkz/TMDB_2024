@@ -1,7 +1,8 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.entities.Session
+import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.davidluna.tmdb.test_shared.fakes.fakeSession
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.Flow

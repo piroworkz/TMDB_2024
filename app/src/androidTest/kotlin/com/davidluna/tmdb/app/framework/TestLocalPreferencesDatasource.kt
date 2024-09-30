@@ -12,9 +12,9 @@ import com.davidluna.protodatastore.ProtoPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class TestLocalPreferencesDatasource @Inject constructor() :
+
+class TestLocalPreferencesDatasource () :
     com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource {
 
     private val preferences = flowOf(ProtoPreferences.getDefaultInstance())

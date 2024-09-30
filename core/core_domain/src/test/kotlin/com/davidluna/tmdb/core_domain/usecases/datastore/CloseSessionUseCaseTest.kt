@@ -1,5 +1,7 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
+import com.davidluna.tmdb.core_domain.usecases.CloseSessionUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

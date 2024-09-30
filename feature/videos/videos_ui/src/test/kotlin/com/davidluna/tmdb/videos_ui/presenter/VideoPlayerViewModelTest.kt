@@ -3,13 +3,12 @@ package com.davidluna.tmdb.videos_ui.presenter
 import app.cash.turbine.test
 import arrow.core.left
 import arrow.core.right
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.test_shared.fakes.fakeContentKind
 import com.davidluna.tmdb.test_shared.fakes.fakeMovieVideos
 import com.davidluna.tmdb.test_shared.fakes.fakeNotFoundAppError
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import com.davidluna.tmdb.videos_ui.presenter.VideoPlayerViewModel
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf

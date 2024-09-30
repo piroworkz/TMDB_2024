@@ -9,22 +9,19 @@ import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.LaunchBioPrompt
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.LoginButtonClicked
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.Navigate
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.SetAppError
-import com.davidluna.tmdb.core_domain.entities.Session
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation.MediaCatalog
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
+
+class LoginViewModel (
     private val loginArgs: AuthNavigation.Login,
     private val usecases: LoginViewModelUseCases,
 ) : ViewModel() {

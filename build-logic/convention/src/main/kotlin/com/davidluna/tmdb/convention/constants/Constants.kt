@@ -9,7 +9,7 @@ object Constants {
     const val TARGET_SDK = 34
     const val VERSION_CODE = 1
     const val VERSION_NAME = "1.0"
-    const val HILT_TEST_RUNNER = "com.davidluna.tmdb.app.di.HiltTestRunner"
+    const val HILT_TEST_RUNNER = "com.davidluna.tmdb.app.InstrumentationTestRunner"
     const val API_KEY = "MY_API_KEY"
     const val BASE_URL = "BASE_URL"
     const val KEY_ALIAS = "MY_KEY_ALIAS"

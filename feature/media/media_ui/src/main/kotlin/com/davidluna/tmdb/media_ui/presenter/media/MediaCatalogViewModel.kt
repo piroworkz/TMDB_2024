@@ -3,15 +3,13 @@ package com.davidluna.tmdb.media_ui.presenter.media
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.toAppError
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.media_domain.entities.Media
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.tmdb.media_ui.presenter.paging.asPagingFlow
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,10 +17,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MediaCatalogViewModel @Inject constructor(
+
+class MediaCatalogViewModel (
     private val getContent: GetMediaCatalogUseCase,
     private val getContentKind: GetContentKindUseCase,
 ) : ViewModel() {

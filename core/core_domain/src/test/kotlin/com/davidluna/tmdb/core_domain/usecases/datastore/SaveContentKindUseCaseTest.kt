@@ -1,6 +1,7 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
-import com.davidluna.tmdb.core_domain.entities.ContentKind
+import com.davidluna.tmdb.core_domain.usecases.SaveContentKindUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

@@ -31,11 +31,7 @@ pagingCompose = "3.3.2"
 protobufJavalite = "4.26.0"
 protobufKotlinLite = "4.26.0"
 protobuf = "0.9.4"
-#hilt
-hilt = "2.51.1"
-hiltNavigationCompose = "1.2.0"
-hiltWork = "1.2.0"
-javaxInject = "1"
+
 #annotation processor
 ksp = "2.0.0-1.0.23"
 
@@ -50,6 +46,9 @@ androidx-rules = "1.6.1"
 okhttp3 = "4.12.0"
 espresso-intents = "3.6.1"
 
+#kmm *kotlin multiplatform mobile*
+##di koin
+koin-version = "4.0.0"
 
 [libraries]
 #androidX
@@ -91,12 +90,6 @@ pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "pagi
 #google
 playServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
-#hilt
-hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
-
 #piroworkz
 composeAndroidPermissions = { module = "com.piroworkz:compose-android-permissions", version.ref = "piroworkz-permissions" }
 piroworkzVersionsCatalog = { module = "com.piroworkz:versions-catalog", version.ref = "piroworkz-catalogs" }
@@ -112,7 +105,6 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ##COMPOSE TESTING
 uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 uiTestJunit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-hiltTest = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp3" }
 navigationTesting = { module = "androidx.navigation:navigation-testing", version.ref = "compose-navigation" }
 androidRunner = { module = "androidx.test:runner", version.ref = "androidx-test" }
@@ -126,6 +118,17 @@ espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents"
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
+## KMM *Kotlin Multiplatform Mobile*
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-version" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose" }
+koin-compose-viewmodel-navigation = { group = "io.insert-koin", name = "koin-compose-viewmodel-navigation" }
+
+#Koin test features
+koin-test = { group = "io.insert-koin", name = "koin-test" }
+koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4" }
+
 [plugins]
 
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -133,7 +136,6 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobufPlugin = { id = "com.google.protobuf", version.ref = "protobuf" }
-hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

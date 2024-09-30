@@ -3,25 +3,17 @@ package com.davidluna.tmdb.core_framework.di
 import android.app.Application
 import android.location.Geocoder
 import com.google.android.gms.location.LocationServices
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object CoreModule {
-
-    @Singleton
-    @Provides
-    fun provideFusedLocationProviderClient(application: Application) =
-        LocationServices.getFusedLocationProviderClient(application)
-
-    @Singleton
-    @Provides
-    fun provideGeoCoder(application: Application) =
-        Geocoder(application)
+val coreModule = module {
+    single { provideFusedLocationProviderClient(get()) }
+    single { provideGeoCoder(get()) }
 }
+
+private fun provideFusedLocationProviderClient(application: Application) =
+    LocationServices.getFusedLocationProviderClient(application)
+
+private fun provideGeoCoder(application: Application) =
+    Geocoder(application)
 
 

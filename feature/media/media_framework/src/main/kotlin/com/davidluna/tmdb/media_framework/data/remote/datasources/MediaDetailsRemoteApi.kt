@@ -12,9 +12,9 @@ import com.davidluna.tmdb.media_domain.entities.MediaDetails
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteCast
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteImage
 import com.davidluna.tmdb.media_framework.data.remote.services.MediaDetailService
-import javax.inject.Inject
 
-class MediaDetailsRemoteApi @Inject constructor(
+
+class MediaDetailsRemoteApi (
     private val service: MediaDetailService
 ) : MovieDetailsDataSource {
 

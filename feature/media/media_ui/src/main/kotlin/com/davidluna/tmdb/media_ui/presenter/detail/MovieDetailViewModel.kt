@@ -3,12 +3,10 @@ package com.davidluna.tmdb.media_ui.presenter.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.toAppError
-import com.davidluna.tmdb.core_domain.usecases.datastore.GetContentKindUseCase
-import com.davidluna.tmdb.core_ui.di.MediaId
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.media_domain.entities.Cast
@@ -19,7 +17,6 @@ import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaImagesUseCase
 import com.davidluna.tmdb.media_ui.presenter.paging.asPagingFlow
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,11 +25,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MovieDetailViewModel @Inject constructor(
-    @MediaId
+
+class MovieDetailViewModel (
     private val movieId: Int,
     private val getMovieDetails: GetMediaDetailsUseCase,
     private val getMediaImagesUseCase: GetMediaImagesUseCase,
@@ -60,11 +55,11 @@ class MovieDetailViewModel @Inject constructor(
         val similar: Flow<PagingData<Media>> = emptyFlow(),
     )
 
-    fun sendEvent(event: com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent) {
+    fun sendEvent(event: MovieDetailEvent) {
         when (event) {
-            is com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnNavigate -> setDestination(event.destination)
-            is com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnMovieSelected -> onMovieSelected(event.mediaId, event.appBarTitle)
-            com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.ResetError -> resetError()
+            is MovieDetailEvent.OnNavigate -> setDestination(event.destination)
+            is MovieDetailEvent.OnMovieSelected -> onMovieSelected(event.mediaId, event.appBarTitle)
+            MovieDetailEvent.ResetError -> resetError()
         }
     }
 

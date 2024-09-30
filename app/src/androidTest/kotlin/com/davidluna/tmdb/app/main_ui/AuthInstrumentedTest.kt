@@ -15,7 +15,6 @@ import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.rule.GrantPermissionRule
-import com.davidluna.tmdb.app.main_ui.MainActivity
 import com.davidluna.tmdb.app.main_ui.common.permissions
 import com.davidluna.tmdb.app.rules.MockWebServerRule
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_GUEST_BUTTON
@@ -24,30 +23,24 @@ import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_SCREEN_VIEW
 import com.davidluna.tmdb.media_domain.entities.tags.MediaTag.MEDIA_CATALOG_SCREEN_VIEW
 import com.davidluna.tmdb.test_shared.fakes.FAKE_DEEP_LINK
 import com.davidluna.tmdb.test_shared.fakes.FAKE_TMDB_URL
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
 class AuthInstrumentedTest {
 
     private val tmdbUri: Uri = Uri.parse(FAKE_TMDB_URL)
     private val deepLink: Uri = Uri.parse(FAKE_DEEP_LINK)
 
     @get:Rule(order = 0)
-    val hiltRule: HiltAndroidRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
     val mockWebServerRule: MockWebServerRule = MockWebServerRule()
 
-    @get:Rule(order = 2)
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @get:Rule(order = 3)
+    @get:Rule(order = 2)
     val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
 
-    @get:Rule(order = 4)
+    @get:Rule(order = 3)
     val intentsTestRule = IntentsRule()
 
     @Test

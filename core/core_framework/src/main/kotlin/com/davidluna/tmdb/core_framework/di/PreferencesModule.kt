@@ -2,16 +2,10 @@ package com.davidluna.tmdb.core_framework.di
 
 import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
 import com.davidluna.tmdb.core_framework.data.local.datastore.LocalPreferencesDataSource
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class PreferencesModule {
-
-    @Binds
-    abstract fun bindLocalStorageDatastore(dataStore: LocalPreferencesDataSource): com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-
+val preferencesModule = module {
+    singleOf(::LocalPreferencesDataSource) bind PreferencesDataSource::class
 }

@@ -9,9 +9,8 @@ import com.davidluna.tmdb.media_domain.data.MediaCatalogRemoteDatasource
 import com.davidluna.tmdb.media_domain.entities.Media
 import com.davidluna.tmdb.media_domain.entities.Results
 import com.davidluna.tmdb.media_framework.data.remote.services.MediaCatalogService
-import javax.inject.Inject
 
-class MediaCatalogRemoteApi @Inject constructor(private val service: MediaCatalogService) :
+class MediaCatalogRemoteApi (private val service: MediaCatalogService) :
     MediaCatalogRemoteDatasource {
 
     override suspend fun getMediaCatalog(

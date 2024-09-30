@@ -10,10 +10,8 @@ import com.davidluna.tmdb.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
 import com.davidluna.tmdb.auth_framework.data.remote.RemoteSessionDataSource
-import com.davidluna.tmdb.core_domain.data.datastore.LocalPreferencesDataRepository
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-import com.davidluna.tmdb.core_domain.usecases.datastore.PreferencesRepository
-import com.davidluna.tmdb.core_domain.usecases.datastore.SessionUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
+import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
 import com.davidluna.tmdb.test_shared.framework.FakeLocalPreferencesDataSource
 
 class FakeAuthDi {

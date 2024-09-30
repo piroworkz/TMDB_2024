@@ -1,11 +1,13 @@
 package com.davidluna.tmdb.convention.plugins
+
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
 import com.davidluna.tmdb.convention.constants.Constants
 import com.davidluna.tmdb.convention.helpers.alias
 import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.helpers.java
 import com.davidluna.tmdb.convention.libs.arrowCore
-import com.davidluna.tmdb.convention.libs.javaxInject
+import com.davidluna.tmdb.convention.libs.koinBom
+import com.davidluna.tmdb.convention.libs.koinCore
 import com.davidluna.tmdb.convention.libs.kotlinCoroutinesCore
 import com.davidluna.tmdb.convention.libs.kotlinJvm
 import com.davidluna.tmdb.convention.libs.libs
@@ -38,7 +40,8 @@ class KotlinModuleConventionPlugin : Plugin<Project> {
         dependencies {
             implementation(libs.kotlinCoroutinesCore)
             implementation(libs.arrowCore)
-            implementation(libs.javaxInject)
+            implementation(platform(libs.koinBom))
+            implementation(libs.koinCore)
             unitTestingBundle
         }
     }

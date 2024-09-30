@@ -1,7 +1,8 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.entities.UserAccount
+import com.davidluna.tmdb.core_domain.usecases.UserAccountUseCase
+import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.davidluna.tmdb.test_shared.fakes.fakeUserAccount
 import com.google.common.truth.Truth
 import kotlinx.coroutines.flow.Flow

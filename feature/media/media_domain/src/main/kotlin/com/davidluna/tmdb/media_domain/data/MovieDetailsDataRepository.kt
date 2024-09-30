@@ -5,10 +5,9 @@ import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.media_domain.entities.Cast
 import com.davidluna.tmdb.media_domain.entities.Image
 import com.davidluna.tmdb.media_domain.entities.MediaDetails
-import com.davidluna.tmdb.media_domain.usecases.MovieDetailsRepository
-import javax.inject.Inject
+import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
 
-class MovieDetailsDataRepository @Inject constructor(private val remote: MovieDetailsDataSource) :
+class MovieDetailsDataRepository(private val remote: MovieDetailsDataSource) :
     MovieDetailsRepository {
 
     override suspend fun getMovieDetail(endpoint: String): Either<AppError, MediaDetails> =

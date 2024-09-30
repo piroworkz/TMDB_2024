@@ -1,9 +1,8 @@
 package com.davidluna.tmdb.auth_domain.usecases
 
-import com.davidluna.tmdb.core_domain.usecases.datastore.SessionUseCase
-import javax.inject.Inject
+import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
 
-data class LoginViewModelUseCases @Inject constructor(
+data class LoginViewModelUseCases (
     val createRequestToken: CreateRequestTokenUseCase,
     val createSessionId: CreateSessionUseCase,
     val createGuestSessionId: CreateGuestSessionIdUseCase,

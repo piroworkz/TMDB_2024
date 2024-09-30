@@ -1,17 +1,12 @@
 package com.davidluna.tmdb.core_framework.data.local.datastore
 
 import androidx.datastore.core.DataStore
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-import com.davidluna.tmdb.core_domain.entities.ContentKind
-import com.davidluna.tmdb.core_domain.entities.Session
-import com.davidluna.tmdb.core_domain.entities.UserAccount
-import com.davidluna.tmdb.core_domain.entities.tryCatch
 import com.davidluna.protodatastore.ProtoPreferences
+import com.davidluna.tmdb.core_domain.entities.tryCatch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class LocalPreferencesDataSource @Inject constructor(private val dataStore: DataStore<ProtoPreferences>) :
+class LocalPreferencesDataSource (private val dataStore: DataStore<ProtoPreferences>) :
     com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource {
 
     override val session: Flow<com.davidluna.tmdb.core_domain.entities.Session>

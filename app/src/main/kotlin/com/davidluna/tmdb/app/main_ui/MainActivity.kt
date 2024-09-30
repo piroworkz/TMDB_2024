@@ -3,18 +3,16 @@ package com.davidluna.tmdb.app.main_ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
 import com.davidluna.tmdb.app.main_ui.presenter.MainViewModel
 import com.davidluna.tmdb.app.main_ui.view.Navigator
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : FragmentActivity() {
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModel<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
