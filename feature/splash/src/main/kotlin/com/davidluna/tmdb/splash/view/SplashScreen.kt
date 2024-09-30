@@ -7,7 +7,11 @@ import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,20 +29,27 @@ import com.davidluna.tmdb.core_domain.entities.tags.CoreTag
 import com.davidluna.tmdb.core_ui.R
 import com.davidluna.tmdb.core_ui.composables.ErrorDialogView
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
-import com.davidluna.tmdb.splash.animation.AnimationLaunchedEffect
-import com.davidluna.tmdb.splash.animation.AnimationState
-import com.davidluna.tmdb.splash.animation.AnimationStateHolder
-import com.davidluna.tmdb.splash.animation.rememberAnimationState
+import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
+import com.davidluna.tmdb.splash.presenter.SplashEvent
+import com.davidluna.tmdb.splash.presenter.SplashEvent.LaunchBioPrompt
+import com.davidluna.tmdb.splash.presenter.SplashViewModel
+import com.davidluna.tmdb.splash.view.animation.AnimationLaunchedEffect
+import com.davidluna.tmdb.splash.view.animation.AnimationState
+import com.davidluna.tmdb.splash.view.animation.AnimationStateHolder
+import com.davidluna.tmdb.splash.view.animation.rememberAnimationState
+import com.davidluna.tmdb.splash.view.biometrics.rememberBiometricAuth
 import com.piroworkz.composeandroidpermissions.PermissionLaunchedEffect
 import com.piroworkz.composeandroidpermissions.PermissionsState.SHOULD_SHOW_RATIONALE
 import com.piroworkz.composeandroidpermissions.rememberPermissionsState
 
 @Composable
 fun SplashScreen(
-    onGranted: () -> Unit,
+    state: SplashViewModel.State,
+    sendEvent: (event: SplashEvent) -> Unit,
 ) {
     val permissions = rememberPermissionsState()
     val animationState = rememberAnimationState()
+    val bioState = rememberBiometricAuth(sendEvent = { sendEvent(it) })
 
     AnimationLaunchedEffect(animationState)
 
@@ -47,7 +58,15 @@ fun SplashScreen(
             permissions,
             ACCESS_COARSE_LOCATION,
             ACCESS_FINE_LOCATION
-        ) { onGranted() }
+        ) { sendEvent(SplashEvent.OnPermissionsGranted) }
+    }
+
+    if (state.permissionGranted) {
+        bioState.LaunchEffects(
+            session = state.session,
+            result = state.bioResult,
+            launchBioPrompt = state.launchBioPrompt
+        )
     }
 
     Box(
@@ -68,6 +87,19 @@ fun SplashScreen(
                 .testTag(CoreTag.SPLASH_TMDB_LOGO),
             colorFilter = tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
+
+        TextButton(
+            onClick = { sendEvent(LaunchBioPrompt(true)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = Dimens.margins.xLarge)
+        ) {
+            Text(
+                text = stringResource(id = R.string.btn_launch_biometrics),
+                modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+            )
+        }
 
         if (permissions.state == SHOULD_SHOW_RATIONALE && !permissions.requestedAtLeastOnce) {
             ErrorDialogView(
@@ -103,7 +135,10 @@ private fun GraphicsLayerScope.createBlurEffect(animationState: AnimationStateHo
 @Composable
 private fun SplashScreenPreview() {
     TmdbTheme {
-        SplashScreen { }
+        SplashScreen(
+            state = SplashViewModel.State(),
+            sendEvent = {}
+        )
     }
 }
 

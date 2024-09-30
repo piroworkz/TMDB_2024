@@ -20,7 +20,9 @@ import androidx.compose.ui.test.swipeUp
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
+import com.davidluna.tmdb.app.di.testModules
 import com.davidluna.tmdb.app.main_ui.common.permissions
+import com.davidluna.tmdb.app.rules.KoinTestRule
 import com.davidluna.tmdb.app.rules.MockWebServerRule
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_GUEST_BUTTON
 import com.davidluna.tmdb.core_domain.entities.tags.CoreTag.APP_BAR_ICON
@@ -76,15 +78,18 @@ import org.junit.Test
 class MediaCatalogInstrumentedTest {
 
     @get:Rule(order = 0)
-    val mockWebServerRule: MockWebServerRule = MockWebServerRule()
+    val koinTestRule = KoinTestRule(modules = testModules)
 
     @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val mockWebServerRule: MockWebServerRule = MockWebServerRule()
 
     @get:Rule(order = 2)
-    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 3)
+    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
+
+    @get:Rule(order = 4)
     val intentsTestRule = IntentsRule()
 
     @Test

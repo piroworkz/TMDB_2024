@@ -13,6 +13,7 @@ import com.davidluna.tmdb.core_framework.di.preferencesModule
 import com.davidluna.tmdb.media_domain.di.mediaDomainModule
 import com.davidluna.tmdb.media_framework.di.mediaFrameworkModule
 import com.davidluna.tmdb.media_ui.di.mediaViewModelModule
+import com.davidluna.tmdb.splash.di.splashViewModelModule
 import com.davidluna.tmdb.videos_domain.di.videosDomainModule
 import com.davidluna.tmdb.videos_framework.di.videosFrameworkModule
 import com.davidluna.tmdb.videos_ui.di.videosViewModelModule
@@ -30,6 +31,7 @@ fun Application.configureKoin() {
             coreDomainModule,
             dataStoreModule,
             preferencesModule,
+            splashViewModelModule,
             authDomainModule,
             authFrameworkModule,
             authViewModelModule,
@@ -42,3 +44,4 @@ fun Application.configureKoin() {
         )
     }
 }
+

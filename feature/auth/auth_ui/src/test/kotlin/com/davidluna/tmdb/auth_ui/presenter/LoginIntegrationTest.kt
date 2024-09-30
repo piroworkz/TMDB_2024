@@ -7,8 +7,6 @@ import com.davidluna.tmdb.fakes.FakeAuthDi
 import com.davidluna.tmdb.test_shared.fakes.FAKE_REQUEST_TOKEN
 import com.davidluna.tmdb.test_shared.fakes.fakeEmptySession
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
-import com.davidluna.tmdb.auth_ui.presenter.LoginEvent
-import com.davidluna.tmdb.auth_ui.presenter.LoginViewModel
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -37,7 +35,7 @@ class LoginIntegrationTest {
             )
             val viewModel = buildViewModel()
 
-            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
+            viewModel.onEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -59,7 +57,7 @@ class LoginIntegrationTest {
             )
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.LoginButtonClicked)
+            viewModel.onEvent(LoginEvent.LoginButtonClicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)

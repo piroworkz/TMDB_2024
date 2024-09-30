@@ -1,5 +1,6 @@
 package com.davidluna.tmdb.app.di
 
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -12,9 +13,14 @@ object NativeModule {
     val apiKeyQualifier = named("apiKey")
     val baseUrlQualifier = named("baseUrl")
 
-    val nativeModule: org.koin.core.module.Module = module {
+    val nativeModule: Module = module {
         single(apiKeyQualifier) { getApiKey() }
         single(baseUrlQualifier) { getBaseUrl() }
+    }
+
+    val nativeTestModule: Module = module {
+        single(apiKeyQualifier) { "test" }
+        single(baseUrlQualifier) { "http://localhost:8080" }
     }
 
     private external fun getApiKey(): String

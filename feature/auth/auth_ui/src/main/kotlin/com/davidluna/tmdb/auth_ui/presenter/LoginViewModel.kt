@@ -5,62 +5,44 @@ import androidx.lifecycle.viewModelScope
 import com.davidluna.tmdb.auth_domain.entities.session.LoginRequest
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.GuestButtonCLicked
-import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.LaunchBioPrompt
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.LoginButtonClicked
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.Navigate
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.SetAppError
+import com.davidluna.tmdb.core_domain.entities.Session
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation.MediaCatalog
+import com.davidluna.tmdb.core_ui.onInit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel (
+class LoginViewModel(
     private val loginArgs: AuthNavigation.Login,
     private val usecases: LoginViewModelUseCases,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
-    val state = _state.asStateFlow()
-
-    init {
-        collectSession()
-        getArguments()
-    }
+    val state = _state.onInit(::getArguments)
 
     data class LoginState(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
-        val userName: String = String(),
-        val password: String = String(),
-        val session: com.davidluna.tmdb.core_domain.entities.Session? = null,
+        val session: Session? = null,
         val token: String? = null,
         val launchTMDBWeb: Boolean = false,
-        val launchBioPrompt: Boolean = false,
         val destination: Destination? = null,
     )
 
-    fun sendEvent(event: LoginEvent) {
+    fun onEvent(event: LoginEvent) {
         when (event) {
             GuestButtonCLicked -> createGuestSessionId()
             LoginButtonClicked -> createRequestToken()
             is Navigate -> setDestination(event.destination)
             is SetAppError -> setAppError(event.error)
-            is LaunchBioPrompt -> setLaunchBioPrompt(event.value)
-        }
-    }
-
-    private fun setLaunchBioPrompt(value: Boolean) {
-        _state.update {
-            it.copy(
-                launchBioPrompt = value && _state.value.session?.id?.isNotEmpty() == true
-            )
         }
     }
 
@@ -73,12 +55,9 @@ class LoginViewModel (
     }
 
     private fun createRequestToken() = run {
-        setLaunchBioPrompt(false)
         usecases.createRequestToken().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r ->
-                _state.update { s -> s.copy(token = r.requestToken, launchTMDBWeb = true) }
-            }
+            ifRight = { r -> _state.update { s -> s.copy(token = r.requestToken, launchTMDBWeb = true) } }
         )
     }
 
@@ -99,9 +78,7 @@ class LoginViewModel (
         } else {
             usecases.createGuestSessionId().fold(
                 ifLeft = { e -> _state.update { it.copy(appError = e) } },
-                ifRight = {
-                    setDestination(MediaCatalog())
-                }
+                ifRight = { onEvent(Navigate(MediaCatalog())) }
             )
         }
     }
@@ -109,20 +86,8 @@ class LoginViewModel (
     private fun getAccount() = run {
         usecases.getUserAccount().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { setDestination(MediaCatalog()) }
+            ifRight = { onEvent(Navigate(MediaCatalog())) }
         )
-    }
-
-    private fun collectSession() {
-        viewModelScope.launch {
-            val currentSession = usecases.sessionId().firstOrNull()
-            _state.update {
-                it.copy(
-                    session = currentSession,
-                    launchBioPrompt = !currentSession?.id.isNullOrEmpty()
-                )
-            }
-        }
     }
 
     private fun getArguments() {

@@ -1,4 +1,4 @@
-package com.davidluna.tmdb.splash.animation
+package com.davidluna.tmdb.splash.view.animation
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D

@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import com.davidluna.tmdb.app.main_ui.presenter.MainEvent
 import com.davidluna.tmdb.app.main_ui.view.composables.NavDrawerState
-import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.core_ui.navigation.destination.DrawerItem
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation

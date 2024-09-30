@@ -22,7 +22,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag
-import com.davidluna.tmdb.auth_ui.biometrics.rememberBiometricAuth
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent
 import com.davidluna.tmdb.auth_ui.presenter.LoginViewModel
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
@@ -36,11 +35,6 @@ fun LoginScreen(
     state: LoginViewModel.LoginState,
     sendEvent: (event: LoginEvent) -> Unit,
 ) {
-    val bioState = rememberBiometricAuth()
-
-    bioState.CanAuthenticateEffect(state.session) { sendEvent(it) }
-    bioState.BioResultEffect { sendEvent(it) }
-    bioState.BiometricsLaunchedEffect(state.launchBioPrompt)
 
     Box(
         modifier = Modifier.fillMaxSize().testTag(AuthTag.AUTH_SCREEN_VIEW),
@@ -82,18 +76,6 @@ fun LoginScreen(
                 )
             }
 
-            if (state.session?.id?.isNotEmpty() == true) {
-                TextButton(
-                    onClick = { sendEvent(LoginEvent.LaunchBioPrompt(true)) },
-                    modifier = Modifier.fillMaxWidth().testTag(AuthTag.AUTH_BIOMETRIC_BUTTON),
-                    enabled = state.isLoading.not(),
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.btn_launch_biometrics),
-                        modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-                    )
-                }
-            }
         }
 
         if (state.isLoading) {
@@ -101,9 +83,6 @@ fun LoginScreen(
         }
 
         ErrorDialogView(error = state.appError as? AppError.Message) {
-            if (state.launchBioPrompt) {
-                sendEvent(LoginEvent.LaunchBioPrompt(false))
-            }
             sendEvent(LoginEvent.SetAppError(null))
         }
     }

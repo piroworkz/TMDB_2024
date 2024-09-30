@@ -9,6 +9,7 @@ class MockWebServerRule: TestWatcher() {
     private val mockWebServer = MockWebServer()
 
     override fun starting(description: Description?) {
+        println("<-- MockWebServerRule starting")
         mockWebServer.start(8080)
         mockWebServer.dispatcher = MockDispatcher()
     }

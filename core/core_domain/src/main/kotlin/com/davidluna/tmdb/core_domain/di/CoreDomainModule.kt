@@ -8,7 +8,7 @@ import com.davidluna.tmdb.core_domain.usecases.CloseSessionUseCase
 import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
 import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import com.davidluna.tmdb.core_domain.usecases.SaveContentKindUseCase
-import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.core_domain.usecases.UserAccountUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -22,6 +22,6 @@ val coreDomainModule = module {
     factoryOf(::GetContentKindUseCase)
     factoryOf(::GetCountryCodeUseCase)
     factoryOf(::SaveContentKindUseCase)
-    factoryOf(::SessionUseCase)
+    factoryOf(::SessionFlowUseCase)
     factoryOf(::UserAccountUseCase)
 }

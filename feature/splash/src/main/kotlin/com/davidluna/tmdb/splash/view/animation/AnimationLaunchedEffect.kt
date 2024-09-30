@@ -1,4 +1,4 @@
-package com.davidluna.tmdb.splash.animation
+package com.davidluna.tmdb.splash.view.animation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

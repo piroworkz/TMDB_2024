@@ -10,12 +10,15 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.printToString
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsRule
 import androidx.test.rule.GrantPermissionRule
+import com.davidluna.tmdb.app.di.testModules
 import com.davidluna.tmdb.app.main_ui.common.permissions
+import com.davidluna.tmdb.app.rules.KoinTestRule
 import com.davidluna.tmdb.app.rules.MockWebServerRule
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_GUEST_BUTTON
 import com.davidluna.tmdb.auth_domain.entities.tags.AuthTag.AUTH_LOGIN_BUTTON
@@ -32,15 +35,18 @@ class AuthInstrumentedTest {
     private val deepLink: Uri = Uri.parse(FAKE_DEEP_LINK)
 
     @get:Rule(order = 0)
-    val mockWebServerRule: MockWebServerRule = MockWebServerRule()
+    val koinTestRule = KoinTestRule(modules = testModules)
 
     @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val mockWebServerRule: MockWebServerRule = MockWebServerRule()
 
     @get:Rule(order = 2)
-    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 3)
+    val grantPermissionsRule: GrantPermissionRule = GrantPermissionRule.grant(*permissions)
+
+    @get:Rule(order = 4)
     val intentsTestRule = IntentsRule()
 
     @Test
@@ -61,12 +67,14 @@ class AuthInstrumentedTest {
         with(composeTestRule) {
             interceptTmdbIntent()
             onRoot(true)
+                .printToString()
             onNodeWithTag(AUTH_LOGIN_BUTTON)
                 .assertExists("Login Button not found")
                 .performClick()
             onRoot(true)
+                .printToString()
             onNodeWithTag(MEDIA_CATALOG_SCREEN_VIEW)
-                .assertIsDisplayed()
+                .assertExists("Media Catalog not found")
             waitForIdle()
         }
 

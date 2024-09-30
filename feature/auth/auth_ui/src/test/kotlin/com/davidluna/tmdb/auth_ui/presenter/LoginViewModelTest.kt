@@ -9,7 +9,7 @@ import com.davidluna.tmdb.auth_domain.usecases.CreateSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
-import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation.Login
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.test_shared.fakes.FAKE_REQUEST_TOKEN
@@ -53,7 +53,7 @@ class LoginViewModelTest {
     lateinit var getUserAccountUseCase: GetUserAccountUseCase
 
     @Mock
-    lateinit var sessionUseCase: SessionUseCase
+    lateinit var sessionFlowUseCase: SessionFlowUseCase
 
     @Mock
     lateinit var guestSessionNotExpiredUseCase: GuestSessionNotExpiredUseCase
@@ -74,7 +74,7 @@ class LoginViewModelTest {
             createSessionUseCase,
             createGuestSessionIdUseCase,
             getUserAccountUseCase,
-            sessionUseCase,
+            sessionFlowUseCase,
             guestSessionNotExpiredUseCase
         )
     }
@@ -87,10 +87,10 @@ class LoginViewModelTest {
                 session = fakeEmptySession
             )
             whenever(createGuestSessionIdUseCase()).thenReturn(fakeGuestSession.right())
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
+            viewModel.onEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -101,7 +101,7 @@ class LoginViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
             verify(createGuestSessionIdUseCase).invoke()
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
         }
 
     @Test
@@ -110,10 +110,10 @@ class LoginViewModelTest {
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
             whenever(createGuestSessionIdUseCase()).thenReturn(fakeUnknownAppError.left())
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
+            viewModel.onEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -124,7 +124,7 @@ class LoginViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
             verify(createGuestSessionIdUseCase).invoke()
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
         }
 
     @Test
@@ -134,11 +134,11 @@ class LoginViewModelTest {
                 destination = MediaNavigation.MediaCatalog(),
                 session = fakeGuestSession
             )
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeGuestSession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeGuestSession))
             whenever(guestSessionNotExpiredUseCase(any())).thenReturn(true)
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.GuestButtonCLicked)
+            viewModel.onEvent(LoginEvent.GuestButtonCLicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -148,7 +148,7 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
             verify(guestSessionNotExpiredUseCase).invoke(any())
         }
 
@@ -163,10 +163,10 @@ class LoginViewModelTest {
                     session = fakeEmptySession
                 )
             whenever(createRequestTokenUseCase()).thenReturn(fakeTokenResponse.right())
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.LoginButtonClicked)
+            viewModel.onEvent(LoginEvent.LoginButtonClicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -177,7 +177,7 @@ class LoginViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
             verify(createRequestTokenUseCase).invoke()
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
         }
 
     @Test
@@ -186,10 +186,10 @@ class LoginViewModelTest {
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
             whenever(createRequestTokenUseCase()).thenReturn(fakeUnknownAppError.left())
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
 
             val viewModel = buildViewModel()
-            viewModel.sendEvent(LoginEvent.LoginButtonClicked)
+            viewModel.onEvent(LoginEvent.LoginButtonClicked)
 
             viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
@@ -200,7 +200,7 @@ class LoginViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
             verify(createRequestTokenUseCase).invoke()
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
         }
 
     @Test
@@ -210,7 +210,7 @@ class LoginViewModelTest {
                 destination = MediaNavigation.MediaCatalog(),
                 session = fakeEmptySession,
             )
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(fakeSession.right())
             whenever(getUserAccountUseCase()).thenReturn(fakeUserAccount.right())
 
@@ -226,7 +226,7 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
             verify(getUserAccountUseCase).invoke()
         }
@@ -237,7 +237,7 @@ class LoginViewModelTest {
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
 
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
                 fakeUnknownAppError.left()
             )
@@ -252,7 +252,7 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
         }
 
@@ -263,7 +263,7 @@ class LoginViewModelTest {
             val expected =
                 initialState.copy(appError = fakeUnknownAppError, session = fakeEmptySession)
 
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeEmptySession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeEmptySession))
             whenever(createSessionUseCase(fakeLoginRequest)).thenReturn(
                 fakeSession.right()
             )
@@ -281,7 +281,7 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
             verify(createSessionUseCase).invoke(fakeLoginRequest)
             verify(getUserAccountUseCase).invoke()
         }
@@ -290,7 +290,7 @@ class LoginViewModelTest {
     fun `GIVEN (Session exists) WHEN (sessionUseCase collect succeeds) THEN (should update launchBioPrompt state = true)`() =
         runTest {
             val expected = initialState.copy(session = fakeSession, launchBioPrompt = true)
-            whenever(sessionUseCase()).thenReturn(flowOf(fakeSession))
+            whenever(sessionFlowUseCase()).thenReturn(flowOf(fakeSession))
 
             val viewModel = buildViewModel()
 
@@ -299,7 +299,7 @@ class LoginViewModelTest {
                 Truth.assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()
             }
-            verify(sessionUseCase).invoke()
+            verify(sessionFlowUseCase).invoke()
         }
 
     private fun buildViewModel(loginArgs: Login = Login()): LoginViewModel =

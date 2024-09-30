@@ -15,7 +15,6 @@ import com.davidluna.tmdb.app.main_ui.view.composables.DrawerScaffoldView
 import com.davidluna.tmdb.app.main_ui.view.composables.rememberNavigatorState
 import com.davidluna.tmdb.auth_ui.navigation.authNavGraph
 import com.davidluna.tmdb.core_domain.entities.tags.CoreTag
-import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.tmdb.core_ui.navigation.destination.StartNavigation
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import com.davidluna.tmdb.media_ui.navigation.mediaNavGraph
@@ -53,7 +52,7 @@ fun Navigator(
 
             authNavGraph {
                 navigateTo(it) {
-                    popUpTo(AuthNavigation.Init) { inclusive = true }
+                    popUpTo(StartNavigation.Init) { inclusive = true }
                     launchSingleTop = true
                 }
             }

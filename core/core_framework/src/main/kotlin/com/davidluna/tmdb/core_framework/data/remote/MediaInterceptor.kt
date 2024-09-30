@@ -1,7 +1,7 @@
 package com.davidluna.tmdb.core_framework.data.remote
 
 import com.davidluna.tmdb.core_domain.entities.PAGE_SIZE
-import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ import okhttp3.Response
 
 class MediaInterceptor(
     private val apiKey: String,
-    private val sessionUseCase: SessionUseCase,
+    private val sessionFlowUseCase: SessionFlowUseCase,
     private val getCountryCodeUseCase: GetCountryCodeUseCase,
     private val scope: CoroutineScope,
 ) : Interceptor {
@@ -54,7 +54,7 @@ class MediaInterceptor(
 
     private fun collectAuth() {
         scope.launch {
-            sessionUseCase().collect { session: com.davidluna.tmdb.core_domain.entities.Session ->
+            sessionFlowUseCase().collect { session: com.davidluna.tmdb.core_domain.entities.Session ->
                 id = session.id.ifEmpty { session.guestSession.id }
                 setRegion()
             }

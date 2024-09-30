@@ -1,7 +1,7 @@
 package com.davidluna.tmdb.core_domain.usecases.datastore
 
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.davidluna.tmdb.test_shared.fakes.fakeSession
 import com.google.common.truth.Truth.assertThat
@@ -18,12 +18,12 @@ import org.mockito.kotlin.whenever
 import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
-class SessionUseCaseTest {
+class SessionFlowUseCaseTest {
 
     @Mock
     lateinit var repository: PreferencesRepository
 
-    private val useCase by lazy { SessionUseCase(repository) }
+    private val useCase by lazy { SessionFlowUseCase(repository) }
 
     @Test
     fun `GIVEN (invoke is called) WHEN (sessionId succeeds) THEN (should return a flow of String)`() =

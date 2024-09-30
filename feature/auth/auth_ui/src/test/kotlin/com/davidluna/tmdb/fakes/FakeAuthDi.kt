@@ -11,7 +11,7 @@ import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
 import com.davidluna.tmdb.auth_framework.data.remote.RemoteSessionDataSource
 import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
-import com.davidluna.tmdb.core_domain.usecases.SessionUseCase
+import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.test_shared.framework.FakeLocalPreferencesDataSource
 
 class FakeAuthDi {
@@ -50,7 +50,7 @@ class FakeAuthDi {
         GetUserAccountUseCase(sessionRepository)
     }
     private val sessionId by lazy {
-        SessionUseCase(preferencesRepository)
+        SessionFlowUseCase(preferencesRepository)
     }
     private val guestSessionNotExpired by lazy {
         GuestSessionNotExpiredUseCase()

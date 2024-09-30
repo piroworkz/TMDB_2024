@@ -17,7 +17,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
-class CreateSessionUseCaseTest {
+class CreateSessionFlowUseCaseTest {
 
     @Mock
     lateinit var repository: SessionRepository

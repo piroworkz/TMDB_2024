@@ -1,4 +1,4 @@
-package com.davidluna.tmdb.auth_ui.biometrics
+package com.davidluna.tmdb.splash.view.biometrics
 
 enum class BioResult {
     SUCCESS, FAILED, UNDEFINED
