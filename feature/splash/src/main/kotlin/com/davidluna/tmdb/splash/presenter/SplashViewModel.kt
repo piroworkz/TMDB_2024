@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 class SplashViewModel(
     private val sessionFlow: SessionFlowUseCase,
 ) : ViewModel() {

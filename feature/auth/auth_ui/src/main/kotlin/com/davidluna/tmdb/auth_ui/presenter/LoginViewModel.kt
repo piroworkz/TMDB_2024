@@ -8,7 +8,6 @@ import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.GuestButtonCLicked
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.LoginButtonClicked
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.Navigate
 import com.davidluna.tmdb.auth_ui.presenter.LoginEvent.SetAppError
-import com.davidluna.tmdb.core_domain.entities.Session
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
@@ -31,7 +30,6 @@ class LoginViewModel(
     data class LoginState(
         val isLoading: Boolean = false,
         val appError: AppError? = null,
-        val session: Session? = null,
         val token: String? = null,
         val launchTMDBWeb: Boolean = false,
         val destination: Destination? = null,
@@ -57,7 +55,14 @@ class LoginViewModel(
     private fun createRequestToken() = run {
         usecases.createRequestToken().fold(
             ifLeft = { e -> _state.update { it.copy(appError = e) } },
-            ifRight = { r -> _state.update { s -> s.copy(token = r.requestToken, launchTMDBWeb = true) } }
+            ifRight = { r ->
+                _state.update { s ->
+                    s.copy(
+                        token = r.requestToken,
+                        launchTMDBWeb = true
+                    )
+                }
+            }
         )
     }
 
@@ -69,18 +74,10 @@ class LoginViewModel(
     }
 
     private fun createGuestSessionId() = run {
-        val isNotExpired = usecases
-            .guestSessionNotExpired
-            .invoke(_state.value.session?.guestSession?.expiresAt ?: "")
-
-        if (isNotExpired) {
-            setDestination(MediaCatalog())
-        } else {
-            usecases.createGuestSessionId().fold(
-                ifLeft = { e -> _state.update { it.copy(appError = e) } },
-                ifRight = { onEvent(Navigate(MediaCatalog())) }
-            )
-        }
+        usecases.createGuestSessionId().fold(
+            ifLeft = { e -> _state.update { it.copy(appError = e) } },
+            ifRight = { onEvent(Navigate(MediaCatalog())) }
+        )
     }
 
     private fun getAccount() = run {

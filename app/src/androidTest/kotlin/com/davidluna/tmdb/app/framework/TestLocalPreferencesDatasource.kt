@@ -14,8 +14,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 
-class TestLocalPreferencesDatasource :
-    PreferencesDataSource {
+class TestLocalPreferencesDatasource : PreferencesDataSource {
 
     private val preferences = flowOf(ProtoPreferences.getDefaultInstance())
 

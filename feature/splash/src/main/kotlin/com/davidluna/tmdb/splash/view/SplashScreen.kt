@@ -45,7 +45,7 @@ import com.piroworkz.composeandroidpermissions.rememberPermissionsState
 @Composable
 fun SplashScreen(
     state: SplashViewModel.State,
-    sendEvent: (event: SplashEvent) -> Unit,
+    sendEvent: (event: SplashEvent) -> Unit
 ) {
     val permissions = rememberPermissionsState()
     val animationState = rememberAnimationState()

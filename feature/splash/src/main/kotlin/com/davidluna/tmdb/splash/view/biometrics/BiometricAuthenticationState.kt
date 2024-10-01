@@ -44,7 +44,7 @@ import java.util.concurrent.Executor
 
 class BiometricAuthenticationState(
     private val fragmentActivity: WeakReference<FragmentActivity>,
-    private val sendEvent: (event: SplashEvent) -> Unit = {},
+    private val sendEvent: (event: SplashEvent) -> Unit = {}
 ) {
     private val executor: Executor? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -144,7 +144,8 @@ class BiometricAuthenticationState(
                     ERROR_TIMEOUT,
                     ERROR_UNABLE_TO_PROCESS,
                     ERROR_USER_CANCELED,
-                    ERROR_CANCELED -> {
+                    ERROR_CANCELED,
+                    -> {
                         sendEvent(OnBioPromptResult(UNDEFINED))
                     }
 
@@ -152,6 +153,7 @@ class BiometricAuthenticationState(
                         sendEvent(OnBioPromptResult(FAILED))
                     }
                 }
+                sendEvent(LaunchBioPrompt(false))
             }
 
             override fun onAuthenticationSucceeded(result: AuthenticationResult) {

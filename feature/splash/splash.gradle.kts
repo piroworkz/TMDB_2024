@@ -13,4 +13,6 @@ dependencies {
     implementation(projects.core.coreDomain)
     implementation(libs.composeAndroidPermissions)
     implementation(libs.biometric)
+    testImplementation(projects.testShared)
+    testImplementation(projects.core.coreFramework)
 }

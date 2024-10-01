@@ -6,12 +6,9 @@ import com.davidluna.tmdb.auth_domain.usecases.CreateGuestSessionIdUseCase
 import com.davidluna.tmdb.auth_domain.usecases.CreateRequestTokenUseCase
 import com.davidluna.tmdb.auth_domain.usecases.CreateSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
-import com.davidluna.tmdb.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
 import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
 import com.davidluna.tmdb.auth_framework.data.remote.RemoteSessionDataSource
-import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
-import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.test_shared.framework.FakeLocalPreferencesDataSource
 
 class FakeAuthDi {
@@ -31,12 +28,6 @@ class FakeAuthDi {
         )
     }
 
-    private val preferencesRepository: PreferencesRepository by lazy {
-        com.davidluna.tmdb.core_domain.data.datastore.LocalPreferencesDataRepository(
-            local = local
-        )
-    }
-
     private val createRequestToken by lazy {
         CreateRequestTokenUseCase(sessionRepository)
     }
@@ -49,12 +40,6 @@ class FakeAuthDi {
     private val getUserAccount by lazy {
         GetUserAccountUseCase(sessionRepository)
     }
-    private val sessionId by lazy {
-        SessionFlowUseCase(preferencesRepository)
-    }
-    private val guestSessionNotExpired by lazy {
-        GuestSessionNotExpiredUseCase()
-    }
 
 
     val loginViewModelUseCases by lazy {
@@ -62,9 +47,7 @@ class FakeAuthDi {
             createRequestToken,
             createSessionId,
             createGuestSessionId,
-            getUserAccount,
-            sessionId,
-            guestSessionNotExpired
+            getUserAccount
         )
     }
 }

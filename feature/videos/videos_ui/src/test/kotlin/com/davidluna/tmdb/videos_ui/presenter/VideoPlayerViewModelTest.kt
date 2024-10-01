@@ -19,6 +19,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
@@ -50,6 +51,8 @@ class VideoPlayerViewModelTest {
                 Truth.assertThat(awaitItem().contentKind).isEqualTo(fakeContentKind)
                 cancelAndIgnoreRemainingEvents()
             }
+            verify(getContentKindUseCase).invoke()
+            verify(getVideosUseCase).invoke(any())
         }
 
     @Test
@@ -64,7 +67,7 @@ class VideoPlayerViewModelTest {
                 Truth.assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)
                 cancelAndIgnoreRemainingEvents()
             }
-
+            verify(getContentKindUseCase).invoke()
         }
 
     @Test
@@ -82,6 +85,8 @@ class VideoPlayerViewModelTest {
                     .isEqualTo(fakeMovieVideos.sortedBy { it.order }.map { it.key })
                 cancelAndIgnoreRemainingEvents()
             }
+            verify(getContentKindUseCase).invoke()
+            verify(getVideosUseCase).invoke(any())
         }
 
 
@@ -99,6 +104,8 @@ class VideoPlayerViewModelTest {
                 Truth.assertThat(awaitItem().appError).isEqualTo(fakeNotFoundAppError)
                 cancelAndIgnoreRemainingEvents()
             }
+            verify(getContentKindUseCase).invoke()
+            verify(getVideosUseCase).invoke(any())
         }
 
 
