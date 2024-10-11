@@ -3,6 +3,7 @@ package com.davidluna.tmdb.media_ui.presenter.media
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.core_domain.entities.errors.toAppError
 import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
