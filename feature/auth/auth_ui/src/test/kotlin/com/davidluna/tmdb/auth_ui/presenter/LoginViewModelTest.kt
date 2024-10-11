@@ -19,7 +19,6 @@ import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
 import com.davidluna.tmdb.test_shared.fakes.fakeUserAccount
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -77,7 +76,7 @@ class LoginViewModelTest {
             val viewModel = buildViewModel()
             viewModel.onEvent(LoginEvent.GuestButtonCLicked)
 
-            viewModel.state.onEach { println("<-- state $it") }.test {
+            viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem()).isEqualTo(expected)
                 cancelAndConsumeRemainingEvents()

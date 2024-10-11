@@ -2,7 +2,6 @@ package com.davidluna.tmdb.fakes
 
 import arrow.core.Either
 import arrow.core.right
-import com.davidluna.tmdb.auth_framework.data.remote.SessionService
 import com.davidluna.tmdb.core_framework.data.remote.model.RemoteError
 import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteGuestSession
 import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteLoginRequest

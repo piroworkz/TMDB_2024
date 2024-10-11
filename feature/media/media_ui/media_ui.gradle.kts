@@ -1,11 +1,5 @@
-import com.davidluna.tmdb.convention.constants.Constants
-
 plugins {
     alias(libs.plugins.uiModuleConventionPlugin)
-}
-
-android {
-    namespace = Constants.NAMESPACE.plus(".media_ui")
 }
 
 dependencies {

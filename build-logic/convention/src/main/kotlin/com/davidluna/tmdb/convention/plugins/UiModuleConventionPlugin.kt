@@ -6,6 +6,7 @@ import com.davidluna.tmdb.convention.bundles.composeUiBundle
 import com.davidluna.tmdb.convention.bundles.koinAndroidBundle
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
 import com.davidluna.tmdb.convention.constants.Constants
+import com.davidluna.tmdb.convention.constants.NAME_SPACE
 import com.davidluna.tmdb.convention.extensions.defaultConfig
 import com.davidluna.tmdb.convention.extensions.javaVersion
 import com.davidluna.tmdb.convention.extensions.kotlin
@@ -40,6 +41,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
         }
 
         android {
+            namespace = NAME_SPACE
             defaultConfig()
             setBuildTypes()
             compileOptions.apply {

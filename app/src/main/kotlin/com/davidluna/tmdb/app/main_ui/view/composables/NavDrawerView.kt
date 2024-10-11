@@ -37,13 +37,13 @@ import com.davidluna.tmdb.core_domain.entities.tags.CoreTag
 import com.davidluna.tmdb.core_domain.entities.tags.CoreTag.DRAWER_VIEW
 import com.davidluna.tmdb.core_ui.R
 import com.davidluna.tmdb.core_ui.composables.appGradient
-import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 import com.davidluna.tmdb.core_ui.navigation.destination.DrawerItem
+import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 
 @Composable
 fun NavDrawerView(
     isGuest: Boolean = false,
-    user: com.davidluna.tmdb.core_domain.entities.UserAccount? = null,
+    user: UserAccount? = null,
     onSelected: (DrawerItem?) -> Unit,
 ) {
 

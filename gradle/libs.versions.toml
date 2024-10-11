@@ -50,6 +50,11 @@ espresso-intents = "3.6.1"
 ##di koin
 koin-version = "4.0.0"
 ktor = "2.3.7"
+coreKtx = "1.13.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
 
 [libraries]
 #androidX
@@ -72,11 +77,11 @@ composeNavigation = { group = "androidx.navigation", name = "navigation-compose"
 coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
-#retrofit
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-okhttpClient = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
-kotlinConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter" }
+##retrofit
+#retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+#okhttpClient = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+#okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+#kotlinConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-converter" }
 
 #protobuf
 protobufJavalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavalite" }
@@ -139,6 +144,11 @@ logback = { module = "ch.qos.logback:logback-classic", version = "1.2.11" }
 #Koin test features
 koin-test = { group = "io.insert-koin", name = "koin-test" }
 koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 

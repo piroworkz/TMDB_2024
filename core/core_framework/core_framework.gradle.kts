@@ -1,14 +1,9 @@
 
-import com.davidluna.tmdb.convention.constants.Constants
 import com.google.protobuf.gradle.id
 
 plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)
     alias(libs.plugins.protobufPlugin)
-}
-
-android {
-    namespace = Constants.NAMESPACE.plus(".core_framework")
 }
 
 dependencies {
@@ -17,7 +12,6 @@ dependencies {
     implementation(libs.protobufJavalite)
     implementation(libs.protobufKotlinLite)
     implementation(libs.playServicesLocation)
-    implementation(libs.okhttpClient)
     testImplementation(projects.testShared)
 }
 

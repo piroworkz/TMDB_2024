@@ -1,9 +1,15 @@
 package com.davidluna.tmdb.convention.bundles
 
+import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.helpers.testImplementation
 import com.davidluna.tmdb.convention.libs.coroutinesTest
 import com.davidluna.tmdb.convention.libs.junit
+import com.davidluna.tmdb.convention.libs.ktorClientAndroid
+import com.davidluna.tmdb.convention.libs.ktorClientContentNegotiation
+import com.davidluna.tmdb.convention.libs.ktorClientLogging
+import com.davidluna.tmdb.convention.libs.ktorSerializationKotlinxJson
 import com.davidluna.tmdb.convention.libs.libs
+import com.davidluna.tmdb.convention.libs.logback
 import com.davidluna.tmdb.convention.libs.mockitoInline
 import com.davidluna.tmdb.convention.libs.mockitoKotlin
 import com.davidluna.tmdb.convention.libs.truth
@@ -23,3 +29,14 @@ internal val Project.unitTestingBundle: Unit
         }
     }
 
+internal val Project.ktorAndroidBundle: Unit
+    get() {
+        dependencies {
+            implementation(libs.ktorClientAndroid)
+            implementation(libs.ktorClientContentNegotiation)
+            implementation(libs.ktorClientLogging)
+            implementation(libs.ktorSerializationKotlinxJson)
+            implementation(libs.ktorClientLogging)
+            implementation(libs.logback)
+        }
+    }

@@ -2,8 +2,10 @@ package com.davidluna.tmdb.convention.plugins
 
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.tmdb.convention.bundles.koinCoreBundle
+import com.davidluna.tmdb.convention.bundles.ktorAndroidBundle
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
 import com.davidluna.tmdb.convention.constants.Constants
+import com.davidluna.tmdb.convention.constants.NAME_SPACE
 import com.davidluna.tmdb.convention.extensions.defaultConfig
 import com.davidluna.tmdb.convention.extensions.javaVersion
 import com.davidluna.tmdb.convention.extensions.kotlin
@@ -19,7 +21,6 @@ import com.davidluna.tmdb.convention.libs.kotlinSerialization
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
 import com.davidluna.tmdb.convention.libs.ksp
 import com.davidluna.tmdb.convention.libs.libs
-import com.davidluna.tmdb.convention.libs.retrofit
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -39,6 +40,7 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
             }
 
             android {
+                namespace = NAME_SPACE
                 defaultConfig()
                 setBuildTypes()
                 compileOptions.apply {
@@ -56,8 +58,8 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
             javaVersion
             dependencies {
                 koinCoreBundle
+                ktorAndroidBundle
                 implementation(libs.kotlinxSerializationJson)
-                implementation(libs.retrofit)
                 implementation(libs.arrowCore)
                 implementation(libs.kotlinCoroutinesCore)
                 unitTestingBundle
@@ -68,3 +70,5 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
     private fun Project.android(config: Action<LibraryExtension>) =
         (this as ExtensionAware).extensions.configure("android", config)
 }
+
+

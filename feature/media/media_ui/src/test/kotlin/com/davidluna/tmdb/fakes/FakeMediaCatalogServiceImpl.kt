@@ -5,7 +5,6 @@ import arrow.core.right
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMedia
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteResults
 import com.davidluna.tmdb.core_framework.data.remote.model.RemoteError
-import com.davidluna.tmdb.media_framework.data.remote.services.MediaCatalogService
 
 class FakeMediaCatalogServiceImpl : MediaCatalogService {
 

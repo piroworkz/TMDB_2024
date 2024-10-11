@@ -6,7 +6,6 @@ import com.davidluna.tmdb.media_framework.data.remote.media.RemoteCredits
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteImages
 import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMediaDetail
 import com.davidluna.tmdb.core_framework.data.remote.model.RemoteError
-import com.davidluna.tmdb.media_framework.data.remote.services.MediaDetailService
 
 class FakeMediaDetailServiceImpl : MediaDetailService {
     override suspend fun getDetailById(endpoint: String): Either<RemoteError, RemoteMediaDetail> =

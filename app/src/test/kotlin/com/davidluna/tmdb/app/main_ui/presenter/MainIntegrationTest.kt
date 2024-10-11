@@ -2,7 +2,6 @@ package com.davidluna.tmdb.app.main_ui.presenter
 
 import app.cash.turbine.test
 import com.davidluna.tmdb.app.fakes.FakeMainDI
-import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import com.google.common.truth.Truth

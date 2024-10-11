@@ -1,12 +1,6 @@
-import com.davidluna.tmdb.convention.constants.Constants
-
 plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)
     alias(libs.plugins.kotlinAndroid)
-}
-
-android {
-    namespace = Constants.NAMESPACE.plus(".videos_framework")
 }
 
 dependencies {

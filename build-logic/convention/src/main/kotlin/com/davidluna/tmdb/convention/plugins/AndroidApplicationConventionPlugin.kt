@@ -4,6 +4,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.davidluna.tmdb.convention.bundles.androidTestingBundle
 import com.davidluna.tmdb.convention.bundles.composeUiBundle
 import com.davidluna.tmdb.convention.bundles.koinAppBundle
+import com.davidluna.tmdb.convention.bundles.ktorAndroidBundle
 import com.davidluna.tmdb.convention.bundles.unitTestingBundle
 import com.davidluna.tmdb.convention.constants.Constants
 import com.davidluna.tmdb.convention.constants.Constants.COMPILE_SDK
@@ -29,13 +30,9 @@ import com.davidluna.tmdb.convention.libs.composeActivity
 import com.davidluna.tmdb.convention.libs.composeCompiler
 import com.davidluna.tmdb.convention.libs.composeNavigation
 import com.davidluna.tmdb.convention.libs.kotlinAndroid
-import com.davidluna.tmdb.convention.libs.kotlinConverter
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
 import com.davidluna.tmdb.convention.libs.ksp
 import com.davidluna.tmdb.convention.libs.libs
-import com.davidluna.tmdb.convention.libs.okhttpClient
-import com.davidluna.tmdb.convention.libs.okhttpLoggingInterceptor
-import com.davidluna.tmdb.convention.libs.retrofit
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -159,11 +156,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             implementation(libs.composeActivity)
             implementation(libs.coilCompose)
             implementation(libs.composeNavigation)
-            implementation(libs.retrofit)
-            implementation(libs.okhttpClient)
-            implementation(libs.okhttpLoggingInterceptor)
             implementation(libs.kotlinxSerializationJson)
-            implementation(libs.kotlinConverter)
+            ktorAndroidBundle
             unitTestingBundle
             androidTestingBundle
         }

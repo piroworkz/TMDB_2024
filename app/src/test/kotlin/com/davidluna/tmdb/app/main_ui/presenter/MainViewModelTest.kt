@@ -49,7 +49,7 @@ class MainViewModelTest {
 
             val viewModel = buildViewModel()
 
-            viewModel.state.onEach { println("<-- $it") }.test {
+            viewModel.state.test {
                 Truth.assertThat(awaitItem()).isEqualTo(initialState)
                 Truth.assertThat(awaitItem().loading).isTrue()
                 Truth.assertThat(awaitItem().loading).isFalse()

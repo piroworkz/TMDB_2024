@@ -10,6 +10,5 @@ suspend fun <T> tryCatch(block: suspend () -> T): Either<AppError, T> =
     try {
         block().right()
     } catch (e: Throwable) {
-        println("<-- Error in tryCatch: ${e.toAppError()}")
         e.toAppError().left()
     }
