@@ -41,7 +41,7 @@ fun MediaCatalogScreen(
     val fourthList = state.fourthList.collectAsLazyPagingItems()
 
     LaunchedEffect(state.contentKind) {
-        if (state.contentKind != com.davidluna.tmdb.core_domain.entities.ContentKind.UNDEFINED) {
+        if (state.contentKind != ContentKind.UNDEFINED) {
             sendEvent(MediaEvent.OnUiReady(state.contentKind))
         }
     }
@@ -80,7 +80,7 @@ fun MediaCatalogScreen(
 
         item {
             val resourceId =
-                if (state.contentKind == com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE) R.string.title_upcoming_movies else R.string.title_airing_today
+                if (state.contentKind == ContentKind.MOVIE) R.string.title_upcoming_movies else R.string.title_airing_today
             ReelView(
                 modifier = Modifier.testTag(MEDIA_THIRD_LIST_TITLE_VIEW),
                 lazyRowModifier = Modifier.testTag(MEDIA_THIRD_LIST_LAZY_ROW),
@@ -95,7 +95,7 @@ fun MediaCatalogScreen(
 
         item {
             val resourceId =
-                if (state.contentKind == com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE) R.string.title_now_playing_movies else R.string.title_on_air
+                if (state.contentKind == ContentKind.MOVIE) R.string.title_now_playing_movies else R.string.title_on_air
             ReelView(
                 modifier = Modifier.testTag(MEDIA_FOURTH_LIST_TITLE_VIEW),
                 lazyRowModifier = Modifier.testTag(MEDIA_FOURTH_LIST_LAZY_ROW),

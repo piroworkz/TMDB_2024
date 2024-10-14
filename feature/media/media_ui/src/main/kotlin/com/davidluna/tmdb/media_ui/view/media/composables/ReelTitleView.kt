@@ -21,25 +21,23 @@ fun ReelTitleView(
     modifier: Modifier = Modifier,
     title: String?,
 ) {
-    title?.let {
-        Box(
-            modifier = modifier
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Color.Black)
+    ) {
+        Text(
+            text = title ?: "",
+            modifier = Modifier
+                .padding(Dimens.margins.small)
                 .fillMaxWidth()
-                .background(Color.Black)
-        ) {
-            Text(
-                text = title,
-                modifier = Modifier
-                    .padding(Dimens.margins.small)
-                    .fillMaxWidth()
-                    .testTag(REEL_TITLE_TEXT),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimary,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
-            )
-        }
+                .testTag(REEL_TITLE_TEXT),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center
+        )
     }
 }

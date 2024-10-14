@@ -39,6 +39,10 @@ class LocationDataSource (
                         continuation.resume(getCode(location))
                     }
                 }
+                .addOnFailureListener {
+                    println("<-- Error getting location ${it.stackTrace}")
+                    continuation.resume(DEFAULT_COUNTRY_CODE)
+                }
         }
     }
 
@@ -62,11 +66,15 @@ class LocationDataSource (
             }
         }
 
-    private fun getCode(location: Location): String =
-        try {
+    private fun getCode(location: Location): String {
+        println("<-- Getting country code from location ${location.latitude}, ${location.longitude}")
+        return try {
             val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 var countryCode: String? = null
                 coder.getFromLocation(location.latitude, location.longitude, 1) {
+                    it.firstOrNull()?.apply {
+                        println("<-- Country code: $this")
+                    }
                     countryCode = it.firstOrNull()?.countryCode
                 }
                 countryCode
@@ -75,10 +83,12 @@ class LocationDataSource (
                 coder.getFromLocation(location.latitude, location.longitude, 1)
                     ?.firstOrNull()?.countryCode
             } ?: DEFAULT_COUNTRY_CODE
+            println("<-- Country code: $code")
             code
         } catch (e: Exception) {
             DEFAULT_COUNTRY_CODE
         }
+    }
 
 
     companion object {

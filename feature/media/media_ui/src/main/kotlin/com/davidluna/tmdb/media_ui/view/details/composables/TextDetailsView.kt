@@ -2,7 +2,6 @@ package com.davidluna.tmdb.media_ui.view.details.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,14 +23,11 @@ import com.davidluna.tmdb.media_domain.entities.tags.MediaTag
 @Composable
 fun TextDetailsView(movieDetail: MediaDetails?) {
 
-    if (movieDetail == null) {
-        CircularProgressIndicator()
-    }
-
     Text(
         text = annotatedString(movieDetail),
         modifier = Modifier
             .padding(horizontal = Dimens.margins.large)
+
             .testTag(MediaTag.TEXT_RELEASE_DATE)
     )
 

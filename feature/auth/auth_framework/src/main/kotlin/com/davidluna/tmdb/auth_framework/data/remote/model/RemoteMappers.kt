@@ -8,16 +8,16 @@ import com.davidluna.tmdb.core_domain.entities.UserAccount
 import com.davidluna.tmdb.core_domain.entities.buildModel
 
 
-fun RemoteUserAccountDetail.toDomain(): com.davidluna.tmdb.core_domain.entities.UserAccount =
-    com.davidluna.tmdb.core_domain.entities.UserAccount(
+fun RemoteUserAccountDetail.toDomain(): UserAccount =
+    UserAccount(
         id = id,
         name = name,
         username = username,
         avatarPath = avatar.tmdb.avatarPath.buildModel()
     )
 
-fun RemoteSessionIdResponse.toDomain(): com.davidluna.tmdb.core_domain.entities.SessionId =
-    com.davidluna.tmdb.core_domain.entities.SessionId(sessionId = sessionId)
+fun RemoteSessionIdResponse.toDomain(): SessionId =
+    SessionId(sessionId = sessionId)
 
 fun LoginRequest.toRemote(): RemoteLoginRequest =
     RemoteLoginRequest(requestToken = requestToken)
@@ -28,8 +28,8 @@ fun RemoteTokenResponse.toDomain(): TokenResponse = TokenResponse(
     success = success
 )
 
-fun RemoteGuestSession.toDomain(): com.davidluna.tmdb.core_domain.entities.GuestSession =
-    com.davidluna.tmdb.core_domain.entities.GuestSession(
+fun RemoteGuestSession.toDomain(): GuestSession =
+    GuestSession(
         expiresAt = expiresAt,
         id = guestSessionId
     )

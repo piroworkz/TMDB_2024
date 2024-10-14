@@ -3,8 +3,8 @@ package com.davidluna.tmdb.media_ui.view.details.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -48,8 +48,8 @@ fun UserScoreView(
                 progress = { score / 10F },
                 modifier = Modifier.size(Dimens.margins.large * 3)
                     .testTag(MediaTag.USER_SCORE_PROGRESS),
-                color = MaterialTheme.colorScheme.secondary,
-                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
             )
             Text(
                 text = (score * 10F).toInt().toString().plus("%"),
@@ -68,10 +68,10 @@ fun UserScoreView(
 
         VerticalDivider(
             modifier = Modifier
-                .fillMaxHeight()
+                .height(Dimens.margins.xLarge)
                 .padding(horizontal = Dimens.margins.large),
             thickness = Dimens.margins.small,
-            color = Color.White
+            color = Color.White.copy(alpha = 0.5F)
         )
 
         TextButton(

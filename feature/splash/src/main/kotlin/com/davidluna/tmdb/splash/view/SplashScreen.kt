@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.graphics.Shader
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -88,17 +89,23 @@ fun SplashScreen(
             colorFilter = tint(colorScheme.onPrimary.copy(alpha = 0.5f))
         )
 
-        TextButton(
-            onClick = { sendEvent(LaunchBioPrompt(true)) },
+        AnimatedVisibility(!state.launchBioPrompt,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(bottom = Dimens.margins.xLarge)
-        ) {
-            Text(
-                text = stringResource(id = R.string.btn_launch_biometrics),
-                modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
-            )
+                .padding(bottom = Dimens.margins.xLarge)) {
+            TextButton(
+                onClick = { sendEvent(LaunchBioPrompt(true)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = Dimens.margins.xLarge)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.btn_launch_biometrics),
+                    modifier = Modifier.padding(horizontal = Dimens.margins.xLarge)
+                )
+            }
         }
 
         if (permissions.state == SHOULD_SHOW_RATIONALE && !permissions.requestedAtLeastOnce) {

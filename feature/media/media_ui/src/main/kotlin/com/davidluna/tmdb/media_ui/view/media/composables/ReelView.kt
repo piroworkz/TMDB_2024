@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 import com.davidluna.tmdb.media_domain.entities.Media
@@ -34,30 +35,65 @@ fun ReelView(
     Spacer(
         modifier = Modifier.padding(top = Dimens.margins.xLarge)
     )
-
     ReelTitleView(modifier = modifier, title = title)
-
     LazyRow(
         modifier = lazyRowModifier
             .wrapContentHeight(),
     ) {
-        items(list.itemCount) {
-            val media: Media? = list[it]
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black)
-                    .clickable { media?.id?.let { id -> onMovieSelected(id, media.title) } }
-                    .testTag(REEL_IMAGE_COLUMN_CONTAINER),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                FilmMaskImageView(
-                    model = media?.posterPath,
-                    imageSize = imageSize
-                )
+        when (list.loadState.refresh) {
+            is LoadState.Error -> {
+                items(5) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        ErrorImageView(imageSize)
+                        MediaTitleView("Error...", imageSize)
+                    }
+                }
+            }
 
-                MediaTitleView(media?.title, imageSize)
+            LoadState.Loading -> {
+                items(5) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        LoadingImageView(imageSize)
+                        MediaTitleView("Loading...", imageSize)
+                    }
+                }
+            }
+
+            is LoadState.NotLoading -> {
+                items(list.itemCount) {
+                    val media: Media? = list[it]
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black)
+                            .clickable {
+                                media?.id?.let { id ->
+                                    onMovieSelected(id, media.title)
+                                }
+                            }
+                            .testTag(REEL_IMAGE_COLUMN_CONTAINER),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        FilmMaskImageView(
+                            model = media?.posterPath,
+                            imageSize = imageSize
+                        )
+                        MediaTitleView(media?.title, imageSize)
+                    }
+                }
             }
         }
     }

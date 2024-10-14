@@ -13,11 +13,16 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-class MediaCatalogRemoteApi (private val client: HttpClient) :
-    MediaCatalogRemoteDatasource {
+class MediaCatalogRemoteApi(private val client: HttpClient) : MediaCatalogRemoteDatasource {
 
-    override suspend fun getMediaCatalog(endpoint: String, page: Int): Either<AppError, Results<Media>> =
-        tryCatch(client.get(endpoint){
-            parameter("page", page)
-        }.body<RemoteResults<RemoteMedia>>()::toDomain)
+    override suspend fun getMediaCatalog(
+        endpoint: String,
+        page: Int,
+    ): Either<AppError, Results<Media>> =
+        tryCatch(client.get(endpoint) { parameter(PAGE_NAME, page) }
+            .body<RemoteResults<RemoteMedia>>()::toDomain)
+
+    companion object {
+        private const val PAGE_NAME = "page"
+    }
 }

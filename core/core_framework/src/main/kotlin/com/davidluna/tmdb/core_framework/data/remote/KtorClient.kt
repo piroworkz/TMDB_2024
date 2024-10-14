@@ -15,7 +15,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.parameter
+import io.ktor.http.ContentType
 import io.ktor.http.URLProtocol
+import io.ktor.http.contentType
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
@@ -35,19 +37,20 @@ class KtorClient(
 
     init {
         collectAuth()
+        getRegion()
     }
 
     val instance: HttpClient = HttpClient(Android) {
         installContentNegotiation()
         configDefaultRequest()
         install(Logging) {
-            level = LogLevel.NONE
+            level = LogLevel.INFO
         }
 
     }.apply {
         plugin(HttpSend).intercept { request: HttpRequestBuilder ->
             id.ifNotEmpty { request.parameter(SESSION_ID_NAME, it) }
-            region.ifNotEmpty { request.parameter(REGION, it) }
+            region.ifNotEmpty { request.parameter(REGION_NAME, it) }
             execute(request)
         }
     }
@@ -58,8 +61,9 @@ class KtorClient(
                 protocol = URLProtocol.HTTPS
                 host = baseUrl
                 path("3/")
+                contentType(ContentType.Application.Json)
                 headers.append("Accept", "application/json")
-                headers.append(AUTHORIZATION, "$API_KEY_NAME $apiKey")
+                headers.append(AUTHORIZATION_NAME, "$API_KEY_NAME $apiKey")
                 parameters.append(API_KEY_NAME, apiKey)
             }
         }
@@ -79,15 +83,13 @@ class KtorClient(
         scope.launch {
             sessionFlowUseCase().collect { session: Session ->
                 id = session.id.ifEmpty { session.guestSession.id }
-                setRegion()
             }
         }
     }
 
-    private fun setRegion() {
+    private fun getRegion() {
         scope.launch { region = getCountryCodeUseCase() }
     }
-
 
     private fun String.ifNotEmpty(action: (String) -> Unit) {
         if (isNullOrEmpty().not()) action(this)
@@ -96,7 +98,7 @@ class KtorClient(
     companion object {
         private const val API_KEY_NAME = "api_key"
         private const val SESSION_ID_NAME = "session_id"
-        private const val AUTHORIZATION = "Authorization"
-        private const val REGION = "region"
+        private const val AUTHORIZATION_NAME = "Authorization"
+        private const val REGION_NAME = "region"
     }
 }

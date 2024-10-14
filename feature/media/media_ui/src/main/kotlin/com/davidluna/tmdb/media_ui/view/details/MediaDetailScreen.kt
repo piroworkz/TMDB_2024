@@ -43,7 +43,7 @@ import com.davidluna.tmdb.media_ui.view.media.composables.ReelView
 @Composable
 fun MediaDetailScreen(
     state: MovieDetailViewModel.State,
-    sendEvent: (com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent) -> Unit,
+    sendEvent: (MovieDetailEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -79,14 +79,14 @@ fun MediaDetailScreen(
                 lazyRowModifier = Modifier.testTag(MEDIA_DETAILS_RECOMMENDED_LAZY_ROW),
                 title = stringResource(R.string.title_recommended_movies),
                 list = state.recommendations.collectAsLazyPagingItems()
-            ) { id, title -> sendEvent(com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnMovieSelected(id, title)) }
+            ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }
 
             ReelView(
                 modifier = Modifier.testTag(MEDIA_DETAILS_SIMILAR_TITLE_VIEW),
                 lazyRowModifier = Modifier.testTag(MEDIA_DETAILS_SIMILAR_LAZY_ROW),
                 title = stringResource(R.string.title_similar_movies),
                 list = state.similar.collectAsLazyPagingItems()
-            ) { id, title -> sendEvent(com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnMovieSelected(id, title)) }
+            ) { id, title -> sendEvent(MovieDetailEvent.OnMovieSelected(id, title)) }
 
             Spacer(modifier = Modifier.padding(all = 16.dp))
         }
@@ -96,7 +96,7 @@ fun MediaDetailScreen(
         }
 
         ErrorDialogView(error = state.appError as? AppError.Message) {
-            sendEvent(com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.ResetError)
+            sendEvent(MovieDetailEvent.ResetError)
         }
     }
 
