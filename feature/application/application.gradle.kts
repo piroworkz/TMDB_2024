@@ -3,19 +3,15 @@ plugins {
 }
 
 dependencies {
-    api(projects.feature.splash)
     api(projects.core.coreUi)
     api(projects.core.coreDomain)
-    api(projects.core.coreFramework)
+    api(projects.core.coreData)
     api(projects.feature.auth.authUi)
     api(projects.feature.auth.authDomain)
-    api(projects.feature.auth.authFramework)
+    api(projects.feature.auth.authData)
     api(projects.feature.media.mediaUi)
     api(projects.feature.media.mediaDomain)
-    api(projects.feature.media.mediaFramework)
-    api(projects.feature.videos.videosUi)
-    api(projects.feature.videos.videosDomain)
-    api(projects.feature.videos.videosFramework)
+    api(projects.feature.media.mediaData)
     implementation(libs.playServicesLocation)
     implementation(libs.datastoreCore)
 }

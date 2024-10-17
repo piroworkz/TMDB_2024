@@ -1,15 +1,18 @@
 package com.davidluna.tmdb.fakes
 
-import com.davidluna.tmdb.media_framework.data.remote.datasources.toDomain
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteCredits
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteImages
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMedia
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMediaDetail
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteResults
-import com.davidluna.tmdb.videos_framework.data.remote.model.RemoteVideos
+import androidx.paging.PagingData
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteCredits
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteImages
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteMedia
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteMediaDetail
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteResults
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteVideos
+import com.davidluna.tmdb.media_data.framework.remote.model.toDomain
 import com.davidluna.tmdb.media_domain.entities.Media
-import com.davidluna.tmdb.test_shared.reader.TestConstants
 import com.davidluna.tmdb.test_shared.reader.Reader
+import com.davidluna.tmdb.test_shared.reader.TestConstants
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 val fakeRemoteMedia: RemoteResults<RemoteMedia> =
     Reader.fromJson<RemoteResults<RemoteMedia>>(TestConstants.MOVIE_LIST)
@@ -30,3 +33,5 @@ val fakeRemoteMovieVideos =
 
 val fakeRemoteTvShowVideos =
     Reader.fromJson<RemoteVideos>(TestConstants.TV_SHOW_VIDEOS)
+
+val empty = emptyFlow<Flow<PagingData<Media>>>()

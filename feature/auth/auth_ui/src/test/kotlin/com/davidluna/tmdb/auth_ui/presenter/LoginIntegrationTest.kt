@@ -1,6 +1,8 @@
 package com.davidluna.tmdb.auth_ui.presenter
 
 import app.cash.turbine.test
+import com.davidluna.tmdb.auth_ui.presenter.login.LoginEvent
+import com.davidluna.tmdb.auth_ui.presenter.login.LoginViewModel
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation.Login
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.fakes.FakeAuthDi

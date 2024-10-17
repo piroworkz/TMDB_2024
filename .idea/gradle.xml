@@ -26,24 +26,19 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/core_data" />
             <option value="$PROJECT_DIR$/core/core_domain" />
-            <option value="$PROJECT_DIR$/core/core_framework" />
             <option value="$PROJECT_DIR$/core/core_ui" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/application" />
             <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/auth/auth_data" />
             <option value="$PROJECT_DIR$/feature/auth/auth_domain" />
-            <option value="$PROJECT_DIR$/feature/auth/auth_framework" />
             <option value="$PROJECT_DIR$/feature/auth/auth_ui" />
             <option value="$PROJECT_DIR$/feature/media" />
+            <option value="$PROJECT_DIR$/feature/media/media_data" />
             <option value="$PROJECT_DIR$/feature/media/media_domain" />
-            <option value="$PROJECT_DIR$/feature/media/media_framework" />
             <option value="$PROJECT_DIR$/feature/media/media_ui" />
-            <option value="$PROJECT_DIR$/feature/splash" />
-            <option value="$PROJECT_DIR$/feature/videos" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_domain" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_framework" />
-            <option value="$PROJECT_DIR$/feature/videos/videos_ui" />
             <option value="$PROJECT_DIR$/test_shared" />
           </set>
         </option>

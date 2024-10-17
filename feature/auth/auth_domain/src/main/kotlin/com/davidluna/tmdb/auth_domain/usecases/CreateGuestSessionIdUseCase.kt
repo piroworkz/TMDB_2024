@@ -1,6 +1,7 @@
 package com.davidluna.tmdb.auth_domain.usecases
 
 import arrow.core.Either
+import com.davidluna.tmdb.auth_domain.repositories.SessionRepository
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 
 class CreateGuestSessionIdUseCase (

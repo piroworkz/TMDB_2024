@@ -9,8 +9,6 @@ dependencies {
     implementation(libs.pagingCompose)
     implementation(libs.coilCompose)
     testImplementation(projects.testShared)
-    testImplementation(projects.feature.media.mediaFramework)
-    testImplementation(projects.feature.videos.videosDomain)
-    testImplementation(projects.feature.videos.videosFramework)
-    testImplementation(projects.core.coreFramework)
+    testImplementation(projects.feature.media.mediaData)
+    testImplementation(projects.core.coreData)
 }

@@ -8,6 +8,8 @@ import com.davidluna.tmdb.auth_domain.usecases.CreateRequestTokenUseCase
 import com.davidluna.tmdb.auth_domain.usecases.CreateSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
+import com.davidluna.tmdb.auth_ui.presenter.login.LoginEvent
+import com.davidluna.tmdb.auth_ui.presenter.login.LoginViewModel
 import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation.Login
 import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
 import com.davidluna.tmdb.test_shared.fakes.FAKE_REQUEST_TOKEN

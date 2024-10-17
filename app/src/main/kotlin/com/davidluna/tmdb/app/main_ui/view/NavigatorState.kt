@@ -7,11 +7,16 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import com.davidluna.tmdb.app.main_ui.presenter.MainEvent
+import com.davidluna.tmdb.app.main_ui.presenter.MainEvent.OnCloseSession
+import com.davidluna.tmdb.app.main_ui.presenter.MainEvent.SetContentKind
 import com.davidluna.tmdb.app.main_ui.view.composables.NavDrawerState
+import com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE
+import com.davidluna.tmdb.core_domain.entities.ContentKind.TV_SHOW
+import com.davidluna.tmdb.core_ui.navigation.destination.AuthNavigation.Splash
 import com.davidluna.tmdb.core_ui.navigation.destination.Destination
 import com.davidluna.tmdb.core_ui.navigation.destination.DrawerItem
-import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation
-import com.davidluna.tmdb.core_ui.navigation.destination.StartNavigation
+import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation.Detail
+import com.davidluna.tmdb.core_ui.navigation.destination.MediaNavigation.MediaCatalog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -71,9 +76,9 @@ class NavigatorState(
         sendEvent: (MainEvent) -> Unit,
     ) {
         when (drawerDestination) {
-            DrawerItem.CloseSession -> sendEvent(MainEvent.OnCloseSession)
-            DrawerItem.Movies -> sendEvent(MainEvent.SetContentKind(com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE))
-            DrawerItem.TvShows -> sendEvent(MainEvent.SetContentKind(com.davidluna.tmdb.core_domain.entities.ContentKind.TV_SHOW))
+            DrawerItem.CloseSession -> sendEvent(OnCloseSession)
+            DrawerItem.Movies -> sendEvent(SetContentKind(MOVIE))
+            DrawerItem.TvShows -> sendEvent(SetContentKind(TV_SHOW))
             null -> {}
         }
         drawer.toggleState()
@@ -86,9 +91,9 @@ class NavigatorState(
         scope.launch {
             backStackEntry.collect {
                 it.arguments?.let { args ->
-                    hideAppBar = args.getBoolean(StartNavigation.Splash::hideAppBar.name)
-                    isTopLevel = args.getBoolean(MediaNavigation.MediaCatalog::topLevel.name)
-                    appBarTitle = args.getString(MediaNavigation.Detail::appBarTitle.name)
+                    hideAppBar = args.getBoolean(Splash::hideAppBar.name)
+                    isTopLevel = args.getBoolean(MediaCatalog::topLevel.name)
+                    appBarTitle = args.getString(Detail::appBarTitle.name)
                 }
             }
         }

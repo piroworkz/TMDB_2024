@@ -1,10 +1,10 @@
 package com.davidluna.tmdb.fakes
 
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteCredits
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteImages
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMedia
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteMediaDetail
-import com.davidluna.tmdb.media_framework.data.remote.media.RemoteResults
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteCredits
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteImages
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteMedia
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteMediaDetail
+import com.davidluna.tmdb.media_data.framework.remote.model.RemoteResults
 import com.davidluna.tmdb.test_shared.reader.TestConstants
 import com.davidluna.tmdb.test_shared.reader.Reader
 

@@ -30,19 +30,15 @@ rootProject.name = "Tmdb2024"
 
 include(
     ":app",
-    ":feature:splash",
     ":feature:auth:auth_ui",
     ":feature:auth:auth_domain",
-    ":feature:auth:auth_framework",
+    ":feature:auth:auth_data",
     ":feature:media:media_ui",
     ":feature:media:media_domain",
-    ":feature:media:media_framework",
-    ":feature:videos:videos_ui",
-    ":feature:videos:videos_domain",
-    ":feature:videos:videos_framework",
+    ":feature:media:media_data",
     ":core:core_ui",
     ":core:core_domain",
-    ":core:core_framework",
+    ":core:core_data",
     ":test_shared",
 )
 

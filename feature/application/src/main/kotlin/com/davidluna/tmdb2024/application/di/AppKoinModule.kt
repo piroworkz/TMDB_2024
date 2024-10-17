@@ -5,20 +5,23 @@ import android.location.Geocoder
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.MultiProcessDataStoreFactory
 import com.davidluna.protodatastore.ProtoPreferences
-import com.davidluna.tmdb.auth_domain.data.SessionDataRepository
-import com.davidluna.tmdb.auth_domain.data.SessionDataSource
+import com.davidluna.tmdb.auth_data.framework.remote.datasources.SessionDatasource
+import com.davidluna.tmdb.auth_data.framework.remote.datasources.SessionService
+import com.davidluna.tmdb.auth_data.repositories.SessionDataRepository
+import com.davidluna.tmdb.auth_domain.repositories.SessionRepository
 import com.davidluna.tmdb.auth_domain.usecases.CreateGuestSessionIdUseCase
 import com.davidluna.tmdb.auth_domain.usecases.CreateRequestTokenUseCase
 import com.davidluna.tmdb.auth_domain.usecases.CreateSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
 import com.davidluna.tmdb.auth_domain.usecases.GuestSessionNotExpiredUseCase
 import com.davidluna.tmdb.auth_domain.usecases.LoginViewModelUseCases
-import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
-import com.davidluna.tmdb.auth_framework.data.remote.RemoteSessionDataSource
-import com.davidluna.tmdb.core_domain.data.datastore.LocalPreferencesDataRepository
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
-import com.davidluna.tmdb.core_domain.data.location.RegionDataRepository
-import com.davidluna.tmdb.core_domain.data.location.RegionDataSource
+import com.davidluna.tmdb.core_data.framework.local.CountryCodeDatasource
+import com.davidluna.tmdb.core_data.framework.local.CountryCodeLocalDatasource
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.PreferencesDataSource
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.ProtoPreferencesDatasource
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.ProtoPreferencesSerializer
+import com.davidluna.tmdb.core_data.repositories.LocalPreferencesDataRepository
+import com.davidluna.tmdb.core_data.repositories.RegionDataRepository
 import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
 import com.davidluna.tmdb.core_domain.repositories.RegionRepository
 import com.davidluna.tmdb.core_domain.usecases.CloseSessionUseCase
@@ -27,27 +30,24 @@ import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import com.davidluna.tmdb.core_domain.usecases.SaveContentKindUseCase
 import com.davidluna.tmdb.core_domain.usecases.SessionFlowUseCase
 import com.davidluna.tmdb.core_domain.usecases.UserAccountUseCase
-import com.davidluna.tmdb.core_framework.data.local.LocationDataSource
-import com.davidluna.tmdb.core_framework.data.local.datastore.LocalPreferencesDataSource
-import com.davidluna.tmdb.core_framework.data.local.datastore.ProtoPreferencesSerializer
-import com.davidluna.tmdb.media_domain.data.MediaCatalogDataRepository
-import com.davidluna.tmdb.media_domain.data.MediaCatalogRemoteDatasource
-import com.davidluna.tmdb.media_domain.data.MovieDetailsDataRepository
-import com.davidluna.tmdb.media_domain.data.MovieDetailsDataSource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaCatalogRemoteDatasource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaCatalogService
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaDetailsRemoteDatasource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaDetailsService
+import com.davidluna.tmdb.media_data.framework.remote.datasources.VideosRemoteDataSource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.VideosService
+import com.davidluna.tmdb.media_data.repositories.MediaCatalogDataRepository
+import com.davidluna.tmdb.media_data.repositories.MovieDetailsDataRepository
+import com.davidluna.tmdb.media_data.repositories.VideoPlayerDataRepository
 import com.davidluna.tmdb.media_domain.repositories.MediaRepository
 import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
+import com.davidluna.tmdb.media_domain.repositories.VideosPlayerRepository
 import com.davidluna.tmdb.media_domain.usecases.FormatDateUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCastUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaImagesUseCase
-import com.davidluna.tmdb.media_framework.data.remote.datasources.MediaCatalogRemoteApi
-import com.davidluna.tmdb.media_framework.data.remote.datasources.MediaDetailsRemoteApi
-import com.davidluna.tmdb.videos_domain.data.VideosDataRepository
-import com.davidluna.tmdb.videos_domain.data.VideosDataSource
-import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import com.davidluna.tmdb.videos_domain.usecases.VideosRepository
-import com.davidluna.tmdb.videos_framework.data.remote.datasource.VideosRemoteApi
+import com.davidluna.tmdb.media_domain.usecases.GetVideosUseCase
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,20 +64,20 @@ val applicationKoinModule = module {
     singleOf(::provideDataStore)
     singleOf(::provideCoroutineScope)
 //    Datasources and repositories
-    factoryOf(::LocationDataSource) bind RegionDataSource::class
+    factoryOf(::CountryCodeLocalDatasource) bind CountryCodeDatasource::class
     factoryOf(::RegionDataRepository) bind RegionRepository::class
     factoryOf(::LocalPreferencesDataRepository) bind PreferencesRepository::class
-    factoryOf(::LocalPreferencesDataSource) bind PreferencesDataSource::class
+    factoryOf(::ProtoPreferencesDatasource) bind PreferencesDataSource::class
     factoryOf(::LocalPreferencesDataRepository) bind PreferencesRepository::class
     factoryOf(::RegionDataRepository) bind RegionRepository::class
-    factoryOf(::RemoteSessionDataSource) bind SessionDataSource::class
+    factoryOf(::SessionService) bind SessionDatasource::class
     factoryOf(::SessionDataRepository) bind SessionRepository::class
-    factoryOf(::MediaDetailsRemoteApi) bind MovieDetailsDataSource::class
-    factoryOf(::MediaCatalogRemoteApi) bind MediaCatalogRemoteDatasource::class
+    factoryOf(::MediaDetailsService) bind MediaDetailsRemoteDatasource::class
+    factoryOf(::MediaCatalogService) bind MediaCatalogRemoteDatasource::class
     factoryOf(::MediaCatalogDataRepository) bind MediaRepository::class
     factoryOf(::MovieDetailsDataRepository) bind MovieDetailsRepository::class
-    factoryOf(::VideosRemoteApi) bind VideosDataSource::class
-    factoryOf(::VideosDataRepository) bind VideosRepository::class
+    factoryOf(::VideosService) bind VideosRemoteDataSource::class
+    factoryOf(::VideoPlayerDataRepository) bind VideosPlayerRepository::class
 //    Use cases
     factoryOf(::CloseSessionUseCase)
     factoryOf(::GetContentKindUseCase)
@@ -99,7 +99,7 @@ val applicationKoinModule = module {
     factoryOf(::GetMediaCatalogUseCase)
     factoryOf(::GetMediaDetailsUseCase)
     factoryOf(::GetMediaImagesUseCase)
-    factoryOf(::VideosDataRepository) bind VideosRepository::class
+    factoryOf(::VideoPlayerDataRepository) bind VideosPlayerRepository::class
     factoryOf(::GetVideosUseCase)
 
 }

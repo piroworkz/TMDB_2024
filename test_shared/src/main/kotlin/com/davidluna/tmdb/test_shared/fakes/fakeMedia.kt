@@ -6,7 +6,7 @@ import com.davidluna.tmdb.media_domain.entities.Image
 import com.davidluna.tmdb.media_domain.entities.Media
 import com.davidluna.tmdb.media_domain.entities.MediaDetails
 import com.davidluna.tmdb.media_domain.entities.Results
-import com.davidluna.tmdb.videos_domain.entities.YoutubeVideo
+import com.davidluna.tmdb.media_domain.entities.Video
 
 val fakeMedia: List<Media> = (0..19).map {
     Media(id = it, posterPath = "oporteat", title = "vivamus")
@@ -41,8 +41,8 @@ val fakeImages: List<Image> = (0..20).map {
     Image(filePath = "partiendo $it")
 }
 
-val fakeMovieVideos: List<YoutubeVideo> = (0..20).map {
-    YoutubeVideo(
+val fakeMovieVideos: List<Video> = (0..20).map {
+    Video(
         id = "ultricies", key = "offend $it", site = "enim", type = "antiopam", order = 1845
 
     )

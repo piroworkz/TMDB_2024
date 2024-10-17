@@ -36,8 +36,8 @@ class MediaCatalogIntegrationTest {
             viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem())
-                    .isEqualTo(initialState.copy(contentKind = com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE))
-                viewModel.sendEvent(MediaEvent.OnUiReady(com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE))
+                    .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
+                viewModel.sendEvent(MediaEvent.OnUiReady(ContentKind.MOVIE))
                 assertThat(awaitItem().firstList).isNotEqualTo(expected)
                 assertThat(awaitItem().secondList).isNotEqualTo(expected)
                 assertThat(awaitItem().fourthList).isNotEqualTo(expected)
@@ -56,8 +56,8 @@ class MediaCatalogIntegrationTest {
             viewModel.state.test {
                 assertThat(awaitItem()).isEqualTo(initialState)
                 assertThat(awaitItem())
-                    .isEqualTo(initialState.copy(contentKind = com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE))
-                viewModel.sendEvent(MediaEvent.OnUiReady(com.davidluna.tmdb.core_domain.entities.ContentKind.MOVIE))
+                    .isEqualTo(initialState.copy(contentKind = ContentKind.MOVIE))
+                viewModel.sendEvent(MediaEvent.OnUiReady(ContentKind.MOVIE))
                 assertThat(awaitItem().firstList).isNotEqualTo(empty)
                 assertThat(awaitItem().secondList).isNotEqualTo(empty)
                 assertThat(awaitItem().fourthList).isNotEqualTo(empty)

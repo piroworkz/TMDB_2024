@@ -1,55 +1,53 @@
 package com.davidluna.tmdb.fakes
 
-import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.PreferencesDataSource
+import com.davidluna.tmdb.core_data.repositories.LocalPreferencesDataRepository
 import com.davidluna.tmdb.core_domain.repositories.PreferencesRepository
-import com.davidluna.tmdb.videos_framework.data.remote.datasource.VideosRemoteApi
-import com.davidluna.tmdb.media_framework.data.remote.datasources.MediaCatalogRemoteApi
-import com.davidluna.tmdb.media_framework.data.remote.datasources.MediaDetailsRemoteApi
-import com.davidluna.tmdb.media_domain.data.MediaCatalogDataRepository
-import com.davidluna.tmdb.media_domain.data.MediaCatalogRemoteDatasource
-import com.davidluna.tmdb.media_domain.data.MovieDetailsDataRepository
-import com.davidluna.tmdb.media_domain.data.MovieDetailsDataSource
+import com.davidluna.tmdb.core_domain.usecases.GetContentKindUseCase
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaCatalogRemoteDatasource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.MediaDetailsRemoteDatasource
+import com.davidluna.tmdb.media_data.framework.remote.datasources.VideosRemoteDataSource
+import com.davidluna.tmdb.media_data.repositories.MediaCatalogDataRepository
+import com.davidluna.tmdb.media_data.repositories.MovieDetailsDataRepository
+import com.davidluna.tmdb.media_data.repositories.VideoPlayerDataRepository
+import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
+import com.davidluna.tmdb.media_domain.repositories.VideosPlayerRepository
 import com.davidluna.tmdb.media_domain.usecases.FormatDateUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCastUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaCatalogUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetMediaImagesUseCase
-import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
-import com.davidluna.tmdb.test_shared.framework.FakeLocalPreferencesDataSource
-import com.davidluna.tmdb.videos_domain.data.VideosDataRepository
-import com.davidluna.tmdb.videos_domain.data.VideosDataSource
-import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import com.davidluna.tmdb.videos_domain.usecases.VideosRepository
+import com.davidluna.tmdb.media_domain.usecases.GetVideosUseCase
 
 class FakeMediaDI {
 
-    private val videosDataSource: VideosDataSource by lazy {
-        VideosRemoteApi(FakeVideosServiceImpl())
+    private val videosDataSource: VideosRemoteDataSource by lazy {
+        FakeVideosService()
     }
 
-    private val videosRepository: VideosRepository by lazy {
-        VideosDataRepository(videosDataSource)
+    private val videosPlayerRepository: VideosPlayerRepository by lazy {
+        VideoPlayerDataRepository(videosDataSource)
     }
 
-    private val movieDetailsDataSource: MovieDetailsDataSource by lazy {
-        MediaDetailsRemoteApi(FakeMediaDetailServiceImpl())
+    private val movieDetailsDataSource: MediaDetailsRemoteDatasource by lazy {
+        FakeMediaDetailService()
     }
 
     private val movieDetailsRepository: MovieDetailsRepository by lazy {
         MovieDetailsDataRepository(movieDetailsDataSource)
     }
 
-    private val local: com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource by lazy {
+    private val local: PreferencesDataSource by lazy {
         FakeLocalPreferencesDataSource()
     }
     private val preferencesRepository: PreferencesRepository by lazy {
-        com.davidluna.tmdb.core_domain.data.datastore.LocalPreferencesDataRepository(
+        LocalPreferencesDataRepository(
             local = local
         )
     }
 
     private val mediaCatalogRemoteDatasource: MediaCatalogRemoteDatasource by lazy {
-        MediaCatalogRemoteApi(FakeMediaCatalogServiceImpl())
+        FakeMediaCatalogService()
     }
 
     private val repository by lazy {
@@ -60,8 +58,8 @@ class FakeMediaDI {
         FormatDateUseCase()
     }
 
-    private val getVideosUseCase by lazy {
-        GetVideosUseCase(videosRepository)
+    val getVideosUseCase by lazy {
+        GetVideosUseCase(videosPlayerRepository)
     }
 
     val getContentKindUseCase by lazy {

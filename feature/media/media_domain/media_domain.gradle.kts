@@ -4,6 +4,5 @@ plugins {
 
 dependencies {
     implementation(projects.core.coreDomain)
-    implementation(projects.feature.videos.videosDomain)
     testImplementation(projects.testShared)
 }

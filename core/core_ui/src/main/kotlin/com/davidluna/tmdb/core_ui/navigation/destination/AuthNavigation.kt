@@ -12,13 +12,17 @@ sealed interface AuthNavigation : Destination {
     @Serializable
     data object Init : AuthNavigation
 
+
+    @Serializable
+    data class Splash(val hideAppBar: Boolean = true) : AuthNavigation
+
     @Serializable
     data class Login(
         @SerialName("request_token")
         val requestToken: String = String(),
         @SerialName("approved")
         val approved: Boolean = false,
-        val hideAppBar: Boolean = true
+        val hideAppBar: Boolean = true,
     ) : AuthNavigation
 
     companion object {

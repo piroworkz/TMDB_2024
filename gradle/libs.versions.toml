@@ -2,7 +2,7 @@
 agp = "8.3.2"
 #kotlin
 kotlin = "2.0.0"
-kotlin-coroutines = "1.8.0"
+kotlin-coroutines = "1.8.1"
 kotlinxSerializationJson = "1.7.1"
 kotlin-converter = "1.0.0"
 #androidX
@@ -12,17 +12,15 @@ biometric = "1.2.0-alpha05"
 #compose
 composeBom = "2024.08.00"
 compose-animation = "1.7.0-rc01"
-activityCompose = "1.9.2"
-compose-navigation = "2.8.1"
+activityCompose = "1.9.3"
+compose-navigation = "2.8.3"
 coil-compose = "2.6.0"
 #piroworkz
 piroworkz-permissions = "1.0.0"
 piroworkz-catalogs = "1.0.2"
 #google
 playServicesLocation = "21.3.0"
-#retrofit
-retrofit = "2.11.0"
-okhttp = "4.12.0"
+
 #other
 arrow = "1.2.1"
 #paging
@@ -53,8 +51,6 @@ ktor = "2.3.7"
 coreKtx = "1.13.1"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-appcompat = "1.7.0"
-material = "1.12.0"
 
 [libraries]
 #androidX
@@ -141,11 +137,8 @@ koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
-
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -162,4 +155,3 @@ frameworkModuleConventionPlugin = { id = "tmdb.framework.module.plugin", version
 uiModuleConventionPlugin = { id = "tmdb.ui.module.plugin", version = "unspecified" }
 kotlinModuleConventionPlugin = { id = "tmdb.kotlin.module.plugin", version = "unspecified" }
 testSharedConventionPlugin = { id = "tmdb.test.shared.plugin", version = "unspecified" }
-[bundles]

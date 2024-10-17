@@ -6,7 +6,6 @@ import arrow.core.right
 import com.davidluna.tmdb.core_domain.entities.errors.AppError
 import com.davidluna.tmdb.media_domain.entities.MediaDetails
 import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
-import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
 
 class GetMediaDetailsUseCase (
     private val repository: MovieDetailsRepository,

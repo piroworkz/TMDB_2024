@@ -1,10 +1,9 @@
 package com.davidluna.tmdb.media_domain.usecases
 
 import arrow.core.Either
+import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
 import com.davidluna.tmdb.test_shared.fakes.fakeMediaDetail
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
-import com.davidluna.tmdb.videos_domain.usecases.GetVideosUseCase
-import com.davidluna.tmdb.media_domain.repositories.MovieDetailsRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

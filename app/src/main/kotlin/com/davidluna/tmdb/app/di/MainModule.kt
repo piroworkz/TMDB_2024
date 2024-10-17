@@ -3,7 +3,7 @@ package com.davidluna.tmdb.app.di
 import com.davidluna.tmdb.app.di.NativeModule.apiKeyQualifier
 import com.davidluna.tmdb.app.di.NativeModule.baseUrlQualifier
 import com.davidluna.tmdb.app.main_ui.presenter.MainViewModel
-import com.davidluna.tmdb.core_framework.data.remote.KtorClient
+import com.davidluna.tmdb.core_data.framework.remote.client.KtorClient
 import io.ktor.client.HttpClient
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.scope.Scope

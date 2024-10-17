@@ -1,9 +1,9 @@
 package com.davidluna.tmdb.fakes
 
-import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteGuestSession
-import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteSessionIdResponse
-import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteTokenResponse
-import com.davidluna.tmdb.auth_framework.data.remote.model.RemoteUserAccountDetail
+import com.davidluna.tmdb.auth_data.framework.remote.model.RemoteGuestSession
+import com.davidluna.tmdb.auth_data.framework.remote.model.RemoteSessionIdResponse
+import com.davidluna.tmdb.auth_data.framework.remote.model.RemoteTokenResponse
+import com.davidluna.tmdb.auth_data.framework.remote.model.RemoteUserAccountDetail
 import com.davidluna.tmdb.test_shared.reader.TestConstants
 import com.davidluna.tmdb.test_shared.reader.Reader
 

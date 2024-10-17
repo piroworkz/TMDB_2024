@@ -1,6 +1,5 @@
 package com.davidluna.tmdb.media_domain.usecases
 
-import com.davidluna.tmdb.media_domain.usecases.FormatDateUseCase
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

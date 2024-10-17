@@ -1,14 +1,14 @@
 package com.davidluna.tmdb.app.framework
 
 import com.davidluna.protodatastore.ProtoPreferences
-import com.davidluna.tmdb.core_domain.data.datastore.PreferencesDataSource
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.PreferencesDataSource
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.setContentKind
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.setSession
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.setUserAccount
+import com.davidluna.tmdb.core_data.framework.local.proto_datastore.toDomain
 import com.davidluna.tmdb.core_domain.entities.ContentKind
 import com.davidluna.tmdb.core_domain.entities.Session
 import com.davidluna.tmdb.core_domain.entities.UserAccount
-import com.davidluna.tmdb.core_framework.data.local.datastore.setContentKind
-import com.davidluna.tmdb.core_framework.data.local.datastore.setSession
-import com.davidluna.tmdb.core_framework.data.local.datastore.setUserAccount
-import com.davidluna.tmdb.core_framework.data.local.datastore.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map

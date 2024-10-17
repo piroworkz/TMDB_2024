@@ -2,7 +2,7 @@ package com.davidluna.tmdb.auth_domain.usecases.session
 
 import arrow.core.Either
 import com.davidluna.tmdb.auth_domain.usecases.CreateGuestSessionIdUseCase
-import com.davidluna.tmdb.auth_domain.usecases.SessionRepository
+import com.davidluna.tmdb.auth_domain.repositories.SessionRepository
 import com.davidluna.tmdb.test_shared.fakes.fakeGuestSession
 import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
 import com.google.common.truth.Truth.assertThat
