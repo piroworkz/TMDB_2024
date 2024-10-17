@@ -25,8 +25,23 @@ fun NavGraphBuilder.authNavGraph(
 ) {
 
     navigation<AuthNavigation.Init>(
-        startDestination = Login(),
+        startDestination = Splash(),
     ) {
+
+        composable<Splash> {
+            val viewModel: SplashViewModel = koinViewModel()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            state.destination?.let {
+                navigateTo(it)
+                viewModel.onEvent(SplashEvent.NavigateTo(null))
+            }
+
+            SplashScreen(
+                state = state,
+                sendEvent = viewModel::onEvent,
+            )
+        }
 
         composable<Login>(deepLinks = AuthNavigation.deepLink) {
             val viewModel: LoginViewModel = koinViewModel { parametersOf(it.toRoute<Login>()) }
@@ -43,19 +58,5 @@ fun NavGraphBuilder.authNavGraph(
             )
         }
 
-        composable<Splash> {
-            val viewModel: SplashViewModel = koinViewModel()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-
-            state.destination?.let {
-                navigateTo(it)
-                viewModel.onEvent(SplashEvent.NavigateTo(null))
-            }
-
-            SplashScreen(
-                state = state,
-                sendEvent = viewModel::onEvent,
-            )
-        }
     }
 }
