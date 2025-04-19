@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17">
+      <module name="Tmdb2024.feature.auth.auth_data" target="17" />
+      <module name="Tmdb2024.feature.auth.auth_presentation" target="17" />
+      <module name="Tmdb2024.feature.auth.auth_usecases" target="17" />
+      <module name="Tmdb2024.feature.core.core_data" target="17" />
+      <module name="Tmdb2024.feature.core.core_domain" target="17" />
+      <module name="Tmdb2024.feature.core.core_presentation" target="17" />
+      <module name="Tmdb2024.feature.core.core_usecases" target="17" />
+      <module name="Tmdb2024.feature.main.main_presentation" target="17" />
+      <module name="Tmdb2024.feature.media.media_data" target="17" />
+      <module name="Tmdb2024.feature.media.media_presentation" target="17" />
+      <module name="Tmdb2024.feature.media.media_usecases" target="17" />
+      <module name="Tmdb2024.shared" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

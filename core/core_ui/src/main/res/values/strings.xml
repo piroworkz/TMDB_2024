@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">TMDB</string>
+    <string name="intent_url">https://www.themoviedb.org/authenticate/%1$s?redirect_to=https://deeplinks-d440b.web.app/login/</string>
+    <string name="title_popular_movies">POPULAR</string>
+    <string name="title_now_playing_movies">NOW PLAYING</string>
+    <string name="title_top_rated_movies">TOP RATED</string>
+    <string name="title_upcoming_movies">UPCOMING</string>
+    <string name="title_recommended_movies">RECOMMENDATIONS</string>
+    <string name="title_similar_movies">SIMILAR</string>
+    <string name="biometric_auth_title">Login</string>
+    <string name="biometric_auth_subtitle">Please login using fingerprint reader</string>
+    <string name="biometric_use_password_instead">Use Password Instead</string>
+    <string name="biometric_auth_failed">Try again!</string>
+    <string name="permission_rationale_message">The location permission was denied, this permission is required, you should consider granting it.</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="page_image_description">Page Image</string>
+    <string name="placeholder_description">Placeholder</string>
+    <string name="play_trailer_button">Play Trailer</string>
+    <string name="drawer_movies">Movies</string>
+    <string name="drawer_tv_shows">Tv Shows</string>
+    <string name="drawer_close_session">Close Session</string>
+    <string name="title_airing_today">AIRING TODAY</string>
+    <string name="title_on_air">ON AIR</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_login_as_guest">Login as Guest</string>
+    <string name="btn_launch_biometrics">Login with fingerprint</string>
+    <string name="btn_dismiss_message">Press to dismiss</string>
+    <string name="error_dialog_title">Something went wrong</string>
+    <string name="title_cast_row">CAST</string>
+    <string name="title_overview">Overview</string>
+    <string name="user_score_label">User\nscore</string>
+    <string name="asset_statements">
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.davidluna.tmdb",
+      "sha256_cert_fingerprints": [
+        "6C:8E:12:E2:FF:46:03:A4:CD:F5:0E:24:1C:D7:EA:34:73:C4:74:20:EB:05:7B:3E:2C:C9:4B:D5:E6:6C:AB:C2",
+        "2C:9A:B3:BD:43:CF:E8:49:A8:26:ED:DB:CF:5F:8B:83:7E:05:9C:E5:69:39:E6:36:9A:92:EC:83:0F:04:E9:9C"
+      ]
+    }
+  }
+]
+    </string>
+</resources>

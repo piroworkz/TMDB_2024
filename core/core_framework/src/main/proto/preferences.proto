@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "user.proto";
+import "session_id.proto";
+import "content_kind.proto";
+
+option java_package = "com.davidluna.protodatastore";
+option java_multiple_files = true;
+
+message ProtoPreferences {
+  ProtoSession session = 1;
+  ProtoUserAccount user = 2;
+  CONTENT_KIND content_kind = 3;
+}
+

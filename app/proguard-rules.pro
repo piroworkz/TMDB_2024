@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-printconfiguration ../full-r8-config.txt
+-keep class com.davidluna.tmdb.app.di.MainModule {
+    native <methods>;
+}
+-keep class com.davidluna.tmdb.build_logic.libs.** { *; }
+
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
+   <fields>;
+}
+
+-keep class retrofit2.** { *; }
+-keep class arrow.core.** { *; }

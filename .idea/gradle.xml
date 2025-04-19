@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/convention" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="homebrew-21" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/core_domain" />
+            <option value="$PROJECT_DIR$/core/core_framework" />
+            <option value="$PROJECT_DIR$/core/core_ui" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/auth/auth_domain" />
+            <option value="$PROJECT_DIR$/feature/auth/auth_framework" />
+            <option value="$PROJECT_DIR$/feature/auth/auth_ui" />
+            <option value="$PROJECT_DIR$/feature/media" />
+            <option value="$PROJECT_DIR$/feature/media/media_domain" />
+            <option value="$PROJECT_DIR$/feature/media/media_framework" />
+            <option value="$PROJECT_DIR$/feature/media/media_ui" />
+            <option value="$PROJECT_DIR$/feature/splash" />
+            <option value="$PROJECT_DIR$/feature/videos" />
+            <option value="$PROJECT_DIR$/feature/videos/videos_domain" />
+            <option value="$PROJECT_DIR$/feature/videos/videos_framework" />
+            <option value="$PROJECT_DIR$/feature/videos/videos_ui" />
+            <option value="$PROJECT_DIR$/test_shared" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
