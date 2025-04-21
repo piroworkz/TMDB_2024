@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.davidluna.tmdb.convention.plugins
 
 import com.davidluna.tmdb.convention.bundles.androidTestingBundle
@@ -8,6 +10,7 @@ import com.davidluna.tmdb.convention.extensions.common.applicationPluginManager
 import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.helpers.ksp
 import com.davidluna.tmdb.convention.libs.arrowCore
+import com.davidluna.tmdb.convention.libs.biometric
 import com.davidluna.tmdb.convention.libs.coilCompose
 import com.davidluna.tmdb.convention.libs.composeActivity
 import com.davidluna.tmdb.convention.libs.composeNavigation
@@ -35,6 +38,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     private fun Project.setDependencies() {
         dependencies {
             composeUiBundle
+            implementation(libs.biometric)
             implementation(libs.arrowCore)
             implementation(libs.hiltNavigationCompose)
             implementation(libs.composeActivity)

@@ -1,146 +1,259 @@
 package com.davidluna.tmdb.app.main_ui.presenter
 
 import app.cash.turbine.test
-import com.davidluna.tmdb.core_domain.entities.errors.AppError
-import com.davidluna.tmdb.core_domain.entities.errors.AppErrorCode
-import com.davidluna.tmdb.core_domain.usecases.datastore.CloseSessionUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.SaveContentKindUseCase
-import com.davidluna.tmdb.core_domain.usecases.datastore.UserAccountUseCase
-import com.davidluna.tmdb.test_shared.fakes.fakeUnknownAppError
-import com.davidluna.tmdb.test_shared.fakes.fakeUserAccount
+import arrow.core.left
+import arrow.core.right
+import com.davidluna.tmdb.app.main_ui.fakes.fakeAppError
+import com.davidluna.tmdb.app.main_ui.fakes.fakeUserAccount
+import com.davidluna.tmdb.media_domain.entities.Catalog
+import com.davidluna.tmdb.media_domain.entities.MediaType
+import com.davidluna.tmdb.core_domain.entities.toAppError
+import com.davidluna.tmdb.auth_domain.usecases.CloseSessionUseCase
+import com.davidluna.tmdb.auth_domain.usecases.GetUserAccountUseCase
+import com.davidluna.tmdb.media_domain.usecases.UpdateSelectedEndpoint
+import com.davidluna.tmdb.media_ui.view.utils.bottomBarItems
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
-import com.google.common.truth.Truth
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit4.MockKRule
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
-@RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
 
-    @get:Rule
+    @get:Rule(order = 1)
+    val mockkRule = MockKRule(this)
+
+    @get:Rule(order = 2)
     val coroutineTestRule = CoroutineTestRule()
 
-    @Mock
-    lateinit var userAccountUseCase: UserAccountUseCase
+    @MockK
+    private lateinit var getUserAccount: GetUserAccountUseCase
 
-    @Mock
-    lateinit var saveContentKindUseCase: SaveContentKindUseCase
+    @MockK
+    private lateinit var closeSessionUseCase: CloseSessionUseCase
 
-    @Mock
-    lateinit var closeSessionUseCase: CloseSessionUseCase
+    @MockK
+    private lateinit var updateMediaCatalogUseCase: UpdateSelectedEndpoint
 
-    private val initialState = MainViewModel.MainState()
+    private val initialState = MainViewModel.State()
 
     @Test
-    fun `GIVEN (initViewModel) WHEN (userAccountUseCase is collected successfully) THEN (should update user state with UserAccount)`() =
-        runTest {
-            val expected = initialState.copy(user = fakeUserAccount)
-            whenever(saveContentKindUseCase(any())).thenReturn(true)
-            whenever(userAccountUseCase()).thenReturn(flowOf(fakeUserAccount))
+    fun `GIVEN initial state WHEN MainViewModel is created THEN state should be the initial one`() =
+        coroutineTestRule.scope.runTest {
+            every { getUserAccount.invoke() } returns flowOf(null)
+            val sut = buildSUT()
 
-            val viewModel = buildViewModel()
-
-            viewModel.state.onEach { println("<-- $it") }.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().loading).isTrue()
-                Truth.assertThat(awaitItem().loading).isFalse()
-                Truth.assertThat(awaitItem()).isEqualTo(expected)
+            sut.state.test {
+                val actual = awaitItem()
+                assertEquals(initialState, actual)
                 cancel()
             }
-            verify(userAccountUseCase).invoke()
-            verify(saveContentKindUseCase).invoke(any())
-
         }
 
     @Test
-    fun `GIVEN (initViewModel) WHEN (userAccountUseCase collection fails) THEN should update AppError state with AppError`() =
-        runTest {
-            whenever(saveContentKindUseCase(any())).thenReturn(true)
-            whenever(userAccountUseCase()).thenReturn(flow { throw fakeUnknownAppError })
-            val viewModel = buildViewModel()
+    fun `GIVEN no user account WHEN userAccount is observed THEN initial value should be null`() =
+        coroutineTestRule.scope.runTest {
+            every { getUserAccount.invoke() } returns flowOf(null)
+            val sut = buildSUT()
 
-            viewModel.state.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().loading).isTrue()
-                Truth.assertThat(awaitItem().loading).isFalse()
-                Truth.assertThat(awaitItem().appError).isNotNull()
+            sut.userAccount.test {
+                val actual = awaitItem()
+                assertNull(actual)
                 cancel()
             }
-
-            verify(userAccountUseCase).invoke()
-            verify(saveContentKindUseCase).invoke(any())
         }
 
     @Test
-    fun `GIVEN (event is OnCloseSession) WHEN (closeSessionUseCase is successful) THEN (should update closeSession state to true)`() =
-        runTest {
-            whenever(saveContentKindUseCase(any())).thenReturn(true)
-            whenever(userAccountUseCase()).thenReturn(flowOf(fakeUserAccount))
-            whenever(closeSessionUseCase()).thenReturn(true)
+    fun `GIVEN a UserAccount WHEN getUserAccountUseCase is successful THEN userAccount StateFlow should emit it`() =
+        coroutineTestRule.scope.runTest {
+            val expected = fakeUserAccount
 
-            val viewModel = buildViewModel()
+            every { getUserAccount.invoke() } returns flowOf(expected)
+            val sut = buildSUT()
 
-            viewModel.state.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().loading).isTrue()
-                Truth.assertThat(awaitItem().loading).isFalse()
-                Truth.assertThat(awaitItem().user).isEqualTo(fakeUserAccount)
-                viewModel.sendEvent(MainEvent.OnCloseSession)
-                Truth.assertThat(awaitItem().closeSession).isTrue()
+            sut.userAccount.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
                 cancel()
             }
-            verify(userAccountUseCase).invoke()
-            verify(saveContentKindUseCase).invoke(any())
-            verify(closeSessionUseCase).invoke()
-
         }
 
     @Test
-    fun `GIVEN (event is OnCloseSession) WHEN (closeSessionUseCase fails) THEN (should update appError state to AppError)`() =
-        runTest {
+    fun `GIVEN an exception WHEN getUserAccountUseCase throws an exception THEN _state should be updated with AppError and userAccount should remain null`() =
+        coroutineTestRule.scope.runTest {
+            val exception = IllegalStateException("Something went wrong")
             val expected = initialState.copy(
-                user = fakeUserAccount,
-                closeSession = false,
-                appError = AppError.Message(
-                    AppErrorCode.UNKNOWN,
-                    "Error closing session, please try again later"
-                )
+                appError = exception.toAppError()
             )
-            whenever(saveContentKindUseCase(any())).thenReturn(true)
-            whenever(userAccountUseCase()).thenReturn(flowOf(fakeUserAccount))
-            whenever(closeSessionUseCase()).thenReturn(false)
 
-            val viewModel = buildViewModel()
+            every { getUserAccount.invoke() } returns flow { throw exception }
+            val sut = buildSUT()
 
-            viewModel.state.test {
-                Truth.assertThat(awaitItem()).isEqualTo(initialState)
-                Truth.assertThat(awaitItem().loading).isTrue()
-                Truth.assertThat(awaitItem().loading).isFalse()
-                Truth.assertThat(awaitItem().user).isEqualTo(fakeUserAccount)
-                viewModel.sendEvent(MainEvent.OnCloseSession)
-                Truth.assertThat(awaitItem()).isEqualTo(expected)
+            val userAccountJob = launch { sut.userAccount.collect {} }
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                assertNull(sut.userAccount.value)
+                cancel()
             }
-            verify(userAccountUseCase).invoke()
-            verify(saveContentKindUseCase).invoke(any())
-            verify(closeSessionUseCase).invoke()
 
+            userAccountJob.cancel()
         }
 
+    @Test
+    fun `GIVEN OnCloseSession event WHEN closeSessionUseCase is successful THEN _state should be updated with isSessionClosed = true`() =
+        coroutineTestRule.scope.runTest {
+            val expected = initialState.copy(isSessionClosed = true)
 
-    private fun buildViewModel(): MainViewModel {
-        return MainViewModel(
-            userAccountUseCase,
-            saveContentKindUseCase,
-            closeSessionUseCase
-        )
-    }
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { closeSessionUseCase.invoke() } returns true.right()
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCloseSession)
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN OnCloseSession event WHEN closeSessionUseCase fails THEN _state should not be be updated`() =
+        coroutineTestRule.scope.runTest {
+            val expected = initialState
+
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { closeSessionUseCase.invoke() } returns false.right()
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCloseSession)
+
+            sut.state.test {
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN OnCloseSession event WHEN closeSessionUseCase returns an error THEN _state should be updated with AppError`() =
+        coroutineTestRule.scope.runTest {
+            val expected = initialState.copy(appError = fakeAppError)
+
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { closeSessionUseCase.invoke() } returns fakeAppError.left()
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCloseSession)
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN UpdateBottomNavItems event with new Endpoints WHEN onEvent is called THEN _state should be updated with new bottomNavItems`() =
+        coroutineTestRule.scope.runTest {
+            val bottomNavItems = MediaType.TV_SHOW.bottomBarItems()
+            val expected = initialState.copy(bottomNavItems = bottomNavItems)
+
+            every { getUserAccount.invoke() } returns flowOf(null)
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.UpdateBottomNavItems(bottomNavItems))
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN OnCatalogSelected event WHEN updateMediaCatalogUseCase succeeds THEN _state should be updated with new selectedCatalog`() =
+        coroutineTestRule.scope.runTest {
+            val selectedCatalog = Catalog.MOVIE_POPULAR
+            val expected = initialState.copy(selectedCatalog = selectedCatalog)
+
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { updateMediaCatalogUseCase.invoke(any()) } returns true.right()
+
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCatalogSelected(selectedCatalog))
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN OnCatalogSelected event WHEN updateMediaCatalogUseCase returns an error THEN _state should be updated with AppError and selectedCatalog should remain unchanged`() =
+        coroutineTestRule.scope.runTest {
+            val selectedCatalog = Catalog.MOVIE_POPULAR
+            val expected = initialState.copy(appError = fakeAppError)
+
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { updateMediaCatalogUseCase.invoke(any()) } returns fakeAppError.left()
+
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCatalogSelected(selectedCatalog))
+
+            sut.state.test {
+                skipItems(1)
+                val actual = awaitItem()
+
+                assertEquals(expected, actual)
+                assertEquals(expected.selectedCatalog, actual.selectedCatalog)
+                cancel()
+            }
+        }
+
+    @Test
+    fun `GIVEN _state appError is not null WHEN ResetAppError event THEN _state should be updated with appError = null`() =
+        coroutineTestRule.scope.runTest {
+            every { getUserAccount.invoke() } returns flowOf(null)
+            coEvery { closeSessionUseCase.invoke() } returns fakeAppError.left()
+
+            val sut = buildSUT()
+            sut.onEvent(MainEvent.OnCloseSession)
+
+            sut.state.test {
+                skipItems(2)
+                sut.onEvent(MainEvent.ResetAppError)
+                val actual = awaitItem().appError
+
+                assertNull(actual)
+                cancel()
+            }
+        }
+
+    private fun buildSUT() = MainViewModel(
+        getUserAccountUseCase = getUserAccount,
+        closeSessionUseCase = closeSessionUseCase,
+        ioDispatcher = coroutineTestRule.dispatcher,
+        updateMediaCatalogUseCase = updateMediaCatalogUseCase
+    )
 }

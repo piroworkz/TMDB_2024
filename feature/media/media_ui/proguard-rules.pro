@@ -1,21 +1,35 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+#noinspection ShrinkerUnresolvedReference
+# ===================== HILT / DAGGER FOR UI MODULE =====================
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep all annotations (required by Hilt/Dagger)
+-keepattributes *Annotation*
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep classes annotated with @HiltViewModel (used for injecting ViewModels)
+-keep @dagger.hilt.android.lifecycle.HiltViewModel class * { <init>(...); }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep all ViewModel subclasses (used by Jetpack Compose / Lifecycle)
+-keep class * extends androidx.lifecycle.ViewModel
+
+# Keep generated Hilt modules for ViewModels
+-keep class *ViewModel_HiltModules* { *; }
+-keep class *HiltModules* { *; }
+
+# Keep Hilt internal classes
+-keep class dagger.hilt.internal.** { *; }
+-dontwarn dagger.hilt.internal.**
+
+# Keep Hilt aggregated dependency classes
+-keep class hilt_aggregated_deps.** { *; }
+-dontwarn hilt_aggregated_deps.**
+
+# ===================== ARROW EITHER =====================
+
+# Keep Arrow Either classes to avoid type erasure issues in release builds
+-keep class arrow.core.Either { *; }
+-keep class arrow.core.Left { *; }
+-keep class arrow.core.Right { *; }
+
+# ===================== LOCAL CLASSES IN auth_ui MODULE =====================
+
+-keep class com.davidluna.tmdb.media_ui.** { *; }
+-dontwarn com.davidluna.tmdb.media_ui.**

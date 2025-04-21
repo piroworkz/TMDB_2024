@@ -1,91 +1,129 @@
 package com.davidluna.tmdb.media_ui.view.details
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.davidluna.tmdb.core_domain.entities.errors.AppError
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.core_ui.composables.ErrorDialogView
-import com.davidluna.tmdb.core_ui.composables.appGradient
-import com.davidluna.tmdb.core_ui.navigation.destination.YoutubeNavigation.Video
+import com.davidluna.tmdb.core_ui.composables.LoadingIndicator
+import com.davidluna.tmdb.core_ui.navigation.Destination
+import com.davidluna.tmdb.media_ui.navigation.MediaNavigation
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
-import com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent
-import com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnMovieSelected
-import com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailEvent.OnNavigate
-import com.davidluna.tmdb.media_ui.presenter.detail.MovieDetailViewModel
+import com.davidluna.tmdb.media_domain.entities.details.Cast
+import com.davidluna.tmdb.media_domain.entities.details.Genre
+import com.davidluna.tmdb.media_domain.entities.details.Image
+import com.davidluna.tmdb.media_domain.entities.details.MediaDetails
+import com.davidluna.tmdb.media_ui.presenter.detail.MediaDetailsViewModel
 import com.davidluna.tmdb.media_ui.view.details.composables.MediaCastView
 import com.davidluna.tmdb.media_ui.view.details.composables.MediaDetailsView
-import com.davidluna.tmdb.media_ui.view.details.composables.PostersPagerView
-import com.davidluna.tmdb.media_ui.view.details.composables.fakeDetails
-import com.davidluna.tmdb.media_ui.view.details.composables.joinImages
-import com.davidluna.tmdb.media_ui.view.media.composables.ReelView
+import com.davidluna.tmdb.media_ui.view.media.composables.CarouselImageView
+import com.davidluna.tmdb.media_ui.view.media.composables.MediaPager
 
 @Composable
 fun MediaDetailScreen(
-    state: MovieDetailViewModel.State,
-    sendEvent: (MovieDetailEvent) -> Unit,
+    viewModel: MediaDetailsViewModel = hiltViewModel(),
+    navigate: (Destination) -> Unit,
 ) {
-    val lazyListState = rememberLazyListState()
+    val uiState by viewModel.mediaDetails.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.mediaDetails) {
-        lazyListState.animateScrollToItem(0)
-    }
-
-    Box(contentAlignment = Alignment.Center) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            state = lazyListState
-        ) {
-            item {
-                PostersPagerView(images = joinImages(state))
-            }
-
-            item {
-                MediaDetailsView(state.mediaDetails) {
-                    sendEvent(OnNavigate(Video(mediaId = state.mediaDetails?.id ?: 0)))
-                }
-                Spacer(modifier = Modifier.padding(all = 16.dp))
-            }
-
-            item {
-                MediaCastView(state.movieCredits)
-            }
-
-            item {
-                Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
-            }
-            items(state.catalogs) { catalog ->
-                val list = catalog.flow.collectAsLazyPagingItems()
-                ReelView(
-                    title = catalog.catalogName,
-                    list = list,
-                ) { id, title ->
-                    sendEvent(OnMovieSelected(id, title))
-                }
-                Spacer(modifier = Modifier.padding(top = Dimens.margins.xLarge))
-            }
-        }
-
-        ErrorDialogView(error = state.appError as? AppError.Message) {
-            sendEvent(MovieDetailEvent.ResetError)
+    Crossfade(targetState = uiState) {
+        when (val state = it) {
+            is UiState.Failure -> ErrorDialogView(appError = state.appError) { }
+            UiState.Loading -> LoadingIndicator()
+            is UiState.Success<MediaDetails> ->
+                MediaDetailScreen(
+                    backdropPath = state.data.backdropPath,
+                    castList = state.data.castList,
+                    genres = state.data.genres,
+                    hasVideo = state.data.hasVideo,
+                    images = state.data.images,
+                    overview = state.data.overview,
+                    releaseDate = state.data.releaseDate,
+                    tagline = state.data.tagline,
+                    voteAverage = state.data.voteAverage,
+                    navigate = {
+                        navigate(
+                            MediaNavigation.Video(
+                                mediaId = state.data.id,
+                                appBarTitle = state.data.title
+                            )
+                        )
+                    }
+                )
         }
     }
 
 }
 
+@Composable
+fun MediaDetailScreen(
+    backdropPath: String,
+    castList: List<Cast>,
+    genres: List<Genre>,
+    hasVideo: Boolean,
+    images: List<Image>,
+    overview: String,
+    releaseDate: String,
+    tagline: String,
+    voteAverage: Float,
+    navigate: () -> Unit,
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(backdropPath)
+            .crossfade(500)
+            .build(),
+        contentDescription = "",
+        modifier = Modifier
+            .fillMaxSize(),
+        alignment = Alignment.Center,
+        contentScale = ContentScale.Crop,
+        alpha = .3F
+    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+    ) {
+        MediaPager(
+            modifier = Modifier
+                .padding(vertical = Dimens.margins.large),
+            itemCount = images.size
+        ) {
+            val media = images[it].filePath
+            CarouselImageView(media, .66F)
+        }
+
+        MediaDetailsView(
+            releaseDate = releaseDate,
+            genres = genres,
+            hasVideo = hasVideo,
+            tagline = tagline,
+            overview = overview,
+            voteAverage = voteAverage
+        ) { navigate() }
+        Spacer(modifier = Modifier.padding(all = 16.dp))
+        MediaCastView(castList)
+        Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
+    }
+}
 
 @Preview(
     showSystemUi = true,
@@ -94,15 +132,17 @@ fun MediaDetailScreen(
 @Composable
 private fun MediaDetailScreenPreview() {
     TmdbTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(appGradient())
-        ) {
-            MediaDetailScreen(
-                state = MovieDetailViewModel.State(mediaDetails = fakeDetails),
-                sendEvent = {}
-            )
-        }
+        MediaDetailScreen(
+            backdropPath = "",
+            castList = emptyList(),
+            genres = emptyList(),
+            hasVideo = true,
+            images = emptyList(),
+            overview = "",
+            releaseDate = "",
+            tagline = "",
+            voteAverage = 0F,
+            navigate = {}
+        )
     }
 }

@@ -9,6 +9,7 @@ import com.davidluna.tmdb.convention.libs.kotlinAndroid
 import com.davidluna.tmdb.convention.libs.kotlinSerialization
 import com.davidluna.tmdb.convention.libs.ksp
 import com.davidluna.tmdb.convention.libs.libs
+import com.davidluna.tmdb.convention.libs.roomPlugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.PluginManager
 
@@ -32,9 +33,7 @@ internal val Project.frameworkPluginManager: PluginManager
 
 internal val Project.uiPluginManager: PluginManager
     get() = frameworkPluginManager.apply {
-        hiltPluginManager
         alias(libs.composeCompiler)
-        alias(libs.kotlinSerialization)
     }
 
 internal val Project.applicationPluginManager: PluginManager
@@ -42,4 +41,9 @@ internal val Project.applicationPluginManager: PluginManager
         alias(libs.androidApplication)
         alias(libs.kotlinAndroid)
         alias(libs.composeCompiler)
+    }
+
+internal val Project.roomPluginManger: PluginManager
+    get() = frameworkPluginManager.apply {
+        alias(libs.roomPlugin)
     }

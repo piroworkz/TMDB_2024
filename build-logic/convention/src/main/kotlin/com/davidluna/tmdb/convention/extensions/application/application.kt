@@ -1,5 +1,6 @@
 package com.davidluna.tmdb.convention.extensions.application
 
+import com.davidluna.tmdb.convention.extensions.android_library.kotlin
 import com.davidluna.tmdb.convention.extensions.common.setJavaVersions
 import com.davidluna.tmdb.convention.extensions.common.setVersions
 import com.davidluna.tmdb.convention.helpers.androidApplication
@@ -20,6 +21,10 @@ internal val Project.application: Unit
                 resources {
                     excludes += "/META-INF/{AL2.0,LGPL2.1}"
                 }
+            }
+
+            kotlin{
+                jvmToolchain(17)
             }
         }
     }

@@ -5,7 +5,7 @@ import org.gradle.api.JavaVersion
 object Constants {
     const val NAMESPACE = "com.davidluna.tmdb"
     const val COMPILE_SDK = 35
-    const val MIN_SDK = 26
+    const val MIN_SDK = 28
     const val TARGET_SDK = 35
     const val VERSION_CODE = 1
     const val VERSION_NAME = "1.0"
@@ -17,7 +17,7 @@ object Constants {
     const val STORE_FILE = "MY_STORE_FILE"
     const val STORE_PASSWORD = "MY_STORE_PASSWORD"
 
-    val JAVA_VERSION: JavaVersion = JavaVersion.VERSION_21
+    val JAVA_VERSION: JavaVersion = JavaVersion.VERSION_17
 
     val ABI_FILTERS = listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
 

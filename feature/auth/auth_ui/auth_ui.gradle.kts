@@ -9,12 +9,12 @@ android {
 }
 
 dependencies {
-    
-    implementation(projects.core.coreDomain)
-    implementation(projects.core.coreUi)
-    implementation(projects.feature.auth.authDomain)
     implementation(libs.biometric)
-    testImplementation(projects.testShared)
+    implementation(projects.feature.core.coreDomain)
+    implementation(projects.feature.core.coreUi)
+    implementation(projects.feature.auth.authDomain)
     testImplementation(projects.feature.auth.authFramework)
-    testImplementation(projects.core.coreFramework)
+    testImplementation(projects.feature.core.coreFramework)
+    testImplementation(projects.testShared)
+    testImplementation(testFixtures(projects.feature.auth.authFramework))
 }

@@ -7,6 +7,7 @@ import com.davidluna.tmdb.convention.extensions.android_library.androidLibrary
 import com.davidluna.tmdb.convention.extensions.common.uiPluginManager
 import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.helpers.ksp
+import com.davidluna.tmdb.convention.libs.activityKtx
 import com.davidluna.tmdb.convention.libs.arrowCore
 import com.davidluna.tmdb.convention.libs.hiltAndroid
 import com.davidluna.tmdb.convention.libs.hiltCompiler
@@ -17,6 +18,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
+@Suppress("unused")
 class UiModuleConventionPlugin : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
@@ -28,6 +30,7 @@ class UiModuleConventionPlugin : Plugin<Project> {
     private fun Project.dependencies() {
         dependencies {
             implementation(libs.arrowCore)
+            implementation(libs.activityKtx)
             implementation(libs.hiltNavigationCompose)
             implementation(libs.hiltAndroid)
             implementation(libs.kotlinxSerializationJson)

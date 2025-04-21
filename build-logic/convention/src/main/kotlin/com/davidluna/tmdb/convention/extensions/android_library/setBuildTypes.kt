@@ -5,7 +5,7 @@ import com.android.build.api.dsl.LibraryExtension
 internal fun LibraryExtension.setBuildTypes() {
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

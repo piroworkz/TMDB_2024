@@ -1,7 +1,7 @@
 package com.davidluna.tmdb.app.di
 
-import com.davidluna.tmdb.core_framework.data.remote.MoviesInterceptor
 import com.davidluna.tmdb.core_framework.data.remote.call_adapter.NetworkCallAdapterFactory
+import com.davidluna.tmdb.core_framework.data.remote.interceptors.TmdbInterceptor
 import com.davidluna.tmdb.core_framework.di.qualifiers.BaseUrl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -22,7 +22,7 @@ object MainModule {
     @Singleton
     @Provides
     fun provideClient(
-        interceptor: MoviesInterceptor
+        interceptor: TmdbInterceptor
     ): OkHttpClient = HttpLoggingInterceptor().run {
         level = HttpLoggingInterceptor.Level.NONE
         OkHttpClient.Builder()
@@ -37,6 +37,7 @@ object MainModule {
         ignoreUnknownKeys = true
         isLenient = true
         prettyPrint = true
+        coerceInputValues = true
     }
 
     @Singleton

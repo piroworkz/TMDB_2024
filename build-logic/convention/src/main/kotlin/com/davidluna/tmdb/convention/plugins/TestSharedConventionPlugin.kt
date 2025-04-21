@@ -8,10 +8,13 @@ import com.davidluna.tmdb.convention.libs.junit
 import com.davidluna.tmdb.convention.libs.kotlinJvm
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
 import com.davidluna.tmdb.convention.libs.libs
+import com.davidluna.tmdb.convention.libs.mockk
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmExtension
 
+@Suppress("unused")
 class TestSharedConventionPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
@@ -20,7 +23,14 @@ class TestSharedConventionPlugin : Plugin<Project> {
                 alias(libs.kotlinJvm)
             }
             setJavaVersions()
+            setKotlinJvmToolchain()
             dependencies()
+        }
+    }
+
+    private fun Project.setKotlinJvmToolchain() {
+        extensions.configure(KotlinJvmExtension::class.java) {
+            jvmToolchain(17)
         }
     }
 
@@ -29,6 +39,7 @@ class TestSharedConventionPlugin : Plugin<Project> {
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.coroutinesTest)
             implementation(libs.junit)
+            implementation(libs.mockk)
         }
     }
 }

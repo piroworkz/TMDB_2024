@@ -1,10 +1,10 @@
 package com.davidluna.tmdb.app.main_ui.presenter
 
-import com.davidluna.tmdb.core_domain.entities.ContentKind
-import com.davidluna.tmdb.core_domain.entities.errors.AppError
+import com.davidluna.tmdb.media_domain.entities.Catalog
 
 sealed interface MainEvent {
+    data class OnCatalogSelected(val endpoint: Catalog) : MainEvent
+    data class UpdateBottomNavItems(val bottomNavItems: List<Catalog>) : MainEvent
     data object OnCloseSession : MainEvent
-    data class SetContentKind(val mediaType: ContentKind) : MainEvent
-    data class SetAppError(val appError: AppError?) : MainEvent
+    data object ResetAppError: MainEvent
 }
