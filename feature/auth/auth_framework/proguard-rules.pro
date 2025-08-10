@@ -1,21 +1,53 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# ===================== HILT / DAGGER FOR FRAMEWORK =====================
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep all annotations (required for Hilt/Dagger to work)
+-keepattributes *Annotation*
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Preserve internal Hilt/Dagger classes
+-keep class dagger.hilt.** { *; }
+-keep interface dagger.hilt.** { *; }
+-keep class dagger.hilt.internal.** { *; }
+-dontwarn dagger.hilt.internal.**
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Preserve module and install-related annotations
+-keep @dagger.Module class * { *; }
+-keep @dagger.Provides class * { *; }
+-keep @dagger.Binds class * { *; }
+-keep @dagger.hilt.InstallIn class * { *; }
+
+# Keep generated dependency aggregation classes
+-keep class hilt_aggregated_deps.** { *; }
+-dontwarn hilt_aggregated_deps.**
+
+# ===================== RETROFIT =====================
+
+# Keep Retrofit interfaces and annotations
+-keep class retrofit2.** { *; }
+-keep interface retrofit2.http.* { *; }
+-keepclassmembers interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# ===================== kotlinx.serialization =====================
+
+# Preserve kotlinx.serialization runtime
+-keep class kotlinx.serialization.** { *; }
+
+# Keep all @Serializable model classes from this module
+-keep @kotlinx.serialization.Serializable class com.davidluna.tmdb.auth_framework.data.remote.model.** { *; }
+
+# Keep fields annotated with @SerialName and companion objects
+-keepclassmembers class ** {
+    @kotlinx.serialization.SerialName <fields>;
+}
+-keepclassmembers class ** {
+    *** Companion;
+}
+# Keep Companion objects if they exist (valid usage)
+-keepclassmembers class ** {
+    public static final ** Companion;
+}
+# ===================== LOCAL CLASSES IN auth_framework MODULE =====================
+
+-keep class com.davidluna.tmdb.auth_framework.** { *; }
+-dontwarn com.davidluna.tmdb.auth_framework.**

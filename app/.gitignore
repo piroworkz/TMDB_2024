@@ -1,15 +1,60 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# =====================
+# General System Files
+# =====================
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+
+# =====================
+# Local Configuration
+# =====================
+/local.properties
 /gradle.properties
+
+# =====================
+# IDE Configuration (Android Studio / IntelliJ)
+/.idea/
+/*.iml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# =====================
+# Gradle & Build Outputs
+# =====================
+/.gradle/
+.gradle/
+**/build/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+out/
+tmp/
+
+# =====================
+# Compiled & Generated Files
+# =====================
+*.class
+*.jar
+*.dex
+*.apk
+*.ap_
+
+# Kotlin / Java compiler output
+**/intermediates/
+**/transforms/
+**/kotlin-classes/
+**/kspCaches/
+**/ksp/
+**/tmp/
+**/generated/
+**/hilt_aggregated_deps/
+
+# =====================
+# Testing & Coverage
+# =====================
+test-results/
+coverage/

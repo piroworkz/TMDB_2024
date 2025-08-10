@@ -17,13 +17,12 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
+@Suppress("unused")
 class FrameworkModuleConventionPlugin : Plugin<Project> {
-    override fun apply(project: Project) {
-        with(project) {
-            frameworkPluginManager
-            androidLibrary
-            dependencies()
-        }
+    override fun apply(project: Project) = with(project) {
+        frameworkPluginManager
+        androidLibrary
+        dependencies()
     }
 
 
@@ -40,3 +39,4 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
         }
     }
 }
+

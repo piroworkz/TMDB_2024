@@ -1,34 +1,45 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+#noinspection ShrinkerUnresolvedReference
+# ===================== GENERAL =====================
+-keepattributes *Annotation*
+-dontwarn java.lang.invoke.StringConcatFactory
+-keep class java.lang.invoke.StringConcatFactory { *; }
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
-
--printconfiguration ../full-r8-config.txt
--keep class com.davidluna.tmdb.app.di.MainModule {
-    native <methods>;
+# ===================== KOTLIN =====================
+-keepclassmembers class **$WhenMappings { <fields>; }
+-keepclassmembers class ** {
+    static <fields>;
 }
--keep class com.davidluna.tmdb.build_logic.libs.** { *; }
+-keepclassmembers class kotlin.Metadata { *; }
 
--keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
-   <fields>;
-}
+# ===================== HILT / DAGGER =====================
+-keep class dagger.hilt.** { *; }
+-keep interface dagger.hilt.** { *; }
+-keep class dagger.hilt.internal.** { *; }
+-keep class hilt_aggregated_deps.** { *; }
+-dontwarn hilt_aggregated_deps.**
 
--keep class retrofit2.** { *; }
--keep class arrow.core.** { *; }
+-keep @dagger.hilt.android.lifecycle.HiltViewModel class * { <init>(...); }
+-keep class * extends androidx.lifecycle.ViewModel
+-keep class * extends dagger.hilt.android.internal.lifecycle.HiltViewModelFactory { *; }
+-keep class *ViewModel_HiltModules* { *; }
+-keep class *HiltModules* { *; }
+
+# ===================== ANDROIDX =====================
+-keep class androidx.lifecycle.** { *; }
+-dontwarn androidx.lifecycle.**
+-dontwarn androidx.room.**
+-keep class * extends androidx.room.RoomDatabase
+-keep @androidx.room.Entity class * { *; }
+-keep interface * implements androidx.room.Dao
+-keep class androidx.compose.** { *; }
+-dontwarn androidx.compose.**
+-dontwarn androidx.navigation.**
+
+# ===================== KOTLINX SERIALIZATION =====================
+-keep class kotlinx.serialization.** { *; }
+-keep class kotlinx.serialization.internal.** { *; }
+-dontwarn kotlinx.serialization.**
+
+## ===================== TU APP =====================
+-keep class com.davidluna.tmdb.** { *; }
+-dontwarn com.davidluna.tmdb.**

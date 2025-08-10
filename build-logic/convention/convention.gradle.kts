@@ -8,6 +8,7 @@ group = "com.davidluna.tmdb"
 dependencies {
     compileOnly(libs.androidGradlePlugin)
     compileOnly(libs.kotlinGradlePlugin)
+    compileOnly(libs.roomGradlePlugin)
     ksp(libs.piroworkzVersionsCatalog)
 }
 
@@ -59,6 +60,12 @@ gradlePlugin {
             id = "tmdb.test.shared.plugin"
             implementationClass =
                 "com.davidluna.tmdb.convention.plugins.TestSharedConventionPlugin"
+        }
+
+        register("roomModuleConventionPlugin") {
+            id = "tmdb.room.module.plugin"
+            implementationClass =
+                "com.davidluna.tmdb.convention.plugins.RoomModuleConvention"
         }
     }
 }

@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.core.coreDomain)
-    testImplementation(projects.testShared)
+    implementation(projects.feature.core.coreDomain)
+    testImplementation(libs.mockk)
 }

@@ -1,6 +1,5 @@
 package com.davidluna.tmdb.convention.extensions.android_library
 
-
 import com.android.build.api.dsl.LibraryExtension
 import com.davidluna.tmdb.convention.constants.Constants
 
@@ -9,6 +8,6 @@ internal fun LibraryExtension.defaultConfig() {
     defaultConfig {
         minSdk = Constants.MIN_SDK
         testInstrumentationRunner = Constants.HILT_TEST_RUNNER
-        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles("proguard-rules.pro")
     }
 }

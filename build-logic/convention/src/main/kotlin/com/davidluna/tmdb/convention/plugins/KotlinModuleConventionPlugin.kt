@@ -1,5 +1,5 @@
 package com.davidluna.tmdb.convention.plugins
-import com.davidluna.tmdb.convention.bundles.unitTestingBundle
+
 import com.davidluna.tmdb.convention.constants.Constants
 import com.davidluna.tmdb.convention.helpers.alias
 import com.davidluna.tmdb.convention.helpers.implementation
@@ -9,16 +9,27 @@ import com.davidluna.tmdb.convention.libs.javaxInject
 import com.davidluna.tmdb.convention.libs.kotlinCoroutinesCore
 import com.davidluna.tmdb.convention.libs.kotlinJvm
 import com.davidluna.tmdb.convention.libs.libs
+import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
+@Suppress("unused")
 class KotlinModuleConventionPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
         applyPlugins()
         setUpJavaVersions()
         setupDependencies()
+        kotlin {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
+                freeCompilerArgs.add("-Xcontext-sensitive-resolution")
+            }
+        }
     }
 
     private fun Project.applyPlugins() {
@@ -34,13 +45,15 @@ class KotlinModuleConventionPlugin : Plugin<Project> {
         }
     }
 
+    private fun Project.kotlin(config: Action<KotlinJvmProjectExtension>) {
+        (this as ExtensionAware).extensions.configure("kotlin", config)
+    }
+
     private fun Project.setupDependencies() {
         dependencies {
             implementation(libs.kotlinCoroutinesCore)
             implementation(libs.arrowCore)
             implementation(libs.javaxInject)
-            unitTestingBundle
         }
     }
-
 }

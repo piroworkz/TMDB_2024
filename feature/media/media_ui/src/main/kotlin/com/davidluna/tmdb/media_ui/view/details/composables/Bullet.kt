@@ -17,7 +17,7 @@ fun AnnotatedString.Builder.LabelStyle() {
     pushStyle(
         style = SpanStyle(
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Light
         )
     )

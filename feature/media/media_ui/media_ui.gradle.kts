@@ -9,14 +9,15 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.coreUi)
-    implementation(projects.core.coreDomain)
+    implementation(projects.feature.core.coreUi)
+    implementation(projects.feature.core.coreDomain)
     implementation(projects.feature.media.mediaDomain)
-    implementation(libs.pagingCompose)
     implementation(libs.coilCompose)
+    implementation(libs.pagingRuntime)
+    implementation(libs.pagingCompose)
     testImplementation(projects.testShared)
-    testImplementation(projects.feature.media.mediaFramework)
-    testImplementation(projects.feature.videos.videosDomain)
-    testImplementation(projects.feature.videos.videosFramework)
-    testImplementation(projects.core.coreFramework)
+    testImplementation(projects.feature.core.coreFramework)
+    testImplementation(testFixtures(projects.feature.media.mediaFramework))
+    testImplementation(libs.coreDatastore)
+    testImplementation(libs.pagingTesting)
 }
