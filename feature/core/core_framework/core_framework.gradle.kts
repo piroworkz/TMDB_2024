@@ -2,6 +2,7 @@ import com.davidluna.tmdb.convention.constants.Constants
 
 plugins {
     alias(libs.plugins.frameworkModuleConventionPlugin)
+
 }
 
 android {
@@ -16,4 +17,5 @@ dependencies {
     implementation(libs.playServicesLocation)
     implementation(libs.okhttpClient)
     implementation(libs.coreDatastore)
+    implementation(libs.firebaseMessaging)
 }

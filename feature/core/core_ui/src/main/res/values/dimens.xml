@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="zero">0dp</dimen>
-    <dimen name="one">1dp</dimen>
-    <dimen name="two">2dp</dimen>
-    <dimen name="small">4dp</dimen>
-    <dimen name="medium">8dp</dimen>
-    <dimen name="large">16dp</dimen>
-    <dimen name="xlarge">32dp</dimen>
-    <dimen name="xxlarge">64dp</dimen>
-    <dimen name="xxxlarge">128dp</dimen>
-    <dimen name="minImageSize">150dp</dimen>
+    <!--MARGINS-->
+    <dimen name="zero_margin">0dp</dimen>
+    <dimen name="one_margin">1dp</dimen>
+    <dimen name="two_margin">2dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+    <dimen name="xlarge_margin">32dp</dimen>
 </resources>

@@ -33,8 +33,10 @@ internal fun ApplicationExtension.setDefaultConfig(project: Project) {
             ndkBuild {
                 arguments(
                     "${Constants.API_KEY}=${project.property(Constants.API_KEY)}",
-                    "${Constants.BASE_URL}=${project.property(Constants.BASE_URL)}"
+                    "${Constants.BASE_URL}=${project.property(Constants.BASE_URL)}",
+                    "APP_LDFLAGS+=-Wl,-z,max-page-size=16384"
                 )
+
             }
         }
 

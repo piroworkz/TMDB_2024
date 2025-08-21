@@ -1,9 +1,12 @@
 package com.davidluna.tmdb.auth_ui.view.splash.holder
 
+import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.biometric.BiometricManager.Authenticators
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricManager.from
 import androidx.biometric.BiometricPrompt
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.davidluna.tmdb.auth_ui.navigation.AuthNavigation
@@ -11,6 +14,20 @@ import com.davidluna.tmdb.core_ui.R
 import com.davidluna.tmdb.core_ui.navigation.Destination
 import java.util.concurrent.Executor
 
+@Composable
+fun rememberBiometricsAuthenticator(
+    navigateHome: () -> Unit,
+    navigate: (Destination) -> Unit,
+): BiometricAuthenticator {
+    val registryOwner = LocalActivityResultRegistryOwner.current
+    return remember(registryOwner) {
+        BiometricAuthenticator(
+            activity = registryOwner as? FragmentActivity,
+            navigateHome = navigateHome,
+            navigate = navigate
+        )
+    }
+}
 class BiometricAuthenticator(
     private val activity: FragmentActivity?,
     private val navigateHome: () -> Unit,
