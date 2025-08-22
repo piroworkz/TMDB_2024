@@ -19,7 +19,13 @@ internal val Project.application: Unit
             }
             packaging {
                 resources {
-                    excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                    excludes.apply {
+                        add("/META-INF/{AL2.0,LGPL2.1}")
+                        add("META-INF/LICENSE.md")
+                        add("META-INF/LICENSE")
+                        add("META-INF/NOTICE.md")
+                        add("META-INF/NOTICE")
+                    }
                 }
             }
 

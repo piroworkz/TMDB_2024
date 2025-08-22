@@ -6,6 +6,7 @@ import com.davidluna.tmdb.convention.extensions.common.frameworkPluginManager
 import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.helpers.ksp
 import com.davidluna.tmdb.convention.libs.arrowCore
+import com.davidluna.tmdb.convention.libs.firebaseBom
 import com.davidluna.tmdb.convention.libs.hiltAndroid
 import com.davidluna.tmdb.convention.libs.hiltCompiler
 import com.davidluna.tmdb.convention.libs.javaxInject
@@ -25,7 +26,6 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
         dependencies()
     }
 
-
     private fun Project.dependencies() {
         dependencies {
             implementation(libs.kotlinxSerializationJson)
@@ -35,6 +35,7 @@ class FrameworkModuleConventionPlugin : Plugin<Project> {
             implementation(libs.hiltAndroid)
             ksp(libs.hiltCompiler)
             implementation(libs.javaxInject)
+            implementation(platform(libs.firebaseBom))
             unitTestingBundle
         }
     }

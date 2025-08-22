@@ -1,6 +1,7 @@
 package com.davidluna.tmdb.app.main_ui.view.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,19 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.davidluna.tmdb.app.main_ui.presenter.MainEvent
-import com.davidluna.tmdb.app.main_ui.presenter.MainEvent.UpdateBottomNavItems
-import com.davidluna.tmdb.app.main_ui.view.NavigatorState
-import com.davidluna.tmdb.media_domain.entities.Catalog
-import com.davidluna.tmdb.media_domain.entities.MediaType.MOVIE
-import com.davidluna.tmdb.media_domain.entities.MediaType.TV_SHOW
-import com.davidluna.tmdb.auth_domain.entities.UserAccount
-import com.davidluna.tmdb.core_ui.composables.AppBarView
 import com.davidluna.tmdb.app.main_ui.model.DrawerItem
 import com.davidluna.tmdb.app.main_ui.model.DrawerItem.CloseSession
 import com.davidluna.tmdb.app.main_ui.model.DrawerItem.Movies
 import com.davidluna.tmdb.app.main_ui.model.DrawerItem.TvShows
+import com.davidluna.tmdb.app.main_ui.presenter.MainEvent
+import com.davidluna.tmdb.app.main_ui.presenter.MainEvent.UpdateBottomNavItems
+import com.davidluna.tmdb.app.main_ui.view.NavigatorState
+import com.davidluna.tmdb.auth_domain.entities.UserAccount
+import com.davidluna.tmdb.core_ui.composables.AppBarView
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
+import com.davidluna.tmdb.media_domain.entities.Catalog
+import com.davidluna.tmdb.media_domain.entities.MediaType.MOVIE
+import com.davidluna.tmdb.media_domain.entities.MediaType.TV_SHOW
 import com.davidluna.tmdb.media_ui.view.utils.bottomBarItems
 import com.davidluna.tmdb.media_ui.view.utils.getMediaType
 import com.davidluna.tmdb.media_ui.view.utils.title
@@ -108,16 +109,17 @@ private fun AppBottomBar(
 ) {
     Row(
         modifier = modifier
-            .padding(BottomAppBarDefaults.ContentPadding),
+            .padding(BottomAppBarDefaults.ContentPadding)
+            .background(colorScheme.surface),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        bottomNavItems.forEach {
-            val title = it.title?.let { stringResource(it) }.orEmpty()
+        bottomNavItems.forEach { catalog: Catalog ->
+            val title = catalog.title?.let { stringResource(it) }.orEmpty()
             TextButton(
                 modifier = Modifier
                     .weight(1f),
-                onClick = { onMediaCatalogSelected(it) },
-                enabled = it != selectedCatalog,
+                onClick = { onMediaCatalogSelected(catalog) },
+                enabled = catalog != selectedCatalog,
                 colors = ButtonColors(
                     containerColor = colorScheme.surface,
                     contentColor = colorScheme.onSurface,
@@ -126,7 +128,7 @@ private fun AppBottomBar(
                 )
             ) {
                 Image(
-                    if (it.getMediaType() == MOVIE) Icons.Outlined.Movie else Icons.Outlined.Tv,
+                    if (catalog.getMediaType() == MOVIE) Icons.Outlined.Movie else Icons.Outlined.Tv,
                     contentDescription = null,
                     modifier = Modifier
                         .size(24.dp)

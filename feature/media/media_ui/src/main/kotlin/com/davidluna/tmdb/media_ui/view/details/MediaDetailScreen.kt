@@ -19,22 +19,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.core_ui.composables.ErrorDialogView
 import com.davidluna.tmdb.core_ui.composables.LoadingIndicator
 import com.davidluna.tmdb.core_ui.navigation.Destination
-import com.davidluna.tmdb.media_ui.navigation.MediaNavigation
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 import com.davidluna.tmdb.media_domain.entities.details.Cast
 import com.davidluna.tmdb.media_domain.entities.details.Genre
 import com.davidluna.tmdb.media_domain.entities.details.Image
 import com.davidluna.tmdb.media_domain.entities.details.MediaDetails
+import com.davidluna.tmdb.media_ui.navigation.MediaNavigation
 import com.davidluna.tmdb.media_ui.presenter.detail.MediaDetailsViewModel
 import com.davidluna.tmdb.media_ui.view.details.composables.MediaCastView
 import com.davidluna.tmdb.media_ui.view.details.composables.MediaDetailsView
 import com.davidluna.tmdb.media_ui.view.media.composables.CarouselImageView
 import com.davidluna.tmdb.media_ui.view.media.composables.MediaPager
+import com.davidluna.tmdb.media_ui.view.utils.UiState
 
 @Composable
 fun MediaDetailScreen(
@@ -52,7 +52,6 @@ fun MediaDetailScreen(
                     backdropPath = state.data.backdropPath,
                     castList = state.data.castList,
                     genres = state.data.genres,
-                    hasVideo = state.data.hasVideo,
                     images = state.data.images,
                     overview = state.data.overview,
                     releaseDate = state.data.releaseDate,
@@ -77,7 +76,6 @@ fun MediaDetailScreen(
     backdropPath: String,
     castList: List<Cast>,
     genres: List<Genre>,
-    hasVideo: Boolean,
     images: List<Image>,
     overview: String,
     releaseDate: String,
@@ -114,7 +112,6 @@ fun MediaDetailScreen(
         MediaDetailsView(
             releaseDate = releaseDate,
             genres = genres,
-            hasVideo = hasVideo,
             tagline = tagline,
             overview = overview,
             voteAverage = voteAverage
@@ -136,7 +133,6 @@ private fun MediaDetailScreenPreview() {
             backdropPath = "",
             castList = emptyList(),
             genres = emptyList(),
-            hasVideo = true,
             images = emptyList(),
             overview = "",
             releaseDate = "",

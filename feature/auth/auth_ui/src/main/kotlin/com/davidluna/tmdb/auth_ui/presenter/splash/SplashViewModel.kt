@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davidluna.tmdb.auth_domain.usecases.GetSessionUseCase
 import com.davidluna.tmdb.auth_domain.usecases.ValidateGuestSessionUseCase
+import com.davidluna.tmdb.auth_ui.view.splash.holder.CurrentScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +25,18 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isLoggedIn: MutableState<Boolean?> = mutableStateOf(null)
+
+    private val _currentScreen = MutableStateFlow(CurrentScreen.SPLASH)
+    val state = _currentScreen
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = CurrentScreen.SPLASH
+        )
+
+    fun updateCurrentScreen(screen: CurrentScreen) {
+        _currentScreen.update { screen }
+    }
 
     fun checkSessionStatus() {
         viewModelScope.launch(ioDispatcher) {

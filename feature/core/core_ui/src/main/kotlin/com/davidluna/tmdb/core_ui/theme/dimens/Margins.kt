@@ -11,29 +11,29 @@ data object Margins {
     val thin: Dp
         @Composable
         @ReadOnlyComposable
-        get() = dimensionResource(id = R.dimen.one)
+        get() = dimensionResource(id = R.dimen.one_margin)
 
     /** 4 dp **/
     val small: Dp
         @Composable
         @ReadOnlyComposable
-        get() = dimensionResource(id = R.dimen.small)
+        get() = dimensionResource(id = R.dimen.small_margin)
 
     /** 8 dp **/
     val medium: Dp
         @Composable
         @ReadOnlyComposable
-        get() = dimensionResource(id = R.dimen.medium)
+        get() = dimensionResource(id = R.dimen.medium_margin)
 
     /** 16 dp **/
     val large: Dp
         @Composable
         @ReadOnlyComposable
-        get() = dimensionResource(id = R.dimen.large)
+        get() = dimensionResource(id = R.dimen.large_margin)
 
     /** 32 dp **/
     val xLarge: Dp
         @Composable
         @ReadOnlyComposable
-        get() = dimensionResource(id = R.dimen.xlarge)
+        get() = dimensionResource(id = R.dimen.xlarge_margin)
 }

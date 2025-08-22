@@ -2,6 +2,7 @@ package com.davidluna.tmdb.core_framework.data.local.sources
 
 import android.annotation.SuppressLint
 import com.davidluna.tmdb.core_domain.usecases.PermissionValidator
+import com.davidluna.tmdb.core_framework.data.local.model.Coordinates
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject

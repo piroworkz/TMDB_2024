@@ -4,6 +4,7 @@ import com.davidluna.tmdb.convention.helpers.alias
 import com.davidluna.tmdb.convention.libs.androidApplication
 import com.davidluna.tmdb.convention.libs.androidLibrary
 import com.davidluna.tmdb.convention.libs.composeCompiler
+import com.davidluna.tmdb.convention.libs.googleServices
 import com.davidluna.tmdb.convention.libs.hiltPlugin
 import com.davidluna.tmdb.convention.libs.kotlinAndroid
 import com.davidluna.tmdb.convention.libs.kotlinSerialization
@@ -41,6 +42,7 @@ internal val Project.applicationPluginManager: PluginManager
         alias(libs.androidApplication)
         alias(libs.kotlinAndroid)
         alias(libs.composeCompiler)
+        alias(libs.googleServices)
     }
 
 internal val Project.roomPluginManger: PluginManager
