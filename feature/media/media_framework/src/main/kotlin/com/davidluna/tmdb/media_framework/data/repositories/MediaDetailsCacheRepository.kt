@@ -84,7 +84,7 @@ class MediaDetailsCacheRepository @Inject constructor(
     ) = RoomMediaDetailsRelations(
         details = details.toLocalStorage(),
         cast = credits.cast.map { it.toLocalStorage(details.id ?: 0) },
-        images = images.toLocalStorage(details.posterPath.orEmpty(), details.id ?: 0)
+        images = images.toLocalStorage(details.id ?: 0)
     )
 
 
@@ -156,13 +156,13 @@ class MediaDetailsCacheRepository @Inject constructor(
         mediaId = mediaId
     )
 
+    private fun RemoteImages.toLocalStorage(mediaId: Int): List<RoomImage> =
+        posters.mapNotNull { image ->
+            image.filePath?.takeIf { it.isNotEmpty() }?.let { image.toLocalStorage(mediaId) }
+        }
+
     private fun RemoteImage.toLocalStorage(i: Int): RoomImage = RoomImage(
         filePath = filePath?.buildModel(width = "w500").orEmpty(),
         mediaId = i
     )
-
-    private fun RemoteImages.toLocalStorage(posterPath: String, mediaId: Int): List<RoomImage> =
-        listOf(RoomImage(filePath = posterPath.buildModel(), mediaId = mediaId)) + posters.mapNotNull { image ->
-            image.filePath?.takeIf { it.isNotEmpty() }?.let { image.toLocalStorage(mediaId) }
-        }
 }

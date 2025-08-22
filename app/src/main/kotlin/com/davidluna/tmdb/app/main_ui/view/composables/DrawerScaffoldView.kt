@@ -110,16 +110,16 @@ private fun AppBottomBar(
     Row(
         modifier = modifier
             .padding(BottomAppBarDefaults.ContentPadding)
-            .background(MaterialTheme.colorScheme.surface),
+            .background(colorScheme.surface),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        bottomNavItems.forEach {
-            val title = it.title?.let { stringResource(it) }.orEmpty()
+        bottomNavItems.forEach { catalog: Catalog ->
+            val title = catalog.title?.let { stringResource(it) }.orEmpty()
             TextButton(
                 modifier = Modifier
                     .weight(1f),
-                onClick = { onMediaCatalogSelected(it) },
-                enabled = it != selectedCatalog,
+                onClick = { onMediaCatalogSelected(catalog) },
+                enabled = catalog != selectedCatalog,
                 colors = ButtonColors(
                     containerColor = colorScheme.surface,
                     contentColor = colorScheme.onSurface,
@@ -128,7 +128,7 @@ private fun AppBottomBar(
                 )
             ) {
                 Image(
-                    if (it.getMediaType() == MOVIE) Icons.Outlined.Movie else Icons.Outlined.Tv,
+                    if (catalog.getMediaType() == MOVIE) Icons.Outlined.Movie else Icons.Outlined.Tv,
                     contentDescription = null,
                     modifier = Modifier
                         .size(24.dp)

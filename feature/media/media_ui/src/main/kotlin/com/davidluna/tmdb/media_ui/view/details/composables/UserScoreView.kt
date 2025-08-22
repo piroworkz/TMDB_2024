@@ -26,7 +26,6 @@ import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 @Composable
 fun UserScoreView(
     score: Float,
-    hasVideo: Boolean,
     playTrailer: () -> Unit,
 ) {
     Row(
@@ -66,7 +65,6 @@ fun UserScoreView(
         )
 
         TextButton(
-            enabled = hasVideo,
             onClick = { playTrailer() },
         ) {
             Icon(

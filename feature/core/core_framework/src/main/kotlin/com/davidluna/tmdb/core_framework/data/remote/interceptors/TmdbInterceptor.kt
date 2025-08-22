@@ -1,5 +1,6 @@
 package com.davidluna.tmdb.core_framework.data.remote.interceptors
 
+import com.davidluna.tmdb.core_framework.data.remote.interceptors.ParametersSnapshot.Keys
 import com.davidluna.tmdb.core_framework.di.qualifiers.ApiKey
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -11,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class TmdbInterceptor @Inject constructor(
     @param:ApiKey private val apiKey: String,
-    private val parametersSnapshot: ParametersSnapshot
+    private val parametersSnapshot: ParametersSnapshot,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -26,13 +27,26 @@ class TmdbInterceptor @Inject constructor(
     }
 
     private fun buildRequest(request: Request, url: HttpUrl) = request.newBuilder().apply {
-        addHeader("Authorization", "Bearer $apiKey")
+        addHeader(Keys.AUTHENTICATION, "Bearer $apiKey")
         url(url)
     }.build()
 
     private fun buildUrl(request: Request, queryParameters: Map<String, String>) =
         request.url.newBuilder().apply {
-            addQueryParameter("api_key", apiKey)
-            queryParameters.forEach { (key, value) -> addQueryParameter(key, value) }
+            addQueryParameter(Keys.API_KEY, apiKey)
+
+            val isImagesRequest = request.url.encodedPath.contains("images")
+
+            queryParameters.forEach { (key, value) ->
+                when (key) {
+                    Keys.LANGUAGE -> if (!isImagesRequest) {
+                        addQueryParameter(key, value)
+                    }
+                    Keys.INCLUDE_IMAGE_LANGUAGE -> if (isImagesRequest) {
+                        addQueryParameter(key, value)
+                    }
+                    else -> addQueryParameter(key, value)
+                }
+            }
         }.build()
 }

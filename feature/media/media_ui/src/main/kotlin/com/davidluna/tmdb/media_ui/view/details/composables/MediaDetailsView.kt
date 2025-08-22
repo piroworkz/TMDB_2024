@@ -21,7 +21,6 @@ import com.davidluna.tmdb.media_domain.entities.details.Genre
 fun MediaDetailsView(
     releaseDate: String?,
     genres: List<Genre>?,
-    hasVideo: Boolean,
     tagline: String,
     overview: String,
     voteAverage: Float,
@@ -77,7 +76,6 @@ fun MediaDetailsView(
 
         UserScoreView(
             score = voteAverage,
-            hasVideo = hasVideo,
             playTrailer = { playTrailer() }
         )
 
