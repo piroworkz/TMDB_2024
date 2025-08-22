@@ -2,6 +2,7 @@ package com.davidluna.tmdb.core_framework.data.local.sources
 
 import android.location.Geocoder
 import android.os.Build
+import com.davidluna.tmdb.core_framework.data.local.model.Coordinates
 import javax.inject.Inject
 
 class GeoCountryCodeResolver @Inject constructor(

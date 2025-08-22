@@ -48,7 +48,7 @@ fun SplashScreen(
     val permissionsPromptState = rememberPermissionsPromptState { viewModel.checkSessionStatus() }
     val animationState: SplashAnimationState =
         rememberSplashState {
-            if (permissionsPromptState.areGranted() || permissionsPromptState.arePermanentlyDenied()) {
+            if (permissionsPromptState.areGranted()) {
                 viewModel.checkSessionStatus()
             } else {
                 viewModel.updateCurrentScreen(PERMISSIONS_PROMPT)

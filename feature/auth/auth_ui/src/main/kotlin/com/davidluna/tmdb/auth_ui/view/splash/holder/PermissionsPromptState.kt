@@ -56,7 +56,7 @@ class PermissionsPromptState(
         }
     }
 
-    fun arePermanentlyDenied(): Boolean =
+    private fun arePermanentlyDenied(): Boolean =
         (registryOwner as? Activity)?.let { currentActivity: Activity ->
             permissions.any { permission ->
                 !ActivityCompat.shouldShowRequestPermissionRationale(currentActivity, permission)

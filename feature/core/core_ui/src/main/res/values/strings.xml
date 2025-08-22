@@ -42,4 +42,18 @@
     <string name="catalog_airing_today_title">AIRING TODAY</string>
     <string name="catalog_on_the_air_title">ON THE AIR</string>
     <string name="catalog_top_rated_title">TOP RATED</string>
+
+    <!--Notification Categories-->
+    <string-array name="notification_channel_names">
+        <item>Release Reminder</item>
+        <item>App News</item>
+        <item>Maintenance</item>
+    </string-array>
+
+    <string-array name="notification_channel_descriptions">
+        <item>Reminders for upcoming releases you marked.</item>
+        <item>News, updates, and announcements from the app.</item>
+        <item>Alerts about maintenance or service availability.</item>
+    </string-array>
+
 </resources>

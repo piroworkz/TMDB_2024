@@ -1,5 +1,6 @@
 package com.davidluna.tmdb.media_ui.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -8,6 +9,7 @@ import com.davidluna.tmdb.media_ui.view.details.MediaDetailScreen
 import com.davidluna.tmdb.media_ui.view.media.MediaCatalogScreen
 import com.davidluna.tmdb.media_ui.view.videos.VideoPlayerScreen
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.mediaNavGraph(
     navigateTo: (Destination) -> Unit,
 ) {
@@ -19,4 +21,3 @@ fun NavGraphBuilder.mediaNavGraph(
         composable<MediaNavigation.Video> { VideoPlayerScreen() }
     }
 }
-
