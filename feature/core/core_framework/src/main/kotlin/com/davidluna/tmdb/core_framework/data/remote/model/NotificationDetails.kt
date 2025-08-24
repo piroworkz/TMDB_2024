@@ -8,15 +8,12 @@ data class NotificationDetails(
     val title: String,
     val message: String,
     val channelId: String,
-    val autocancel: Boolean,
-    val iconId: Int,
+    val autocancel: Boolean = true,
 ) {
     fun build(context: Context): Notification =
         NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(iconId)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(autocancel)
             .build()
 }
-

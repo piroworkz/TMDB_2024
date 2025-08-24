@@ -4,36 +4,30 @@ import com.davidluna.tmdb.auth_domain.usecases.GetSessionUseCase
 import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import com.davidluna.tmdb.core_framework.data.remote.interceptors.ParametersSnapshot
 import com.davidluna.tmdb.core_framework.data.remote.interceptors.ParametersSnapshot.Keys
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class QueryParametersSnapshot @Inject constructor(
-    getSessionUseCase: GetSessionUseCase,
     getCountryCode: GetCountryCodeUseCase,
+    getSessionUseCase: GetSessionUseCase,
     scope: CoroutineScope,
-    ioDispatcher: CoroutineDispatcher,
 ) : ParametersSnapshot {
 
-    private val queryParameters: MutableMap<String, String> = mutableMapOf()
+    private val session = getSessionUseCase()
+        .stateIn(scope, SharingStarted.Eagerly, null)
 
-    init {
-        scope.launch(ioDispatcher) {
-            getSessionUseCase.flow.collect {
-                it?.let { queryParameters[Keys.SESSION_ID] = it.sessionId }
-            }
-        }
-        scope.launch(ioDispatcher) {
-            getCountryCode().collect {
-                queryParameters[Keys.REGION] = it
-                queryParameters[Keys.LANGUAGE] = if (it == "MX") "es-mx" else Keys.DEFAULT_LANGUAGE
-                queryParameters[Keys.INCLUDE_IMAGE_LANGUAGE] = if (it == "MX") "es" else "en"
-            }
-        }
+    private val country = getCountryCode()
+        .stateIn(scope, SharingStarted.Eagerly, "US")
+
+    override fun invoke(): Map<String, String> = buildMap {
+        val countryCode = country.value
+        session.value?.let { put(Keys.SESSION_ID, it.sessionId) }
+        put(Keys.REGION, countryCode)
+        put(Keys.LANGUAGE, if (countryCode == "MX") "es-mx" else Keys.DEFAULT_LANGUAGE)
+        put(Keys.INCLUDE_IMAGE_LANGUAGE, if (countryCode == "MX") "es" else "en")
     }
-
-    override fun invoke(): Map<String, String> = queryParameters
 }

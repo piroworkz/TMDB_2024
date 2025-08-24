@@ -89,7 +89,7 @@ fun NavDrawerView(
         Spacer(modifier = Modifier.height(Dimens.margins.large))
 
         Text(
-            text = userAccount?.name ?: userAccount?.username ?: "Guest User",
+            text = userAccount?.name ?: "Guest User",
             color = colorScheme.onBackground,
         )
 

@@ -25,13 +25,13 @@ object NotificationsModule {
                     .toList()
 
             NotificationCategories.entries.mapIndexed { index, category ->
-                ChannelSpec(
+                category.name.lowercase() to ChannelSpec(
                     id = category.name.lowercase(),
                     name = names[index],
                     importance = NotificationManager.IMPORTANCE_DEFAULT,
                     description = descriptions[index]
                 )
-            }
+            }.toMap()
         }
 
 }
