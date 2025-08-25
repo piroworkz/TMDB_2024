@@ -12,7 +12,6 @@ class AndroidLocationProvider @Inject constructor(
 
     override fun invoke(): Flow<String> = flow {
         val region = getRegionCode()
-        println("<-- Region: $region")
         emit(region)
     }
 

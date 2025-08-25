@@ -33,7 +33,6 @@ class TmdbInterceptor @Inject constructor(
 
     private fun buildUrl(request: Request, queryParameters: Map<String, String>) =
         request.url.newBuilder().apply {
-            println("<-- $queryParameters")
             addQueryParameter(Keys.API_KEY, apiKey)
 
             val isImagesRequest = request.url.encodedPath.contains("images")
