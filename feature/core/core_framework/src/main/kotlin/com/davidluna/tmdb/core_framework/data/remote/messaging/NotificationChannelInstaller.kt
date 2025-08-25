@@ -15,7 +15,11 @@ class NotificationChannelInstaller @Inject constructor(
 
     override operator fun invoke() {
         val channels = notificationChannelSetProvider()
-        manager.createNotificationChannels(channels.map { it.toNotificationChannel() })
+        channels.values.map {
+            if (manager.getNotificationChannel(it.id) == null) {
+                manager.createNotificationChannel(it.toNotificationChannel())
+            }
+        }
     }
 
     private fun ChannelSpec.toNotificationChannel(): NotificationChannel =

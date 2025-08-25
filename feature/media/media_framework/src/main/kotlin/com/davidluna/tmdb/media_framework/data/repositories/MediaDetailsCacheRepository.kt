@@ -4,8 +4,8 @@ import arrow.core.Either
 import com.davidluna.tmdb.core_domain.entities.AppError
 import com.davidluna.tmdb.core_domain.entities.AppErrorCode
 import com.davidluna.tmdb.core_domain.entities.tryCatch
+import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import com.davidluna.tmdb.core_framework.data.remote.model.buildModel
-import com.davidluna.tmdb.core_framework.data.remote.model.formatDate
 import com.davidluna.tmdb.core_framework.data.remote.model.toAppError
 import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_domain.entities.details.Cast
@@ -31,12 +31,19 @@ import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaServic
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.time.format.FormatStyle
+import java.util.Locale
 import javax.inject.Inject
 
 class MediaDetailsCacheRepository @Inject constructor(
     private val local: MediaDetailsDao,
     private val remote: RemoteMediaService,
     private val isCacheExpired: IsCacheExpired,
+    private val getCountryCodeUseCase: GetCountryCodeUseCase,
 ) : GetMediaDetailsUseCase {
 
     override suspend fun invoke(catalog: Catalog, mediaId: Int): Either<AppError, MediaDetails> =
@@ -44,16 +51,20 @@ class MediaDetailsCacheRepository @Inject constructor(
             val endpoint = catalog.toEndpointPath(forId = mediaId)
             val localDetails: RoomMediaDetailsRelations? = local.getFullDetail(mediaId)
             val isCacheExpired = isCacheExpired(localDetails?.details?.savedOnTimeMillis)
+            val countryCode = getCountryCodeUseCase().first()
             if (localDetails != null && !isCacheExpired) {
                 localDetails.toDomain()
             } else {
-                val remoteDetails: RoomMediaDetailsRelations = fetchDetails(endpoint)
+                val remoteDetails: RoomMediaDetailsRelations = fetchDetails(endpoint, countryCode)
 
                 local.cacheDetails(remoteDetails, isCacheExpired)?.toDomain() ?: throw appError()
             }
         }
 
-    private suspend fun fetchDetails(endPoint: String): RoomMediaDetailsRelations =
+    private suspend fun fetchDetails(
+        endPoint: String,
+        countryCode: String,
+    ): RoomMediaDetailsRelations =
         coroutineScope {
             val detailsDeferred: Deferred<RemoteMediaDetail> = async {
                 remote.getDetailById(endPoint)
@@ -74,15 +85,16 @@ class MediaDetailsCacheRepository @Inject constructor(
             val credits = creditsDeferred.await()
             val images = imagesDeferred.await()
 
-            toLocalStorage(details, credits, images)
+            toLocalStorage(details, credits, images, countryCode)
         }
 
     private fun toLocalStorage(
         details: RemoteMediaDetail,
         credits: RemoteCredits,
         images: RemoteImages,
+        countryCode: String,
     ) = RoomMediaDetailsRelations(
-        details = details.toLocalStorage(),
+        details = details.toLocalStorage(countryCode = countryCode),
         cast = credits.cast.map { it.toLocalStorage(details.id ?: 0) },
         images = images.toLocalStorage(details.id ?: 0)
     )
@@ -126,20 +138,21 @@ class MediaDetailsCacheRepository @Inject constructor(
         mediaId = mediaId
     )
 
-    private fun RemoteMediaDetail.toLocalStorage(): RoomMediaDetails = RoomMediaDetails(
-        id = id ?: 0,
-        title = title.orEmpty(),
-        releaseDate = formatDate(releaseDate).orEmpty(),
-        runtime = runtime ?: 0,
-        posterPath = posterPath?.buildModel().orEmpty(),
-        backdropPath = backdropPath?.buildModel().orEmpty(),
-        overview = overview.orEmpty(),
-        tagline = tagline.orEmpty(),
-        voteAverage = voteAverage ?: 0.0,
-        hasVideo = hasVideo,
-        genres = genres.map { it.toLocalStorage() },
-        savedOnTimeMillis = System.currentTimeMillis()
-    )
+    private fun RemoteMediaDetail.toLocalStorage(countryCode: String): RoomMediaDetails =
+        RoomMediaDetails(
+            id = id ?: 0,
+            title = title.orEmpty(),
+            releaseDate = formatDate(releaseDate, countryCode).orEmpty(),
+            runtime = runtime ?: 0,
+            posterPath = posterPath?.buildModel().orEmpty(),
+            backdropPath = backdropPath?.buildModel().orEmpty(),
+            overview = overview.orEmpty(),
+            tagline = tagline.orEmpty(),
+            voteAverage = voteAverage ?: 0.0,
+            hasVideo = hasVideo,
+            genres = genres.map { it.toLocalStorage() },
+            savedOnTimeMillis = System.currentTimeMillis()
+        )
 
     private fun RemoteGenre.toLocalStorage(): RoomGenre {
         return RoomGenre(
@@ -165,4 +178,22 @@ class MediaDetailsCacheRepository @Inject constructor(
         filePath = filePath?.buildModel(width = "w500").orEmpty(),
         mediaId = i
     )
+
+    fun formatDate(releaseDate: String?, countryCode: String): String? = try {
+        releaseDate?.let {
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
+            val date = LocalDate.parse(it, inputFormatter)
+
+            val locale = if (countryCode.equals("MX", ignoreCase = true)) {
+                Locale("es", "MX")
+            } else {
+                Locale.US
+            }
+
+            val outputFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale)
+            date.format(outputFormatter)
+        }
+    } catch (_: DateTimeParseException) {
+        null
+    }
 }

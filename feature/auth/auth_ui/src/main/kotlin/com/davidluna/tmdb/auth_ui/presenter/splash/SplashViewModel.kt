@@ -40,7 +40,7 @@ class SplashViewModel @Inject constructor(
 
     fun checkSessionStatus() {
         viewModelScope.launch(ioDispatcher) {
-            val session = getSessionUseCase.flow.first()
+            val session = getSessionUseCase().first()
             val isSessionValid: Boolean = when {
                 session == null -> false
                 session.isGuest -> isGuestSessionValid(session.expiresAt)
