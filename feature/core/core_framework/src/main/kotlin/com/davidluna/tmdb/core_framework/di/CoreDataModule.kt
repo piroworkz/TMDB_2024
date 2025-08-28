@@ -1,16 +1,18 @@
 package com.davidluna.tmdb.core_framework.di
 
 import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
+import com.davidluna.tmdb.core_domain.usecases.InstallNotificationChannels
+import com.davidluna.tmdb.core_domain.usecases.IsChannelEnabled
 import com.davidluna.tmdb.core_domain.usecases.PermissionValidator
+import com.davidluna.tmdb.core_domain.usecases.ShowNotification
 import com.davidluna.tmdb.core_framework.data.local.sources.AndroidLocationProvider
 import com.davidluna.tmdb.core_framework.data.local.sources.AndroidLocationService
 import com.davidluna.tmdb.core_framework.data.local.sources.CountryCodeResolver
 import com.davidluna.tmdb.core_framework.data.local.sources.GeoCountryCodeResolver
 import com.davidluna.tmdb.core_framework.data.local.sources.LocationPermissionValidator
 import com.davidluna.tmdb.core_framework.data.local.sources.LocationService
-import com.davidluna.tmdb.core_framework.data.remote.messaging.InstallNotificationChannels
 import com.davidluna.tmdb.core_framework.data.remote.messaging.NotificationChannelInstaller
-import com.davidluna.tmdb.core_framework.data.remote.messaging.ShowNotification
+import com.davidluna.tmdb.core_framework.data.remote.messaging.TmdbNotificationChannelStateReader
 import com.davidluna.tmdb.core_framework.data.remote.messaging.TmdbNotificationsManager
 import dagger.Binds
 import dagger.Module
@@ -32,4 +34,6 @@ abstract class CoreDataModule {
     abstract fun bindShowNotification(source: TmdbNotificationsManager): ShowNotification
     @Binds
     abstract fun bindInstallNotificationChannels(source: NotificationChannelInstaller): InstallNotificationChannels
+    @Binds
+    abstract fun bindIsChannelEnabled(source: TmdbNotificationChannelStateReader): IsChannelEnabled
 }

@@ -30,7 +30,7 @@ fun CarouselImageView(
             .data(model)
             .crossfade(1000)
             .build(),
-        contentDescription = "",
+        contentDescription = "Media image",
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(aspectRatio)
