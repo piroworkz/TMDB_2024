@@ -125,11 +125,11 @@ pagingTesting = { module = "androidx.paging:paging-testing", version.ref = "pagi
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 ##COMPOSE TESTING
+navigationTesting = { module = "androidx.navigation:navigation-testing", version.ref = "compose-navigation" }
 androidRunner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidTestCore = { group = "androidx.test", name = "core-ktx", version.ref = "androidx-rules" }
 hiltTest = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp3" }
-navigationTesting = { module = "androidx.navigation:navigation-testing", version.ref = "compose-navigation" }
 uiTestJunit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 # Rules

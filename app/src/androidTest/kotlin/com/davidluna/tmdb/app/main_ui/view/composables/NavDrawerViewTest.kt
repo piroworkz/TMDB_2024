@@ -13,7 +13,6 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
-import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,7 +23,7 @@ class NavDrawerViewTest {
 
     @Test
     fun navDrawerView(): Unit = composeTestRule.run {
-        setContent { TmdbTheme { NavDrawerViewPreview() } }
+        setContent { NavDrawerViewPreview() }
 
         val userImage = onNodeWithContentDescription("user photo")
         val userName = onNodeWithText("Karina Dorsey")

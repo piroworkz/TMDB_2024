@@ -25,6 +25,7 @@ internal val Project.application: Unit
                         add("META-INF/LICENSE")
                         add("META-INF/NOTICE.md")
                         add("META-INF/NOTICE")
+                        add("META-INF/LICENSE-notice.md")
                     }
                 }
             }

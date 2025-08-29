@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.davidluna.tmdb.app.main_ui.presenter.MainEvent
 import com.davidluna.tmdb.app.main_ui.view.composables.DrawerScaffoldView
-import com.davidluna.tmdb.app.main_ui.view.composables.rememberNavigatorState
 import com.davidluna.tmdb.auth_domain.entities.UserAccount
 import com.davidluna.tmdb.auth_ui.navigation.InitialNavigation
 import com.davidluna.tmdb.auth_ui.navigation.authNavGraph
@@ -19,15 +18,13 @@ import com.davidluna.tmdb.media_ui.navigation.mediaNavGraph
 
 @Composable
 fun Navigator(
+    navController: NavHostController,
+    state: NavigatorState,
     bottomNavItems: List<Catalog>,
     selectedCatalog: Catalog,
     userAccount: UserAccount?,
     onMainEvent: (MainEvent) -> Unit,
 ) {
-    val navController = rememberNavController()
-    val state = rememberNavigatorState(navController)
-    state.BackStackEntryFlowCollectEffect()
-
     DrawerScaffoldView(
         bottomNavItems = bottomNavItems,
         navigatorState = state,

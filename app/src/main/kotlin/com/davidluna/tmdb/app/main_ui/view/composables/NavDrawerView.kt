@@ -42,7 +42,7 @@ import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_ui.view.media.composables.rememberItemWidth
-import com.davidluna.tmdb.media_ui.view.utils.getMediaType
+import com.davidluna.tmdb.media_ui.view.utils.mediaType
 
 @Composable
 fun NavDrawerView(
@@ -107,7 +107,7 @@ fun NavDrawerView(
         Spacer(modifier = Modifier.height(Dimens.margins.large))
 
         DrawerItem.list.forEach { item ->
-            val isSelected by remember(selectedEndpoint) { mutableStateOf(item.startEndpoint?.getMediaType() == selectedEndpoint.getMediaType()) }
+            val isSelected by remember(selectedEndpoint) { mutableStateOf(item.startEndpoint?.mediaType == selectedEndpoint.mediaType) }
 
             Row(
                 modifier = Modifier
