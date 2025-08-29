@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.GraphicsLayerScope
@@ -22,6 +25,7 @@ import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidluna.tmdb.auth_ui.navigation.AuthNavigation
@@ -35,6 +39,7 @@ import com.davidluna.tmdb.auth_ui.view.splash.holder.rememberPermissionsPromptSt
 import com.davidluna.tmdb.auth_ui.view.splash.holder.rememberSplashState
 import com.davidluna.tmdb.core_ui.R
 import com.davidluna.tmdb.core_ui.navigation.Destination
+import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -123,5 +128,41 @@ private fun GraphicsLayerScope.createBlurEffect(holder: SplashAnimationState) {
             holder.blur(),
             Shader.TileMode.DECAL
         ).asComposeRenderEffect()
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun SplashScreenPreview() {
+
+    TmdbTheme {
+        var currentScreen by remember { mutableStateOf(SPLASH) }
+        val animationState: SplashAnimationState = rememberSplashState { currentScreen = PERMISSIONS_PROMPT }
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = currentScreen,
+                label = "CurrentScreen"
+            ) { screen ->
+                if (screen == SPLASH) {
+                    SplashScreen(
+                        holder = animationState,
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        animatedVisibilityScope = this@AnimatedContent
+                    )
+                } else {
+                    PermissionsPromptScreen(
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        animatedVisibilityScope = this@AnimatedContent,
+                        launchPermissionsPrompt = {  },
+                        onDismiss = {  }
+                    )
+
+                }
+            }
+        }
     }
 }
