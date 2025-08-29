@@ -42,6 +42,7 @@
     <string name="catalog_airing_today_title">AIRING TODAY</string>
     <string name="catalog_on_the_air_title">ON THE AIR</string>
     <string name="catalog_top_rated_title">TOP RATED</string>
+    <string name="dismiss_button">DISMISS</string>
 
     <!--Notification Categories-->
     <string-array name="notification_channel_names">
