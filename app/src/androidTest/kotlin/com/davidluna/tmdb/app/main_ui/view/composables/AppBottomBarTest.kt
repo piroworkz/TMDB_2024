@@ -1,13 +1,18 @@
 package com.davidluna.tmdb.app.main_ui.view.composables
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.printToLog
+import com.davidluna.tmdb.core_ui.theme.TmdbTheme
+import com.davidluna.tmdb.media_domain.entities.Catalog
+import com.davidluna.tmdb.media_ui.view.utils.bottomBarItems
+import com.davidluna.tmdb.media_ui.view.utils.mediaType
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,71 +22,60 @@ class AppBottomBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun appBottomBarPreview(): Unit = composeTestRule.run {
+    fun initialRender_showsNowPlayingSelected(): Unit = composeTestRule.run {
+        var selectedCatalog by mutableStateOf(Catalog.MOVIE_NOW_PLAYING)
         setContent {
-            AppBottomBarPreview()
-        }
-        onRoot(true).printToLog("<--")
-        val nowPlayingButton = onNodeWithText("NOW PLAYING")
-        val popularButton = onNodeWithText("POPULAR")
-        val topRatedButton = onNodeWithText("TOP RATED")
-
-        nowPlayingButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsNotEnabled()
+            TmdbTheme {
+                AppBottomBar(
+                    selectedCatalog = selectedCatalog,
+                    bottomNavItems = selectedCatalog.mediaType.bottomBarItems(),
+                    onMediaCatalogSelected = { selectedCatalog = it }
+                )
+            }
         }
 
-        popularButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
+        onNodeWithText("NOW PLAYING").assertExists().assertIsDisplayed().assertIsNotEnabled()
+        onNodeWithText("POPULAR").assertExists().assertIsDisplayed().assertIsEnabled()
+        onNodeWithText("TOP RATED").assertExists().assertIsDisplayed().assertIsEnabled()
+    }
+
+    @Test
+    fun clickingPopular_selectsPopular(): Unit = composeTestRule.run {
+        var selectedCatalog by mutableStateOf(Catalog.MOVIE_NOW_PLAYING)
+        setContent {
+            TmdbTheme {
+                AppBottomBar(
+                    selectedCatalog = selectedCatalog,
+                    bottomNavItems = selectedCatalog.mediaType.bottomBarItems(),
+                    onMediaCatalogSelected = { selectedCatalog = it }
+                )
+            }
         }
 
-        topRatedButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
+        onNodeWithText("POPULAR").performClick()
+
+        onNodeWithText("NOW PLAYING").assertIsEnabled()
+        onNodeWithText("POPULAR").assertIsNotEnabled()
+        onNodeWithText("TOP RATED").assertIsEnabled()
+    }
+
+    @Test
+    fun clickingTopRated_selectsTopRated(): Unit = composeTestRule.run {
+        var selectedCatalog by mutableStateOf(Catalog.MOVIE_NOW_PLAYING)
+        setContent {
+            TmdbTheme {
+                AppBottomBar(
+                    selectedCatalog = selectedCatalog,
+                    bottomNavItems = selectedCatalog.mediaType.bottomBarItems(),
+                    onMediaCatalogSelected = { selectedCatalog = it }
+                )
+            }
         }
 
-        popularButton.performClick()
+        onNodeWithText("TOP RATED").performClick()
 
-        nowPlayingButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
-        }
-
-        popularButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsNotEnabled()
-        }
-
-        topRatedButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
-        }
-
-        topRatedButton.performClick()
-
-        nowPlayingButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
-        }
-
-        popularButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsEnabled()
-        }
-
-        topRatedButton.apply {
-            assertExists()
-            assertIsDisplayed()
-            assertIsNotEnabled()
-        }
+        onNodeWithText("NOW PLAYING").assertIsEnabled()
+        onNodeWithText("POPULAR").assertIsEnabled()
+        onNodeWithText("TOP RATED").assertIsNotEnabled()
     }
 }
