@@ -22,66 +22,54 @@ class NavDrawerViewTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun navDrawerView(): Unit = composeTestRule.run {
+    fun initialRender_showsUserAndItems(): Unit = composeTestRule.run {
         setContent { NavDrawerViewPreview() }
 
-        val userImage = onNodeWithContentDescription("user photo")
-        val userName = onNodeWithText("Karina Dorsey")
+        onNodeWithContentDescription("user photo").assertIsDisplayed()
+        onNodeWithText("Karina Dorsey").assertIsDisplayed()
+
+        onNodeWithContentDescription("Outlined.Movie")
+            .assertIsDisplayed()
+            .assertTextEquals("Movies")
+            .assertHasClickAction()
+            .assertIsNotEnabled()
+
+        onNodeWithContentDescription("Outlined.Tv")
+            .assertIsDisplayed()
+            .assertTextEquals("Tv Shows")
+            .assertHasClickAction()
+            .assertIsEnabled()
+
+        onNodeWithContentDescription("Outlined.Close")
+            .assertIsDisplayed()
+            .assertTextEquals("Close Session")
+            .assertHasClickAction()
+            .assertIsEnabled()
+    }
+
+    @Test
+    fun clickingTvShows_switchesSelection(): Unit = composeTestRule.run {
+        setContent { NavDrawerViewPreview() }
+
         val moviesDrawerItem = onNodeWithContentDescription("Outlined.Movie")
         val tvShowsDrawerItem = onNodeWithContentDescription("Outlined.Tv")
         val closeSessionDrawerItem = onNodeWithContentDescription("Outlined.Close")
-        userImage.assertIsDisplayed()
-
-        userName.assertIsDisplayed()
-
-        moviesDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Movies")
-            assertHasClickAction()
-            assertIsNotEnabled()
-        }
-
-        tvShowsDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Tv Shows")
-            assertHasClickAction()
-            assertIsEnabled()
-        }
-
-        closeSessionDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Close Session")
-            assertHasClickAction()
-            assertIsEnabled()
-        }
 
         tvShowsDrawerItem.performClick()
 
-        moviesDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Movies")
-            assertHasClickAction()
-            assertIsEnabled()
-        }
+        moviesDrawerItem.assertIsEnabled()
+        tvShowsDrawerItem.assertIsNotEnabled()
+        closeSessionDrawerItem.assertIsEnabled()
+    }
 
-        tvShowsDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Tv Shows")
-            assertHasClickAction()
-            assertIsNotEnabled()
-        }
+    @Test
+    fun clickingCloseSession_closesDrawer(): Unit = composeTestRule.run {
+        setContent { NavDrawerViewPreview() }
 
-        closeSessionDrawerItem.apply {
-            assertIsDisplayed()
-            assertTextEquals("Close Session")
-            assertHasClickAction()
-            assertIsEnabled()
-        }
-
+        val closeSessionDrawerItem = onNodeWithContentDescription("Outlined.Close")
         closeSessionDrawerItem.performClick()
 
         onRoot(useUnmergedTree = true)
             .assert(hasAnyChild(isRoot()).not())
     }
-
 }
