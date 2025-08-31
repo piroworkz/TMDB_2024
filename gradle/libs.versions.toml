@@ -1,5 +1,5 @@
 [versions]
-agp = "8.12.1"
+agp = "8.12.2"
 #kotlin
 coreSplashscreen = "1.0.1"
 kotlin = "2.2.10"
@@ -14,7 +14,7 @@ biometric = "1.2.0-alpha05"
 paging = "3.3.6"
 datastore = "1.1.7"
 #compose
-composeBom = "2025.08.00"
+composeBom = "2025.08.01"
 activityCompose = "1.10.1"
 compose-animation = "1.7.0-rc01"
 compose-navigation = "2.9.3"
@@ -29,7 +29,7 @@ okhttp = "5.1.0"
 #other
 arrow = "2.1.2"
 #hilt
-hilt = "2.57"
+hilt = "2.57.1"
 hiltNavigationCompose = "1.2.0"
 hiltWork = "1.2.0"
 javaxInject = "1"
@@ -37,7 +37,7 @@ javaxInject = "1"
 ksp = "2.2.0-2.0.2"
 #google services
 googleServices = "4.4.3"
-firebase-bom = "34.1.0"
+firebase-bom = "34.2.0"
 
 #testing
 junit = "4.13.2"
@@ -125,11 +125,11 @@ pagingTesting = { module = "androidx.paging:paging-testing", version.ref = "pagi
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 ##COMPOSE TESTING
+navigationTesting = { module = "androidx.navigation:navigation-testing", version.ref = "compose-navigation" }
 androidRunner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidTestCore = { group = "androidx.test", name = "core-ktx", version.ref = "androidx-rules" }
 hiltTest = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp3" }
-navigationTesting = { module = "androidx.navigation:navigation-testing", version.ref = "compose-navigation" }
 uiTestJunit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 # Rules

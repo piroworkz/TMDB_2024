@@ -25,10 +25,12 @@ dependencies {
     testImplementation(projects.testShared)
     testImplementation(libs.pagingTesting)
     testFixturesImplementation(projects.testShared)
+    testFixturesImplementation(projects.feature.media.mediaDomain)
     testFixturesImplementation(libs.arrowCore)
     testFixturesImplementation(libs.coroutinesTest)
     testFixturesImplementation(libs.kotlinStdLib)
     testFixturesImplementation(libs.pagingJVM)
     testFixturesImplementation(projects.feature.core.coreFramework)
+    testFixturesImplementation(projects.feature.core.coreDomain)
 
 }

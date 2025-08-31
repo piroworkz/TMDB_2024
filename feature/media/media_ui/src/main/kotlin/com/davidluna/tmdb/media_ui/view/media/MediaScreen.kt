@@ -22,9 +22,9 @@ import androidx.paging.compose.itemKey
 import com.davidluna.tmdb.core_domain.entities.AppError
 import com.davidluna.tmdb.core_ui.composables.ErrorDialogView
 import com.davidluna.tmdb.core_ui.navigation.Destination
-import com.davidluna.tmdb.media_ui.navigation.MediaNavigation.Detail
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 import com.davidluna.tmdb.media_domain.entities.Media
+import com.davidluna.tmdb.media_ui.navigation.MediaNavigation.Detail
 import com.davidluna.tmdb.media_ui.presenter.media.MediaCatalogViewModel
 import com.davidluna.tmdb.media_ui.view.media.composables.CarouselImageView
 import com.davidluna.tmdb.media_ui.view.media.composables.FilmMaskImageView
@@ -43,10 +43,10 @@ fun MediaCatalogScreen(
 
     MediaCatalogScreen(
         appError = state.appError,
-        gridCatalogTitle = state.gridCatalogTitle,
+        gridCatalogTitle = state.gridCatalogTitle?.let { stringResource(it) },
         gridLazyPagingItems = gridLazyPagingItems,
         lastKnownPosition = state.lastKnownPosition,
-        pagerCatalogTitle = state.pagerCatalogTitle,
+        pagerCatalogTitle = state.pagerCatalogTitle?.let { stringResource(it) },
         pagerLazyPagingItems = pagerLazyPagingItems,
         navigateTo = { navigateTo(it) },
         onPositionChanged = { index, offset -> viewModel.updateLastKnownPosition(index, offset) }
@@ -56,10 +56,10 @@ fun MediaCatalogScreen(
 @Composable
 fun MediaCatalogScreen(
     appError: AppError?,
-    gridCatalogTitle: Int?,
+    gridCatalogTitle: String?,
     gridLazyPagingItems: LazyPagingItems<Media>,
     lastKnownPosition: Pair<Int, Int>,
-    pagerCatalogTitle: Int?,
+    pagerCatalogTitle: String?,
     pagerLazyPagingItems: LazyPagingItems<Media>,
     navigateTo: (Destination) -> Unit,
     onPositionChanged: (Int, Int) -> Unit,
@@ -93,7 +93,7 @@ fun MediaCatalogScreen(
             item(
                 span = { GridItemSpan(3) }
             ) {
-                pagerCatalogTitle?.let { ReelTitleView(title = stringResource(it)) }
+                ReelTitleView(title = pagerCatalogTitle)
             }
         }
 
@@ -119,7 +119,7 @@ fun MediaCatalogScreen(
                 span = { GridItemSpan(3) }
             ) {
                 Spacer(modifier = Modifier.padding(top = Dimens.margins.xLarge))
-                gridCatalogTitle?.let { ReelTitleView(title = stringResource(it)) }
+                ReelTitleView(title = gridCatalogTitle)
             }
         }
 

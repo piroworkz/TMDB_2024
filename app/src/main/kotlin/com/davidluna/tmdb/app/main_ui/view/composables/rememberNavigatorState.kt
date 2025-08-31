@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun rememberNavigatorState(
     navController: NavHostController,
-    scope: CoroutineScope = rememberCoroutineScope()
+    scope: CoroutineScope = rememberCoroutineScope(),
 ): NavigatorState = remember(navController, scope) {
     NavigatorState(
         navController = navController,

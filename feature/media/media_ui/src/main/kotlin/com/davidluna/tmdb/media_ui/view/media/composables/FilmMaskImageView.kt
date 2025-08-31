@@ -44,7 +44,7 @@ fun FilmMaskImageView(
                 .data(model)
                 .crossfade(500)
                 .build(),
-            contentDescription = "",
+            contentDescription = "FilmMaskImageView",
             modifier = Modifier
                 .aspectRatio(aspectRatio),
             alignment = Alignment.Center,
@@ -54,7 +54,7 @@ fun FilmMaskImageView(
 
         Image(
             painter = painterResource(id = R.drawable.film_mask),
-            contentDescription = "film reel",
+            contentDescription = "FilmMaskImageFrameView",
             modifier = Modifier
                 .aspectRatio(aspectRatio),
             contentScale = ContentScale.FillBounds

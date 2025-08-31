@@ -1,4 +1,4 @@
-package com.davidluna.tmdb.media_ui
+package com.davidluna.tmdb.media_framework.fakes
 
 import androidx.paging.PagingData
 import com.davidluna.tmdb.core_domain.entities.AppError
@@ -49,7 +49,7 @@ val fakeRemoteCredits: RemoteCredits = Reader.fromJson<RemoteCredits>(Reader.MOV
 val fakeVideos: List<Video> =
     Reader.fromJson<RemoteVideos>(Reader.MOVIE_VIDEOS).toDomain()
 
-val mediaDetails = MediaDetails(
+val fakeMediaDetails = MediaDetails(
     id = fakeRemoteMediaDetail.id ?: 0,
     title = fakeRemoteMediaDetail.title.orEmpty(),
     releaseDate = formatDate(fakeRemoteMediaDetail.releaseDate).orEmpty(),

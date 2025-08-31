@@ -10,7 +10,7 @@ import com.davidluna.tmdb.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
 import com.davidluna.tmdb.media_ui.di.DetailsMediaId
 import com.davidluna.tmdb.media_ui.view.utils.UiState
-import com.davidluna.tmdb.media_ui.view.utils.getMediaType
+import com.davidluna.tmdb.media_ui.view.utils.mediaType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,7 +40,7 @@ class MediaDetailsViewModel @Inject constructor(
             .catch { UiState.Failure(it.toAppError()) }
             .map { mediaCatalog ->
                 val selectedEndpoint =
-                    if (mediaCatalog.getMediaType() == MediaType.MOVIE) Catalog.MOVIE_DETAIL else Catalog.TV_DETAIL
+                    if (mediaCatalog.mediaType == MediaType.MOVIE) Catalog.MOVIE_DETAIL else Catalog.TV_DETAIL
                 getMediaDetails(selectedEndpoint, mediaId)
                     .fold(
                         ifLeft = { UiState.Failure(it) },

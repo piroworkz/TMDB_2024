@@ -18,6 +18,7 @@ dependencies {
     testImplementation(projects.testShared)
     testImplementation(projects.feature.core.coreFramework)
     testImplementation(testFixtures(projects.feature.media.mediaFramework))
+    androidTestImplementation(testFixtures(projects.feature.media.mediaFramework))
     testImplementation(libs.coreDatastore)
     testImplementation(libs.pagingTesting)
 }

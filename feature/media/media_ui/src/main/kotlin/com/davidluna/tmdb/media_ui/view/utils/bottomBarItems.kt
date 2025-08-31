@@ -3,8 +3,8 @@ package com.davidluna.tmdb.media_ui.view.utils
 import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_domain.entities.MediaType
 
-fun MediaType.bottomBarItems(): List<Catalog> =
-    if (this == MediaType.MOVIE) {
+fun MediaType.bottomBarItems(): List<Catalog> {
+    return if (this == MediaType.MOVIE) {
         listOf(
             Catalog.MOVIE_NOW_PLAYING,
             Catalog.MOVIE_POPULAR,
@@ -17,3 +17,4 @@ fun MediaType.bottomBarItems(): List<Catalog> =
             Catalog.TV_TOP_RATED
         )
     }
+}

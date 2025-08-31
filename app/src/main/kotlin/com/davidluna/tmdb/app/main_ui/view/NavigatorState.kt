@@ -16,8 +16,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import com.davidluna.tmdb.auth_ui.navigation.AuthNavigation
-import com.davidluna.tmdb.core_ui.navigation.Destination
 import com.davidluna.tmdb.auth_ui.navigation.InitialNavigation
+import com.davidluna.tmdb.core_ui.navigation.Destination
 import com.davidluna.tmdb.media_ui.navigation.MediaNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.distinctUntilChanged

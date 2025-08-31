@@ -6,6 +6,7 @@ import com.davidluna.tmdb.convention.helpers.implementation
 import com.davidluna.tmdb.convention.libs.coroutinesTest
 import com.davidluna.tmdb.convention.libs.junit
 import com.davidluna.tmdb.convention.libs.kotlinJvm
+import com.davidluna.tmdb.convention.libs.kotlinSerialization
 import com.davidluna.tmdb.convention.libs.kotlinxSerializationJson
 import com.davidluna.tmdb.convention.libs.libs
 import com.davidluna.tmdb.convention.libs.mockk
@@ -21,6 +22,7 @@ class TestSharedConventionPlugin : Plugin<Project> {
         with(project) {
             pluginManager.apply {
                 alias(libs.kotlinJvm)
+                alias(libs.kotlinSerialization)
             }
             setJavaVersions()
             setKotlinJvmToolchain()

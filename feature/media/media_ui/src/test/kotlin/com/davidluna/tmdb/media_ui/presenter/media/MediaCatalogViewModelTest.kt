@@ -5,8 +5,8 @@ import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.core_domain.entities.toAppError
 import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
 import com.davidluna.tmdb.media_domain.usecases.ObserveMediaCatalogUseCase
-import com.davidluna.tmdb.media_ui.fakeEmptyPagingData
-import com.davidluna.tmdb.media_ui.fakeMediaPagingData
+import com.davidluna.tmdb.media_framework.fakes.fakeEmptyPagingData
+import com.davidluna.tmdb.media_framework.fakes.fakeMediaPagingData
 import com.davidluna.tmdb.media_ui.view.utils.title
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import io.mockk.every

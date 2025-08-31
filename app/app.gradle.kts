@@ -16,4 +16,6 @@ dependencies {
     testImplementation(projects.testShared)
     testImplementation(testFixtures(projects.feature.auth.authFramework))
     testImplementation(libs.coreDatastore)
+    androidTestImplementation(libs.navigationTesting)
+    androidTestImplementation(projects.testShared)
 }

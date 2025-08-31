@@ -12,9 +12,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -22,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidluna.tmdb.core_domain.entities.AppError
 import com.davidluna.tmdb.core_domain.entities.AppErrorCode
+import com.davidluna.tmdb.core_ui.R
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
 import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 
@@ -55,7 +61,7 @@ fun ErrorDialogView(
                     .background(MaterialTheme.colorScheme.error)
             ) {
                 Text(
-                    text = "Something went wrong",
+                    text = stringResource(R.string.something_went_wrong),
                     modifier = Modifier
                         .padding(Dimens.margins.small)
                         .fillMaxWidth(),
@@ -86,7 +92,7 @@ fun ErrorDialogView(
                 onClick = { onDismissRequest() }
             ) {
                 Text(
-                    text = "Dismiss",
+                    text = stringResource(R.string.dismiss_button),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -99,18 +105,18 @@ fun ErrorDialogView(
     showBackground = true, showSystemUi = true
 )
 @Composable
-private fun ErrorDialogPreView() {
+fun ErrorDialogPreView() {
+    var appError: AppError? by remember {
+        mutableStateOf(
+            AppError(AppErrorCode.BAD_REQUEST, "Invalid API key: You must be granted a valid key.")
+        )
+    }
+
     TmdbTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+        appError?.let {
             ErrorDialogView(
-                appError = AppError(
-                    AppErrorCode.BAD_REQUEST, "Invalid API key: You must be granted a valid key."
-                ),
-                onDismissRequest = {},
+                appError = it,
+                onDismissRequest = { appError = null },
             )
         }
     }

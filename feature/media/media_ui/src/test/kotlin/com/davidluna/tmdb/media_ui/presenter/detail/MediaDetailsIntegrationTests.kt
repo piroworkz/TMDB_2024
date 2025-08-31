@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import app.cash.turbine.test
 import com.davidluna.tmdb.core_domain.entities.toAppError
+import com.davidluna.tmdb.core_domain.usecases.GetCountryCodeUseCase
 import com.davidluna.tmdb.core_framework.data.remote.model.RemoteError
 import com.davidluna.tmdb.core_framework.data.remote.model.toAppError
 import com.davidluna.tmdb.media_framework.data.local.database.dao.MediaDetailsDao
@@ -14,10 +15,11 @@ import com.davidluna.tmdb.media_framework.data.paging.CachePolicyValidator
 import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaService
 import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaServiceSpy
 import com.davidluna.tmdb.media_framework.data.repositories.MediaDetailsCacheRepository
-import com.davidluna.tmdb.media_ui.mediaDetails
+import com.davidluna.tmdb.media_framework.fakes.fakeMediaDetails
 import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.test_shared.reader.Reader
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -54,7 +56,7 @@ class MediaDetailsIntegrationTests {
     @Test
     fun `GIVEN GetMediaDetailsUseCase WHEN is successful THEN mediaDetails emits UiState Success`() =
         coroutineTestRule.scope.runTest {
-            val expected = UiState.Success(data = mediaDetails)
+            val expected = UiState.Success(data = fakeMediaDetails)
             val sut = buildSUT()
 
             sut.mediaDetails.onEach { println("<-- $it") }.test {
@@ -105,10 +107,12 @@ class MediaDetailsIntegrationTests {
         val dataStore = newDataStore(temporaryFolderRule.newFolder())
         val isCacheExpired = CachePolicyValidator()
         val getSelectedMediaCatalog = SelectedCatalogDataSource(dataStore)
+        val getCountryCodeUseCase = provideFakeGetCountryCodeUseCase()
         val getMediaDetailsUseCase = MediaDetailsCacheRepository(
             local = mediaDetailsDao,
             remote = remoteMediaService,
-            isCacheExpired = isCacheExpired
+            isCacheExpired = isCacheExpired,
+            getCountryCodeUseCase = getCountryCodeUseCase
         )
 
         return MediaDetailsViewModel(
@@ -122,4 +126,10 @@ class MediaDetailsIntegrationTests {
         PreferenceDataStoreFactory.create(
             scope = coroutineTestRule.scope,
         ) { File(tmp, "test.preferences_pb") }
+
+    private fun provideFakeGetCountryCodeUseCase(): GetCountryCodeUseCase {
+        return object : GetCountryCodeUseCase {
+            override fun invoke() = flowOf("US")
+        }
+    }
 }

@@ -23,7 +23,8 @@ fun MediaDetailsView(
     genres: List<Genre>?,
     tagline: String,
     overview: String,
-    voteAverage: Float,
+    score: Float,
+    voteAveragePercentage: String,
     playTrailer: () -> Unit,
 ) {
 
@@ -75,7 +76,8 @@ fun MediaDetailsView(
         )
 
         UserScoreView(
-            score = voteAverage,
+            score = score,
+            voteAveragePercentage = voteAveragePercentage,
             playTrailer = { playTrailer() }
         )
 

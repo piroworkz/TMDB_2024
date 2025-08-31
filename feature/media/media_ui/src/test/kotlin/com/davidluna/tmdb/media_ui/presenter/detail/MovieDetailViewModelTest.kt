@@ -6,8 +6,8 @@ import arrow.core.right
 import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_domain.usecases.GetMediaDetailsUseCase
 import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
-import com.davidluna.tmdb.media_ui.fakeAppError
-import com.davidluna.tmdb.media_ui.mediaDetails
+import com.davidluna.tmdb.media_framework.fakes.fakeAppError
+import com.davidluna.tmdb.media_framework.fakes.fakeMediaDetails
 import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import io.mockk.coEvery
@@ -48,9 +48,9 @@ class MovieDetailViewModelTest {
     @Test
     fun `GIVEN getSelectedMediaCatalogUseCase emits MOVIE and getMediaDetails returns Right WHEN fetching movie details THEN mediaDetails is UiState Success with movie details`() =
         coroutineTestRule.scope.runTest {
-            val expected = UiState.Success(mediaDetails)
+            val expected = UiState.Success(fakeMediaDetails)
             every { getSelectedMediaCatalogUseCase.selectedCatalog } returns flowOf(Catalog.MOVIE_UPCOMING)
-            coEvery { getMediaDetails(any(), any()) } returns mediaDetails.right()
+            coEvery { getMediaDetails(any(), any()) } returns fakeMediaDetails.right()
             val sut = buildSUT()
 
             sut.mediaDetails.test {

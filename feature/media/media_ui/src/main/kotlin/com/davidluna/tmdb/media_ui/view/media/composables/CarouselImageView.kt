@@ -18,7 +18,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.davidluna.tmdb.core_ui.composables.shimmer
 import com.davidluna.tmdb.core_ui.theme.TmdbTheme
-import kotlinx.coroutines.delay
 
 @Composable
 fun CarouselImageView(
@@ -30,7 +29,7 @@ fun CarouselImageView(
             .data(model)
             .crossfade(1000)
             .build(),
-        contentDescription = "Media image",
+        contentDescription = "CarouselImageView",
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(aspectRatio)
@@ -43,11 +42,10 @@ fun CarouselImageView(
 
 @Preview
 @Composable
-private fun CarouselImagePreView() {
+fun CarouselImagePreView() {
     var model: String? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
-        delay(5000)
         model = "/uLXxpWRfoIPfB2fwM8hsAMIjSWf.jpg".buildModel("w500")
     }
 

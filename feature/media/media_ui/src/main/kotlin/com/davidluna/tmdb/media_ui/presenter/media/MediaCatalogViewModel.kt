@@ -12,7 +12,7 @@ import com.davidluna.tmdb.media_domain.entities.Media
 import com.davidluna.tmdb.media_domain.entities.MediaType.MOVIE
 import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
 import com.davidluna.tmdb.media_domain.usecases.ObserveMediaCatalogUseCase
-import com.davidluna.tmdb.media_ui.view.utils.getMediaType
+import com.davidluna.tmdb.media_ui.view.utils.mediaType
 import com.davidluna.tmdb.media_ui.view.utils.title
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -82,7 +82,7 @@ class MediaCatalogViewModel @Inject constructor(
         .catch { e -> _state.update { it.copy(appError = e.toAppError()) } }
         .flatMapLatest { catalog ->
             val pagerCatalog =
-                if (catalog.getMediaType() == MOVIE) MOVIE_UPCOMING else TV_AIRING_TODAY
+                if (catalog.mediaType == MOVIE) MOVIE_UPCOMING else TV_AIRING_TODAY
             _state.update { it.copy(pagerCatalogTitle = pagerCatalog.title) }
             observeMediaCatalogUseCase(pagerCatalog, viewModelScope)
         }

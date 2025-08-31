@@ -6,12 +6,12 @@ import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_domain.entities.Catalog.MOVIE_DETAIL
 import com.davidluna.tmdb.media_domain.entities.Catalog.TV_DETAIL
 import com.davidluna.tmdb.media_domain.entities.MediaType.MOVIE
-import com.davidluna.tmdb.media_ui.view.utils.UiState
-import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
-import com.davidluna.tmdb.media_ui.di.VideosMediaId
 import com.davidluna.tmdb.media_domain.entities.details.Video
 import com.davidluna.tmdb.media_domain.usecases.GetMediaVideosUseCase
-import com.davidluna.tmdb.media_ui.view.utils.getMediaType
+import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
+import com.davidluna.tmdb.media_ui.di.VideosMediaId
+import com.davidluna.tmdb.media_ui.view.utils.UiState
+import com.davidluna.tmdb.media_ui.view.utils.mediaType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -37,7 +37,7 @@ class VideoPlayerViewModel @Inject constructor(
     private fun fetchMediaVideos(): Flow<UiState<List<Video>>> = getSelectedMediaCatalogUseCase.selectedCatalog
         .distinctUntilChanged()
         .map { catalog: Catalog ->
-            val selected = if (catalog.getMediaType() == MOVIE) MOVIE_DETAIL else TV_DETAIL
+            val selected = if (catalog.mediaType == MOVIE) MOVIE_DETAIL else TV_DETAIL
             getMediaVideosUseCase(selected, mediaId).fold(
                 ifLeft = { UiState.Failure(it) },
                 ifRight = { UiState.Success(it) }
