@@ -14,4 +14,10 @@ data class MediaDetails(
     val genres: List<Genre>,
     val castList: List<Cast>,
     val images: List<Image>
-)
+) {
+    val voteAveragePercentage: String
+        get() = "${(voteAverage * 10).toInt()}%"
+
+    val score: Float
+        get() = voteAverage / 10
+}

@@ -7,8 +7,8 @@ import com.davidluna.tmdb.media_domain.entities.Catalog
 import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.media_domain.usecases.GetSelectedMediaCatalog
 import com.davidluna.tmdb.media_domain.usecases.GetMediaVideosUseCase
-import com.davidluna.tmdb.media_ui.fakeAppError
-import com.davidluna.tmdb.media_ui.fakeVideos
+import com.davidluna.tmdb.media_framework.fakes.fakeAppError
+import com.davidluna.tmdb.media_framework.fakes.fakeVideos
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import io.mockk.coEvery
 import io.mockk.every

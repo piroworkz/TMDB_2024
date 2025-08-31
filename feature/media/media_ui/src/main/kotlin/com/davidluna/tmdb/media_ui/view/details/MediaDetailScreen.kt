@@ -56,8 +56,9 @@ fun MediaDetailScreen(
                     overview = state.data.overview,
                     releaseDate = state.data.releaseDate,
                     tagline = state.data.tagline,
-                    voteAverage = state.data.voteAverage,
-                    navigate = {
+                    score = state.data.score,
+                    voteAveragePercentage = state.data.voteAveragePercentage,
+                    playTrailer = {
                         navigate(
                             MediaNavigation.Video(
                                 mediaId = state.data.id,
@@ -80,8 +81,9 @@ fun MediaDetailScreen(
     overview: String,
     releaseDate: String,
     tagline: String,
-    voteAverage: Float,
-    navigate: () -> Unit,
+    score: Float,
+    voteAveragePercentage: String,
+    playTrailer: () -> Unit,
 ) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -114,8 +116,9 @@ fun MediaDetailScreen(
             genres = genres,
             tagline = tagline,
             overview = overview,
-            voteAverage = voteAverage
-        ) { navigate() }
+            score = score,
+            voteAveragePercentage = voteAveragePercentage
+        ) { playTrailer() }
         Spacer(modifier = Modifier.padding(all = 16.dp))
         MediaCastView(castList)
         Spacer(modifier = Modifier.padding(top = Dimens.margins.large))
@@ -137,8 +140,9 @@ private fun MediaDetailScreenPreview() {
             overview = "",
             releaseDate = "",
             tagline = "",
-            voteAverage = 0F,
-            navigate = {}
+            score = 0F,
+            voteAveragePercentage = "0%",
+            playTrailer = {}
         )
     }
 }

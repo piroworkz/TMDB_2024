@@ -18,7 +18,7 @@ import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaServic
 import com.davidluna.tmdb.media_framework.data.repositories.MediaCatalogRepository
 import com.davidluna.tmdb.media_framework.di.MediaCatalogMediatorFactory
 import com.davidluna.tmdb.media_framework.di.MediaCatalogMediatorFactorySpy
-import com.davidluna.tmdb.media_ui.buildFakeMediaList
+import com.davidluna.tmdb.media_framework.fakes.buildFakeMediaList
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest

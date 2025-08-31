@@ -15,6 +15,18 @@ internal val Project.androidLibrary: Unit
             defaultConfig()
             setBuildTypes()
             compileOptions { setVersions() }
+            packaging {
+                resources {
+                    excludes.apply {
+                        add("/META-INF/{AL2.0,LGPL2.1}")
+                        add("META-INF/LICENSE.md")
+                        add("META-INF/LICENSE")
+                        add("META-INF/NOTICE.md")
+                        add("META-INF/NOTICE")
+                        add("META-INF/LICENSE-notice.md")
+                    }
+                }
+            }
         }
         setJavaVersions()
         kotlin {

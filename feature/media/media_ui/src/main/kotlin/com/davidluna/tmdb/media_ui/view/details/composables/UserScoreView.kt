@@ -26,6 +26,7 @@ import com.davidluna.tmdb.core_ui.theme.dimens.Dimens
 @Composable
 fun UserScoreView(
     score: Float,
+    voteAveragePercentage: String,
     playTrailer: () -> Unit,
 ) {
     Row(
@@ -39,13 +40,13 @@ fun UserScoreView(
             contentAlignment = Alignment.Center,
         ) {
             CircularProgressIndicator(
-                progress = { score / 10F },
+                progress = { score },
                 modifier = Modifier.size(Dimens.margins.large * 3),
                 color = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
             )
             Text(
-                text = (score * 10F).toInt().toString().plus("%"),
+                text = voteAveragePercentage,
                 style = MaterialTheme.typography.labelMedium
             )
         }

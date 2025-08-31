@@ -12,7 +12,7 @@ import com.davidluna.tmdb.media_framework.data.paging.CachePolicyValidator
 import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaService
 import com.davidluna.tmdb.media_framework.data.remote.services.RemoteMediaServiceSpy
 import com.davidluna.tmdb.media_framework.data.repositories.MediaVideosRepository
-import com.davidluna.tmdb.media_ui.fakeVideos
+import com.davidluna.tmdb.media_framework.fakes.fakeVideos
 import com.davidluna.tmdb.media_ui.view.utils.UiState
 import com.davidluna.tmdb.test_shared.rules.CoroutineTestRule
 import kotlinx.coroutines.flow.onEach

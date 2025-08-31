@@ -35,10 +35,6 @@ class MediaDaoSpy : MediaDao {
         inMemoryDatabase.removeIf { it.category == category }
     }
 
-    fun setError(error: Throwable) {
-        this.error = error
-    }
-
     private fun tryThrow() {
         error?.let { throw it }
     }

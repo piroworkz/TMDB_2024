@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.toSize
 fun rememberItemWidth(maxItemsPerScreen: Int = 3): Dp {
     val windowInfo = LocalWindowInfo.current
     val density = LocalDensity.current
-    return remember {
+    return remember(windowInfo, density) {
         derivedStateOf {
             with(density) {
                 val containerSize = windowInfo.containerSize.toSize()
